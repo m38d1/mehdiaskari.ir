@@ -23,7 +23,7 @@
 19. Responsive
 
 */
-@import url("https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&display=swap&subset=cyrillic");
+@import url("https://fonts.googleapis.com/css?family=Rubik:300,300i,400,400i,500,500i,700,700i,900,900i&amp;display=swap&amp;subset=cyrillic");
 /*=================================================================*/
 /*                      BASE                              
 /*=================================================================*/
@@ -935,8 +935,7 @@ section.home.light .social-icons li a:hover {
   -moz-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-.service-box h3,
-.service-box .service-title {
+.service-box h3 {
   font-size: 20px;
 }
 .service-box img {
@@ -1638,8 +1637,6 @@ body.dark footer.footer {
   -webkit-transform: perspective(1px) translateZ(0);
   transform: perspective(1px) translateZ(0);
   box-shadow: 0 0 1px rgba(0, 0, 0, 0);
-  font-weight: bold;
-  text-decoration: none;
 }
 .btn-default:hover {
   color: #FFF;
@@ -1651,7 +1648,6 @@ body.dark footer.footer {
   animation-timing-function: linear;
   -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
-  text-decoration: underline;
 }
 
 .btn-full {
