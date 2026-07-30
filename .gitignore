@@ -1,18 +1,1 @@
-```
-# Logs and temp files
-*.log
-*.tmp
-*.swp
-
-# Environment
-.env
-.env.local
-.env.
-
-# Editors
-.vscode/
-.idea/
-
-# Original rules preserved
-*.log
-```
+Nothing should be ignored based on the provided file changes. The changes only include source/config files (.md, .css, .html) without any build artifacts, dependencies, or temporary files that would warrant adding ignore rules.
