@@ -1,545 +1,707 @@
 <!DOCTYPE html>
-<html lang="en-US" dir="rtl">
-
-
+<html lang="fa" dir="rtl" data-theme="dark">
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-	<title>Mehdi Askari | مهدی عسکری</title>
-	<meta name="description" content="سایت شخصی مهدی عسکری">
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-	<link rel="shortcut icon" type="image/x-icon" href="images/favicon.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#08090D">
+<title data-en="Mehdi Askari | Project Planning &amp; Control · Web Developer · Network Specialist">مهدی عسکری | برنامه‌ریزی و کنترل پروژه · توسعه‌دهنده وب · متخصص شبکه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal: #2FE0C4;
+    --teal-2: #5B8CFF;
+    --amber: #F6B255;
+  }
 
-	<!-- STYLESHEETS -->
-	<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/all.min.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/simple-line-icons.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/slick.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/animate.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/style.css" type="text/css" media="all">
-	<link rel="stylesheet" href="css/style-rtl.css" type="text/css" media="all">
+  html[data-theme="dark"]{
+    --bg: #08090D;
+    --mesh1: rgba(91,140,255,0.16);
+    --mesh2: rgba(47,224,196,0.13);
+    --mesh3: rgba(246,178,85,0.07);
+    --glass: rgba(255,255,255,0.04);
+    --glass-2: rgba(255,255,255,0.07);
+    --border: rgba(255,255,255,0.09);
+    --border-soft: rgba(255,255,255,0.06);
+    --text: #F3F5F7;
+    --text-muted: #98A2B0;
+    --text-dim: #5C6672;
+    --teal-dim: rgba(47,224,196,0.14);
+    --card-shadow: 0 20px 60px -24px rgba(0,0,0,0.55);
+    --nav-bg: rgba(10,12,16,0.65);
+  }
 
-	<!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-	<!-- Global site tag (gtag.js) - Google Analytics -->	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-163783572-1"></script>	<script>	  window.dataLayer = window.dataLayer || [];	  function gtag(){dataLayer.push(arguments);}	  gtag('js', new Date());	  gtag('config', 'UA-163783572-1');	</script>
+  html[data-theme="light"]{
+    --bg: #F3F5F9;
+    --mesh1: rgba(91,140,255,0.14);
+    --mesh2: rgba(20,184,155,0.12);
+    --mesh3: rgba(246,178,85,0.10);
+    --glass: rgba(255,255,255,0.68);
+    --glass-2: rgba(255,255,255,0.85);
+    --border: rgba(16,21,28,0.09);
+    --border-soft: rgba(16,21,28,0.06);
+    --text: #10151C;
+    --text-muted: #4B5563;
+    --text-dim: #8892A0;
+    --teal: #0EA894;
+    --teal-2: #3B6FE0;
+    --amber: #C97A1E;
+    --teal-dim: rgba(14,168,148,0.12);
+    --card-shadow: 0 20px 50px -28px rgba(16,21,28,0.25);
+    --nav-bg: rgba(255,255,255,0.72);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Vazirmatn', sans-serif;
+    line-height:1.75;
+    overflow-x:hidden;
+    position:relative;
+    transition:background-color .5s ease, color .5s ease;
+  }
+
+  body::before{
+    content:"";
+    position:fixed; inset:0; z-index:-2;
+    background:
+      radial-gradient(ellipse 900px 600px at 15% -10%, var(--mesh1), transparent 60%),
+      radial-gradient(ellipse 800px 700px at 100% 10%, var(--mesh2), transparent 55%),
+      radial-gradient(ellipse 700px 600px at 50% 100%, var(--mesh3), transparent 55%),
+      var(--bg);
+    background-size: 160% 160%, 160% 160%, 160% 160%, 100% 100%;
+    animation: meshDrift 22s ease-in-out infinite alternate;
+    transition:background-color .5s ease;
+  }
+
+  @keyframes meshDrift{
+    0%{ background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
+    100%{ background-position: 10% 15%, 85% 20%, 55% 85%, 0 0; }
+  }
+
+  .spotlight{
+    position:fixed; inset:0; z-index:-1; pointer-events:none;
+    background: radial-gradient(circle 420px at var(--mx,50%) var(--my,20%), var(--teal-dim), transparent 70%);
+    opacity:0; transition:opacity .4s ease;
+  }
+  .spotlight.on{opacity:1;}
+
+  .mono{font-family:'IBM Plex Mono', monospace; direction:ltr; unicode-bidi:isolate;}
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--teal); color:#08090D;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  .reveal{opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1);}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  .glass-surface, .info-card, .gantt-item, .tool-card, .contact-panel, .schedule-card, .role-pill, .skill-tag, .social-link, .nav-wrap{
+    transition:background-color .5s ease, border-color .5s ease, box-shadow .5s ease, color .5s ease, transform .25s ease;
+  }
+
+  /* ---------- NAV ---------- */
+  header{position:sticky; top:0; z-index:50; padding:18px 24px;}
+  .nav-wrap{
+    max-width:980px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 20px;
+    background:var(--nav-bg);
+    backdrop-filter:blur(18px) saturate(160%);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);
+    border:1px solid var(--border-soft);
+    border-radius:100px;
+    box-shadow:var(--card-shadow);
+  }
+  .logo{display:flex; align-items:center; gap:9px; font-weight:800; font-size:1rem;}
+  .logo-mark{
+    width:9px;height:9px;border-radius:50%;
+    background:linear-gradient(135deg, var(--teal), var(--teal-2));
+    box-shadow:0 0 14px 2px var(--teal-dim);
+  }
+  .nav-right{display:flex; align-items:center; gap:22px;}
+  nav ul{list-style:none; display:flex; gap:20px;}
+  nav a{font-size:0.84rem; color:var(--text-muted); transition:color .2s ease;}
+  nav a:hover, nav a:focus-visible{color:var(--text);}
+  nav a:focus-visible{outline:2px solid var(--teal); outline-offset:4px; border-radius:2px;}
+  @media (max-width:700px){ nav ul{display:none;} }
+
+  /* theme segmented control */
+  .theme-toggle{
+    display:flex; align-items:center; gap:2px;
+    background:var(--glass-2); border:1px solid var(--border);
+    border-radius:100px; padding:3px; flex-shrink:0;
+  }
+  .theme-opt{
+    width:28px; height:24px; border:none; background:transparent; border-radius:100px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; cursor:pointer; color:var(--text-dim);
+    transition:background .25s ease, color .25s ease;
+  }
+  .theme-opt.active{
+    background:linear-gradient(135deg, var(--teal), var(--teal-2));
+    color:#08090D;
+  }
+  .theme-opt:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  .lang-toggle{
+    display:flex; align-items:center; gap:2px;
+    background:var(--glass-2); border:1px solid var(--border);
+    border-radius:100px; padding:3px; flex-shrink:0;
+  }
+  .lang-opt{
+    padding:0 10px; height:24px; border:none; background:transparent; border-radius:100px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
+    cursor:pointer; color:var(--text-dim);
+    transition:background .25s ease, color .25s ease;
+  }
+  .lang-opt.active{ background:linear-gradient(135deg, var(--teal), var(--teal-2)); color:#08090D; }
+  .lang-opt:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  html[lang="en"] .schedule-card{ text-align:left; }
+  html[lang="en"] .about-text p, html[lang="en"] .tool-card p{ text-align-last:left; }
+  html[lang="en"] .info-row .value{ text-align:right; }
+  html[lang="en"] .section-head .rule{ background:linear-gradient(to right, var(--border), transparent); }
+
+  /* ---------- HERO ---------- */
+  .hero{max-width:960px; margin:0 auto; padding:76px 24px 56px; text-align:center;}
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:9px;
+    font-size:0.78rem; color:var(--teal);
+    border:1px solid var(--border); background:var(--glass);
+    padding:7px 16px; border-radius:100px;
+    margin-bottom:32px;
+  }
+  .eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--teal); animation:pulse 2.2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;} 50%{opacity:0.4;}}
+
+  .eyebrow-text{position:relative; display:inline-block; min-width:15ch; text-align:right;}
+  .eyebrow-text span{
+    display:inline-block;
+    animation: rotateText .45s cubic-bezier(.2,.8,.2,1);
+  }
+  @keyframes rotateText{
+    0%{ opacity:0; transform:translateY(6px); filter:blur(3px); }
+    100%{ opacity:1; transform:translateY(0); filter:blur(0); }
+  }
+
+  .tools-grid .tool-card, .gantt .gantt-item{
+    animation: cardIn .6s cubic-bezier(.2,.8,.2,1) both;
+    animation-play-state:paused;
+  }
+  .reveal.in .tool-card, .reveal.in .gantt-item{ animation-play-state:running; }
+  @keyframes cardIn{
+    from{ opacity:0; transform:translateY(16px) scale(.98); }
+    to{ opacity:1; transform:translateY(0) scale(1); }
+  }
+
+  .gantt-item:nth-child(1), .tools-grid .tool-card:nth-child(1){ animation-delay:.02s; }
+  .gantt-item:nth-child(2), .tools-grid .tool-card:nth-child(2){ animation-delay:.10s; }
+  .gantt-item:nth-child(3), .tools-grid .tool-card:nth-child(3){ animation-delay:.18s; }
+  .gantt-item:nth-child(4){ animation-delay:.26s; }
+  .gantt-item:nth-child(5){ animation-delay:.34s; }
+  .gantt-item:nth-child(6){ animation-delay:.42s; }
+
+  h1{
+    font-size:clamp(2.6rem, 8vw, 5rem);
+    font-weight:900; letter-spacing:-1.5px; line-height:1.08;
+    margin-bottom:20px;
+  }
+  h1 .grad{
+    background:linear-gradient(100deg, var(--teal) 10%, var(--teal-2) 60%, var(--amber) 100%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+
+  .role{
+    font-size:clamp(1.02rem, 2.1vw, 1.25rem);
+    color:var(--text-muted); font-weight:500;
+    max-width:60ch; margin:0 auto 20px;
+  }
+
+  .role-pills{display:flex; flex-wrap:wrap; justify-content:center; gap:8px; margin-bottom:44px;}
+  .role-pill{
+    font-size:0.76rem; color:var(--text-muted);
+    border:1px solid var(--border); background:var(--glass);
+    padding:6px 13px; border-radius:100px;
+  }
+
+  .schedule-card{
+    max-width:580px; margin:0 auto;
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(20px);
+    border-radius:20px; padding:26px 28px 22px;
+    text-align:right;
+    box-shadow:var(--card-shadow);
+  }
+  .schedule-card-head{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:16px;}
+  .schedule-card-head .mono{font-size:0.7rem; color:var(--text-dim); letter-spacing:0.5px;}
+  .schedule-card-head .pct{font-family:'IBM Plex Mono', monospace; color:var(--teal); font-size:0.85rem; font-weight:600;}
+  .schedule-track{height:8px; border-radius:5px; background:var(--border-soft); overflow:hidden; position:relative;}
+  .schedule-fill{
+    height:100%; width:0%; border-radius:5px;
+    background:linear-gradient(90deg, var(--teal-2), var(--teal));
+    animation:fillbar 1.7s cubic-bezier(.2,.8,.2,1) 0.4s forwards;
+  }
+  @keyframes fillbar{to{width:88%;}}
+  .schedule-meta{display:flex; justify-content:space-between; margin-top:14px;}
+  .schedule-meta span{font-size:0.72rem; color:var(--text-dim);}
+  .schedule-meta strong{color:var(--text-muted); font-weight:600;}
+
+  /* ---------- SECTION SHELL ---------- */
+  section{max-width:960px; margin:0 auto; padding:56px 24px;}
+  .section-head{display:flex; align-items:center; gap:16px; margin-bottom:36px;}
+  .section-head .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--teal);
+    border:1px solid var(--border); background:var(--glass);
+    padding:5px 12px; border-radius:100px; letter-spacing:0.5px;
+  }
+  .section-head h2{font-size:1.5rem; font-weight:800;}
+  .section-head .rule{flex:1; height:1px; background:linear-gradient(to left, var(--border), transparent);}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:24px;}
+  @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
+  .about-text p{color:var(--text-muted); margin-bottom:16px; max-width:60ch; text-align:justify; text-align-last:right;}
+  .about-text strong{color:var(--text); font-weight:700;}
+
+  .info-card{
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(16px);
+    border-radius:18px; padding:24px 26px;
+    box-shadow:var(--card-shadow);
+  }
+  .info-row{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-soft); font-size:0.86rem; gap:10px;}
+  .info-row:last-child{border-bottom:none;}
+  .info-row .label{color:var(--text-dim); flex-shrink:0;}
+  .info-row .value{color:var(--text); font-weight:600; text-align:left;}
+
+  /* ---------- EXPERIENCE — glass Gantt ---------- */
+  .gantt{display:flex; flex-direction:column; gap:12px;}
+  .gantt-item{
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(16px);
+    border-radius:18px; padding:24px 26px;
+    display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:center;
+  }
+  .gantt-item:hover{border-color:var(--teal); transform:translateY(-2px);}
+  @media (max-width:680px){ .gantt-item{grid-template-columns:1fr;} }
+  .gantt-label .role-title{font-weight:700; font-size:0.98rem; margin-bottom:4px;}
+  .gantt-label .org{color:var(--text-muted); font-size:0.83rem;}
+  .gantt-label .proj{color:var(--text-dim); font-size:0.78rem; margin-top:3px;}
+  .gantt-label .dates{color:var(--teal); font-size:0.72rem; margin-top:10px; font-weight:600;}
+
+  .gantt-bar-track{height:10px; background:var(--border-soft); border-radius:6px; overflow:hidden; position:relative;}
+  .gantt-bar{
+    position:absolute; top:0; bottom:0; right:0; width:0%; border-radius:6px;
+    background:linear-gradient(90deg, var(--amber), var(--teal));
+    animation:growbar 1.5s cubic-bezier(.2,.8,.2,1) forwards;
+  }
+  @keyframes growbar{to{width:var(--w,60%);}}
+
+  /* ---------- EDUCATION TIMELINE ---------- */
+  .edu-list{display:flex; flex-direction:column;}
+  .edu-item{
+    display:grid; grid-template-columns:110px 1fr; gap:20px;
+    padding:18px 4px; border-bottom:1px solid var(--border-soft);
+  }
+  .edu-item:last-child{border-bottom:none;}
+  @media (max-width:600px){ .edu-item{grid-template-columns:80px 1fr;} }
+  .edu-year{font-family:'IBM Plex Mono', monospace; color:var(--amber); font-size:0.82rem; font-weight:600; padding-top:2px;}
+  .edu-title{font-weight:700; font-size:0.94rem; margin-bottom:3px;}
+  .edu-desc{color:var(--text-dim); font-size:0.83rem;}
+
+  /* ---------- SKILLS ---------- */
+  .tools-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:14px;}
+  .tool-card{
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(16px);
+    border-radius:18px; padding:24px;
+    box-shadow:var(--card-shadow);
+  }
+  .tool-card:hover{border-color:var(--teal-2); transform:translateY(-3px);}
+  .tool-icon{
+    width:38px; height:38px; border-radius:11px;
+    background:linear-gradient(135deg, var(--teal-dim), rgba(91,140,255,0.12));
+    color:var(--teal);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'IBM Plex Mono', monospace; font-weight:600; font-size:0.78rem;
+    margin-bottom:16px; border:1px solid var(--border);
+  }
+  .tool-card h3{font-size:0.94rem; font-weight:700; margin-bottom:6px;}
+  .tool-card p{font-size:0.81rem; color:var(--text-dim); text-align:justify; text-align-last:right;}
+
+  .skill-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+  .skill-tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
+    border:1px solid var(--border); background:var(--glass);
+    padding:8px 14px; border-radius:100px; color:var(--text-muted);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-panel{
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(20px);
+    border-radius:22px; padding:44px;
+    display:flex; flex-wrap:wrap; justify-content:space-between; gap:32px; align-items:center;
+    box-shadow:var(--card-shadow);
+  }
+  .contact-panel h2{font-size:1.6rem; font-weight:800; margin-bottom:10px;}
+  .contact-panel p{color:var(--text-muted); max-width:40ch;}
+  .contact-links{display:flex; flex-direction:column; gap:11px;}
+  .contact-link{
+    display:flex; align-items:center; gap:10px; font-size:0.88rem;
+    padding:11px 18px; border:1px solid var(--border-soft); border-radius:12px;
+    background:var(--glass-2);
+    transition:border-color .2s ease, color .2s ease, background .2s ease;
+  }
+  .contact-link:hover, .contact-link:focus-visible{border-color:var(--teal); color:var(--teal); background:var(--teal-dim);}
+  .contact-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  .contact-link .mono{color:var(--text-dim); font-size:0.74rem;}
+
+  .social-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:36px; justify-content:center;}
+  .social-link{
+    width:44px; height:44px; display:flex; align-items:center; justify-content:center;
+    font-size:1.05rem; color:var(--text-muted);
+    border:1px solid var(--border); background:var(--glass);
+    border-radius:50%;
+  }
+  .social-link:hover, .social-link:focus-visible{color:var(--teal); border-color:var(--teal); transform:translateY(-2px);}
+  .social-link svg{width:18px; height:18px; fill:currentColor; display:block;}
+
+  footer{text-align:center; padding:36px 24px 52px; color:var(--text-dim); font-size:0.76rem;}
+</style>
 </head>
-
 <body>
+<div class="spotlight" id="spotlight"></div>
 
-<!-- Preloader -->
-<div id="preloader">
-	<div class="outer">
-		<!-- Google Chrome -->
-		<div class="infinityChrome">
-			<div></div>
-			<div></div>
-			<div></div>
-		</div>
-
-		<!-- Safari and others -->
-		<div class="infinity">
-			<div>
-				<span></span>
-			</div>
-			<div>
-				<span></span>
-			</div>
-			<div>
-				<span></span>
-			</div>
-		</div>
-		<!-- Stuff -->
-		<svg xmlns="http://www.w3.org/2000/svg" version="1.1" class="goo-outer">
-			<defs>
-				<filter id="goo">
-					<feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur" />
-					<feColorMatrix in="blur" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="goo" />
-					<feBlend in="SourceGraphic" in2="goo" />
-				</filter>
-			</defs>
-		</svg>
-	</div>
-</div>
-
-<!-- desktop header -->
-<header class="desktop-header-3 fixed-top">
-
-    <div class="container">
-	
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                <ul class="navbar-nav ml-auto scrollspy">
-                    <li class="nav-item"><a class="nav-link" href="#home">صفحه اصلی</a></li>
-                    <li class="nav-item"><a href="#about" class="nav-link">درباره من</a></li>
-                    <li class="nav-item"><a href="#services" class="nav-link">خدمات</a></li>
-                    <li class="nav-item"><a href="#experience" class="nav-link">تجربیات</a></li>
-                    <li class="nav-item"><a href="#contact" class="nav-link">تماس با من</a></li>
-                </ul>
-            </div>
-        </nav>
-
+<header>
+  <div class="nav-wrap">
+    <div class="logo" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</div>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="#about" data-en="About">درباره من</a></li>
+          <li><a href="#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="#education" data-en="Education">تحصیلات</a></li>
+          <li><a href="#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+        <button class="lang-opt" data-lang="fa">فا</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+      </div>
+      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن">☀️</button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک">🌙</button>
+      </div>
     </div>
-
+  </div>
 </header>
 
-<!-- main layout -->
-<main class="content-3">
-	
-	<!-- section home -->
-	<section id="home" class="home d-flex align-items-center">
-		<div class="container">
-
-			<!-- intro -->
-			<div class="intro">
-
-				<!-- info -->
-				<h1 class="mb-2 mt-0">مهدی عسکری</h1>
-				<span>من <span class="text-rotating">برنامه‌ریز پروژه‌های صنعتی , متخصص برنامه‌ریزی و کنترل پروژه , توسعه‌دهنده و برنامه نویس , متخصص شبکه و روتینگ , عاشق فلوچارت ,  مهندس فناوری اطلاعات  </span> هستم</span>
-
-				<!-- social icons -->
-				<ul class="social-icons light list-inline mb-0 mt-4">
-					<li class="list-inline-item"><a href="https://www.facebook.com/m38d1"><i class="fab fa-facebook"></i></a></li>
-					<li class="list-inline-item"><a href="http://instagram.com/m38d1"><i class="fab fa-instagram"></i></a></li>
-					<li class="list-inline-item"><a href="https://www.twitter.com/m38d1"><i class="fab fa-twitter"></i></a></li>
-					<li class="list-inline-item"><a href="https://www.youtube.com/channel/UCVpexOhOzEIe12HlYTDlZJg"><i class="fab fa-google"></i></a></li>
-					<li class="list-inline-item"><a href="https://telegram.me/m38d1"><i class="fab fa-telegram"></i></a></li>
-					<li class="list-inline-item"><a href="https://wa.me/+989991231110"><i class="fab fa-whatsapp"></i></a></li>
-					<li class="list-inline-item"><a href="https://m.me/m38d1"><i class="fab fa-facebook-messenger"></i></a></li>
-					<li class="list-inline-item"><a href="https://github.com/m38d1"><i class="fab fa-github"></i></a></li>
-					<li class="list-inline-item"><a href="skype:m38d145k4r1?chat"><i class="fab fa-skype"></i></a></li>
-					<li class="list-inline-item"><a href="https://open.spotify.com/user/m38d1"><i class="fab fa-spotify"></i></a></li>
-					<li class="list-inline-item"><a href="https://www.twitch.tv/m38d1"><i class="fab fa-twitch"></i></a></li>
-				</ul>
-
-				<!-- buttons -->
-				<div class="mt-4">
-					<a href="https://blog.itha.ir/" target="_blank" class="btn btn-default">وبلاگ من</a>
-					<a href="#about" class="btn btn-default">درباره من</a>
-
-				</div>
-			</div>
-			
-			<!-- scroll down mouse wheel -->
-			<div class="scroll-down">
-				<a href="#about" class="mouse-wrapper">
-					<span>حرکت به پایین</span>
-					<span class="mouse">
-						<span class="wheel"></span>
-					</span>
-				</a>
-			</div>
-
-			<!-- parallax layers -->
-			<div class="parallax" data-relative-input="true">
-
-				<svg width="27" height="29" data-depth="0.3" class="layer p1" xmlns="http://www.w3.org/2000/svg"><path d="M21.15625.60099c4.37954 3.67487 6.46544 9.40612 5.47254 15.03526-.9929 5.62915-4.91339 10.30141-10.2846 12.25672-5.37122 1.9553-11.3776.89631-15.75715-2.77856l2.05692-2.45134c3.50315 2.93948 8.3087 3.78663 12.60572 2.22284 4.297-1.5638 7.43381-5.30209 8.22768-9.80537.79387-4.50328-.8749-9.08872-4.37803-12.02821L21.15625.60099z" fill="#FFD15C" fill-rule="evenodd"/></svg>
-
-				<svg width="26" height="26" data-depth="0.2" class="layer p2" xmlns="http://www.w3.org/2000/svg"><path d="M13 3.3541L2.42705 24.5h21.1459L13 3.3541z" stroke="#FF4C60" stroke-width="3" fill="none" fill-rule="evenodd"/></svg>
-
-				<svg width="30" height="25" data-depth="0.3" class="layer p3" xmlns="http://www.w3.org/2000/svg"><path d="M.1436 8.9282C3.00213 3.97706 8.2841.92763 14.00013.92796c5.71605.00032 10.9981 3.04992 13.85641 8 2.8583 4.95007 2.8584 11.0491-.00014 16.00024l-2.77128-1.6c2.28651-3.96036 2.28631-8.84002.00011-12.8002-2.2862-3.96017-6.5124-6.40017-11.08513-6.4-4.57271.00018-8.79872 2.43984-11.08524 6.4002l-2.77128-1.6z" fill="#44D7B6" fill-rule="evenodd"/></svg>
-
-				<svg width="15" height="23" data-depth="0.6" class="layer p4" xmlns="http://www.w3.org/2000/svg"><rect transform="rotate(30 9.86603 10.13397)" x="7" width="3" height="25" rx="1.5" fill="#FFD15C" fill-rule="evenodd"/></svg>
-
-				<svg width="15" height="23" data-depth="0.2" class="layer p5" xmlns="http://www.w3.org/2000/svg"><rect transform="rotate(30 9.86603 10.13397)" x="7" width="3" height="25" rx="1.5" fill="#6C6CE5" fill-rule="evenodd"/></svg>
-
-				<svg width="49" height="17" data-depth="0.5" class="layer p6" xmlns="http://www.w3.org/2000/svg"><g fill="#FF4C60" fill-rule="evenodd"><path d="M.5 16.5c0-5.71709 2.3825-10.99895 6.25-13.8567 3.8675-2.85774 8.6325-2.85774 12.5 0C23.1175 5.50106 25.5 10.78292 25.5 16.5H23c0-4.57303-1.90625-8.79884-5-11.08535-3.09375-2.28652-6.90625-2.28652-10 0C4.90625 7.70116 3 11.92697 3 16.5H.5z"/><path d="M23.5 16.5c0-5.71709 2.3825-10.99895 6.25-13.8567 3.8675-2.85774 8.6325-2.85774 12.5 0C46.1175 5.50106 48.5 10.78292 48.5 16.5H46c0-4.57303-1.90625-8.79884-5-11.08535-3.09375-2.28652-6.90625-2.28652-10 0-3.09375 2.28651-5 6.51232-5 11.08535h-2.5z"/></g></svg>
-
-				<svg width="26" height="26" data-depth="0.4" class="layer p7" xmlns="http://www.w3.org/2000/svg"><path d="M13 22.6459L2.42705 1.5h21.1459L13 22.6459z" stroke="#FFD15C" stroke-width="3" fill="none" fill-rule="evenodd"/></svg>
-
-				<svg width="19" height="21" data-depth="0.3" class="layer p8" xmlns="http://www.w3.org/2000/svg"><rect transform="rotate(-40 6.25252 10.12626)" x="7" width="3" height="25" rx="1.5" fill="#6C6CE5" fill-rule="evenodd"/></svg>
-
-				<svg width="30" height="25" data-depth="0.3" data-depth-y="-1.30" class="layer p9" xmlns="http://www.w3.org/2000/svg"><path d="M29.8564 16.0718c-2.85854 4.95114-8.1405 8.00057-13.85654 8.00024-5.71605-.00032-10.9981-3.04992-13.85641-8-2.8583-4.95007-2.8584-11.0491.00014-16.00024l2.77128 1.6c-2.28651 3.96036-2.28631 8.84002-.00011 12.8002 2.2862 3.96017 6.5124 6.40017 11.08513 6.4 4.57271-.00018 8.79872-2.43984 11.08524-6.4002l2.77128 1.6z" fill="#6C6CE5" fill-rule="evenodd"/></svg>
-
-				<svg width="47" height="29" data-depth="0.2" class="layer p10" xmlns="http://www.w3.org/2000/svg"><g fill="#44D7B6" fill-rule="evenodd"><path d="M46.78878 17.19094c-1.95535 5.3723-6.00068 9.52077-10.61234 10.8834-4.61167 1.36265-9.0893-.26708-11.74616-4.27524-2.65686-4.00817-3.08917-9.78636-1.13381-15.15866l2.34923.85505c-1.56407 4.29724-1.2181 8.92018.90705 12.12693 2.12514 3.20674 5.70772 4.5107 9.39692 3.4202 3.68921-1.0905 6.92581-4.40949 8.48988-8.70673l2.34923.85505z"/><path d="M25.17585 9.32448c-1.95535 5.3723-6.00068 9.52077-10.61234 10.8834-4.61167 1.36264-9.0893-.26708-11.74616-4.27525C.16049 11.92447-.27182 6.14628 1.68354.77398l2.34923.85505c-1.56407 4.29724-1.2181 8.92018.90705 12.12692 2.12514 3.20675 5.70772 4.5107 9.39692 3.4202 3.68921-1.0905 6.92581-4.40948 8.48988-8.70672l2.34923.85505z"/></g></svg>
-
-				<svg width="33" height="20" data-depth="0.5" class="layer p11" xmlns="http://www.w3.org/2000/svg"><path d="M32.36774.34317c.99276 5.63023-1.09332 11.3614-5.47227 15.03536-4.37895 3.67396-10.3855 4.73307-15.75693 2.77837C5.76711 16.2022 1.84665 11.53014.8539 5.8999l3.15139-.55567c.7941 4.50356 3.93083 8.24147 8.22772 9.8056 4.29688 1.56413 9.10275.71673 12.60554-2.2227C28.34133 9.98771 30.01045 5.4024 29.21635.89884l3.15139-.55567z" fill="#FFD15C" fill-rule="evenodd"/></svg>
-
-			</div>
-		</div>
-		
-	</section>
-
-	<!-- section about -->
-	<section id="about">
-
-		<div class="container">
-			
-			<!-- section title -->
-			<h2 class="section-title wow fadeInUp">درباره من</h2>
-
-			<div class="spacer" data-height="60"></div>
-			
-			<div class="row">
-
-
-
-				<div class="col-md-12 triangle-top-sm">
-					<div class="rounded bg-white shadow-dark padding-30">
-						<div class="row">
-							<div class="col-md-6">
-								<!-- about text -->
-								<p ><strong>از کد تا برنامه‌ریزی: </strong>مسیر یک توسعه‌دهنده در دنیای صنعت</p>
-								<p style="direction: rtl; text-align: justify; text-align-last: right; line-height: 2;" >من <strong>مهدی عسکری </strong>، فارغ‌التحصیل رشتهٔ فناوری اطلاعات و توسعه‌دهنده‌ای هستم که علاقهٔ عمیقم به خلق راه‌حل‌های نرم‌افزاری، مرا به سمت دنیای جذاب و چالش‌برانگیز برنامه‌ریزی و کنترل پروژه‌های صنعتی کشاند.
-
-در حال حاضر، در پروژه‌های صنعتی مشغول هستم و از تلفیق دانش فنی توسعه نرم‌افزار با اصول دقیق مدیریت پروژه، اطمینان حاصل می‌کنم که ایده‌ها نه تنها به کد تبدیل می‌شوند، بلکه در چارچوب زمان، بودجه و کیفیت مشخص، به نتیجهٔ عملیاتی و ارزشمند می‌رسند.
-
-باور دارم که در دنیای امروز، نقطهٔ طلایی موفقیت در همگرایی فناوری و مدیریت است.خوشحال می‌شوم داستان پروژهٔ بعدی ما با هم نوشته شود.</p>
-								<div class="mt-2">
-									<a href="#" class="btn btn-default">دانلود رزومه</a>
-								</div>
-								<div class="spacer d-md-none d-lg-none" data-height="30"></div>
-							</div>
-							<div class="col-md-6">
-								<!-- skill item -->
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0">💻 برنامه نویس و توسعه دهنده</h4>
-									</div>
-									<div class="spacer" data-height="20"></div>
-								</div>
-
-								<!-- skill item -->
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0">📈 مسلط به دانش و اصول برنامه ریزی و کنترل پروژه</h4>
-									</div>
-									<div class="spacer" data-height="20"></div>
-								</div>
-                                <!-- skill item -->
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0"> 📊 ﻣﺴﻠﻂ ﺑﻪ ﻧﺮم اﻓﺰار Oracle Primavera P6</h4>
-									</div>
-									<div class="spacer" data-height="20"></div>
-								</div>
-								<!-- skill item -->
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0">📝 ﻣﺴﻠﻂ ﺑﻪ ﻧﺮم اﻓﺰار Microsoft Project</h4>
-									</div>
-									<div class="spacer" data-height="20"></div>
-								</div>
-								<!-- skill item -->
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0">📅 توانایی تهیه و ارائه گزارشات دوره ای و کتابچه موانع و مشکلات پروژه </h4>
-									</div>
-									<div class="spacer" data-height="20"></div>
-								</div>
-								<!-- skill item -->
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0">🔐 متخصص امنیت شبکه </h4>
-									</div>
-									<div class="spacer" data-height="20"></div>
-								</div>
-								<!-- skill item -->
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0">🛡️ ﻣﺴﻠﻂ ﺑﻪ ﻣﻄﺎﻟﺐ CompTIA Network+ و CompTIA Security+ </h4>
-									</div>
-									<div class="spacer" data-height="20"></div>
-								</div>
-								<!-- skill item
-								<div class="skill-item">
-									<div class="skill-info clearfix">
-										<h4 class="float-left mb-3 mt-0">امنیت شبکه</h4>
-										<span class="float-right">80%</span>
-									</div>
-									<div class="progress">
-										<div class="progress-bar data-background" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="70" data-color="#6C6CE5">
-										</div>
-									</div>
-								</div>
-							    -->
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
-			<!-- row end -->
-
-			<div class="spacer" data-height="70"></div>
-			
-			
-
-			</div>
-
-		</div>
-		
-	</section>
-	
-	<!-- section services -->
-	<section id="services">
-
-		<div class="container">
-			
-			<!-- section title -->
-			<h2 class="section-title wow fadeInUp">کارهایی که میتونم انجام بدم </h2>
-
-			<div class="spacer" data-height="60"></div>
-			
-			<div class="row">
-
-				<div class="col-md-4">
-					<!-- service box -->
-					<div class="service-box rounded data-background padding-30 text-center text-light shadow-blue" data-color="#6C6CE5">
-						<h3 class="mb-3 mt-0">برنامه‌ریزی و کنترل پروژه</h3>
-						<p style="direction: rtl; text-align: justify; text-align-last: right; line-height: 1.5;" class="mb-0">تدوین نقشه‌راه پروژه، تعریف فعالیت‌ها، منابع و زمان‌بندی دقیق. پایش مستمر پیشرفت، کنترل انحرافات و ارائه گزارش‌های تحلیلی به ذینفعان برای تضمین تحویل به موقع و مطابق با اهداف تعریف‌شده.</p>
-					</div>
-					<div class="spacer d-md-none d-lg-none" data-height="30"></div>
-				</div>
-
-				<div class="col-md-4">
-					<!-- service box -->
-					<div class="service-box rounded data-background padding-30 text-center shadow-yellow" data-color="#F9D74C">
-						<h3 class="mb-3 mt-0">توسعه دهنده وب</h3>
-						<p style="direction: rtl; text-align: justify; text-align-last: right; line-height: 1.5;" class="mb-0">طراحی و توسعه نرم‌افزارهای تحت وب با تکنولوژی‌های مدرن. پیاده‌سازی رابط کاربری واکنش‌گرا (Frontend) و منطق سمت سرور (Backend) همراه با طراحی پایگاه‌داده و API‌های امن و بهینه. پیاده‌سازی معماری‌های مقیاس‌پذیر.
-</p>					</div>
-					<div class="spacer d-md-none d-lg-none" data-height="30"></div>
-				</div>
-
-				<div class="col-md-4">
-					<!-- service box -->
-					<div class="service-box rounded data-background padding-30 text-center text-light shadow-pink" data-color="#F97B8B">
-						<h3 class="mb-3 mt-0">طراحی و پیاده‌سازی شبکه‌</h3>
-						<p style="direction: rtl; text-align: justify; text-align-last: right; line-height: 1.5;" class="mb-0">طراحی توپولوژی، پیکربندی روترها و سوئیچ‌ها، پیاده‌سازی VLAN‌ها و زیرشبکه‌ها. راه‌اندازی و بهینه‌سازی شبکه‌های LAN/WAN با تمرکز بر پایداری و کارایی.</p>
-
-					</div>
-				</div>
-
-			</div>
-
-			<div class="mt-5 text-center">
-				<p class="mb-0">به دنبال همکاری من در پروژه خودتون هستید؟  برای ارتباط با من <a href="#contact">اینجا کلیک کنید</a>! 👋</p>
-			</div>
-
-		</div>
-		
-	</section>
-	
-	<!-- section experience -->
-	<section id="experience">
-
-		<div class="container">
-			
-			<!-- section title -->
-			<h2 class="section-title wow fadeInUp">مدارک تحصیلی و سوابق شغلی</h2>
-
-			<div class="spacer" data-height="60"></div>
-			
-			<div class="row">
-
-				<div class="col-md-6">
-					
-					<!-- timeline wrapper -->
-					<div class="timeline edu bg-white rounded shadow-dark padding-30 overflow-hidden">
-
-                    <!-- timeline item -->
-						<div class="timeline-container wow fadeInUp">
-							<div class="content">
-								<span class="time">1402</span>
-								<h3 class="title">Google Cloud Skills Boost</h3>
-								<p class="mb-0">اخذ Badges مبانی Google Cloud Platform از شرکت Google </p>
-							</div>
-						</div>
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp">
-							<div class="content">
-								<span class="time">1398</span>
-								<h3 class="title">گواهینامه Responsive Web Design</h3>
-								<p class="mb-0">اخذ مدرک Responsive Web Design در حوزه تخصصی توسعه وب از FreeCodeCamp</p>
-							</div>
-						</div>
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp">
-							<div class="content">
-								<span class="time">1397</span>
-								<h3 class="title">توسعه دهنده نرم افزار Xiaomi</h3>
-								<p class="mb-0">اخذ تاییدیه Mi Developer از شرکت Xiaomi در محصولات توسعه اپلیکیشن برای MIUI</p>
-							</div>
-						</div>
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp">
-							<div class="content">
-								<span class="time">1392 - 1394</span>
-								<h3 class="title">مدرک کارشناسی</h3>
-								<p class="mb-0">فارغ تحصیل گرایش مهندسی فناوری اطلاعات در رشته فناوری اطلاعات.</p>
-							</div>
-						</div>
-
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp" data-wow-delay="0.2s">
-							<div class="content">
-								<span class="time">1389 - 1391</span>
-								<h3 class="title">مدرک کاردانی</h3>
-								<p class="mb-0">ورود به گرایش فناوری اطلاعات و کسب اطلاعات و تجربیات.</p>
-							</div>
-						</div>
-
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp" data-wow-delay="0.4s">
-							<div class="content">
-								<span class="time"></span>
-								<h3 class="title">مدرک افتخاری</h3>
-								<p class="mb-0">دریافت مدارک و تقدیر نامه های متعدد از دانشکده ، موسسات و انجمن های اینترنتی از جمله انجمن توسعه دهنده های <b>XDA-Developers</b>.</p>
-							</div>
-						</div>
-
-						<!-- main line -->
-						<span class="line"></span>
-
-					</div>
-
-				</div>
-
-				<div class="col-md-6">
-					
-					<!-- responsive spacer -->
-					<div class="spacer d-md-none d-lg-none" data-height="30"></div>
-
-					<!-- timeline wrapper -->
-					<div class="timeline exp bg-white rounded shadow-dark padding-30 overflow-hidden">
-	                <!-- timeline item -->
-						<div class="timeline-container wow fadeInUp">
-							<div class="content">
-								<span class="time">1403 - اکنون</span>
-								<h3 class="title">برنامه ریزی و کنترل پروژه</h3>
-								<p class="mb-0">شرکت مدیریت طرح های انرژی مهر پاسارگاد (گسترش انرژی پاسارگاد)</p>
-								<p class="mb-0">پالایشگاه نفت سنگین پارس بهین قشم</p>
-
-							</div>
-						</div>
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp">
-							<div class="content">
-								<span class="time">1401 - 1403</span>
-								<h3 class="title">فناوری اطلاعات / برنامه ریزی و کنترل پروژه</h3>
-								<p class="mb-0">شرکت کیمیا صنعت مبنا (گروه باختر)</p>
-								<p class="mb-0">توسعه پتروشیمی نگین مکران</p>
-
-							</div>
-						</div>
-
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp" data-wow-delay="0.2s">
-							<div class="content">
-								<span class="time">1399 - 1401</span>
-								<h3 class="title">فناوری اطلاعات / برنامه ریزی و کنترل پروژه</h3>
-								<p class="mb-0">شرکت پترو پارس قدرت</p>
-								<p class="mb-0">پتروشیمی آرین متانول</p>
-							</div>
-						</div>
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp" data-wow-delay="0.2s">
-							<div class="content">
-								<span class="time">1396 - 1399</span>
-								<h3 class="title">فناوری اطلاعات / برنامه ریزی و کنترل پروژه</h3>
-								<p class="mb-0">شرکت نیرو پژوه</p>
-								<p class="mb-0">نیروگاه سیکل ترکیبی مپنا</p>
-							</div>
-						</div>
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp" data-wow-delay="0.3s">
-							<div class="content">
-								<span class="time">1396 - 1395</span>
-								<h3 class="title">فناوری اطلاعات / کارشناس کالا پروژه</h3>
-								<p class="mb-0">شرکت IGC</p>
-								<p class="mb-0">فاز 14 پارس جنوبی</p>
-
-							</div>
-						</div>
-
-						<!-- timeline item -->
-						<div class="timeline-container wow fadeInUp" data-wow-delay="0.4s">
-							<div class="content">
-								<span class="time">1394 - 1392</span>
-								<h3 class="title">کارشناس کالا پروژه</h3>
-								<p class="mb-0">شرکت نیروی برق اصفهان</p>
-								<p class="mb-0">نیروگاه سیکل ترکیبی مپنا</p>
-
-							</div>
-						</div>
-						<!-- main line -->
-						<span class="line"></span>
-
-					</div>
-
-				</div>
-
-			</div>
-
-		</div>
-		
-	</section>
-	<section id="contact">
-
-		<div class="container">
-			
-			<!-- section title -->
-			<h2 class="section-title wow fadeInUp">در تماس باشیم</h2>
-
-			<div class="spacer" data-height="60"></div>
-			
-			<div class="row">
-				
-				<div class="col-md-5">
-					<!-- contact info -->
-					<div class="contact-info">
-						<h3 class="wow fadeInUp">بیایید در مورد همه چیز صحبت کنیم</h3>
-<br>
-						<p class="wow fadeInUp">تماس تلفنی با <a href="tel:+989991231110"> 09991231110 </a>
-
-📞</p>
-						<p class="wow fadeInUp">تماس و پیام کوتاه رو دوست ندارید؟ یک <a href="mailto:me@mehdiaskari.ir">ایمیل</a>
-  بفرست.
-👋</p>
-					</div>
-				</div>
-
-				<div class="col-md-8">
-				
-				</div>
-
-			</div>
-
-		</div>
-
-	</section>
-
-    <div class="spacer" data-height="96"></div>
-    
-    <footer class="footer">
-        <div class="container">
-            <span class="copyright">طراحی شده با ❤️ توسط مهدی عسکری</span>
-        </div>
-    </footer>
-	
-</main>
-
-<!-- Go to top button -->
-<a href="javascript:" id="return-to-top"><i class="fas fa-arrow-up"></i></a>
-
-<!-- SCRIPTS -->
-<script src="js/jquery-1.12.3.min.js"></script>
-<script src="js/jquery.easing.min.js"></script>
-<script src="js/jquery.waypoints.min.js"></script>
-<script src="js/jquery.counterup.min.js"></script>
-<script src="js/popper.min.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<script src="js/isotope.pkgd.min-rtl.js"></script>
-<script src="js/infinite-scroll.min.js"></script>
-<script src="js/imagesloaded.pkgd.min.js"></script>
-<script src="js/slick.min.js"></script>
-<script src="js/contact.js"></script>
-<script src="js/validator.js"></script>
-<script src="js/wow.min.js"></script>
-<script src="js/morphext.min.js"></script>
-<script src="js/parallax.min.js"></script>
-<script src="js/custom-rtl.js"></script>
-<script src="js/jquery.magnific-popup.min-rtl.js"></script>
+<div class="hero">
+  <div class="eyebrow"><span class="eyebrow-dot"></span> <span class="eyebrow-text" id="eyebrow-text"><span>در حال برنامه‌ریزی و کنترل پروژه</span></span></div>
+  <h1 data-en='Mehdi <span class="grad">Askari</span>'>مهدی <span class="grad">عسکری</span></h1>
+  <p class="role" data-en="Industrial project planner, project planning &amp; control specialist, web developer &amp; programmer, network &amp; routing specialist, flowchart lover, and IT engineer.">برنامه‌ریز پروژه‌های صنعتی، متخصص برنامه‌ریزی و کنترل پروژه، توسعه‌دهنده و برنامه‌نویس، متخصص شبکه و روتینگ، عاشق فلوچارت و مهندس فناوری اطلاعات.</p>
+  <div class="role-pills">
+    <span class="role-pill">Project Planning &amp; Control</span>
+    <span class="role-pill">Web Developer</span>
+    <span class="role-pill">Network &amp; Routing</span>
+  </div>
+
+  <div class="schedule-card">
+    <div class="schedule-card-head">
+      <span class="mono">CURRENT_PROJECT.STATUS</span>
+      <span class="pct mono">ACTIVE</span>
+    </div>
+    <div class="schedule-track"><div class="schedule-fill"></div></div>
+    <div class="schedule-meta">
+      <span data-en='Employer: <strong>Gostaresh Energy Pasargad</strong>'>کارفرما: <strong>گسترش انرژی پاسارگاد</strong></span>
+      <span data-en='Project: <strong>Pars Behin Qeshm Refinery</strong>'>پروژه: <strong>پالایشگاه پارس بهین قشم</strong></span>
+    </div>
+  </div>
+</div>
+
+<section id="about" class="reveal">
+  <div class="section-head"><span class="tag">01</span><h2 data-en="About Me">درباره من</h2><div class="rule"></div></div>
+  <div class="about-grid">
+    <div class="about-text">
+      <p data-en="<strong>From code to schedules: a developer&#39;s path into industry.</strong> I&#39;m <strong>Mehdi Askari</strong>, an IT engineering graduate and developer whose deep interest in building software solutions led me into the challenging world of industrial project planning and control."><strong>از کد تا برنامه‌ریزی: مسیر یک توسعه‌دهنده در دنیای صنعت.</strong> من <strong>مهدی عسکری</strong> هستم، فارغ‌التحصیل رشته‌ی فناوری اطلاعات و توسعه‌دهنده‌ای که علاقه‌ی عمیقم به خلق راه‌حل‌های نرم‌افزاری، مرا به سمت دنیای جذاب و چالش‌برانگیز برنامه‌ریزی و کنترل پروژه‌های صنعتی کشاند.</p>
+      <p data-en="I currently work on industrial projects, combining technical software-development knowledge with rigorous project-management principles to make sure ideas don&#39;t just turn into code, but land as real, valuable results within a defined timeline, budget and quality.">در حال حاضر در پروژه‌های صنعتی مشغولم و از تلفیق دانش فنی توسعه‌ی نرم‌افزار با اصول دقیق مدیریت پروژه، اطمینان حاصل می‌کنم که ایده‌ها نه‌تنها به کد تبدیل می‌شوند، بلکه در چارچوب زمان، بودجه و کیفیت مشخص به نتیجه‌ی عملیاتی و ارزشمند می‌رسند.</p>
+      <p data-en="I believe today&#39;s sweet spot for success is where technology and management converge. I&#39;d be glad to write the story of our next project together.">باور دارم در دنیای امروز، نقطه‌ی طلایی موفقیت در همگرایی فناوری و مدیریت است. خوشحال می‌شوم داستان پروژه‌ی بعدی ما با هم نوشته شود.</p>
+    </div>
+    <div class="info-card">
+      <div class="info-row"><span class="label" data-en="Current role">نقش فعلی</span><span class="value" data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</span></div>
+      <div class="info-row"><span class="label" data-en="Employer">کارفرما</span><span class="value" data-en="Gostaresh Energy Pasargad">گسترش انرژی پاسارگاد</span></div>
+      <div class="info-row"><span class="label" data-en="Current project">پروژه جاری</span><span class="value" data-en="Pars Behin Qeshm Refinery">پالایشگاه پارس بهین قشم</span></div>
+      <div class="info-row"><span class="label" data-en="Education">تحصیلات</span><span class="value" data-en="B.Sc. Information Technology">کارشناسی فناوری اطلاعات</span></div>
+      <div class="info-row"><span class="label" data-en="Core tools">ابزار اصلی</span><span class="value mono">MSP · Primavera P6</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="experience" class="reveal">
+  <div class="section-head"><span class="tag">02</span><h2 data-en="Experience">تجربه</h2><div class="rule"></div></div>
+  <div class="gantt">
+    <div class="gantt-item">
+      <div class="gantt-label">
+        <div class="role-title" data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</div>
+        <div class="org" data-en="Modiriat-e Tarhha-ye Energy Mehr Pasargad (Gostaresh Energy Pasargad)">شرکت مدیریت طرح‌های انرژی مهر پاسارگاد (گسترش انرژی پاسارگاد)</div>
+        <div class="proj" data-en="Pars Behin Qeshm Heavy Oil Refinery">پالایشگاه نفت سنگین پارس بهین قشم</div>
+        <div class="dates mono" data-en="1403 — Present">1403 — اکنون</div>
+      </div>
+      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:95%;"></div></div>
+    </div>
+    <div class="gantt-item">
+      <div class="gantt-label">
+        <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
+        <div class="org" data-en="Kimia Sanat Mabna Co. (Bakhtar Group)">شرکت کیمیا صنعت مبنا (گروه باختر)</div>
+        <div class="proj" data-en="Negin Makran Petrochemical Development">توسعه پتروشیمی نگین مکران</div>
+        <div class="dates mono">1401 — 1403</div>
+      </div>
+      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:78%;"></div></div>
+    </div>
+    <div class="gantt-item">
+      <div class="gantt-label">
+        <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
+        <div class="org" data-en="Petro Pars Ghodrat Co.">شرکت پترو پارس قدرت</div>
+        <div class="proj" data-en="Arian Methanol Petrochemical">پتروشیمی آرین متانول</div>
+        <div class="dates mono">1399 — 1401</div>
+      </div>
+      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:78%;"></div></div>
+    </div>
+    <div class="gantt-item">
+      <div class="gantt-label">
+        <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
+        <div class="org" data-en="Niroo Pajooh Co.">شرکت نیرو پژوه</div>
+        <div class="proj" data-en="Mapna Combined-Cycle Power Plant">نیروگاه سیکل ترکیبی مپنا</div>
+        <div class="dates mono">1396 — 1399</div>
+      </div>
+      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:95%;"></div></div>
+    </div>
+    <div class="gantt-item">
+      <div class="gantt-label">
+        <div class="role-title" data-en="IT / Project Procurement Specialist">فناوری اطلاعات / کارشناس کالای پروژه</div>
+        <div class="org" data-en="IGC Co.">شرکت IGC</div>
+        <div class="proj" data-en="South Pars Phase 14">فاز 14 پارس جنوبی</div>
+        <div class="dates mono">1395 — 1396</div>
+      </div>
+      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:35%;"></div></div>
+    </div>
+    <div class="gantt-item">
+      <div class="gantt-label">
+        <div class="role-title" data-en="Project Procurement Specialist">کارشناس کالای پروژه</div>
+        <div class="org" data-en="Isfahan Regional Electric Co.">شرکت نیروی برق اصفهان</div>
+        <div class="proj" data-en="Mapna Combined-Cycle Power Plant">نیروگاه سیکل ترکیبی مپنا</div>
+        <div class="dates mono">1392 — 1394</div>
+      </div>
+      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:60%;"></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="education" class="reveal">
+  <div class="section-head"><span class="tag">03</span><h2 data-en="Education &amp; Certifications">تحصیلات و گواهینامه‌ها</h2><div class="rule"></div></div>
+  <div class="edu-list">
+    <div class="edu-item">
+      <div class="edu-year">1402</div>
+      <div>
+        <div class="edu-title">Google Cloud Skills Boost</div>
+        <div class="edu-desc" data-en="Google Cloud Platform fundamentals badges from Google">اخذ Badges مبانی Google Cloud Platform از شرکت Google</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">1398</div>
+      <div>
+        <div class="edu-title" data-en="Responsive Web Design Certification">گواهینامه Responsive Web Design</div>
+        <div class="edu-desc" data-en="Certificate in web development from FreeCodeCamp">اخذ مدرک در حوزه‌ی تخصصی توسعه‌ی وب از FreeCodeCamp</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">1397</div>
+      <div>
+        <div class="edu-title" data-en="Xiaomi Software Developer">توسعه‌دهنده نرم‌افزار Xiaomi</div>
+        <div class="edu-desc" data-en="Mi Developer certification from Xiaomi for MIUI app development">اخذ تاییدیه Mi Developer از شرکت Xiaomi در توسعه‌ی اپلیکیشن برای MIUI</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">1392–1394</div>
+      <div>
+        <div class="edu-title" data-en="B.Sc. Degree">مدرک کارشناسی</div>
+        <div class="edu-desc" data-en="Graduated in Information Technology Engineering">فارغ‌التحصیل گرایش مهندسی فناوری اطلاعات، رشته‌ی فناوری اطلاعات</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">1389–1391</div>
+      <div>
+        <div class="edu-title" data-en="Associate Degree">مدرک کاردانی</div>
+        <div class="edu-desc" data-en="Entered the Information Technology field">ورود به گرایش فناوری اطلاعات و کسب اطلاعات و تجربیات</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year">—</div>
+      <div>
+        <div class="edu-title" data-en="Honorary Certificates">مدارک افتخاری</div>
+        <div class="edu-desc" data-en="Various certificates and recognitions from academic institutions and online communities including XDA-Developers">دریافت مدارک و تقدیرنامه‌های متعدد از دانشکده، موسسات و انجمن‌های اینترنتی از جمله XDA-Developers</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills" class="reveal">
+  <div class="section-head"><span class="tag">04</span><h2 data-en="Skills &amp; Services">مهارت‌ها و خدمات</h2><div class="rule"></div></div>
+  <div class="tools-grid">
+    <div class="tool-card">
+      <div class="tool-icon">PMC</div>
+      <h3 data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</h3>
+      <p data-en="Drafting the project roadmap, defining activities, resources and precise scheduling. Monitoring progress, controlling deviations and delivering analytical reports for stakeholders.">تدوین نقشه‌راه پروژه، تعریف فعالیت‌ها، منابع و زمان‌بندی دقیق. پایش پیشرفت، کنترل انحرافات و گزارش‌های تحلیلی برای ذینفعان.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">WEB</div>
+      <h3 data-en="Web Developer">توسعه‌دهنده وب</h3>
+      <p data-en="Designing and building web applications; responsive frontend interfaces, server-side logic, databases and secure, efficient APIs.">طراحی و توسعه‌ی نرم‌افزارهای تحت وب؛ رابط کاربری واکنش‌گرا (Frontend)، منطق سمت سرور (Backend)، پایگاه‌داده و API‌های امن.</p>
+    </div>
+    <div class="tool-card">
+      <div class="tool-icon">NET</div>
+      <h3 data-en="Network Design &amp; Implementation">طراحی و پیاده‌سازی شبکه</h3>
+      <p data-en="Topology design, router and switch configuration, VLAN and subnet implementation, setting up and optimizing LAN/WAN networks.">طراحی توپولوژی، پیکربندی روتر و سوئیچ، پیاده‌سازی VLAN و زیرشبکه‌ها، راه‌اندازی و بهینه‌سازی شبکه‌های LAN/WAN.</p>
+    </div>
+  </div>
+  <div class="skill-tags">
+    <span class="skill-tag">Oracle Primavera P6</span>
+    <span class="skill-tag">Microsoft Project</span>
+    <span class="skill-tag">CompTIA Network+</span>
+    <span class="skill-tag">CompTIA Security+</span>
+    <span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span>
+    <span class="skill-tag" data-en="Network Security">امنیت شبکه</span>
+    <span class="skill-tag">Frontend / Backend</span>
+  </div>
+</section>
+
+<section id="contact" class="reveal">
+  <div class="section-head"><span class="tag">05</span><h2 data-en="Contact">تماس</h2><div class="rule"></div></div>
+  <div class="contact-panel">
+    <div>
+      <h2 data-en="Let&#39;s talk about everything">بیایید در مورد همه‌چیز صحبت کنیم</h2>
+      <p data-en="Looking to collaborate on your project? Reach me through any of the channels below.">به دنبال همکاری در پروژه‌ی خودتون هستید؟ از راه‌های زیر در دسترسم.</p>
+    </div>
+    <div class="contact-links">
+      <a class="contact-link" href="tel:+989991231110" data-en='📞 Phone &nbsp;<span class="mono">09991231110</span>'>📞 تماس تلفنی &nbsp;<span class="mono">09991231110</span></a>
+      <a class="contact-link" href="mailto:me@mehdiaskari.ir" data-en='✉️ Email &nbsp;<span class="mono">me@mehdiaskari.ir</span>'>✉️ ایمیل &nbsp;<span class="mono">me@mehdiaskari.ir</span></a>
+      <a class="contact-link" href="https://blog.itha.ir/" target="_blank" rel="noopener" data-en='📝 Blog &nbsp;<span class="mono">blog.itha.ir</span>'>📝 وبلاگ &nbsp;<span class="mono">blog.itha.ir</span></a>
+      <a class="contact-link" href="https://github.com/m38d1" target="_blank" rel="noopener" data-en='💻 GitHub &nbsp;<span class="mono">github.com/m38d1</span>'>💻 گیت‌هاب &nbsp;<span class="mono">github.com/m38d1</span></a>
+    </div>
+  </div>
+  <div class="social-row">
+    <a class="social-link" href="https://www.facebook.com/m38d1" target="_blank" rel="noopener" aria-label="فیس‌بوک"><svg viewBox="0 0 16 16"><path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951"/></svg></a>
+    <a class="social-link" href="http://instagram.com/m38d1" target="_blank" rel="noopener" aria-label="اینستاگرام"><svg viewBox="0 0 16 16"><path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599s.453.546.598.92c.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92s.546-.453.92-.598c.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92m-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217m0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334"/></svg></a>
+    <a class="social-link" href="https://www.twitter.com/m38d1" target="_blank" rel="noopener" aria-label="توییتر"><svg viewBox="0 0 16 16"><path d="M12.6.75h2.454l-5.36 6.142L16 15.25h-4.937l-3.867-5.07-4.425 5.07H.316l5.733-6.57L0 .75h5.063l3.495 4.633L12.601.75Zm-.86 13.028h1.36L4.323 2.145H2.865z"/></svg></a>
+    <a class="social-link" href="https://telegram.me/m38d1" target="_blank" rel="noopener" aria-label="تلگرام"><svg viewBox="0 0 16 16"><path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8.287 5.906q-1.168.486-4.666 2.01-.567.225-.595.442c-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294q.39.01.868-.32 3.269-2.206 3.374-2.23c.05-.012.12-.026.166.016s.042.12.037.141c-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8 8 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629q.14.092.27.187c.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.4 1.4 0 0 0-.013-.315.34.34 0 0 0-.114-.217.53.53 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09"/></svg></a>
+    <a class="social-link" href="https://wa.me/+989991231110" target="_blank" rel="noopener" aria-label="واتساپ"><svg viewBox="0 0 16 16"><path d="M13.601 2.326A7.85 7.85 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.9 7.9 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.9 7.9 0 0 0 13.6 2.326zM7.994 14.521a6.6 6.6 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.56 6.56 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592m3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.73.73 0 0 0-.529.247c-.182.198-.691.677-.691 1.654s.71 1.916.81 2.049c.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232"/></svg></a>
+    <a class="social-link" href="https://www.youtube.com/channel/UCVpexOhOzEIe12HlYTDlZJg" target="_blank" rel="noopener" aria-label="یوتیوب"><svg viewBox="0 0 16 16"><path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.01 2.01 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.01 2.01 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31 31 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.01 2.01 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A100 100 0 0 1 7.858 2zM6.4 5.209v4.818l4.157-2.408z"/></svg></a>
+    <a class="social-link" href="https://open.spotify.com/user/m38d1" target="_blank" rel="noopener" aria-label="اسپاتیفای"><svg viewBox="0 0 16 16"><path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.669 11.538a.5.5 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686m.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858m.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288"/></svg></a>
+    <a class="social-link" href="https://www.twitch.tv/m38d1" target="_blank" rel="noopener" aria-label="تویچ"><svg viewBox="0 0 16 16"><path d="M3.857 0 1 2.857v10.286h3.429V16l2.857-2.857H9.57L14.714 8V0zm9.714 7.429-2.285 2.285H9l-2 2v-2H4.429V1.143h9.142z"/><path d="M11.857 3.143h-1.143V6.57h1.143zm-3.143 0H7.571V6.57h1.143z"/></svg></a>
+  </div>
+</section>
+
+<footer data-en='© <span id="year"></span> Mehdi Askari — crafted with ❤️'>© <span id="year"></span> مهدی عسکری — طراحی‌شده با ❤️</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.12});
+  revealEls.forEach(el=>io.observe(el));
+
+  // language: fa (default) / en
+  const langButtons = document.querySelectorAll('.lang-opt');
+  const i18nEls = document.querySelectorAll('[data-en]');
+  i18nEls.forEach(el => { el.dataset.fa = el.innerHTML; });
+  let lang = 'fa';
+
+  function setLang(l){
+    lang = l;
+    document.documentElement.lang = l;
+    document.documentElement.dir = l === 'en' ? 'ltr' : 'rtl';
+    i18nEls.forEach(el => { el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.fa; });
+    langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+  }
+  langButtons.forEach(b => b.addEventListener('click', ()=> setLang(b.dataset.lang)));
+
+  // theme: detect system preference once on first visit, then plain light/dark
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+
+  function render(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+
+  optButtons.forEach(b => b.addEventListener('click', ()=>{
+    theme = b.dataset.mode;
+    render();
+  }));
+
+  render();
+
+  // offline support: cache the site so it opens without a connection
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', ()=>{
+      navigator.serviceWorker.register('sw.js').catch(()=>{});
+    });
+  }
+
+  // rotating eyebrow text (bilingual)
+  const activitiesFa = [
+    'در حال برنامه‌ریزی و کنترل پروژه',
+    'در حال توسعه‌ی وب',
+    'در حال طراحی شبکه',
+    'در حال تحلیل پیشرفت پروژه',
+    'در حال عاشقی به فلوچارت‌ها'
+  ];
+  const activitiesEn = [
+    'Planning &amp; controlling a project',
+    'Developing for the web',
+    'Designing a network',
+    'Analyzing project progress',
+    'Falling in love with flowcharts'
+  ];
+  let actIdx = 0;
+  const eyebrowText = document.getElementById('eyebrow-text');
+  setInterval(()=>{
+    actIdx = (actIdx + 1) % activitiesFa.length;
+    const list = lang === 'en' ? activitiesEn : activitiesFa;
+    eyebrowText.innerHTML = '<span>' + list[actIdx] + '</span>';
+  }, 2800);
+
+  // cursor spotlight (desktop only, respects reduced motion)
+  const spotlight = document.getElementById('spotlight');
+  const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+  if(!reduceMotion && !isCoarsePointer){
+    window.addEventListener('mousemove', (e)=>{
+      root.style.setProperty('--mx', e.clientX + 'px');
+      root.style.setProperty('--my', e.clientY + 'px');
+      spotlight.classList.add('on');
+    }, {passive:true});
+    window.addEventListener('mouseleave', ()=> spotlight.classList.remove('on'));
+  }
+
+  // live GitHub widget removed per request
+
+  setLang('fa');
+</script>
+
 </body>
 </html>
