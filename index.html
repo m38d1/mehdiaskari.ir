@@ -7,6 +7,57 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#08090D">
 <title data-en="Mehdi Askari | Project Planning &amp; Control · Web Developer · Network Specialist">مهدی عسکری | برنامه‌ریزی و کنترل پروژه · توسعه‌دهنده وب · متخصص شبکه</title>
+
+<!-- SEO -->
+<meta name="description" content="مهدی عسکری — مهندس برنامه‌ریزی و کنترل پروژه، توسعه‌دهنده وب و متخصص شبکه. سوابق کاری، تحصیلات، مهارت‌ها و راه‌های تماس.">
+<meta name="keywords" content="مهدی عسکری, Mehdi Askari, برنامه‌ریزی و کنترل پروژه, Project Planning and Control, Primavera P6, Microsoft Project, توسعه‌دهنده وب, متخصص شبکه, m38d1">
+<meta name="author" content="Mehdi Askari">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mehdiaskari.ir/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="مهدی عسکری | برنامه‌ریزی و کنترل پروژه · توسعه‌دهنده وب · متخصص شبکه">
+<meta property="og:description" content="مهندس برنامه‌ریزی و کنترل پروژه، توسعه‌دهنده وب و متخصص شبکه. سوابق کاری، تحصیلات، مهارت‌ها و راه‌های تماس.">
+<meta property="og:url" content="https://mehdiaskari.ir/">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="https://mehdiaskari.ir/icon.svg">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="مهدی عسکری | برنامه‌ریزی و کنترل پروژه · توسعه‌دهنده وب · متخصص شبکه">
+<meta name="twitter:description" content="مهندس برنامه‌ریزی و کنترل پروژه، توسعه‌دهنده وب و متخصص شبکه.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/icon.svg">
+
+<!-- Structured data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mehdi Askari",
+  "alternateName": "مهدی عسکری",
+  "url": "https://mehdiaskari.ir/",
+  "jobTitle": "Project Planning & Control Engineer",
+  "description": "Project planning & control specialist, web developer, and network specialist.",
+  "worksFor": {
+    "@type": "Organization",
+    "name": "Gostaresh Energy Pasargad"
+  },
+  "knowsAbout": ["Project Planning and Control", "Oracle Primavera P6", "Microsoft Project", "Web Development", "Network Security"],
+  "sameAs": [
+    "https://github.com/m38d1",
+    "https://blog.itha.ir/",
+    "https://www.facebook.com/m38d1",
+    "https://www.twitter.com/m38d1",
+    "https://telegram.me/m38d1",
+    "https://open.spotify.com/user/m38d1",
+    "https://www.twitch.tv/m38d1",
+    "https://www.youtube.com/channel/UCVpexOhOzEIe12HlYTDlZJg"
+  ]
+}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,7 +81,7 @@
     --text-muted: #98A2B0;
     --text-dim: #5C6672;
     --teal-dim: rgba(47,224,196,0.14);
-    --card-shadow: 0 20px 60px -24px rgba(0,0,0,0.55);
+    --card-shadow: 0 1px 0 0 rgba(255,255,255,0.04) inset, 0 24px 70px -30px rgba(0,0,0,0.6);
     --nav-bg: rgba(10,12,16,0.65);
   }
 
@@ -50,7 +101,7 @@
     --teal-2: #3B6FE0;
     --amber: #C97A1E;
     --teal-dim: rgba(14,168,148,0.12);
-    --card-shadow: 0 20px 50px -28px rgba(16,21,28,0.25);
+    --card-shadow: 0 1px 0 0 rgba(255,255,255,0.6) inset, 0 24px 60px -32px rgba(16,21,28,0.28);
     --nav-bg: rgba(255,255,255,0.72);
   }
 
@@ -95,6 +146,18 @@
   .mono{font-family:'IBM Plex Mono', monospace; direction:ltr; unicode-bidi:isolate;}
   a{color:inherit; text-decoration:none;}
   ::selection{background:var(--teal); color:#08090D;}
+
+  .scroll-progress{
+    position:fixed; top:0; right:0; left:0; height:2px; z-index:100;
+    background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber));
+    width:0%; transform-origin:right; transition:width .1s linear;
+  }
+
+  .grain{
+    position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  html[data-theme="light"] .grain{ opacity:.02; }
 
   @media (prefers-reduced-motion: reduce){
     *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
@@ -172,6 +235,33 @@
 
   /* ---------- HERO ---------- */
   .hero{max-width:960px; margin:0 auto; padding:76px 24px 56px; text-align:center;}
+
+  .section-head .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--teal);
+    border:1px solid var(--border); background:var(--glass);
+    padding:5px 12px; border-radius:100px; letter-spacing:0.5px;
+    box-shadow:0 0 0 0 var(--teal-dim); transition:box-shadow .3s ease;
+  }
+  .reveal.in .section-head .tag{ box-shadow:0 0 0 5px var(--teal-dim); }
+
+  .section-divider{
+    display:flex; align-items:center; justify-content:center; gap:6px;
+    padding:6px 0 0;
+  }
+  .section-divider span{width:4px; height:4px; border-radius:50%; background:var(--border);}
+  .section-divider span:nth-child(2){background:var(--teal);}
+
+  .scroll-top{
+    position:fixed; bottom:24px; left:24px; z-index:60;
+    width:42px; height:42px; border-radius:50%;
+    background:var(--glass-2); border:1px solid var(--border);
+    backdrop-filter:blur(14px); color:var(--text-muted);
+    display:flex; align-items:center; justify-content:center; font-size:1rem;
+    opacity:0; pointer-events:none; transform:translateY(10px);
+    transition:opacity .3s ease, transform .3s ease, color .2s ease, border-color .2s ease;
+  }
+  .scroll-top.show{opacity:1; pointer-events:auto; transform:translateY(0);}
+  .scroll-top:hover, .scroll-top:focus-visible{color:var(--teal); border-color:var(--teal);}
   .eyebrow{
     display:inline-flex; align-items:center; gap:9px;
     font-size:0.78rem; color:var(--teal);
@@ -230,7 +320,9 @@
     font-size:0.76rem; color:var(--text-muted);
     border:1px solid var(--border); background:var(--glass);
     padding:6px 13px; border-radius:100px;
+    transition:border-color .2s ease, color .2s ease;
   }
+  .role-pill:hover{border-color:var(--teal); color:var(--teal);}
 
   .schedule-card{
     max-width:580px; margin:0 auto;
@@ -255,7 +347,7 @@
   .schedule-meta strong{color:var(--text-muted); font-weight:600;}
 
   /* ---------- SECTION SHELL ---------- */
-  section{max-width:960px; margin:0 auto; padding:56px 24px;}
+  section{max-width:960px; margin:0 auto; padding:64px 24px;}
   .section-head{display:flex; align-items:center; gap:16px; margin-bottom:36px;}
   .section-head .tag{
     font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--teal);
@@ -274,7 +366,7 @@
   .info-card{
     background:var(--glass); border:1px solid var(--border);
     backdrop-filter:blur(16px);
-    border-radius:18px; padding:24px 26px;
+    border-radius:22px; padding:24px 26px;
     box-shadow:var(--card-shadow);
   }
   .info-row{display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border-soft); font-size:0.86rem; gap:10px;}
@@ -282,28 +374,41 @@
   .info-row .label{color:var(--text-dim); flex-shrink:0;}
   .info-row .value{color:var(--text); font-weight:600; text-align:left;}
 
-  /* ---------- EXPERIENCE — glass Gantt ---------- */
-  .gantt{display:flex; flex-direction:column; gap:12px;}
+  /* ---------- EXPERIENCE — vertical timeline ---------- */
+  .gantt{display:flex; flex-direction:column;}
   .gantt-item{
-    background:var(--glass); border:1px solid var(--border);
-    backdrop-filter:blur(16px);
-    border-radius:18px; padding:24px 26px;
-    display:grid; grid-template-columns:1fr 1fr; gap:22px; align-items:center;
+    display:flex; gap:20px; align-items:flex-start;
+    background:transparent; border:none; padding:0 0 30px;
   }
-  .gantt-item:hover{border-color:var(--teal); transform:translateY(-2px);}
-  @media (max-width:680px){ .gantt-item{grid-template-columns:1fr;} }
+  .gantt-item:last-child{padding-bottom:0;}
+  .rail{width:14px; flex-shrink:0; display:flex; flex-direction:column; align-items:center; position:relative; padding-top:6px;}
+  .rail .dot{
+    width:11px; height:11px; border-radius:50%; flex-shrink:0; z-index:1;
+    background:linear-gradient(135deg, var(--teal), var(--teal-2));
+    box-shadow:0 0 0 4px var(--teal-dim);
+  }
+  .gantt-item:not(:last-child) .rail::after{
+    content:""; position:absolute; top:20px; bottom:-30px; width:2px;
+    background:linear-gradient(to bottom, var(--border), var(--border-soft));
+  }
+  .gantt-card{
+    flex:1; background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(16px); border-radius:20px; padding:22px 24px;
+    position:relative; overflow:hidden;
+    transition:border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+  }
+  .gantt-card::after{
+    content:""; position:absolute; inset:0; border-radius:20px; pointer-events:none;
+    background:linear-gradient(160deg, rgba(255,255,255,0.05), transparent 45%);
+  }
+  .gantt-card:hover{border-color:var(--teal); transform:translateX(-4px); box-shadow:0 16px 40px -22px rgba(47,224,196,0.35);}
+  html[lang="en"] .gantt-card:hover{ transform:translateX(4px); }
+  .gantt-top{margin-bottom:10px;}
+  .gantt-years{font-family:'IBM Plex Mono', monospace; color:var(--teal); font-size:1rem; font-weight:700; direction:ltr; unicode-bidi:isolate;}
+  .gantt-duration{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--text-dim); border:1px solid var(--border-soft); border-radius:100px; padding:3px 10px; white-space:nowrap;}
   .gantt-label .role-title{font-weight:700; font-size:0.98rem; margin-bottom:4px;}
-  .gantt-label .org{color:var(--text-muted); font-size:0.83rem;}
-  .gantt-label .proj{color:var(--text-dim); font-size:0.78rem; margin-top:3px;}
-  .gantt-label .dates{color:var(--teal); font-size:0.72rem; margin-top:10px; font-weight:600;}
-
-  .gantt-bar-track{height:10px; background:var(--border-soft); border-radius:6px; overflow:hidden; position:relative;}
-  .gantt-bar{
-    position:absolute; top:0; bottom:0; right:0; width:0%; border-radius:6px;
-    background:linear-gradient(90deg, var(--amber), var(--teal));
-    animation:growbar 1.5s cubic-bezier(.2,.8,.2,1) forwards;
-  }
-  @keyframes growbar{to{width:var(--w,60%);}}
+  .gantt-label .org{color:var(--text-muted); font-size:0.85rem;}
+  .gantt-label .proj{color:var(--text-dim); font-size:0.78rem; margin-top:5px;}
 
   /* ---------- EDUCATION TIMELINE ---------- */
   .edu-list{display:flex; flex-direction:column;}
@@ -318,16 +423,28 @@
   .edu-desc{color:var(--text-dim); font-size:0.83rem;}
 
   /* ---------- SKILLS ---------- */
-  .tools-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(210px,1fr)); gap:14px;}
+  .tools-grid{display:grid; grid-template-columns:1.3fr 1fr; grid-auto-rows:1fr; gap:14px;}
+  @media (max-width:700px){ .tools-grid{grid-template-columns:1fr;} .tool-card.featured{grid-row:auto !important;} }
+  .tool-card.featured{grid-row:span 2;}
   .tool-card{
     background:var(--glass); border:1px solid var(--border);
     backdrop-filter:blur(16px);
-    border-radius:18px; padding:24px;
+    border-radius:22px; padding:26px;
     box-shadow:var(--card-shadow);
+    position:relative; overflow:hidden;
+    display:flex; flex-direction:column; justify-content:center;
   }
-  .tool-card:hover{border-color:var(--teal-2); transform:translateY(-3px);}
+  .tool-card::after{
+    content:""; position:absolute; inset:0; border-radius:22px; pointer-events:none;
+    background:linear-gradient(160deg, rgba(255,255,255,0.06), transparent 45%);
+  }
+  .tool-card:hover{border-color:var(--teal-2); transform:translateY(-3px); box-shadow:0 18px 44px -22px rgba(91,140,255,0.35);}
+  .tool-card.featured{padding:32px 28px;}
+  .tool-card.featured .tool-icon{width:46px; height:46px; font-size:0.88rem; margin-bottom:22px;}
+  .tool-card.featured h3{font-size:1.15rem; margin-bottom:12px;}
+  .tool-card.featured p{font-size:0.88rem; max-width:34ch;}
   .tool-icon{
-    width:38px; height:38px; border-radius:11px;
+    width:38px; height:38px; border-radius:12px;
     background:linear-gradient(135deg, var(--teal-dim), rgba(91,140,255,0.12));
     color:var(--teal);
     display:flex; align-items:center; justify-content:center;
@@ -342,7 +459,9 @@
     font-family:'IBM Plex Mono', monospace; font-size:0.72rem;
     border:1px solid var(--border); background:var(--glass);
     padding:8px 14px; border-radius:100px; color:var(--text-muted);
+    transition:border-color .2s ease, color .2s ease;
   }
+  .skill-tag:hover{border-color:var(--teal); color:var(--teal);}
 
   /* ---------- CONTACT ---------- */
   .contact-panel{
@@ -356,14 +475,24 @@
   .contact-panel p{color:var(--text-muted); max-width:40ch;}
   .contact-links{display:flex; flex-direction:column; gap:11px;}
   .contact-link{
-    display:flex; align-items:center; gap:10px; font-size:0.88rem;
-    padding:11px 18px; border:1px solid var(--border-soft); border-radius:12px;
+    display:flex; align-items:center; gap:13px; font-size:0.88rem;
+    padding:11px 16px; border:1px solid var(--border-soft); border-radius:14px;
     background:var(--glass-2);
-    transition:border-color .2s ease, color .2s ease, background .2s ease;
+    transition:border-color .2s ease, color .2s ease, background .2s ease, transform .2s ease;
   }
-  .contact-link:hover, .contact-link:focus-visible{border-color:var(--teal); color:var(--teal); background:var(--teal-dim);}
+  .contact-link:hover, .contact-link:focus-visible{border-color:var(--teal); color:var(--teal); background:var(--teal-dim); transform:translateX(-3px);}
+  html[lang="en"] .contact-link:hover, html[lang="en"] .contact-link:focus-visible{transform:translateX(3px);}
   .contact-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
-  .contact-link .mono{color:var(--text-dim); font-size:0.74rem;}
+  .contact-link .mono{color:var(--text-dim); font-size:0.74rem; margin-right:auto;}
+  html[lang="en"] .contact-link .mono{margin-right:0; margin-left:auto;}
+  .contact-link .ic{
+    width:32px; height:32px; border-radius:9px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--glass); border:1px solid var(--border);
+    color:var(--text-muted); transition:color .2s ease, border-color .2s ease;
+  }
+  .contact-link:hover .ic, .contact-link:focus-visible .ic{color:var(--teal); border-color:var(--teal);}
+  .contact-link .ic svg{width:15px; height:15px; fill:currentColor;}
 
   .social-row{display:flex; flex-wrap:wrap; gap:10px; margin-top:36px; justify-content:center;}
   .social-link{
@@ -379,6 +508,8 @@
 </style>
 </head>
 <body>
+<div class="scroll-progress" id="scroll-progress"></div>
+<div class="grain"></div>
 <div class="spotlight" id="spotlight"></div>
 
 <header>
@@ -447,66 +578,94 @@
   </div>
 </section>
 
+
+<div class="section-divider"><span></span><span></span><span></span></div>
 <section id="experience" class="reveal">
   <div class="section-head"><span class="tag">02</span><h2 data-en="Experience">تجربه</h2><div class="rule"></div></div>
   <div class="gantt">
     <div class="gantt-item">
-      <div class="gantt-label">
-        <div class="role-title" data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</div>
-        <div class="org" data-en="Modiriat-e Tarhha-ye Energy Mehr Pasargad (Gostaresh Energy Pasargad)">شرکت مدیریت طرح‌های انرژی مهر پاسارگاد (گسترش انرژی پاسارگاد)</div>
-        <div class="proj" data-en="Pars Behin Qeshm Heavy Oil Refinery">پالایشگاه نفت سنگین پارس بهین قشم</div>
-        <div class="dates mono" data-en="1403 — Present">1403 — اکنون</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="gantt-card">
+        <div class="gantt-top">
+          <span class="gantt-years" data-en="1403 — Present">1403 — اکنون</span>
+        </div>
+        <div class="gantt-label">
+          <div class="role-title" data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</div>
+          <div class="org" data-en="Modiriat-e Tarhha-ye Energy Mehr Pasargad (Gostaresh Energy Pasargad)">شرکت مدیریت طرح‌های انرژی مهر پاسارگاد (گسترش انرژی پاسارگاد)</div>
+          <div class="proj" data-en="Pars Behin Qeshm Heavy Oil Refinery">پالایشگاه نفت سنگین پارس بهین قشم</div>
+        </div>
       </div>
-      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:95%;"></div></div>
     </div>
     <div class="gantt-item">
-      <div class="gantt-label">
-        <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
-        <div class="org" data-en="Kimia Sanat Mabna Co. (Bakhtar Group)">شرکت کیمیا صنعت مبنا (گروه باختر)</div>
-        <div class="proj" data-en="Negin Makran Petrochemical Development">توسعه پتروشیمی نگین مکران</div>
-        <div class="dates mono">1401 — 1403</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="gantt-card">
+        <div class="gantt-top">
+          <span class="gantt-years">1401 — 1403</span>
+        </div>
+        <div class="gantt-label">
+          <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
+          <div class="org" data-en="Kimia Sanat Mabna Co. (Bakhtar Group)">شرکت کیمیا صنعت مبنا (گروه باختر)</div>
+          <div class="proj" data-en="Negin Makran Petrochemical Development">توسعه پتروشیمی نگین مکران</div>
+        </div>
       </div>
-      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:78%;"></div></div>
     </div>
     <div class="gantt-item">
-      <div class="gantt-label">
-        <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
-        <div class="org" data-en="Petro Pars Ghodrat Co.">شرکت پترو پارس قدرت</div>
-        <div class="proj" data-en="Arian Methanol Petrochemical">پتروشیمی آرین متانول</div>
-        <div class="dates mono">1399 — 1401</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="gantt-card">
+        <div class="gantt-top">
+          <span class="gantt-years">1399 — 1401</span>
+        </div>
+        <div class="gantt-label">
+          <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
+          <div class="org" data-en="Petro Pars Ghodrat Co.">شرکت پترو پارس قدرت</div>
+          <div class="proj" data-en="Arian Methanol Petrochemical">پتروشیمی آرین متانول</div>
+        </div>
       </div>
-      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:78%;"></div></div>
     </div>
     <div class="gantt-item">
-      <div class="gantt-label">
-        <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
-        <div class="org" data-en="Niroo Pajooh Co.">شرکت نیرو پژوه</div>
-        <div class="proj" data-en="Mapna Combined-Cycle Power Plant">نیروگاه سیکل ترکیبی مپنا</div>
-        <div class="dates mono">1396 — 1399</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="gantt-card">
+        <div class="gantt-top">
+          <span class="gantt-years">1396 — 1399</span>
+        </div>
+        <div class="gantt-label">
+          <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
+          <div class="org" data-en="Niroo Pajooh Co.">شرکت نیرو پژوه</div>
+          <div class="proj" data-en="Mapna Combined-Cycle Power Plant">نیروگاه سیکل ترکیبی مپنا</div>
+        </div>
       </div>
-      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:95%;"></div></div>
     </div>
     <div class="gantt-item">
-      <div class="gantt-label">
-        <div class="role-title" data-en="IT / Project Procurement Specialist">فناوری اطلاعات / کارشناس کالای پروژه</div>
-        <div class="org" data-en="IGC Co.">شرکت IGC</div>
-        <div class="proj" data-en="South Pars Phase 14">فاز 14 پارس جنوبی</div>
-        <div class="dates mono">1395 — 1396</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="gantt-card">
+        <div class="gantt-top">
+          <span class="gantt-years">1395 — 1396</span>
+        </div>
+        <div class="gantt-label">
+          <div class="role-title" data-en="IT / Project Procurement Specialist">فناوری اطلاعات / کارشناس کالای پروژه</div>
+          <div class="org" data-en="IGC Co.">شرکت IGC</div>
+          <div class="proj" data-en="South Pars Phase 14">فاز 14 پارس جنوبی</div>
+        </div>
       </div>
-      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:35%;"></div></div>
     </div>
     <div class="gantt-item">
-      <div class="gantt-label">
-        <div class="role-title" data-en="Project Procurement Specialist">کارشناس کالای پروژه</div>
-        <div class="org" data-en="Isfahan Regional Electric Co.">شرکت نیروی برق اصفهان</div>
-        <div class="proj" data-en="Mapna Combined-Cycle Power Plant">نیروگاه سیکل ترکیبی مپنا</div>
-        <div class="dates mono">1392 — 1394</div>
+      <div class="rail"><span class="dot"></span></div>
+      <div class="gantt-card">
+        <div class="gantt-top">
+          <span class="gantt-years">1392 — 1394</span>
+        </div>
+        <div class="gantt-label">
+          <div class="role-title" data-en="Project Procurement Specialist">کارشناس کالای پروژه</div>
+          <div class="org" data-en="Isfahan Regional Electric Co.">شرکت نیروی برق اصفهان</div>
+          <div class="proj" data-en="Mapna Combined-Cycle Power Plant">نیروگاه سیکل ترکیبی مپنا</div>
+        </div>
       </div>
-      <div class="gantt-bar-track"><div class="gantt-bar" style="--w:60%;"></div></div>
     </div>
   </div>
 </section>
 
+
+<div class="section-divider"><span></span><span></span><span></span></div>
 <section id="education" class="reveal">
   <div class="section-head"><span class="tag">03</span><h2 data-en="Education &amp; Certifications">تحصیلات و گواهینامه‌ها</h2><div class="rule"></div></div>
   <div class="edu-list">
@@ -555,10 +714,12 @@
   </div>
 </section>
 
+
+<div class="section-divider"><span></span><span></span><span></span></div>
 <section id="skills" class="reveal">
   <div class="section-head"><span class="tag">04</span><h2 data-en="Skills &amp; Services">مهارت‌ها و خدمات</h2><div class="rule"></div></div>
   <div class="tools-grid">
-    <div class="tool-card">
+    <div class="tool-card featured">
       <div class="tool-icon">PMC</div>
       <h3 data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</h3>
       <p data-en="Drafting the project roadmap, defining activities, resources and precise scheduling. Monitoring progress, controlling deviations and delivering analytical reports for stakeholders.">تدوین نقشه‌راه پروژه، تعریف فعالیت‌ها، منابع و زمان‌بندی دقیق. پایش پیشرفت، کنترل انحرافات و گزارش‌های تحلیلی برای ذینفعان.</p>
@@ -585,6 +746,8 @@
   </div>
 </section>
 
+
+<div class="section-divider"><span></span><span></span><span></span></div>
 <section id="contact" class="reveal">
   <div class="section-head"><span class="tag">05</span><h2 data-en="Contact">تماس</h2><div class="rule"></div></div>
   <div class="contact-panel">
@@ -593,10 +756,10 @@
       <p data-en="Looking to collaborate on your project? Reach me through any of the channels below.">به دنبال همکاری در پروژه‌ی خودتون هستید؟ از راه‌های زیر در دسترسم.</p>
     </div>
     <div class="contact-links">
-      <a class="contact-link" href="tel:+989991231110" data-en='📞 Phone &nbsp;<span class="mono">09991231110</span>'>📞 تماس تلفنی &nbsp;<span class="mono">09991231110</span></a>
-      <a class="contact-link" href="mailto:me@mehdiaskari.ir" data-en='✉️ Email &nbsp;<span class="mono">me@mehdiaskari.ir</span>'>✉️ ایمیل &nbsp;<span class="mono">me@mehdiaskari.ir</span></a>
-      <a class="contact-link" href="https://blog.itha.ir/" target="_blank" rel="noopener" data-en='📝 Blog &nbsp;<span class="mono">blog.itha.ir</span>'>📝 وبلاگ &nbsp;<span class="mono">blog.itha.ir</span></a>
-      <a class="contact-link" href="https://github.com/m38d1" target="_blank" rel="noopener" data-en='💻 GitHub &nbsp;<span class="mono">github.com/m38d1</span>'>💻 گیت‌هاب &nbsp;<span class="mono">github.com/m38d1</span></a>
+      <a class="contact-link" href="tel:+989991231110" data-en='<span class="ic"><svg viewBox="0 0 16 16"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/></svg></span> Phone &nbsp;<span class="mono">09991231110</span>'><span class="ic"><svg viewBox="0 0 16 16"><path d="M3.654 1.328a.678.678 0 0 0-1.015-.063L1.605 2.3c-.483.484-.661 1.169-.45 1.77a17.6 17.6 0 0 0 4.168 6.608 17.6 17.6 0 0 0 6.608 4.168c.601.211 1.286.033 1.77-.45l1.034-1.034a.678.678 0 0 0-.063-1.015l-2.307-1.794a.68.68 0 0 0-.58-.122l-2.19.547a1.75 1.75 0 0 1-1.657-.459L5.482 8.062a1.75 1.75 0 0 1-.46-1.657l.548-2.19a.68.68 0 0 0-.122-.58zM1.884.511a1.745 1.745 0 0 1 2.612.163L6.29 2.98c.329.423.445.974.315 1.494l-.547 2.19a.68.68 0 0 0 .178.643l2.457 2.457a.68.68 0 0 0 .644.178l2.189-.547a1.75 1.75 0 0 1 1.494.315l2.306 1.794c.829.645.905 1.87.163 2.611l-1.034 1.034c-.74.74-1.846 1.065-2.877.702a18.6 18.6 0 0 1-7.01-4.42 18.6 18.6 0 0 1-4.42-7.009c-.362-1.03-.037-2.137.703-2.877z"/></svg></span> تماس تلفنی &nbsp;<span class="mono">09991231110</span></a>
+      <a class="contact-link" href="mailto:me@mehdiaskari.ir" data-en='<span class="ic"><svg viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/></svg></span> Email &nbsp;<span class="mono">me@mehdiaskari.ir</span>'><span class="ic"><svg viewBox="0 0 16 16"><path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1zm13 2.383-4.708 2.825L15 11.105zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741M1 11.105l4.708-2.897L1 5.383z"/></svg></span> ایمیل &nbsp;<span class="mono">me@mehdiaskari.ir</span></a>
+      <a class="contact-link" href="https://blog.itha.ir/" target="_blank" rel="noopener" data-en='<span class="ic"><svg viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/><path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1m0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1"/></svg></span> Blog &nbsp;<span class="mono">blog.itha.ir</span>'><span class="ic"><svg viewBox="0 0 16 16"><path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/><path d="M5.5 12a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m-3-8.5a1 1 0 0 1 1-1c5.523 0 10 4.477 10 10a1 1 0 1 1-2 0 8 8 0 0 0-8-8 1 1 0 0 1-1-1m0 4a1 1 0 0 1 1-1 6 6 0 0 1 6 6 1 1 0 1 1-2 0 4 4 0 0 0-4-4 1 1 0 0 1-1-1"/></svg></span> وبلاگ &nbsp;<span class="mono">blog.itha.ir</span></a>
+      <a class="contact-link" href="https://github.com/m38d1" target="_blank" rel="noopener" data-en='<span class="ic"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg></span> GitHub &nbsp;<span class="mono">github.com/m38d1</span>'><span class="ic"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg></span> گیت‌هاب &nbsp;<span class="mono">github.com/m38d1</span></a>
     </div>
   </div>
   <div class="social-row">
@@ -612,6 +775,8 @@
 </section>
 
 <footer data-en='© <span id="year"></span> Mehdi Askari — crafted with ❤️'>© <span id="year"></span> مهدی عسکری — طراحی‌شده با ❤️</footer>
+
+<button class="scroll-top" id="scroll-top" aria-label="بازگشت به بالا">↑</button>
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
@@ -666,8 +831,9 @@
   const activitiesFa = [
     'در حال برنامه‌ریزی و کنترل پروژه',
     'در حال توسعه‌ی وب',
-    'در حال پیکربندی شبکه',
-    'در حال تحلیل پیشرفت پروژه'
+    'در حال طراحی شبکه',
+    'در حال تحلیل پیشرفت پروژه',
+    'در حال عاشقی به فلوچارت‌ها'
   ];
   const activitiesEn = [
     'Planning &amp; controlling a project',
@@ -698,6 +864,17 @@
   }
 
   // live GitHub widget removed per request
+
+  // scroll-to-top button + scroll progress bar
+  const scrollTopBtn = document.getElementById('scroll-top');
+  const progressBar = document.getElementById('scroll-progress');
+  window.addEventListener('scroll', ()=>{
+    scrollTopBtn.classList.toggle('show', window.scrollY > 600);
+    const h = document.documentElement;
+    const pct = (h.scrollTop) / (h.scrollHeight - h.clientHeight) * 100;
+    progressBar.style.width = pct + '%';
+  }, {passive:true});
+  scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 
   setLang('fa');
 </script>
