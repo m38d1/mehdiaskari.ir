@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background gradients -->
+    <radialGradient id="bg1" cx="10%" cy="0%" r="65%">
+      <stop offset="0%" stop-color="#5B8CFF" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#5B8CFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bg2" cx="95%" cy="15%" r="55%">
+      <stop offset="0%" stop-color="#2FE0C4" stop-opacity="0.22"/>
+      <stop offset="100%" stop-color="#2FE0C4" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bg3" cx="55%" cy="105%" r="50%">
+      <stop offset="0%" stop-color="#F6B255" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#F6B255" stop-opacity="0"/>
+    </radialGradient>
+    <!-- Glass card gradient -->
+    <linearGradient id="card" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.10"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0.03"/>
+    </linearGradient>
+    <!-- Card specular highlight -->
+    <linearGradient id="spec" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.22"/>
+      <stop offset="40%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <!-- Name gradient -->
+    <linearGradient id="name" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2FE0C4"/>
+      <stop offset="55%" stop-color="#5B8CFF"/>
+      <stop offset="100%" stop-color="#F6B255"/>
+    </linearGradient>
+    <!-- Top accent bar gradient -->
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2FE0C4"/>
+      <stop offset="50%" stop-color="#5B8CFF"/>
+      <stop offset="100%" stop-color="#F6B255"/>
+    </linearGradient>
+    <!-- Dot glow filter -->
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Grid noise mask -->
+    <pattern id="grid" x="0" y="0" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M 48 0 L 0 0 0 48" fill="none" stroke="#ffffff" stroke-width="0.4" stroke-opacity="0.06"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="#08090D"/>
+  <rect width="1200" height="630" fill="url(#bg1)"/>
+  <rect width="1200" height="630" fill="url(#bg2)"/>
+  <rect width="1200" height="630" fill="url(#bg3)"/>
+
+  <!-- Subtle grid overlay -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- ─── MAIN GLASS CARD ─── -->
+  <rect x="60" y="60" width="820" height="510" rx="32" fill="url(#card)"/>
+  <!-- Card border -->
+  <rect x="60" y="60" width="820" height="510" rx="32" fill="none" stroke="#ffffff" stroke-opacity="0.14" stroke-width="1.5"/>
+  <!-- Card specular highlight -->
+  <rect x="60" y="60" width="820" height="510" rx="32" fill="url(#spec)"/>
+  <!-- Card top accent line -->
+  <rect x="60" y="60" width="820" height="3" rx="2" fill="url(#accent)"/>
+
+  <!-- ─── DOMAIN PILL ─── -->
+  <rect x="100" y="108" width="210" height="38" rx="19" fill="#ffffff" fill-opacity="0.07" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1"/>
+  <circle cx="124" cy="127" r="5" fill="#2FE0C4" filter="url(#glow)"/>
+  <text x="138" y="133" font-family="IBM Plex Mono, Courier New, monospace" font-size="16" fill="#2FE0C4" letter-spacing="0.5">mehdiaskari.ir</text>
+
+  <!-- ─── NAME ─── -->
+  <text x="100" y="260" font-family="Arial Black, Helvetica, sans-serif" font-size="92" font-weight="900" letter-spacing="-2" fill="url(#name)">Mehdi Askari</text>
+
+  <!-- ─── TITLE ─── -->
+  <text x="100" y="330" font-family="Arial, Helvetica, sans-serif" font-size="32" font-weight="600" fill="#F3F5F7" opacity="0.9">Project Planning &amp; Control Engineer</text>
+
+  <!-- ─── SUBTITLE ─── -->
+  <text x="100" y="378" font-family="IBM Plex Mono, Courier New, monospace" font-size="22" fill="#98A2B0" letter-spacing="0.3">Web Developer  ·  Network Specialist</text>
+
+  <!-- ─── GLASS PILL TAGS ─── -->
+  <!-- Primavera -->
+  <rect x="100" y="428" width="188" height="44" rx="22" fill="#2FE0C4" fill-opacity="0.10" stroke="#2FE0C4" stroke-opacity="0.35" stroke-width="1.2"/>
+  <text x="194" y="456" font-family="IBM Plex Mono, Courier New, monospace" font-size="17" fill="#2FE0C4" text-anchor="middle" letter-spacing="0.2">Primavera P6</text>
+
+  <!-- MS Project -->
+  <rect x="308" y="428" width="174" height="44" rx="22" fill="#5B8CFF" fill-opacity="0.10" stroke="#5B8CFF" stroke-opacity="0.35" stroke-width="1.2"/>
+  <text x="395" y="456" font-family="IBM Plex Mono, Courier New, monospace" font-size="17" fill="#5B8CFF" text-anchor="middle" letter-spacing="0.2">MS Project</text>
+
+  <!-- Network+ -->
+  <rect x="502" y="428" width="168" height="44" rx="22" fill="#F6B255" fill-opacity="0.10" stroke="#F6B255" stroke-opacity="0.35" stroke-width="1.2"/>
+  <text x="586" y="456" font-family="IBM Plex Mono, Courier New, monospace" font-size="17" fill="#F6B255" text-anchor="middle" letter-spacing="0.2">Network+</text>
+
+  <!-- ─── RIGHT SIDE DECORATIVE GLASS CARD ─── -->
+  <rect x="936" y="60" width="204" height="510" rx="28" fill="#ffffff" fill-opacity="0.04" stroke="#ffffff" stroke-opacity="0.10" stroke-width="1"/>
+  <rect x="936" y="60" width="204" height="3" rx="2" fill="url(#accent)"/>
+
+  <!-- Big decorative number -->
+  <text x="1038" y="260" font-family="IBM Plex Mono, Courier New, monospace" font-size="88" font-weight="700" fill="#5B8CFF" fill-opacity="0.15" text-anchor="middle">{}</text>
+  <text x="1038" y="370" font-family="IBM Plex Mono, Courier New, monospace" font-size="56" font-weight="700" fill="#2FE0C4" fill-opacity="0.13" text-anchor="middle">ssh</text>
+  <text x="1038" y="440" font-family="IBM Plex Mono, Courier New, monospace" font-size="42" font-weight="700" fill="#F6B255" fill-opacity="0.12" text-anchor="middle">:443</text>
+
+  <!-- Floating accent circles -->
+  <circle cx="1100" cy="150" r="3" fill="#2FE0C4" opacity="0.6"/>
+  <circle cx="1030" cy="470" r="4" fill="#5B8CFF" opacity="0.5"/>
+  <circle cx="960" cy="220" r="2.5" fill="#F6B255" opacity="0.55"/>
+</svg>
