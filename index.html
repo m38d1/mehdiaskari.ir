@@ -86,7 +86,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-  :root{
+:root{
     --teal: #2FE0C4;
     --teal-2: #5B8CFF;
     --amber: #F6B255;
@@ -468,31 +468,6 @@
   .schedule-meta span{font-size:0.72rem; color:var(--text-dim);}
   .schedule-meta strong{color:var(--text-muted); font-weight:600;}
 
-  .stats-row{
-    max-width:580px; margin:16px auto 0;
-    display:grid; grid-template-columns:repeat(4, 1fr); gap:10px;
-  }
-  @media (max-width:560px){ .stats-row{grid-template-columns:repeat(2, 1fr);} }
-  .stat-card{
-    background:var(--glass-2); border:1px solid var(--border);
-    backdrop-filter:blur(18px) saturate(170%);
-    border-radius:16px; padding:16px 10px;
-    position:relative; overflow:hidden;
-    transition:border-color .2s ease, transform .2s ease;
-  }
-  .stat-card::before{
-    content:""; position:absolute; top:0; right:0; left:0; height:2px;
-    background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber)); opacity:.55;
-  }
-  .stat-card:hover{border-color:var(--teal-2); transform:translateY(-3px);}
-  .stat-num{
-    font-size:1.3rem; font-weight:700;
-    background:linear-gradient(100deg, var(--teal), var(--teal-2));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-    margin-bottom:4px; direction:ltr; unicode-bidi:isolate;
-  }
-  .stat-label{font-size:0.68rem; color:var(--text-dim);}
-
   /* ---------- SECTION SHELL ---------- */
   section{max-width:960px; margin:0 auto; padding:64px 24px;}
   .section-head{display:flex; align-items:center; gap:16px; margin-bottom:36px;}
@@ -561,6 +536,7 @@
   html[lang="en"] .gantt-card:hover{ transform:translateX(4px); }
   .gantt-top{margin-bottom:10px;}
   .gantt-years{font-family:'IBM Plex Mono', monospace; color:var(--teal); font-size:1rem; font-weight:700; direction:ltr; unicode-bidi:isolate;}
+  html[lang="fa"] .gantt-years{font-family:'Vazirmatn', sans-serif; direction:rtl; unicode-bidi:normal;}
   .gantt-duration{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--text-dim); border:1px solid var(--border-soft); border-radius:100px; padding:3px 10px; white-space:nowrap;}
   .gantt-label .role-title{font-weight:700; font-size:0.98rem; margin-bottom:4px;}
   .gantt-label .org{color:var(--text-muted); font-size:0.85rem;}
@@ -575,6 +551,7 @@
   .edu-item:last-child{border-bottom:none;}
   @media (max-width:600px){ .edu-item{grid-template-columns:80px 1fr;} }
   .edu-year{font-family:'IBM Plex Mono', monospace; color:var(--amber); font-size:0.82rem; font-weight:600; padding-top:2px;}
+  html[lang="fa"] .edu-year{font-family:'Vazirmatn', sans-serif;}
   .edu-title{font-weight:700; font-size:0.94rem; margin-bottom:3px;}
   .edu-desc{color:var(--text-dim); font-size:0.83rem;}
 
@@ -646,6 +623,7 @@
   html[lang="en"] .contact-link:hover, html[lang="en"] .contact-link:focus-visible{transform:translateX(3px);}
   .contact-link:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
   .contact-link .mono{color:var(--text-dim); font-size:0.74rem; margin-right:auto;}
+
   html[lang="en"] .contact-link .mono{margin-right:0; margin-left:auto;}
   .contact-link .ic{
     width:32px; height:32px; border-radius:9px; flex-shrink:0;
@@ -669,6 +647,85 @@
   .social-link svg{width:18px; height:18px; fill:currentColor; display:block;}
 
   footer{text-align:center; padding:36px 24px 52px; color:var(--text-dim); font-size:0.76rem;}
+
+  /* ---------- EASTER EGG (type "sudo") ---------- */
+  /* ---------- COMMAND PALETTE (Cmd/Ctrl+K) ---------- */
+  .cmdk-hint{
+    display:flex; align-items:center; gap:5px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--text-dim);
+    border:1px solid var(--border); background:var(--glass-2);
+    padding:5px 9px; border-radius:8px; cursor:pointer; flex-shrink:0;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .cmdk-hint:hover, .cmdk-hint:focus-visible{border-color:var(--teal); color:var(--teal);}
+  .cmdk-hint kbd{font-family:inherit;}
+  @media (max-width:700px){ .cmdk-hint{display:none;} }
+
+  .cmdk-overlay{
+    position:fixed; inset:0; z-index:300;
+    background:rgba(5,6,9,0.55); backdrop-filter:blur(6px);
+    display:flex; align-items:flex-start; justify-content:center;
+    padding:12vh 20px 20px;
+    opacity:0; pointer-events:none; transition:opacity .2s ease;
+  }
+  .cmdk-overlay.open{opacity:1; pointer-events:auto;}
+  .cmdk-modal{
+    width:min(560px, 100%); max-height:70vh; display:flex; flex-direction:column;
+    background:var(--glass-2); border:1px solid var(--border);
+    backdrop-filter:blur(28px) saturate(180%);
+    border-radius:18px; overflow:hidden;
+    box-shadow:0 30px 80px -20px rgba(0,0,0,0.55);
+    transform:translateY(-10px) scale(0.98); transition:transform .2s cubic-bezier(.2,.8,.2,1);
+  }
+  .cmdk-overlay.open .cmdk-modal{transform:translateY(0) scale(1);}
+  .cmdk-input-row{display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid var(--border-soft);}
+  .cmdk-input-row svg{width:16px; height:16px; fill:var(--text-dim); flex-shrink:0;}
+  .cmdk-input{
+    flex:1; background:none; border:none; outline:none; color:var(--text);
+    font-family:'Vazirmatn', sans-serif; font-size:0.95rem;
+  }
+  .cmdk-input::placeholder{color:var(--text-dim);}
+  .cmdk-esc{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--text-dim); border:1px solid var(--border-soft); border-radius:6px; padding:2px 7px; flex-shrink:0;}
+  .cmdk-list{overflow-y:auto; padding:8px;}
+  .cmdk-empty{padding:24px; text-align:center; color:var(--text-dim); font-size:0.85rem;}
+  .cmdk-item{
+    display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:10px;
+    cursor:pointer; font-size:0.88rem; color:var(--text-muted);
+  }
+  .cmdk-item .cmdk-ic{
+    width:30px; height:30px; border-radius:9px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    background:var(--glass); border:1px solid var(--border); font-size:0.85rem;
+  }
+  .cmdk-item .cmdk-label{flex:1; color:var(--text);}
+  .cmdk-item .cmdk-group{font-size:0.68rem; color:var(--text-dim); font-family:'IBM Plex Mono', monospace;}
+  .cmdk-item.active{background:var(--teal-dim);}
+  .cmdk-item.active .cmdk-ic{border-color:var(--teal); color:var(--teal);}
+
+  .egg{
+    position:fixed; bottom:24px; left:50%; transform:translate(-50%, 20px);
+    width:min(360px, 90vw); z-index:200;
+    background:var(--glass-2); border:1px solid var(--border);
+    backdrop-filter:blur(24px) saturate(180%); border-radius:16px; overflow:hidden;
+    box-shadow:0 24px 60px -20px rgba(0,0,0,0.5);
+    opacity:0; pointer-events:none;
+    transition:opacity .3s ease, transform .3s cubic-bezier(.2,.8,.2,1);
+  }
+  .egg.show{opacity:1; transform:translate(-50%, 0); pointer-events:auto;}
+  .egg-head{
+    display:flex; align-items:center; gap:8px; padding:10px 14px;
+    background:var(--glass); border-bottom:1px solid var(--border-soft);
+  }
+  .egg-head span{width:9px; height:9px; border-radius:50%;}
+  .egg-head span:nth-child(1){background:#F76464;}
+  .egg-head span:nth-child(2){background:#F6C244;}
+  .egg-head span:nth-child(3){background:#63D471;}
+  .egg-head .egg-title{margin-right:auto; font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--text-dim); direction:ltr;}
+  .egg-body{padding:16px 16px 18px; font-family:'IBM Plex Mono', monospace; font-size:0.8rem; direction:ltr; text-align:left; color:var(--text-muted); line-height:1.9;}
+  .egg-body .l1{color:var(--teal);}
+  .egg-body .l2{color:var(--text-dim);}
+  .egg-body .l3{color:#63D471;}
+  .egg-body .l4{color:var(--text); direction:rtl; text-align:right; display:block; margin-top:6px; font-family:'Vazirmatn', sans-serif; font-size:0.86rem;}
 
   /* ---------- PRINT ---------- */
   @media print{
@@ -739,6 +796,7 @@
         <button class="lang-opt" data-lang="fa">فا</button>
         <button class="lang-opt" data-lang="en">EN</button>
       </div>
+      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
       <div class="theme-toggle" role="group" aria-label="حالت نمایش">
         <button class="theme-opt" data-mode="light" aria-label="روشن">☀️</button>
         <button class="theme-opt" data-mode="dark" aria-label="تاریک">🌙</button>
@@ -779,24 +837,6 @@
     </div>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-num mono" data-target="12" data-prefix="+">+12</div>
-      <div class="stat-label" data-en="Years of experience">سال تجربه</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num mono" data-target="7">7</div>
-      <div class="stat-label" data-en="Industrial roles">نقش شغلی صنعتی</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num mono" data-target="3">3</div>
-      <div class="stat-label" data-en="Certifications">گواهینامه</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-num mono" data-target="3">3</div>
-      <div class="stat-label" data-en="Specialties">حوزه تخصصی</div>
-    </div>
-  </div>
 </div>
 
 <section id="about" class="reveal">
@@ -832,7 +872,7 @@
       <div class="rail"><span class="dot"></span></div>
       <div class="gantt-card">
         <div class="gantt-top">
-          <span class="gantt-years" data-en="Bahman 1404 — Present">بهمن ۱۴۰۴ — اکنون</span>
+          <span class="gantt-years" data-en="Feb 2026 — Present">بهمن ۱۴۰۴ — اکنون</span>
         </div>
         <div class="gantt-label">
           <div class="role-title" data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</div>
@@ -845,7 +885,7 @@
       <div class="rail"><span class="dot"></span></div>
       <div class="gantt-card">
         <div class="gantt-top">
-          <span class="gantt-years" data-en="1403 — 1404">1403 — 1404</span>
+          <span class="gantt-years" data-en="2024 — 2025">۱۴۰۳ — ۱۴۰۴</span>
         </div>
         <div class="gantt-label">
           <div class="role-title" data-en="Project Planning &amp; Control">برنامه‌ریزی و کنترل پروژه</div>
@@ -858,7 +898,7 @@
       <div class="rail"><span class="dot"></span></div>
       <div class="gantt-card">
         <div class="gantt-top">
-          <span class="gantt-years">1401 — 1403</span>
+          <span class="gantt-years" data-en="2022 — 2024">۱۴۰۱ — ۱۴۰۳</span>
         </div>
         <div class="gantt-label">
           <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
@@ -871,7 +911,7 @@
       <div class="rail"><span class="dot"></span></div>
       <div class="gantt-card">
         <div class="gantt-top">
-          <span class="gantt-years">1399 — 1401</span>
+          <span class="gantt-years" data-en="2020 — 2022">۱۳۹۹ — ۱۴۰۱</span>
         </div>
         <div class="gantt-label">
           <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
@@ -884,7 +924,7 @@
       <div class="rail"><span class="dot"></span></div>
       <div class="gantt-card">
         <div class="gantt-top">
-          <span class="gantt-years">1396 — 1399</span>
+          <span class="gantt-years" data-en="2017 — 2020">۱۳۹۶ — ۱۳۹۹</span>
         </div>
         <div class="gantt-label">
           <div class="role-title" data-en="IT / Project Planning &amp; Control">فناوری اطلاعات / برنامه‌ریزی و کنترل پروژه</div>
@@ -897,7 +937,7 @@
       <div class="rail"><span class="dot"></span></div>
       <div class="gantt-card">
         <div class="gantt-top">
-          <span class="gantt-years">1395 — 1396</span>
+          <span class="gantt-years" data-en="2016 — 2017">۱۳۹۵ — ۱۳۹۶</span>
         </div>
         <div class="gantt-label">
           <div class="role-title" data-en="IT / Project Procurement Specialist">فناوری اطلاعات / کارشناس کالای پروژه</div>
@@ -910,7 +950,7 @@
       <div class="rail"><span class="dot"></span></div>
       <div class="gantt-card">
         <div class="gantt-top">
-          <span class="gantt-years">1392 — 1394</span>
+          <span class="gantt-years" data-en="2013 — 2015">۱۳۹۲ — ۱۳۹۴</span>
         </div>
         <div class="gantt-label">
           <div class="role-title" data-en="Project Procurement Specialist">کارشناس کالای پروژه</div>
@@ -928,35 +968,70 @@
   <div class="section-head"><span class="tag">03</span><h2 data-en="Education &amp; Certifications">تحصیلات و گواهینامه‌ها</h2><div class="rule"></div></div>
   <div class="edu-list">
     <div class="edu-item">
-      <div class="edu-year">1402</div>
+      <div class="edu-year" data-en="Aug 2026">مرداد ۱۴۰۵</div>
+      <div>
+        <div class="edu-title">Cognitive Project Management in AI (CPMAI)™</div>
+        <div class="edu-desc" data-en="Project Management Institute certification in AI-driven project management methodology">گواهینامه مدیریت پروژه مبتنی بر شناخت در هوش مصنوعی از Project Management Institute</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year" data-en="Aug 2026">مرداد ۱۴۰۵</div>
+      <div>
+        <div class="edu-title">PMI® Essentials: Seven AI Project Patterns</div>
+        <div class="edu-desc" data-en="Core patterns for structuring and running AI projects">آشنایی با هفت الگوی اصلی پروژه‌های هوش مصنوعی</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year" data-en="Aug 2026">مرداد ۱۴۰۵</div>
+      <div>
+        <div class="edu-title">Generative AI Overview for Project Managers</div>
+        <div class="edu-desc" data-en="Overview of generative AI applications for project managers">مروری بر کاربردهای هوش مصنوعی مولد برای مدیران پروژه</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year" data-en="Aug 2026">مرداد ۱۴۰۵</div>
+      <div>
+        <div class="edu-title">Project Management Professional (PMP)® Online Courses</div>
+        <div class="edu-desc" data-en="Online preparation courses for the PMP certification">دوره‌های آنلاین آماده‌سازی برای گواهینامه PMP</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year" data-en="Aug 2026">مرداد ۱۴۰۵</div>
+      <div>
+        <div class="edu-title">PMI Citizen Developer™ Business Architect: CDBA Introduction</div>
+        <div class="edu-desc" data-en="Introduction to business architecture for citizen developers">مقدمه‌ای بر معماری کسب‌وکار برای توسعه‌دهندگان شهروندی</div>
+      </div>
+    </div>
+    <div class="edu-item">
+      <div class="edu-year" data-en="2023">۱۴۰۲</div>
       <div>
         <div class="edu-title">Google Cloud Skills Boost</div>
         <div class="edu-desc" data-en="Google Cloud Platform fundamentals badges from Google">اخذ Badges مبانی Google Cloud Platform از شرکت Google</div>
       </div>
     </div>
     <div class="edu-item">
-      <div class="edu-year">1398</div>
+      <div class="edu-year" data-en="2019">۱۳۹۸</div>
       <div>
         <div class="edu-title" data-en="Responsive Web Design Certification">گواهینامه Responsive Web Design</div>
         <div class="edu-desc" data-en="Certificate in web development from FreeCodeCamp">اخذ مدرک در حوزه‌ی تخصصی توسعه‌ی وب از FreeCodeCamp</div>
       </div>
     </div>
     <div class="edu-item">
-      <div class="edu-year">1397</div>
+      <div class="edu-year" data-en="2018">۱۳۹۷</div>
       <div>
         <div class="edu-title" data-en="Xiaomi Software Developer">توسعه‌دهنده نرم‌افزار Xiaomi</div>
         <div class="edu-desc" data-en="Mi Developer certification from Xiaomi for MIUI app development">اخذ تاییدیه Mi Developer از شرکت Xiaomi در توسعه‌ی اپلیکیشن برای MIUI</div>
       </div>
     </div>
     <div class="edu-item">
-      <div class="edu-year">1392–1394</div>
+      <div class="edu-year" data-en="2013–2015">۱۳۹۲–۱۳۹۴</div>
       <div>
         <div class="edu-title" data-en="B.Sc. Degree">مدرک کارشناسی</div>
         <div class="edu-desc" data-en="Graduated in Information Technology Engineering">فارغ‌التحصیل گرایش مهندسی فناوری اطلاعات، رشته‌ی فناوری اطلاعات</div>
       </div>
     </div>
     <div class="edu-item">
-      <div class="edu-year">1389–1391</div>
+      <div class="edu-year" data-en="2010–2012">۱۳۸۹–۱۳۹۱</div>
       <div>
         <div class="edu-title" data-en="Associate Degree">مدرک کاردانی</div>
         <div class="edu-desc" data-en="Entered the Information Technology field">ورود به گرایش فناوری اطلاعات و کسب اطلاعات و تجربیات</div>
@@ -1036,8 +1111,29 @@
 
 <button class="scroll-top" id="scroll-top" aria-label="بازگشت به بالا">↑</button>
 
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<div class="egg" id="egg" role="status" aria-live="polite">
+  <div class="egg-head"><span></span><span></span><span></span><span class="egg-title">root@mehdiaskari: ~</span></div>
+  <div class="egg-body">
+    <div class="l1">$ sudo su -</div>
+    <div class="l2">[sudo] password for visitor: ********</div>
+    <div class="l3">✓ Access granted.</div>
+    <span class="l4">خب حالا که روت شدی... هیچی، همین‌جا بمون و رزومه رو بخون 😄</span>
+  </div>
+</div>
+
 <script>
-  document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('year').textContent = new Date().getFullYear();
 
   const revealEls = document.querySelectorAll('.reveal');
   const io = new IntersectionObserver((entries)=>{
@@ -1082,7 +1178,6 @@
     document.documentElement.dir = l === 'en' ? 'ltr' : 'rtl';
     i18nEls.forEach(el => { el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.fa; });
     langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === l));
-    if(typeof paintStats === 'function') paintStats();
   }
   langButtons.forEach(b => b.addEventListener('click', ()=> setLang(b.dataset.lang)));
 
@@ -1186,42 +1281,132 @@
   // resume download (print to PDF)
   document.getElementById('download-resume').addEventListener('click', ()=> window.print());
 
-  // stat counters: count up on scroll into view — always Western digits
-  function toDigits(n){
-    return String(n);
-  }
-  const statEls = document.querySelectorAll('.stat-num');
-  function paintStats(){
-    statEls.forEach(el => {
-      const target = parseInt(el.dataset.target, 10) || 0;
-      const prefix = el.dataset.prefix || '';
-      el.textContent = prefix + toDigits(el.dataset.current || target);
-    });
-  }
-  const statsIo = new IntersectionObserver((entries)=>{
-    entries.forEach(entry => {
-      if(!entry.isIntersecting) return;
-      statsIo.unobserve(entry.target);
-      const els = entry.target.querySelectorAll('.stat-num');
-      const start = performance.now();
-      const dur = 900;
-      function tick(now){
-        const p = Math.min(1, (now - start) / dur);
-        const eased = 1 - Math.pow(1 - p, 3);
-        els.forEach(el => {
-          const target = parseInt(el.dataset.target, 10) || 0;
-          const prefix = el.dataset.prefix || '';
-          const current = Math.round(target * eased);
-          el.dataset.current = current;
-          el.textContent = prefix + toDigits(current);
-        });
-        if(p < 1) requestAnimationFrame(tick);
+  // easter egg: type "sudo" anywhere on the page
+  (function(){
+    const egg = document.getElementById('egg');
+    let buffer = '';
+    let hideTimer = null;
+    window.addEventListener('keydown', (e)=>{
+      if(e.ctrlKey || e.metaKey || e.altKey) return;
+      const tag = (document.activeElement && document.activeElement.tagName) || '';
+      if(tag === 'INPUT' || tag === 'TEXTAREA') return;
+      buffer = (buffer + e.key.toLowerCase()).slice(-4);
+      if(buffer === 'sudo'){
+        egg.classList.add('show');
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(()=> egg.classList.remove('show'), 5000);
+        buffer = '';
       }
-      requestAnimationFrame(tick);
     });
-  }, {threshold:0.4});
-  const statsRowEl = document.querySelector('.stats-row');
-  if(statsRowEl) statsIo.observe(statsRowEl);
+    egg.addEventListener('click', ()=>{ egg.classList.remove('show'); clearTimeout(hideTimer); });
+  })();
+
+  // command palette (Ctrl/Cmd+K)
+  (function(){
+    const overlay = document.getElementById('cmdk-overlay');
+    const input = document.getElementById('cmdk-input');
+    const list = document.getElementById('cmdk-list');
+    const hintBtn = document.getElementById('cmdk-hint');
+    let activeIndex = 0;
+    let filtered = [];
+
+    function copyText(text, labelEl){
+      navigator.clipboard && navigator.clipboard.writeText(text).catch(()=>{});
+      if(labelEl){
+        const original = labelEl.textContent;
+        labelEl.textContent = lang === 'en' ? 'Copied!' : 'کپی شد!';
+        setTimeout(()=>{ labelEl.textContent = original; }, 1200);
+      }
+    }
+
+    function commands(){
+      return [
+        { icon:'👤', group: lang==='en'?'Go to':'برو به', fa:'درباره من', en:'About', run:()=>jump('#about') },
+        { icon:'💼', group: lang==='en'?'Go to':'برو به', fa:'تجربه', en:'Experience', run:()=>jump('#experience') },
+        { icon:'🎓', group: lang==='en'?'Go to':'برو به', fa:'تحصیلات', en:'Education', run:()=>jump('#education') },
+        { icon:'🛠️', group: lang==='en'?'Go to':'برو به', fa:'مهارت‌ها', en:'Skills', run:()=>jump('#skills') },
+        { icon:'✉️', group: lang==='en'?'Go to':'برو به', fa:'تماس', en:'Contact', run:()=>jump('#contact') },
+        { icon: theme==='dark' ? '☀️' : '🌙', group: lang==='en'?'Action':'عملیات', fa: theme==='dark' ? 'حالت روشن' : 'حالت تاریک', en: theme==='dark' ? 'Light mode' : 'Dark mode', run:()=>{ theme = theme==='dark'?'light':'dark'; render(); } },
+        { icon:'🌐', group: lang==='en'?'Action':'عملیات', fa:'تغییر زبان به EN', en:'Switch language to FA', run:()=> setLang(lang==='en'?'fa':'en') },
+        { icon:'📋', group: lang==='en'?'Copy':'کپی', fa:'کپی ایمیل', en:'Copy email', run:(el)=> copyText('me@mehdiaskari.ir', el) },
+        { icon:'📋', group: lang==='en'?'Copy':'کپی', fa:'کپی شماره تماس', en:'Copy phone number', run:(el)=> copyText('09991231110', el) },
+        { icon:'💻', group: lang==='en'?'Open':'باز کردن', fa:'باز کردن گیت‌هاب', en:'Open GitHub', run:()=> window.open('https://github.com/m38d1','_blank') },
+        { icon:'📝', group: lang==='en'?'Open':'باز کردن', fa:'باز کردن وبلاگ', en:'Open blog', run:()=> window.open('https://blog.itha.ir/','_blank') },
+        { icon:'⬇️', group: lang==='en'?'Action':'عملیات', fa:'دانلود رزومه (PDF)', en:'Download resume (PDF)', run:()=> window.print() },
+        { icon:'↑', group: lang==='en'?'Action':'عملیات', fa:'برو به بالای صفحه', en:'Scroll to top', run:()=> window.scrollTo({top:0, behavior:'smooth'}) },
+      ];
+    }
+
+    function jump(hash){
+      const el = document.querySelector(hash);
+      if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    }
+
+    function renderList(query){
+      const q = (query || '').trim().toLowerCase();
+      const all = commands();
+      filtered = !q ? all : all.filter(c => c.fa.includes(q) || c.en.toLowerCase().includes(q));
+      activeIndex = 0;
+      if(!filtered.length){
+        list.innerHTML = '<div class="cmdk-empty">' + (lang==='en' ? 'No results' : 'نتیجه‌ای پیدا نشد') + '</div>';
+        return;
+      }
+      list.innerHTML = filtered.map((c, i) =>
+        '<div class="cmdk-item' + (i===0 ? ' active' : '') + '" data-i="' + i + '">' +
+          '<span class="cmdk-ic">' + c.icon + '</span>' +
+          '<span class="cmdk-label">' + (lang==='en' ? c.en : c.fa) + '</span>' +
+          '<span class="cmdk-group">' + c.group + '</span>' +
+        '</div>'
+      ).join('');
+    }
+
+    function setActive(i){
+      const items = list.querySelectorAll('.cmdk-item');
+      items.forEach(el => el.classList.remove('active'));
+      if(items[i]){ items[i].classList.add('active'); items[i].scrollIntoView({block:'nearest'}); }
+      activeIndex = i;
+    }
+
+    function execute(i){
+      const cmd = filtered[i];
+      if(!cmd) return;
+      const el = list.querySelector('.cmdk-item[data-i="' + i + '"] .cmdk-label');
+      cmd.run(el);
+      if(!/copy/i.test(cmd.group)) close();
+    }
+
+    function open(){
+      overlay.classList.add('open');
+      input.value = '';
+      renderList('');
+      setTimeout(()=> input.focus(), 50);
+    }
+    function close(){
+      overlay.classList.remove('open');
+    }
+
+    window.addEventListener('keydown', (e)=>{
+      if((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k'){
+        e.preventDefault();
+        overlay.classList.contains('open') ? close() : open();
+      } else if(e.key === 'Escape' && overlay.classList.contains('open')){
+        close();
+      }
+    });
+    hintBtn.addEventListener('click', open);
+    overlay.addEventListener('click', (e)=>{ if(e.target === overlay) close(); });
+
+    input.addEventListener('input', ()=> renderList(input.value));
+    input.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowDown'){ e.preventDefault(); setActive(Math.min(activeIndex+1, filtered.length-1)); }
+      else if(e.key === 'ArrowUp'){ e.preventDefault(); setActive(Math.max(activeIndex-1, 0)); }
+      else if(e.key === 'Enter'){ e.preventDefault(); execute(activeIndex); }
+    });
+    list.addEventListener('click', (e)=>{
+      const item = e.target.closest('.cmdk-item');
+      if(item) execute(parseInt(item.dataset.i, 10));
+    });
+  })();
 
   setLang('fa');
 </script>
