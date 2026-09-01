@@ -5,7 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<meta name="theme-color" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
 <title data-en="Mehdi Askari | Project Planning &amp; Control · Web Developer · Network Specialist">مهدی عسکری | برنامه‌ریزی و کنترل پروژه · توسعه‌دهنده وب · متخصص شبکه</title>
 
 <!-- SEO -->
@@ -664,6 +667,27 @@
   .gantt-item .rail .dot{ transition:box-shadow .4s ease; }
   .gantt-item.lit .rail .dot{ box-shadow:0 0 0 4px var(--teal-dim), 0 0 20px 2px rgba(47,224,196,0.55); }
   .gantt-item.lit .gantt-card::before{ opacity:1; }
+
+  /* ---------- POLISH: color-scheme, scrollbar, view transitions, render perf ---------- */
+  html[data-theme="dark"]{ color-scheme:dark; }
+  html[data-theme="light"]{ color-scheme:light; }
+
+  html{ scrollbar-width:thin; scrollbar-color:var(--teal) transparent; }
+  ::-webkit-scrollbar{ width:10px; height:10px; }
+  ::-webkit-scrollbar-track{ background:transparent; }
+  ::-webkit-scrollbar-thumb{
+    background:linear-gradient(180deg, var(--teal), var(--teal-2));
+    border-radius:8px; border:2px solid var(--bg);
+  }
+  ::-webkit-scrollbar-thumb:hover{
+    background:linear-gradient(180deg, var(--teal-2), var(--amber));
+  }
+
+  ::view-transition-old(root), ::view-transition-new(root){ animation:none; mix-blend-mode:normal; }
+
+  #experience, #education, #skills, #contact{
+    content-visibility:auto; contain-intrinsic-size:auto 800px;
+  }
   html[data-theme="light"] .card-spot{
     background:radial-gradient(460px circle at var(--spot-x,50%) var(--spot-y,50%), rgba(14,168,148,0.09), transparent 55%);
   }
@@ -899,6 +923,7 @@
     .social-row{display:none;}
 
     footer{border-top:1px solid var(--border); padding-top:14px;}
+    #experience, #education, #skills, #contact{ content-visibility:visible; }
   }
 </style>
 </head>
@@ -1242,7 +1267,7 @@
       <a class="contact-link" href="https://github.com/m38d1" target="_blank" rel="noopener" data-en='<span class="ic"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg></span> GitHub &nbsp;<span class="mono">github.com/m38d1</span>'><span class="ic"><svg viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8"/></svg></span> گیت‌هاب &nbsp;<span class="mono">github.com/m38d1</span></a>
     </div>
     <div class="qr-card">
-      <a class="qr-frame" href="mehdi-askari.vcf" download title="mehdi-askari.vcf"><img src="qr-contact.svg" width="128" height="128" alt="QR code: save Mehdi Askari contact" loading="lazy"></a>
+      <a class="qr-frame" href="mehdi-askari.vcf" download title="mehdi-askari.vcf"><img src="qr-contact.svg" width="128" height="128" alt="QR code: save Mehdi Askari contact" loading="lazy" decoding="async"></a>
       <span class="qr-label" data-en='<svg viewBox="0 0 16 16"><path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5.5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 9c-2.976 0-5.417 1.972-5.987 4.583a.79.79 0 0 0 .762.968h5.45a3.98 3.98 0 0 1-.65-2.5A4 4 0 0 1 8 9"/></svg> Scan to save contact'><svg viewBox="0 0 16 16"><path d="M12.5 16a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7m.5-5.5v1h1a.5.5 0 0 1 0 1h-1v1a.5.5 0 0 1-1 0v-1h-1a.5.5 0 0 1 0-1h1v-1a.5.5 0 0 1 1 0M11 5a3 3 0 1 1-6 0 3 3 0 0 1 6 0M8 9c-2.976 0-5.417 1.972-5.987 4.583a.79.79 0 0 0 .762.968h5.45a3.98 3.98 0 0 1-.65-2.5A4 4 0 0 1 8 9"/></svg> <span data-en="Scan or tap to save contact">اسکن یا کلیک برای ذخیره مخاطب</span></span>
     </div>
   </div>
@@ -1346,9 +1371,22 @@
     optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
   }
 
-  optButtons.forEach(b => b.addEventListener('click', ()=>{
-    theme = b.dataset.mode;
-    render();
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; render(); return; }
+    const vt = document.startViewTransition(() => { theme = next; render(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+
+  optButtons.forEach(b => b.addEventListener('click', (e)=>{
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
   }));
 
   render();
@@ -1539,7 +1577,7 @@
         { icon:'🎓', group: lang==='en'?'Go to':'برو به', fa:'تحصیلات', en:'Education', run:()=>jump('#education') },
         { icon:'🛠️', group: lang==='en'?'Go to':'برو به', fa:'مهارت‌ها', en:'Skills', run:()=>jump('#skills') },
         { icon:'✉️', group: lang==='en'?'Go to':'برو به', fa:'تماس', en:'Contact', run:()=>jump('#contact') },
-        { icon: theme==='dark' ? '☀️' : '🌙', group: lang==='en'?'Action':'عملیات', fa: theme==='dark' ? 'حالت روشن' : 'حالت تاریک', en: theme==='dark' ? 'Light mode' : 'Dark mode', run:()=>{ theme = theme==='dark'?'light':'dark'; render(); } },
+        { icon: theme==='dark' ? '☀️' : '🌙', group: lang==='en'?'Action':'عملیات', fa: theme==='dark' ? 'حالت روشن' : 'حالت تاریک', en: theme==='dark' ? 'Light mode' : 'Dark mode', run:()=>{ applyTheme(theme==='dark'?'light':'dark', innerWidth/2, innerHeight/2); } },
         { icon:'🌐', group: lang==='en'?'Action':'عملیات', fa:'تغییر زبان به EN', en:'Switch language to FA', run:()=> setLang(lang==='en'?'fa':'en') },
         { icon:'📋', group: lang==='en'?'Copy':'کپی', fa:'کپی ایمیل', en:'Copy email', run:(el)=> copyText('me@mehdiaskari.ir', el) },
         { icon:'📋', group: lang==='en'?'Copy':'کپی', fa:'کپی شماره تماس', en:'Copy phone number', run:(el)=> copyText('09991231110', el) },
