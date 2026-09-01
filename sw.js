@@ -1,5 +1,5 @@
 /* mehdiaskari.ir — offline cache service worker */
-const CACHE = 'mehdiaskari-v4';
+const CACHE = 'mehdiaskari-v5';
 
 const PRECACHE = [
   './',
@@ -11,6 +11,8 @@ const PRECACHE = [
   './og-image.png',
   './robots.txt',
   './sitemap.xml',
+  './mehdi-askari.vcf',
+  './qr-contact.svg',
   './fonts/vazirmatn-arabic.woff2',
   './fonts/vazirmatn-latin.woff2',
   './fonts/ibm-plex-mono-400.woff2',
