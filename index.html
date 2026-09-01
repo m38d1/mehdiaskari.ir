@@ -168,7 +168,7 @@
 
   body::before{
     content:"";
-    position:fixed; inset:0; z-index:-2;
+    position:fixed; top:-150px; bottom:-150px; left:0; right:0; z-index:-2;
     background:
       radial-gradient(ellipse 900px 600px at 15% -10%, var(--mesh1), transparent 60%),
       radial-gradient(ellipse 800px 700px at 100% 10%, var(--mesh2), transparent 55%),
@@ -177,7 +177,8 @@
     background-size: 160% 160%, 160% 160%, 160% 160%, 100% 100%;
     animation: meshDrift 22s ease-in-out infinite alternate;
     transition:background-color .5s ease;
-  }
+    transform:translate3d(0, var(--py,0px), 0); will-change:transform;
+}
 
   @keyframes meshDrift{
     0%{ background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
@@ -1801,6 +1802,22 @@
           '</a>');
       });
     }).catch(() => { const sec = grid.closest('section'); if(sec) sec.style.display = 'none'; });
+  })();
+
+  // gentle background parallax
+  (function(){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduce) return;
+    let ticking = false;
+    function update(){
+      ticking = false;
+      const max = document.documentElement.scrollHeight - innerHeight;
+      const p = max > 0 ? (window.scrollY || pageYOffset) / max : 0;
+      document.documentElement.style.setProperty('--py', (p * 150 - 75).toFixed(1) + 'px');
+    }
+    window.addEventListener('scroll', () => { if(!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
+    window.addEventListener('resize', update, {passive:true});
+    update();
   })();
 
   setLang('fa');
