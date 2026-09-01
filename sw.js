@@ -1,5 +1,5 @@
 /* mehdiaskari.ir — offline cache service worker */
-const CACHE = 'mehdiaskari-v1';
+const CACHE = 'mehdiaskari-v2';
 
 const PRECACHE = [
   './',
@@ -8,7 +8,12 @@ const PRECACHE = [
   './manifest.webmanifest',
   './og-image.png',
   './robots.txt',
-  './sitemap.xml'
+  './sitemap.xml',
+  './fonts/vazirmatn-arabic.woff2',
+  './fonts/vazirmatn-latin.woff2',
+  './fonts/ibm-plex-mono-400.woff2',
+  './fonts/ibm-plex-mono-500.woff2',
+  './fonts/ibm-plex-mono-600.woff2'
 ];
 
 self.addEventListener('install', (event) => {
