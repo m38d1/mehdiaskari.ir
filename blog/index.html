@@ -127,14 +127,18 @@
     menuToggle.setAttribute('aria-expanded', 'false');
   }));
 
+  // global error hook (diagnostics)
+  window.addEventListener('error', (e) => { window.__jserr = e.message; });
+
   // posts — from the single source of truth: /posts.json
   let posts = [];
   window.__renderPosts = function(){
     const grid = document.getElementById('post-grid');
     grid.innerHTML = '';
+    grid.classList.add('posts-ready');
     posts.forEach((p, i) => {
       const card = document.createElement('a');
-      card.className = 'post-card fu d' + Math.min(i, 3);
+      card.className = 'post-card';
       card.href = '/blog/' + p.slug + '/';
       card.innerHTML =
         '<div class="post-meta"><span class="mono">' + (lang === 'en' ? p.date : p.dateFa) + '</span>' +

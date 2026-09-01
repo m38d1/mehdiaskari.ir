@@ -85,6 +85,7 @@ header{position:sticky; top:0; z-index:50; padding:18px 24px;}
   transition:background-color .5s ease, border-color .5s ease, box-shadow .5s ease;
 }
 html[data-theme="light"] .nav-wrap{ background:rgba(255,255,255,0.55); }
+html[data-theme="light"] .mobile-menu{ background:rgba(255,255,255,0.55); }
 .logo{display:flex; align-items:center; gap:9px; font-weight:800; font-size:1rem;}
 .logo-mark{
   width:9px;height:9px;border-radius:50%;
@@ -177,6 +178,10 @@ html{ scrollbar-width:thin; scrollbar-color:var(--teal) transparent; }
 @keyframes fadeUp{ from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
 .fu{ animation:fadeUp .75s cubic-bezier(.2,.7,.2,1) both; }
 .fu.d1{animation-delay:.08s;} .fu.d2{animation-delay:.16s;} .fu.d3{animation-delay:.24s;}
+
+/* safety net: never hide content if an entrance animation fails to run */
+.post-card, .section-head, .post-head, .prose, .post-foot{ opacity:1; transform:none; }
+.posts-ready .post-card{ opacity:1; transform:none; }
 
 /* ---------- BLOG SHELL ---------- */
 main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
