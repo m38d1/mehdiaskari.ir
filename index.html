@@ -638,6 +638,36 @@
     background:radial-gradient(460px circle at var(--spot-x,50%) var(--spot-y,50%), rgba(14,168,148,0.09), transparent 55%);
   }
 
+  /* ---------- SKILL MARQUEE ---------- */
+  .skill-marquee{display:flex; flex-direction:column; gap:12px; padding:16px 0 6px;}
+  .mq{
+    display:flex; overflow:hidden; gap:12px;
+    -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  }
+  .mq-track{display:flex; gap:12px; flex-shrink:0; min-width:100%; animation:mq 32s linear infinite;}
+  .mq-rev .mq-track{animation-direction:reverse;}
+  .mq:hover .mq-track, .mq:focus-within .mq-track{animation-play-state:paused;}
+  .mq .skill-tag{white-space:nowrap;}
+  @keyframes mq{ to{ transform:translateX(calc(-100% - 12px)); } }
+
+  /* ---------- SCROLL-DRAWN EXPERIENCE RAIL ---------- */
+  .gantt{position:relative;}
+  .gantt-progress{
+    position:absolute; top:11px; bottom:30px; right:6px; width:2px; border-radius:2px;
+    background:linear-gradient(to bottom, var(--teal), var(--teal-2));
+    transform:scaleY(var(--p,0)); transform-origin:top;
+    box-shadow:0 0 14px rgba(47,224,196,0.45);
+    pointer-events:none;
+  }
+  html[lang="en"] .gantt-progress{ right:auto; left:6px; }
+  .gantt-item .rail .dot{ transition:box-shadow .4s ease; }
+  .gantt-item.lit .rail .dot{ box-shadow:0 0 0 4px var(--teal-dim), 0 0 20px 2px rgba(47,224,196,0.55); }
+  .gantt-item.lit .gantt-card::before{ opacity:1; }
+  html[data-theme="light"] .card-spot{
+    background:radial-gradient(460px circle at var(--spot-x,50%) var(--spot-y,50%), rgba(14,168,148,0.09), transparent 55%);
+  }
+
   /* ---------- ANIMATED TERMINAL: SKILLS INSTALLER ---------- */
   .term-card{
     margin-top:16px; background:#0B0D11; border:1px solid var(--border);
@@ -854,6 +884,7 @@
       border:1px solid var(--border); backdrop-filter:none; break-inside:avoid;
     }
     .info-card::before, .contact-panel::before, .about-text::before, .card-spot{display:none;}
+    .mq-track[aria-hidden="true"]{display:none;}
     .gantt-card::before{display:none;}
     .gantt-item{break-inside:avoid;}
     .rail .dot{background:var(--teal); box-shadow:none;}
@@ -1165,14 +1196,15 @@
       <h3 data-en="Network Design &amp; Implementation">طراحی و پیاده‌سازی شبکه</h3>
       <p data-en="Topology design, router and switch configuration, VLAN and subnet implementation, setting up and optimizing LAN/WAN networks.">طراحی توپولوژی، پیکربندی روتر و سوئیچ، پیاده‌سازی VLAN و زیرشبکه‌ها، راه‌اندازی و بهینه‌سازی شبکه‌های LAN/WAN.</p>
     </div>
-  <div class="skill-tags bento-wide">
-    <span class="skill-tag">Oracle Primavera P6</span>
-    <span class="skill-tag">Microsoft Project</span>
-    <span class="skill-tag">CompTIA Network+</span>
-    <span class="skill-tag">CompTIA Security+</span>
-    <span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span>
-    <span class="skill-tag" data-en="Network Security">امنیت شبکه</span>
-    <span class="skill-tag">Frontend / Backend</span>
+  <div class="bento-wide skill-marquee">
+    <div class="mq">
+      <div class="mq-track"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
+      <div class="mq-track" aria-hidden="true"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
+    </div>
+    <div class="mq mq-rev">
+      <div class="mq-track"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
+      <div class="mq-track" aria-hidden="true"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
+    </div>
   </div>
 
   <div class="term-card bento-wide" id="term-card">
@@ -1608,6 +1640,35 @@
         card.style.setProperty('--spot-y', (e.clientY - r.top) + 'px');
       }, {passive:true});
     });
+  })();
+
+  // scroll-drawn experience rail + dot lighting
+  (function(){
+    const gantt = document.querySelector('.gantt');
+    if(!gantt) return;
+    const items = document.querySelectorAll('.gantt-item');
+    const lit = new IntersectionObserver((es) => es.forEach((e) => {
+      if(e.isIntersecting){ e.target.classList.add('lit'); lit.unobserve(e.target); }
+    }), {threshold:0.5});
+    items.forEach((i) => lit.observe(i));
+
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduceMotion) return;
+    const bar = document.createElement('span');
+    bar.className = 'gantt-progress';
+    bar.setAttribute('aria-hidden', 'true');
+    gantt.appendChild(bar);
+    let ticking = false;
+    function update(){
+      ticking = false;
+      const r = gantt.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, (innerHeight * 0.55 - r.top) / r.height));
+      bar.style.setProperty('--p', p.toFixed(4));
+    }
+    window.addEventListener('scroll', () => {
+      if(!ticking){ ticking = true; requestAnimationFrame(update); }
+    }, {passive:true});
+    update();
   })();
 
   setLang('fa');
