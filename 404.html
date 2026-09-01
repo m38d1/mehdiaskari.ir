@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#08090D">
+<link rel="stylesheet" href="fonts/fonts.css">
+<title data-en="Page not found | Mehdi Askari">صفحه پیدا نشد | مهدی عسکری</title>
+<style>
+  :root{
+    --teal: #2FE0C4;
+    --teal-2: #5B8CFF;
+    --amber: #F6B255;
+  }
+  html[data-theme="dark"]{
+    --bg: #08090D;
+    --mesh1: rgba(91,140,255,0.16);
+    --mesh2: rgba(47,224,196,0.13);
+    --mesh3: rgba(246,178,85,0.07);
+    --glass: rgba(255,255,255,0.06);
+    --glass-2: rgba(255,255,255,0.11);
+    --border: rgba(255,255,255,0.16);
+    --border-soft: rgba(255,255,255,0.09);
+    --text: #F3F5F7;
+    --text-muted: #98A2B0;
+    --text-dim: #5C6672;
+    --teal-dim: rgba(47,224,196,0.14);
+    --card-shadow: inset 0 1px 1px rgba(255,255,255,0.16), inset 0 -1px 1px rgba(0,0,0,0.3), 0 24px 70px -30px rgba(0,0,0,0.6);
+  }
+  html[data-theme="light"]{
+    --bg: #F3F5F9;
+    --mesh1: rgba(91,140,255,0.14);
+    --mesh2: rgba(20,184,155,0.12);
+    --mesh3: rgba(246,178,85,0.10);
+    --glass: rgba(255,255,255,0.5);
+    --glass-2: rgba(255,255,255,0.72);
+    --border: rgba(255,255,255,0.75);
+    --border-soft: rgba(16,21,28,0.06);
+    --text: #10151C;
+    --text-muted: #4B5563;
+    --text-dim: #8892A0;
+    --teal: #0EA894;
+    --teal-2: #3B6FE0;
+    --amber: #C97A1E;
+    --teal-dim: rgba(14,168,148,0.12);
+    --card-shadow: inset 0 1px 1px rgba(255,255,255,0.85), inset 0 -1px 1px rgba(16,21,28,0.04), 0 24px 60px -32px rgba(16,21,28,0.2);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg); color:var(--text);
+    font-family:'Vazirmatn', sans-serif; line-height:1.75;
+    min-height:100vh; overflow-x:hidden;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    padding:32px 20px;
+    transition:background-color .5s ease, color .5s ease;
+  }
+  body::before{
+    content:""; position:fixed; inset:0; z-index:-2;
+    background:
+      radial-gradient(ellipse 900px 600px at 15% -10%, var(--mesh1), transparent 60%),
+      radial-gradient(ellipse 800px 700px at 100% 10%, var(--mesh2), transparent 55%),
+      radial-gradient(ellipse 700px 600px at 50% 100%, var(--mesh3), transparent 55%),
+      var(--bg);
+    background-size: 160% 160%, 160% 160%, 160% 160%, 100% 100%;
+    animation: meshDrift 22s ease-in-out infinite alternate;
+  }
+  @keyframes meshDrift{
+    0%{ background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
+    100%{ background-position: 10% 15%, 85% 20%, 55% 85%, 0 0; }
+  }
+  .grain{
+    position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  html[data-theme="light"] .grain{ opacity:.02; }
+
+  .mono{font-family:'IBM Plex Mono', monospace; direction:ltr; unicode-bidi:isolate;}
+  a{color:inherit; text-decoration:none;}
+  ::selection{background:var(--teal); color:#08090D;}
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  .card{
+    width:min(560px, 100%); text-align:center; position:relative; z-index:3;
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(26px) saturate(170%);
+    border-radius:24px; padding:48px 36px 40px;
+    box-shadow:var(--card-shadow);
+    overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; top:0; right:0; left:0; height:2px;
+    background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber));
+  }
+  .code{
+    font-family:'IBM Plex Mono', monospace; font-weight:700;
+    font-size:clamp(4.2rem, 16vw, 7rem); line-height:1;
+    letter-spacing:-2px; direction:ltr;
+    background:linear-gradient(100deg, var(--teal) 10%, var(--teal-2) 50%, var(--amber) 80%, var(--teal) 100%);
+    background-size:200% auto;
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    animation:shimmer 6s ease-in-out infinite;
+    margin-bottom:8px;
+  }
+  @keyframes shimmer{ 0%,100%{ background-position:0% center; } 50%{ background-position:100% center; } }
+
+  .status{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--teal);
+    border:1px solid var(--border); background:var(--glass-2);
+    padding:5px 12px; border-radius:100px; letter-spacing:0.5px;
+    margin-bottom:18px;
+  }
+  .status::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--amber); animation:pulse 2.2s ease-in-out infinite; }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  h1{ font-size:1.35rem; font-weight:800; margin-bottom:8px; }
+  .sub{ color:var(--text-muted); font-size:0.92rem; max-width:42ch; margin:0 auto 26px; }
+
+  .term{
+    text-align:left; direction:ltr; font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
+    background:#0B0D11; border:1px solid var(--border); border-radius:14px;
+    overflow:hidden; margin-bottom:28px; box-shadow:var(--card-shadow);
+  }
+  .term-head{
+    display:flex; align-items:center; gap:7px; padding:9px 14px;
+    background:rgba(255,255,255,0.04); border-bottom:1px solid rgba(255,255,255,0.06);
+  }
+  .term-dot{width:9px;height:9px;border-radius:50%;}
+  .term-dot.r{background:#F76464;} .term-dot.y{background:#F6C244;} .term-dot.g{background:#63D471;}
+  .term-title{margin-left:auto; font-size:0.68rem; color:rgba(255,255,255,0.35);}
+  .term-body{padding:14px 16px 16px; line-height:1.9; min-height:112px;}
+  .term-body .l{color:#7DE0C9;}
+  .term-body .l::before{content:"$ "; color:rgba(255,255,255,0.3);}
+  .term-body .o{color:rgba(255,255,255,0.75); opacity:0; transform:translateY(4px); transition:opacity .35s ease, transform .35s ease;}
+  .term-body .o.show{opacity:1; transform:translateY(0);}
+  .term-body .o.err{color:#F76464;}
+  .term-body .o.hint{color:var(--amber);}
+  .caret{display:inline-block; width:7px; height:14px; background:#7DE0C9; animation:caretBlink 1s step-end infinite; vertical-align:middle;}
+  @keyframes caretBlink{50%{opacity:0;}}
+
+  .actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
+  .btn{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:'Vazirmatn', sans-serif; font-size:0.88rem; font-weight:600;
+    cursor:pointer; border-radius:100px; padding:11px 22px;
+    border:1px solid var(--border); background:var(--glass-2); color:var(--text);
+    transition:border-color .2s ease, color .2s ease, transform .2s ease, background .2s ease;
+  }
+  .btn:hover, .btn:focus-visible{border-color:var(--teal); color:var(--teal); transform:translateY(-2px);}
+  .btn.primary{
+    border-color:transparent; color:#fff;
+    background:linear-gradient(135deg, var(--teal), var(--teal-2));
+    box-shadow:0 12px 30px -14px rgba(47,224,196,0.5);
+  }
+  html[data-theme="light"] .btn.primary{color:#08090D;}
+  .btn.primary:hover, .btn.primary:focus-visible{color:#fff; filter:brightness(1.08);}
+  html[data-theme="light"] .btn.primary:hover{color:#08090D;}
+  .btn:focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+
+  .theme-toggle{
+    position:fixed; top:18px; left:18px; z-index:5;
+    width:38px; height:38px; border-radius:50%;
+    border:1px solid var(--border); background:var(--glass-2);
+    backdrop-filter:blur(20px); cursor:pointer;
+    display:flex; align-items:center; justify-content:center; font-size:1rem;
+    color:var(--text-muted);
+    transition:color .2s ease, border-color .2s ease, transform .2s ease;
+  }
+  .theme-toggle:hover{color:var(--teal); border-color:var(--teal); transform:translateY(-2px);}
+
+  footer{position:relative; z-index:3; margin-top:26px; font-size:0.72rem; color:var(--text-dim);}
+  footer a{color:var(--text-muted); transition:color .2s ease;}
+  footer a:hover{color:var(--teal);}
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="theme-toggle" aria-label="تغییر حالت روشن/تاریک">🌙</button>
+<div class="grain"></div>
+
+<main class="card">
+  <div class="code mono">404</div>
+  <div class="status mono">HTTP 404 — NOT_FOUND</div>
+  <h1>این مسیر وجود ندارد</h1>
+  <p class="sub">صفحه‌ای که دنبالش بودید جابه‌جا شده یا هرگز وجود نداشته است. نگران نباشید، همه‌چیز سر جایش است.</p>
+
+  <div class="term">
+    <div class="term-head">
+      <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
+      <span class="term-title mono">zsh — mehdi@askari</span>
+    </div>
+    <div class="term-body" id="term-body">
+      <div class="l" id="term-cmd"><span class="mono" style="color:#7DE0C9"></span></div>
+      <div class="o err mono">curl: (404) Not Found</div>
+      <div class="o hint" id="term-hint">مسیر درست: mehdiaskari.ir/</div>
+      <div class="mono" id="term-caret"><span class="caret"></span></div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <a class="btn primary" href="/">بازگشت به خانه</a>
+    <a class="btn" href="mailto:me@mehdiaskari.ir">گزارش مسیر خراب</a>
+  </div>
+</main>
+
+<footer>
+  <a href="/">mehdiaskari.ir</a> · مهدی عسکری
+</footer>
+
+<script>
+  (function(){
+    // theme: detect system preference on first paint, then remember choice
+    var root = document.documentElement;
+    var btn = document.getElementById('theme-toggle');
+    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+    var theme = localStorage.getItem('mehdi-404-theme') || ((mq && mq.matches) ? 'light' : 'dark');
+    function render(){
+      root.setAttribute('data-theme', theme);
+      btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+    }
+    btn.addEventListener('click', function(){
+      theme = theme === 'dark' ? 'light' : 'dark';
+      try{ localStorage.setItem('mehdi-404-theme', theme); }catch(e){}
+      render();
+    });
+    render();
+
+    // show the requested path inside the terminal
+    var path = location.pathname && location.pathname !== '/' ? location.pathname : '/این-مسیر';
+    var cmd = 'curl -s https://mehdiaskari.ir' + path;
+    var typed = document.querySelector('#term-cmd span');
+    var rows = document.querySelectorAll('.term-body .o');
+    var caret = document.getElementById('term-caret');
+    document.getElementById('term-hint').textContent = 'مسیر درست: mehdiaskari.ir/';
+
+    var i = 0;
+    var iv = setInterval(function(){
+      typed.textContent = cmd.slice(0, ++i);
+      if(i >= cmd.length){
+        clearInterval(iv);
+        setTimeout(function(){
+          rows[0].classList.add('show');
+          setTimeout(function(){ rows[1].classList.add('show'); caret.style.display='none'; }, 450);
+        }, 250);
+      }
+    }, 28);
+  })();
+</script>
+</body>
+</html>
