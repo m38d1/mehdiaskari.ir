@@ -53,9 +53,8 @@
   body{
     background:var(--bg); color:var(--text);
     font-family:'Vazirmatn', sans-serif; line-height:1.75;
-    min-height:100vh; overflow-x:hidden;
-    display:flex; flex-direction:column; align-items:center; justify-content:center;
-    padding:32px 20px;
+    min-height:100vh; overflow-x:hidden; position:relative;
+    display:flex; flex-direction:column;
     transition:background-color .5s ease, color .5s ease;
   }
   body::before{
@@ -72,6 +71,25 @@
     0%{ background-position: 0% 0%, 100% 0%, 50% 100%, 0 0; }
     100%{ background-position: 10% 15%, 85% 20%, 55% 85%, 0 0; }
   }
+
+  .orb{
+    position:fixed; border-radius:50%; z-index:-1; pointer-events:none;
+    filter:blur(90px); opacity:.55;
+  }
+  .orb.a{
+    width:420px; height:420px; top:-120px; right:-120px;
+    background:radial-gradient(circle, rgba(47,224,196,0.35), transparent 70%);
+    animation:floatA 18s ease-in-out infinite alternate;
+  }
+  .orb.b{
+    width:520px; height:520px; bottom:-180px; left:-140px;
+    background:radial-gradient(circle, rgba(91,140,255,0.30), transparent 70%);
+    animation:floatB 24s ease-in-out infinite alternate;
+  }
+  @keyframes floatA{ to{ transform:translate(-70px,90px) scale(1.18); } }
+  @keyframes floatB{ to{ transform:translate(90px,-70px) scale(1.12); } }
+  html[data-theme="light"] .orb{ opacity:.35; }
+
   .grain{
     position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -82,16 +100,124 @@
   a{color:inherit; text-decoration:none;}
   ::selection{background:var(--teal); color:#08090D;}
   @media (prefers-reduced-motion: reduce){
-    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
   }
 
+  /* ---------- HEADER (faithful to index) ---------- */
+  header{position:sticky; top:0; z-index:50; padding:18px 24px;}
+  .nav-wrap{
+    max-width:980px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:12px 20px;
+    background:rgba(10,12,16,0.5);
+    backdrop-filter:blur(26px) saturate(180%);
+    -webkit-backdrop-filter:blur(26px) saturate(180%);
+    border:1px solid var(--border-soft);
+    border-radius:100px;
+    box-shadow:var(--card-shadow);
+    transition:background-color .5s ease, border-color .5s ease, box-shadow .5s ease;
+  }
+  html[data-theme="light"] .nav-wrap{ background:rgba(255,255,255,0.55); }
+  .logo{display:flex; align-items:center; gap:9px; font-weight:800; font-size:1rem;}
+  .logo-mark{
+    width:9px;height:9px;border-radius:50%;
+    background:linear-gradient(135deg, var(--teal), var(--teal-2));
+    box-shadow:0 0 14px 2px var(--teal-dim);
+  }
+  .nav-right{display:flex; align-items:center; gap:22px;}
+  nav ul{list-style:none; display:flex; gap:20px;}
+  nav a{font-size:0.84rem; color:var(--text-muted); transition:color .2s ease; position:relative; padding-bottom:3px;}
+  nav a:hover, nav a:focus-visible{color:var(--text);}
+  nav a:focus-visible{outline:2px solid var(--teal); outline-offset:4px; border-radius:2px;}
+  nav a::after{
+    content:""; position:absolute; right:0; left:0; bottom:-2px; height:2px; border-radius:2px;
+    background:linear-gradient(90deg, var(--teal), var(--teal-2));
+    transform:scaleX(0); transition:transform .25s ease;
+  }
+  nav a:hover::after, nav a:focus-visible::after{transform:scaleX(1);}
+  @media (max-width:700px){ nav ul{display:none;} }
+
+  .menu-toggle{
+    display:none; width:32px; height:32px; border:none; background:transparent; cursor:pointer;
+    flex-direction:column; align-items:center; justify-content:center; gap:5px; flex-shrink:0;
+  }
+  .menu-toggle span{width:18px; height:2px; border-radius:2px; background:var(--text-muted); transition:transform .25s ease, opacity .25s ease, background .2s ease;}
+  .menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+  .menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+  .menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+  @media (max-width:700px){ .menu-toggle{display:flex;} }
+
+  .mobile-menu{
+    display:none; flex-direction:column; gap:4px;
+    max-width:980px; margin:8px auto 0; padding:10px;
+    background:rgba(10,12,16,0.5); backdrop-filter:blur(26px) saturate(180%);
+    border:1px solid var(--border-soft); border-radius:20px;
+    max-height:0; overflow:hidden; opacity:0;
+    transition:max-height .3s ease, opacity .25s ease, padding .3s ease;
+  }
+  html[data-theme="light"] .mobile-menu{ background:rgba(255,255,255,0.55); }
+  .mobile-menu a{
+    padding:12px 16px; border-radius:12px; font-size:0.92rem; color:var(--text-muted);
+    transition:background .2s ease, color .2s ease;
+  }
+  .mobile-menu a:hover, .mobile-menu a:focus-visible{background:var(--glass-2); color:var(--text);}
+  @media (max-width:700px){
+    .mobile-menu{display:flex;}
+    .mobile-menu.open{max-height:320px; opacity:1; padding:10px;}
+  }
+
+  .theme-toggle{
+    display:flex; align-items:center; gap:2px;
+    background:var(--glass-2); border:1px solid var(--border);
+    border-radius:100px; padding:3px; flex-shrink:0;
+  }
+  .theme-opt{
+    width:28px; height:24px; border:none; background:transparent; border-radius:100px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:12px; cursor:pointer; color:var(--text-dim);
+    transition:background .25s ease, color .25s ease;
+  }
+  .theme-opt.active{ background:linear-gradient(135deg, var(--teal), var(--teal-2)); color:#08090D; }
+  .theme-opt:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  .lang-toggle{
+    display:flex; align-items:center; gap:2px;
+    background:var(--glass-2); border:1px solid var(--border);
+    border-radius:100px; padding:3px; flex-shrink:0;
+  }
+  .lang-opt{
+    padding:0 10px; height:24px; border:none; background:transparent; border-radius:100px;
+    font-family:'IBM Plex Mono', monospace; font-size:11px; font-weight:600;
+    cursor:pointer; color:var(--text-dim);
+    transition:background .25s ease, color .25s ease;
+  }
+  .lang-opt.active{ background:linear-gradient(135deg, var(--teal), var(--teal-2)); color:#08090D; }
+  .lang-opt:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  .cmdk-hint{
+    display:flex; align-items:center; gap:5px;
+    font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--text-dim);
+    border:1px solid var(--border); background:var(--glass-2);
+    padding:5px 9px; border-radius:8px; cursor:pointer; flex-shrink:0;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .cmdk-hint:hover, .cmdk-hint:focus-visible{border-color:var(--teal); color:var(--teal);}
+  .cmdk-hint kbd{font-family:inherit;}
+  @media (max-width:700px){ .cmdk-hint{display:none;} }
+
+  /* ---------- MAIN ---------- */
+  main{
+    flex:1; display:flex; align-items:center; justify-content:center;
+    padding:32px 20px; perspective:1100px;
+  }
   .card{
-    width:min(560px, 100%); text-align:center; position:relative; z-index:3;
+    width:min(600px, 100%); text-align:center; position:relative; z-index:3;
     background:var(--glass); border:1px solid var(--border);
     backdrop-filter:blur(26px) saturate(170%);
-    border-radius:24px; padding:48px 36px 40px;
+    border-radius:26px; padding:52px 40px 44px;
     box-shadow:var(--card-shadow);
     overflow:hidden;
+    will-change:transform;
   }
   .card::before{
     content:""; position:absolute; top:0; right:0; left:0; height:2px;
@@ -99,13 +225,14 @@
   }
   .code{
     font-family:'IBM Plex Mono', monospace; font-weight:700;
-    font-size:clamp(4.2rem, 16vw, 7rem); line-height:1;
+    font-size:clamp(4.6rem, 17vw, 7.6rem); line-height:1;
     letter-spacing:-2px; direction:ltr;
     background:linear-gradient(100deg, var(--teal) 10%, var(--teal-2) 50%, var(--amber) 80%, var(--teal) 100%);
     background-size:200% auto;
     -webkit-background-clip:text; background-clip:text; color:transparent;
     animation:shimmer 6s ease-in-out infinite;
-    margin-bottom:8px;
+    filter:drop-shadow(0 8px 34px rgba(47,224,196,0.35));
+    margin-bottom:10px;
   }
   @keyframes shimmer{ 0%,100%{ background-position:0% center; } 50%{ background-position:100% center; } }
 
@@ -113,14 +240,15 @@
     display:inline-flex; align-items:center; gap:7px;
     font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--teal);
     border:1px solid var(--border); background:var(--glass-2);
+    backdrop-filter:blur(14px) saturate(160%);
     padding:5px 12px; border-radius:100px; letter-spacing:0.5px;
     margin-bottom:18px;
   }
   .status::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--amber); animation:pulse 2.2s ease-in-out infinite; }
   @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.4;} }
 
-  h1{ font-size:1.35rem; font-weight:800; margin-bottom:8px; }
-  .sub{ color:var(--text-muted); font-size:0.92rem; max-width:42ch; margin:0 auto 26px; }
+  h1{ font-size:1.4rem; font-weight:800; margin-bottom:8px; }
+  .sub{ color:var(--text-muted); font-size:0.92rem; max-width:44ch; margin:0 auto 26px; }
 
   .term{
     text-align:left; direction:ltr; font-family:'IBM Plex Mono', monospace; font-size:0.78rem;
@@ -134,7 +262,7 @@
   .term-dot{width:9px;height:9px;border-radius:50%;}
   .term-dot.r{background:#F76464;} .term-dot.y{background:#F6C244;} .term-dot.g{background:#63D471;}
   .term-title{margin-left:auto; font-size:0.68rem; color:rgba(255,255,255,0.35);}
-  .term-body{padding:14px 16px 16px; line-height:1.9; min-height:112px;}
+  .term-body{padding:14px 16px 16px; line-height:1.9; min-height:118px;}
   .term-body .l{color:#7DE0C9;}
   .term-body .l::before{content:"$ "; color:rgba(255,255,255,0.3);}
   .term-body .o{color:rgba(255,255,255,0.75); opacity:0; transform:translateY(4px); transition:opacity .35s ease, transform .35s ease;}
@@ -146,109 +274,183 @@
 
   .actions{display:flex; gap:12px; justify-content:center; flex-wrap:wrap;}
   .btn{
-    display:inline-flex; align-items:center; gap:9px;
+    position:relative; display:inline-flex; align-items:center; gap:9px; overflow:hidden;
     font-family:'Vazirmatn', sans-serif; font-size:0.88rem; font-weight:600;
-    cursor:pointer; border-radius:100px; padding:11px 22px;
+    cursor:pointer; border-radius:100px; padding:12px 24px;
     border:1px solid var(--border); background:var(--glass-2); color:var(--text);
-    transition:border-color .2s ease, color .2s ease, transform .2s ease, background .2s ease;
+    backdrop-filter:blur(22px) saturate(180%);
+    box-shadow:inset 0 1px 1px rgba(255,255,255,0.14);
+    transition:border-color .2s ease, color .2s ease, transform .2s ease, box-shadow .25s ease;
   }
   .btn:hover, .btn:focus-visible{border-color:var(--teal); color:var(--teal); transform:translateY(-2px);}
-  .btn.primary{
-    border-color:transparent; color:#fff;
-    background:linear-gradient(135deg, var(--teal), var(--teal-2));
-    box-shadow:0 12px 30px -14px rgba(47,224,196,0.5);
-  }
-  html[data-theme="light"] .btn.primary{color:#08090D;}
-  .btn.primary:hover, .btn.primary:focus-visible{color:#fff; filter:brightness(1.08);}
-  html[data-theme="light"] .btn.primary:hover{color:#08090D;}
   .btn:focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
-
-  .theme-toggle{
-    position:fixed; top:18px; left:18px; z-index:5;
-    width:38px; height:38px; border-radius:50%;
-    border:1px solid var(--border); background:var(--glass-2);
-    backdrop-filter:blur(20px); cursor:pointer;
-    display:flex; align-items:center; justify-content:center; font-size:1rem;
-    color:var(--text-muted);
-    transition:color .2s ease, border-color .2s ease, transform .2s ease;
+  .btn.primary{
+    border-color:rgba(255,255,255,0.14); color:#fff;
+    background:linear-gradient(135deg, var(--teal), var(--teal-2));
+    box-shadow:0 14px 34px -16px rgba(47,224,196,0.55), inset 0 1px 1px rgba(255,255,255,0.35);
   }
-  .theme-toggle:hover{color:var(--teal); border-color:var(--teal); transform:translateY(-2px);}
+  .btn.primary:hover, .btn.primary:focus-visible{color:#fff; filter:brightness(1.08);}
+  html[data-theme="light"] .btn.primary{color:#08090D;}
+  html[data-theme="light"] .btn.primary:hover, html[data-theme="light"] .btn.primary:focus-visible{color:#08090D;}
 
-  footer{position:relative; z-index:3; margin-top:26px; font-size:0.72rem; color:var(--text-dim);}
+  footer{position:relative; z-index:3; text-align:center; padding:0 24px 34px; font-size:0.74rem; color:var(--text-dim);}
   footer a{color:var(--text-muted); transition:color .2s ease;}
   footer a:hover{color:var(--teal);}
+
+  /* entrance */
+  @keyframes fadeUp{ from{opacity:0; transform:translateY(20px);} to{opacity:1; transform:translateY(0);} }
+  .fu{ animation:fadeUp .75s cubic-bezier(.2,.7,.2,1) both; }
+  .fu.d1{animation-delay:.08s;} .fu.d2{animation-delay:.16s;} .fu.d3{animation-delay:.24s;}
+  .fu.d4{animation-delay:.32s;} .fu.d5{animation-delay:.40s;} .fu.d6{animation-delay:.48s;}
 </style>
 </head>
 <body>
-<button class="theme-toggle" id="theme-toggle" aria-label="تغییر حالت روشن/تاریک">🌙</button>
+<div class="orb a"></div>
+<div class="orb b"></div>
 <div class="grain"></div>
 
-<main class="card">
-  <div class="code mono">404</div>
-  <div class="status mono">HTTP 404 — NOT_FOUND</div>
-  <h1>این مسیر وجود ندارد</h1>
-  <p class="sub">صفحه‌ای که دنبالش بودید جابه‌جا شده یا هرگز وجود نداشته است. نگران نباشید، همه‌چیز سر جایش است.</p>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+        <button class="lang-opt active" data-lang="fa">فا</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+      </div>
+      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان در صفحه اصلی" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن">☀️</button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک">🌙</button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
 
-  <div class="term">
+<main>
+<div class="card" id="card404">
+  <div class="code mono fu">404</div>
+  <div class="status mono fu d1" data-en="HTTP 404 — PAGE_NOT_FOUND">HTTP 404 — NOT_FOUND</div>
+  <h1 class="fu d2" data-en="This route does not exist">این مسیر وجود ندارد</h1>
+  <p class="sub fu d3" data-en="The page you were looking for has moved or never existed. Don&#39;t worry — everything else is right where it should be.">صفحه‌ای که دنبالش بودید جابه‌جا شده یا هرگز وجود نداشته است. نگران نباشید، همه‌چیز سر جایش است.</p>
+
+  <div class="term fu d4">
     <div class="term-head">
       <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
-      <span class="term-title mono">zsh — mehdi@askari</span>
+      <span class="term-title">zsh — mehdi@askari</span>
     </div>
-    <div class="term-body" id="term-body">
-      <div class="l" id="term-cmd"><span class="mono" style="color:#7DE0C9"></span></div>
-      <div class="o err mono">curl: (404) Not Found</div>
-      <div class="o hint" id="term-hint">مسیر درست: mehdiaskari.ir/</div>
-      <div class="mono" id="term-caret"><span class="caret"></span></div>
+    <div class="term-body">
+      <div class="l" id="term-cmd"><span></span></div>
+      <div class="o err">curl: (404) Not Found</div>
+      <div class="o hint" data-en="Correct path: mehdiaskari.ir/">مسیر درست: mehdiaskari.ir/</div>
+      <div id="term-caret"><span class="caret"></span></div>
     </div>
   </div>
 
-  <div class="actions">
+  <div class="actions fu d5">
     <a class="btn primary" href="/">بازگشت به خانه</a>
     <a class="btn" href="mailto:me@mehdiaskari.ir">گزارش مسیر خراب</a>
   </div>
+</div>
 </main>
 
-<footer>
-  <a href="/">mehdiaskari.ir</a> · مهدی عسکری
-</footer>
+<footer class="fu d6" data-en='<a href="/">mehdiaskari.ir</a> · Designed by Mehdi Askari'><a href="/">mehdiaskari.ir</a> · طراحی شده توسط مهدی عسکری</footer>
 
 <script>
   (function(){
-    // theme: detect system preference on first paint, then remember choice
-    var root = document.documentElement;
-    var btn = document.getElementById('theme-toggle');
-    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
-    var theme = localStorage.getItem('mehdi-404-theme') || ((mq && mq.matches) ? 'light' : 'dark');
+    // language: fa (default) / en — same i18n mechanism as the homepage
+    const langButtons = document.querySelectorAll('.lang-opt');
+    const i18nEls = document.querySelectorAll('[data-en]');
+    i18nEls.forEach(el => { el.dataset.fa = el.innerHTML; });
+    let lang = 'fa';
+
+    function setLang(l){
+      lang = l;
+      document.documentElement.lang = l;
+      document.documentElement.dir = l === 'en' ? 'ltr' : 'rtl';
+      i18nEls.forEach(el => { el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.fa; });
+      langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === l));
+    }
+    langButtons.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+
+    // theme: detect system preference once, then plain light/dark — same as homepage
+    const root = document.documentElement;
+    const optButtons = document.querySelectorAll('.theme-opt');
+    const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+    let theme = (mq && mq.matches) ? 'light' : 'dark';
+
     function render(){
       root.setAttribute('data-theme', theme);
-      btn.textContent = theme === 'dark' ? '🌙' : '☀️';
+      optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
     }
-    btn.addEventListener('click', function(){
-      theme = theme === 'dark' ? 'light' : 'dark';
-      try{ localStorage.setItem('mehdi-404-theme', theme); }catch(e){}
-      render();
-    });
+    optButtons.forEach(b => b.addEventListener('click', () => { theme = b.dataset.mode; render(); }));
     render();
 
-    // show the requested path inside the terminal
-    var path = location.pathname && location.pathname !== '/' ? location.pathname : '/این-مسیر';
-    var cmd = 'curl -s https://mehdiaskari.ir' + path;
-    var typed = document.querySelector('#term-cmd span');
-    var rows = document.querySelectorAll('.term-body .o');
-    var caret = document.getElementById('term-caret');
-    document.getElementById('term-hint').textContent = 'مسیر درست: mehdiaskari.ir/';
+    // mobile menu
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    menuToggle.addEventListener('click', () => {
+      const open = !mobileMenu.classList.contains('open');
+      mobileMenu.classList.toggle('open', open);
+      menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuToggle.setAttribute('aria-expanded', 'false');
+    }));
 
-    var i = 0;
-    var iv = setInterval(function(){
+    // command palette lives on the homepage — take visitors there
+    document.getElementById('cmdk-hint').addEventListener('click', () => { location.href = '/'; });
+
+    // terminal: type the actual requested path
+    const path = location.pathname && location.pathname !== '/' ? location.pathname : '/این-مسیر';
+    const cmd = 'curl -s https://mehdiaskari.ir' + path;
+    const typed = document.querySelector('#term-cmd span');
+    const rows = document.querySelectorAll('.term-body .o');
+    const caret = document.getElementById('term-caret');
+    let i = 0;
+    const iv = setInterval(() => {
       typed.textContent = cmd.slice(0, ++i);
       if(i >= cmd.length){
         clearInterval(iv);
-        setTimeout(function(){
+        setTimeout(() => {
           rows[0].classList.add('show');
-          setTimeout(function(){ rows[1].classList.add('show'); caret.style.display='none'; }, 450);
+          setTimeout(() => { rows[1].classList.add('show'); caret.style.display = 'none'; }, 450);
         }, 250);
       }
     }, 28);
+
+    // subtle 3D tilt (desktop, motion-safe) — mirrors the homepage magnetic button
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    const card = document.getElementById('card404');
+    if(!reduceMotion && !isCoarsePointer){
+      window.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        const rx = ((e.clientY - r.top) / r.height - 0.5) * -5;
+        const ry = ((e.clientX - r.left) / r.width - 0.5) * 7;
+        card.style.transform = 'perspective(1100px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+      }, {passive:true});
+      window.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    }
   })();
 </script>
 </body>
