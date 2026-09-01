@@ -1,0 +1,28 @@
+{
+  "id": "/",
+  "name": "مهدی عسکری | برنامه‌ریزی و کنترل پروژه · توسعه‌دهنده وب · متخصص شبکه",
+  "short_name": "مهدی عسکری",
+  "description": "مهدی عسکری — مهندس برنامه‌ریزی و کنترل پروژه، توسعه‌دهنده وب و متخصص شبکه. سوابق کاری، گواهینامه‌های PMI، مهارت‌ها و راه‌های تماس.",
+  "lang": "fa",
+  "dir": "rtl",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#08090D",
+  "theme_color": "#08090D",
+  "icons": [
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}
