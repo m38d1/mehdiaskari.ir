@@ -17,6 +17,7 @@
 <meta name="author" content="Mehdi Askari">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://mehdiaskari.ir/">
+<link rel="alternate" type="application/rss+xml" title="وبلاگ مهدی عسکری" href="https://mehdiaskari.ir/blog/rss.xml">
 <link rel="apple-touch-icon" href="icon.svg">
 
 <!-- Open Graph -->
@@ -685,9 +686,51 @@
 
   ::view-transition-old(root), ::view-transition-new(root){ animation:none; mix-blend-mode:normal; }
 
-  #experience, #education, #skills, #contact{
+  #experience, #education, #skills, #blog, #contact{
     content-visibility:auto; contain-intrinsic-size:auto 800px;
   }
+
+  /* ---------- BLOG TEASER ---------- */
+  .blog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  @media (max-width:900px){ .blog-grid{grid-template-columns:1fr;} }
+  .blog-card{
+    position:relative; display:flex; flex-direction:column; gap:10px; overflow:hidden;
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(24px) saturate(170%);
+    border-radius:20px; padding:22px;
+    box-shadow:var(--card-shadow);
+    transition:border-color .25s ease, transform .25s ease;
+  }
+  .blog-card::before{
+    content:""; position:absolute; top:0; right:0; left:0; height:2px;
+    background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber));
+    opacity:.5; transition:opacity .25s ease;
+  }
+  .blog-card:hover{border-color:var(--teal); transform:translateY(-4px);}
+  .blog-card:hover::before{opacity:1;}
+  .blog-card h3{font-size:0.98rem; font-weight:800; line-height:1.7;}
+  .blog-card p{font-size:0.82rem; color:var(--text-muted); display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
+  .blog-card .post-meta{display:flex; flex-wrap:wrap; gap:8px; align-items:center; font-size:0.7rem; color:var(--text-dim);}
+  .blog-card .post-meta .tag{
+    font-family:'IBM Plex Mono', monospace; font-size:0.64rem; color:var(--teal);
+    border:1px solid var(--border); background:var(--glass-2);
+    padding:2px 8px; border-radius:100px;
+  }
+  .blog-card .more{
+    margin-top:auto; font-size:0.76rem; font-weight:600; color:var(--teal);
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .blog-card .more svg{width:12px; height:12px; fill:currentColor; transform:scaleX(-1); transition:transform .2s ease;}
+  .blog-card:hover .more svg{transform:translateX(-4px) scaleX(-1);}
+  .blog-more{margin-top:24px; text-align:center;}
+  .blog-more a{
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:0.84rem; font-weight:600; color:var(--text-muted);
+    border:1px solid var(--border); background:var(--glass-2);
+    padding:10px 20px; border-radius:100px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .blog-more a:hover, .blog-more a:focus-visible{border-color:var(--teal); color:var(--teal);}
   html[data-theme="light"] .card-spot{
     background:radial-gradient(460px circle at var(--spot-x,50%) var(--spot-y,50%), rgba(14,168,148,0.09), transparent 55%);
   }
@@ -923,7 +966,7 @@
     .social-row{display:none;}
 
     footer{border-top:1px solid var(--border); padding-top:14px;}
-    #experience, #education, #skills, #contact{ content-visibility:visible; }
+    #experience, #education, #skills, #blog, #contact{ content-visibility:visible; }
   }
 </style>
 </head>
@@ -942,6 +985,7 @@
           <li><a href="#experience" data-en="Experience">تجربه</a></li>
           <li><a href="#education" data-en="Education">تحصیلات</a></li>
           <li><a href="#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/blog/" data-en="Blog">وبلاگ</a></li>
           <li><a href="#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
@@ -964,6 +1008,7 @@
     <a href="#experience" data-en="Experience">تجربه</a>
     <a href="#education" data-en="Education">تحصیلات</a>
     <a href="#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/blog/" data-en="Blog">وبلاگ</a>
     <a href="#contact" data-en="Contact">تماس</a>
   </nav>
 </header>
@@ -1254,8 +1299,15 @@
 
 
 <div class="section-divider"><span></span><span></span><span></span></div>
+<section id="blog" class="reveal">
+  <div class="section-head"><span class="tag">05</span><h2 data-en="Blog">وبلاگ</h2><div class="rule"></div></div>
+  <div class="blog-grid" id="blog-grid"><noscript><a href="/blog/" style="color:var(--teal)">مشاهده‌ی وبلاگ</a></noscript></div>
+  <div class="blog-more"><a href="/blog/" data-en="All posts">همه‌ی نوشته‌ها</a></div>
+</section>
+
+<div class="section-divider"><span></span><span></span><span></span></div>
 <section id="contact" class="reveal">
-  <div class="section-head"><span class="tag">05</span><h2 data-en="Contact">تماس</h2><div class="rule"></div></div>
+  <div class="section-head"><span class="tag">06</span><h2 data-en="Contact">تماس</h2><div class="rule"></div></div>
   <div class="contact-panel">
     <div>
       <h2 data-en="Let&#39;s talk about everything">بیایید در مورد همه‌چیز صحبت کنیم</h2>
@@ -1576,13 +1628,14 @@
         { icon:'💼', group: lang==='en'?'Go to':'برو به', fa:'تجربه', en:'Experience', run:()=>jump('#experience') },
         { icon:'🎓', group: lang==='en'?'Go to':'برو به', fa:'تحصیلات', en:'Education', run:()=>jump('#education') },
         { icon:'🛠️', group: lang==='en'?'Go to':'برو به', fa:'مهارت‌ها', en:'Skills', run:()=>jump('#skills') },
+        { icon:'📚', group: lang==='en'?'Go to':'برو به', fa:'وبلاگ', en:'Blog', run:()=>{ location.href='/blog/'; } },
         { icon:'✉️', group: lang==='en'?'Go to':'برو به', fa:'تماس', en:'Contact', run:()=>jump('#contact') },
         { icon: theme==='dark' ? '☀️' : '🌙', group: lang==='en'?'Action':'عملیات', fa: theme==='dark' ? 'حالت روشن' : 'حالت تاریک', en: theme==='dark' ? 'Light mode' : 'Dark mode', run:()=>{ applyTheme(theme==='dark'?'light':'dark', innerWidth/2, innerHeight/2); } },
         { icon:'🌐', group: lang==='en'?'Action':'عملیات', fa:'تغییر زبان به EN', en:'Switch language to FA', run:()=> setLang(lang==='en'?'fa':'en') },
         { icon:'📋', group: lang==='en'?'Copy':'کپی', fa:'کپی ایمیل', en:'Copy email', run:(el)=> copyText('me@mehdiaskari.ir', el) },
         { icon:'📋', group: lang==='en'?'Copy':'کپی', fa:'کپی شماره تماس', en:'Copy phone number', run:(el)=> copyText('09991231110', el) },
         { icon:'💻', group: lang==='en'?'Open':'باز کردن', fa:'باز کردن گیت‌هاب', en:'Open GitHub', run:()=> window.open('https://github.com/m38d1','_blank') },
-        { icon:'📝', group: lang==='en'?'Open':'باز کردن', fa:'باز کردن وبلاگ', en:'Open blog', run:()=> window.open('https://blog.itha.ir/','_blank') },
+        { icon:'📝', group: lang==='en'?'Open':'باز کردن', fa:'باز کردن وبلاگ ITHA', en:'Open ITHA blog', run:()=> window.open('https://blog.itha.ir/','_blank') },
         { icon:'⬇️', group: lang==='en'?'Action':'عملیات', fa:'دانلود رزومه (PDF)', en:'Download resume (PDF)', run:()=> window.print() },
         { icon:'↑', group: lang==='en'?'Action':'عملیات', fa:'برو به بالای صفحه', en:'Scroll to top', run:()=> window.scrollTo({top:0, behavior:'smooth'}) },
       ];
@@ -1707,6 +1760,25 @@
       if(!ticking){ ticking = true; requestAnimationFrame(update); }
     }, {passive:true});
     update();
+  })();
+
+  // latest blog posts — auto-loaded from /posts.json
+  (function(){
+    const grid = document.getElementById('blog-grid');
+    if(!grid) return;
+    fetch('posts.json').then(r => r.ok ? r.json() : Promise.reject()).then(d => {
+      (d.posts || []).slice(0, 3).forEach(p => {
+        grid.insertAdjacentHTML('beforeend',
+          '<a class="blog-card" href="blog/' + p.slug + '/">' +
+            '<div class="post-meta"><span class="mono">' + p.dateFa + '</span>' +
+            p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
+            '<h3>' + p.title + '</h3>' +
+            '<p>' + p.excerpt + '</p>' +
+            '<span class="more">خواندن نوشته' +
+            ' <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>' +
+          '</a>');
+      });
+    }).catch(() => { const sec = grid.closest('section'); if(sec) sec.style.display = 'none'; });
   })();
 
   setLang('fa');

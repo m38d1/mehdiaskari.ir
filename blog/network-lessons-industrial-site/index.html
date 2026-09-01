@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+<title>پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم | وبلاگ مهدی عسکری</title>
+<meta name="description" content="درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم">
+<meta property="og:description" content="درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/network-lessons-industrial-site/">
+<meta property="article:published_time" content="2026-09-02">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/network-lessons-industrial-site/">
+</head>
+<body>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/blog/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن">☀️</button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک">🌙</button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/blog/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="post-head fu">
+    <div class="post-meta"><span class="mono">۱۱ شهریور ۱۴۰۵</span><span class="tag">شبکه</span><span class="tag">زیرساخت</span></div>
+    <h1>پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم</h1>
+  </div>
+  <article class="prose fu d1">
+
+<p>طراحی و نگهداری شبکه در سایت صنعتی با دفتر کار یک زمین تا زمین فرق دارد. این پنج درس را از تجربه‌ی میدانی یاد گرفتم:</p>
+
+<h2>۱. پایداری از سرعت مهم‌تر است</h2>
+<p>در دفتر، لگِ دو ثانیه‌ای آزاردهنده است؛ در سایت صنعتی، قطعیِ دو ثانیه‌ای می‌تواند یعنی توقف یک واحد. طراحی برای دسترس‌پذیری، نه پهنای باند.</p>
+
+<h2>۲. جداسازی شبکه‌ها نجات‌بخش است</h2>
+<p>شبکه‌ی اتوماسیون، اداری و مدیریتی باید کاملاً تفکیک شوند — VLAN و فایروال بین‌لایه‌ای. وقتی یک لپ‌تاپ آلوده وارد شبکه‌ی اداری می‌شود، نباید راهی به شبکه‌ی کنترل داشته باشد.</p>
+
+<h2>۳. مستندسازی، هدیه‌ای به خودِ آینده‌تان</h2>
+<p>نقشه‌ی به‌روز توپولوژی و برچسب‌گذاری درست کابل‌ها؛ در شب خرابی، باارزش‌ترین دارایی تیم هستند.</p>
+
+<h2>۴. تغییر، همیشه در پنجره‌ی نگهداری</h2>
+<p>هیچ تغییری — حتی آپدیت کوچک — خارج از پنجره‌ی مصوب انجام نمی‌شود. این انضباط در دنیای نرم‌افزار هم همین‌قدر ارزشمند است.</p>
+
+<h2>۵. مانیتورینگ یعنی دیدن قبل از قطعی</h2>
+<p>داشبورد پایش که رشد تدریجی خطا در یک سوئیچ را هفته‌ها قبل از خرابی نشان دهد، بهانه‌ی «غافلگیری» را از بین می‌برد.</p>
+
+<blockquote>در سایت صنعتی، شبکه زیرساخت نیست؛ ستون فقرات است.</blockquote>
+
+  </article>
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/blog/">← همه‌ی نوشته‌ها</a>
+    <a class="rss-link" href="/blog/rss.xml">
+      <svg viewBox="0 0 16 16"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
+      RSS
+    </a>
+  </div>
+</main>
+
+<footer data-en='© Mehdi Askari — Designed with care'>© مهدی عسکری — طراحی شده با دقت</footer>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>

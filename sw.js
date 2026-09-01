@@ -1,10 +1,14 @@
 /* mehdiaskari.ir — offline cache service worker */
-const CACHE = 'mehdiaskari-v9';
+const CACHE = 'mehdiaskari-v10';
 
 const PRECACHE = [
   './',
   './index.html',
   './404.html',
+  './blog/',
+  './blog/index.html',
+  './posts.json',
+  './blog.css',
   './fonts/fonts.css',
   './icon.svg',
   './manifest.webmanifest',
@@ -49,14 +53,14 @@ self.addEventListener('fetch', (event) => {
     event.respondWith(
       fetch(req)
         .then((res) => {
-          // cache only successful pages — never cache a 404 body under the index key
+          // cache only successful page bodies, under their own URL
           if (res && res.ok) {
             const copy = res.clone();
-            caches.open(CACHE).then((cache) => cache.put('./index.html', copy));
+            caches.open(CACHE).then((cache) => cache.put(req, copy));
           }
           return res;
         })
-        .catch(() => caches.match('./index.html'))
+        .catch(() => caches.match(req).then((hit) => hit || caches.match('./index.html')))
     );
     return;
   }

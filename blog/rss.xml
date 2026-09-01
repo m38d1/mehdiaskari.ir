@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>وبلاگ مهدی عسکری</title>
+  <link>https://mehdiaskari.ir/blog/</link>
+  <description>یادداشت‌های مهدی عسکری درباره برنامه‌ریزی و کنترل پروژه، توسعه وب، شبکه و هوش مصنوعی</description>
+  <language>fa</language>
+  <atom:link href="https://mehdiaskari.ir/blog/rss.xml" rel="self" type="application/rss+xml"/>
+  <item>
+    <title>چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است</title>
+    <link>https://mehdiaskari.ir/blog/pmi-ai-project-patterns/</link>
+    <guid>https://mehdiaskari.ir/blog/pmi-ai-project-patterns/</guid>
+    <pubDate>Wed, 02 Sep 2026 00:00:00 +0330</pubDate>
+    <description>از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک کافی نیستند.</description>
+  </item>
+  <item>
+    <title>از کد تا گانت‌چارت: داستان یک تغییر مسیر</title>
+    <link>https://mehdiaskari.ir/blog/from-code-to-gantt/</link>
+    <guid>https://mehdiaskari.ir/blog/from-code-to-gantt/</guid>
+    <pubDate>Wed, 02 Sep 2026 00:00:00 +0330</pubDate>
+    <description>چطور یک توسعه‌دهنده‌ی وب به برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید.</description>
+  </item>
+  <item>
+    <title>پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم</title>
+    <link>https://mehdiaskari.ir/blog/network-lessons-industrial-site/</link>
+    <guid>https://mehdiaskari.ir/blog/network-lessons-industrial-site/</guid>
+    <pubDate>Wed, 02 Sep 2026 00:00:00 +0330</pubDate>
+    <description>درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی.</description>
+  </item>
+</channel>
+</rss>
