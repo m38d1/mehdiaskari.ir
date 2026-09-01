@@ -6,24 +6,40 @@
       "title": "چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است",
       "date": "2026-09-02",
       "dateFa": "۱۱ شهریور ۱۴۰۵",
-      "tags": ["مدیریت پروژه", "هوش مصنوعی", "PMI"],
-      "excerpt": "از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است."
+      "tags": [
+        "مدیریت پروژه",
+        "هوش مصنوعی",
+        "PMI"
+      ],
+      "excerpt": "از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است.",
+      "titleEn": "Why project management is taking AI seriously",
+      "excerptEn": "From CPMAI to the seven AI project patterns; why classic methodologies alone fall short for AI projects — and the path PMI has drawn."
     },
     {
       "slug": "from-code-to-gantt",
       "title": "از کد تا گانت‌چارت: داستان یک تغییر مسیر",
       "date": "2026-09-02",
       "dateFa": "۱۱ شهریور ۱۴۰۵",
-      "tags": ["مسیر شغلی", "توسعه وب"],
-      "excerpt": "چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد."
+      "tags": [
+        "مسیر شغلی",
+        "توسعه وب"
+      ],
+      "excerpt": "چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.",
+      "titleEn": "From code to Gantt charts: the story of a detour",
+      "excerptEn": "How a web developer ended up planning industrial megaprojects — and what debugging code and controlling schedule deviations have in common."
     },
     {
       "slug": "network-lessons-industrial-site",
       "title": "پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم",
       "date": "2026-09-02",
       "dateFa": "۱۱ شهریور ۱۴۰۵",
-      "tags": ["شبکه", "زیرساخت"],
-      "excerpt": "درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه."
+      "tags": [
+        "شبکه",
+        "زیرساخت"
+      ],
+      "excerpt": "درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه.",
+      "titleEn": "Five networking lessons from an industrial site",
+      "excerptEn": "Lessons from designing and maintaining networks where uptime equals project uptime."
     }
   ]
 }
