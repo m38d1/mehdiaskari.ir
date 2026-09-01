@@ -2,20 +2,6 @@
   "updated": "2026-09-02",
   "posts": [
     {
-      "slug": "deepseek-harness-vs-claude-code",
-      "title": "۱۰۰ ساعت آزمایش DeepSeek Harness در برابر Claude Code",
-      "date": "2026-09-02",
-      "dateFa": "۱۱ شهریور ۱۴۰۵",
-      "tags": [
-        "هوش مصنوعی",
-        "ابزارها",
-        "کدنویسی"
-      ],
-      "excerpt": "نیت هرک یک هفته کامل DeepSeek Harness را در برابر Claude Code آزموده است: سرعت، کیفیت خروجی، هزینه، پایداری و شخصی‌سازی — با مدل یکسان روی هر دو. خلاصه‌ی ساختاریافته با فصل‌بندی دقیق و پرش به زمان‌بندی ویدیو.",
-      "titleEn": "100 Hours Testing DeepSeek Harness vs. Claude Code: What You Need to Know",
-      "excerptEn": "Nate Herk spent a week pitting the DeepSeek Harness against Claude Code — speed, output quality, cost, reliability and customization, same model on both. A structured Persian summary with exact chapter timestamps."
-    },
-    {
       "slug": "pmi-ai-project-patterns",
       "title": "چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است",
       "date": "2026-09-02",
