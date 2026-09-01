@@ -495,7 +495,7 @@
   .section-head .rule{flex:1; height:1px; background:linear-gradient(to left, var(--border), transparent);}
 
   /* ---------- ABOUT ---------- */
-  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:24px;}
+  .about-grid{display:grid; grid-template-columns:1.25fr .9fr; gap:24px;}
   @media (max-width:760px){ .about-grid{grid-template-columns:1fr;} }
   .about-text p{color:var(--text-muted); margin-bottom:16px; max-width:60ch; text-align:justify; text-align-last:right;}
   .about-text strong{color:var(--text); font-weight:700;}
@@ -612,6 +612,31 @@
   .tool-card p{font-size:0.81rem; color:var(--text-dim); text-align:justify; text-align-last:right;}
 
   .skill-tags{display:flex; flex-wrap:wrap; gap:10px; margin-top:28px;}
+
+  /* ---------- BENTO + CARD SPOTLIGHT (Linear-style) ---------- */
+  .about-text{
+    background:var(--glass); border:1px solid var(--border);
+    backdrop-filter:blur(24px) saturate(170%);
+    border-radius:22px; padding:26px 26px 20px;
+    box-shadow:var(--card-shadow); position:relative; overflow:hidden;
+    transition:border-color .5s ease;
+  }
+  .about-text::before{
+    content:""; position:absolute; top:0; right:0; left:0; height:2px;
+    background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber)); opacity:.7;
+  }
+  .bento-wide{grid-column:1 / -1;}
+  .tools-grid .skill-tags{margin-top:0; align-content:center;}
+  .tools-grid .term-card{margin-top:0;}
+  .card-spot{
+    position:absolute; inset:0; pointer-events:none; border-radius:inherit;
+    opacity:0; transition:opacity .35s ease;
+    background:radial-gradient(460px circle at var(--spot-x,50%) var(--spot-y,50%), rgba(47,224,196,0.10), transparent 55%);
+  }
+  .spot-enabled:hover .card-spot, .spot-enabled:focus-within .card-spot{opacity:1;}
+  html[data-theme="light"] .card-spot{
+    background:radial-gradient(460px circle at var(--spot-x,50%) var(--spot-y,50%), rgba(14,168,148,0.09), transparent 55%);
+  }
 
   /* ---------- ANIMATED TERMINAL: SKILLS INSTALLER ---------- */
   .term-card{
@@ -825,10 +850,10 @@
     section{padding:18px 0; max-width:100%; break-inside:avoid;}
     .section-head .tag{box-shadow:none;}
 
-    .info-card, .gantt-card, .tool-card, .contact-panel{
+    .info-card, .gantt-card, .tool-card, .contact-panel, .about-text{
       border:1px solid var(--border); backdrop-filter:none; break-inside:avoid;
     }
-    .info-card::before, .contact-panel::before{display:none;}
+    .info-card::before, .contact-panel::before, .about-text::before, .card-spot{display:none;}
     .gantt-card::before{display:none;}
     .gantt-item{break-inside:avoid;}
     .rail .dot{background:var(--teal); box-shadow:none;}
@@ -915,7 +940,7 @@
 <section id="about" class="reveal">
   <div class="section-head"><span class="tag">01</span><h2 data-en="About Me">درباره من</h2><div class="rule"></div></div>
   <div class="about-grid">
-    <div class="about-text">
+    <div class="about-text bento-card">
       <p data-en="<strong>From code to schedules: a developer&#39;s path into industry.</strong> I&#39;m <strong>Mehdi Askari</strong>, an IT engineering graduate and developer whose deep interest in building software solutions led me into the challenging world of industrial project planning and control."><strong>از کد تا برنامه‌ریزی: مسیر یک توسعه‌دهنده در دنیای صنعت.</strong> من <strong>مهدی عسکری</strong> هستم، فارغ‌التحصیل رشته‌ی فناوری اطلاعات و توسعه‌دهنده‌ای که علاقه‌ی عمیقم به خلق راه‌حل‌های نرم‌افزاری، مرا به سمت دنیای جذاب و چالش‌برانگیز برنامه‌ریزی و کنترل پروژه‌های صنعتی کشاند.</p>
       <p data-en="I currently work on industrial projects, combining technical software-development knowledge with rigorous project-management principles to make sure ideas don&#39;t just turn into code, but land as real, valuable results within a defined timeline, budget and quality.">در حال حاضر در پروژه‌های صنعتی مشغولم و از تلفیق دانش فنی توسعه‌ی نرم‌افزار با اصول دقیق مدیریت پروژه، اطمینان حاصل می‌کنم که ایده‌ها نه‌تنها به کد تبدیل می‌شوند، بلکه در چارچوب زمان، بودجه و کیفیت مشخص به نتیجه‌ی عملیاتی و ارزشمند می‌رسند.</p>
       <p data-en="I believe today&#39;s sweet spot for success is where technology and management converge. I&#39;d be glad to write the story of our next project together.">باور دارم در دنیای امروز، نقطه‌ی طلایی موفقیت در همگرایی فناوری و مدیریت است. خوشحال می‌شوم داستان پروژه‌ی بعدی ما با هم نوشته شود.</p>
@@ -1140,8 +1165,7 @@
       <h3 data-en="Network Design &amp; Implementation">طراحی و پیاده‌سازی شبکه</h3>
       <p data-en="Topology design, router and switch configuration, VLAN and subnet implementation, setting up and optimizing LAN/WAN networks.">طراحی توپولوژی، پیکربندی روتر و سوئیچ، پیاده‌سازی VLAN و زیرشبکه‌ها، راه‌اندازی و بهینه‌سازی شبکه‌های LAN/WAN.</p>
     </div>
-  </div>
-  <div class="skill-tags">
+  <div class="skill-tags bento-wide">
     <span class="skill-tag">Oracle Primavera P6</span>
     <span class="skill-tag">Microsoft Project</span>
     <span class="skill-tag">CompTIA Network+</span>
@@ -1151,7 +1175,7 @@
     <span class="skill-tag">Frontend / Backend</span>
   </div>
 
-  <div class="term-card" id="term-card">
+  <div class="term-card bento-wide" id="term-card">
     <div class="term-head">
       <span class="term-dot r"></span><span class="term-dot y"></span><span class="term-dot g"></span>
       <span class="term-title">zsh — mehdi@askari</span>
@@ -1167,6 +1191,7 @@
       ]'><div></div><div></div><div></div><div></div><div></div></div>
       <div class="term-cursor-line"><span class="term-prompt">$</span><span class="term-caret"></span></div>
     </div>
+  </div>
   </div>
 </section>
 
@@ -1561,6 +1586,27 @@
     list.addEventListener('click', (e)=>{
       const item = e.target.closest('.cmdk-item');
       if(item) execute(parseInt(item.dataset.i, 10));
+    });
+  })();
+
+  // Linear-style card spotlight (desktop, motion-safe)
+  (function(){
+    const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
+    if(reduceMotion || coarse) return;
+    document.querySelectorAll('.info-card, .tool-card, .gantt-card, .schedule-card, .contact-panel, .about-text').forEach(card => {
+      if(card.dataset.spot) return;
+      card.dataset.spot = '1';
+      card.classList.add('spot-enabled');
+      const spot = document.createElement('span');
+      spot.className = 'card-spot';
+      spot.setAttribute('aria-hidden', 'true');
+      card.appendChild(spot);
+      card.addEventListener('mousemove', (e) => {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty('--spot-x', (e.clientX - r.left) + 'px');
+        card.style.setProperty('--spot-y', (e.clientY - r.top) + 'px');
+      }, {passive:true});
     });
   })();
 
