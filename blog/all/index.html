@@ -59,19 +59,19 @@
 
   <div class="post-grid" id="post-grid">
     <a class="post-card" href="/blog/pmi-ai-project-patterns/">
-      <div class="post-meta"><span class="mono">۱۱ شهریور ۱۴۰۵</span><span class="tag">مدیریت پروژه</span><span class="tag">هوش مصنوعی</span><span class="tag">PMI</span></div>
+      <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">مدیریت پروژه</span><span class="tag">هوش مصنوعی</span><span class="tag">PMI</span></div>
       <h3 data-en="Why project management is taking AI seriously">چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است</h3>
       <p data-en="From CPMAI to the seven AI project patterns; why classic methodologies alone fall short for AI projects — and the path PMI has drawn.">از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/from-code-to-gantt/">
-      <div class="post-meta"><span class="mono">۱۱ شهریور ۱۴۰۵</span><span class="tag">مسیر شغلی</span><span class="tag">توسعه وب</span></div>
+      <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">مسیر شغلی</span><span class="tag">توسعه وب</span></div>
       <h3 data-en="From code to Gantt charts: the story of a detour">از کد تا گانت‌چارت: داستان یک تغییر مسیر</h3>
       <p data-en="How a web developer ended up planning industrial megaprojects — and what debugging code and controlling schedule deviations have in common.">چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/network-lessons-industrial-site/">
-      <div class="post-meta"><span class="mono">۱۱ شهریور ۱۴۰۵</span><span class="tag">شبکه</span><span class="tag">زیرساخت</span></div>
+      <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">شبکه</span><span class="tag">زیرساخت</span></div>
       <h3 data-en="Five networking lessons from an industrial site">پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم</h3>
       <p data-en="Lessons from designing and maintaining networks where uptime equals project uptime.">درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
@@ -159,7 +159,7 @@
       card.className = 'post-card';
       card.href = '/blog/' + p.slug + '/';
       card.innerHTML =
-        '<div class="post-meta"><span class="mono">' + (lang === 'en' ? p.date : p.dateFa) + '</span>' +
+        '<div class="post-meta"><span class="pdate">' + (lang === 'en' ? p.date : p.dateFa) + '</span>' +
         p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
         '<h3>' + (lang === 'en' && p.titleEn ? p.titleEn : p.title) + '</h3>' +
         '<p>' + (lang === 'en' && p.excerptEn ? p.excerptEn : p.excerpt) + '</p>' +

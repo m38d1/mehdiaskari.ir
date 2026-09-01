@@ -192,6 +192,7 @@
   .spotlight.on{opacity:1;}
 
   .mono{font-family:'IBM Plex Mono', monospace; direction:ltr; unicode-bidi:isolate;}
+  .pdate{font-family:'IBM Plex Mono', monospace;}
   a{color:inherit; text-decoration:none;}
   ::selection{background:var(--teal); color:#08090D;}
 
@@ -1770,7 +1771,7 @@
       (d.posts || []).slice(0, 3).forEach(p => {
         grid.insertAdjacentHTML('beforeend',
           '<a class="blog-card" href="blog/' + p.slug + '/">' +
-            '<div class="post-meta"><span class="mono">' + p.dateFa + '</span>' +
+            '<div class="post-meta"><span class="pdate">' + p.dateFa + '</span>' +
             p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
             '<h3>' + p.title + '</h3>' +
             '<p>' + p.excerpt + '</p>' +
