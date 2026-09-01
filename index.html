@@ -18,6 +18,8 @@
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="https://mehdiaskari.ir/">
 <link rel="alternate" type="application/rss+xml" title="وبلاگ مهدی عسکری" href="https://mehdiaskari.ir/blog/rss.xml">
+<link rel="alternate" type="application/pdf" hreflang="fa" href="/resume-fa.pdf">
+<link rel="alternate" type="application/pdf" hreflang="en" href="/resume-en.pdf">
 <link rel="apple-touch-icon" href="icon.svg">
 
 <!-- Open Graph -->
@@ -1545,8 +1547,17 @@
   }, {passive:true});
   scrollTopBtn.addEventListener('click', ()=> window.scrollTo({top:0, behavior:'smooth'}));
 
-  // resume download (print to PDF)
-  document.getElementById('download-resume').addEventListener('click', ()=> window.print());
+  // resume download (generated PDF, language-aware)
+  function downloadResume(){
+    const code = lang === 'en' ? 'EN' : 'FA';
+    const a = document.createElement('a');
+    a.href = '/resume-' + code.toLowerCase() + '.pdf';
+    a.download = 'Mehdi-Askari-Resume-' + code + '.pdf';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+  }
+  document.getElementById('download-resume').addEventListener('click', downloadResume);
 
   // animated terminal: skills installer (typewriter + staggered output)
   (function(){
@@ -1659,7 +1670,7 @@
         { icon:'i-copy', group: lang==='en'?'Copy':'کپی', fa:'کپی شماره تماس', en:'Copy phone number', run:(el)=> copyText('09991231110', el) },
         { icon:'i-github', group: lang==='en'?'Open':'باز کردن', fa:'باز کردن گیت‌هاب', en:'Open GitHub', run:()=> window.open('https://github.com/m38d1','_blank') },
         { icon:'i-link', group: lang==='en'?'Open':'باز کردن', fa:'باز کردن وبلاگ ITHA', en:'Open ITHA blog', run:()=> window.open('https://blog.itha.ir/','_blank') },
-        { icon:'i-download', group: lang==='en'?'Action':'عملیات', fa:'دانلود رزومه (PDF)', en:'Download resume (PDF)', run:()=> window.print() },
+        { icon:'i-download', group: lang==='en'?'Action':'عملیات', fa:'دانلود رزومه (PDF)', en:'Download resume (PDF)', run:()=> downloadResume() },
         { icon:'i-arrow-up', group: lang==='en'?'Action':'عملیات', fa:'برو به بالای صفحه', en:'Scroll to top', run:()=> window.scrollTo({top:0, behavior:'smooth'}) },
       ];
     }
