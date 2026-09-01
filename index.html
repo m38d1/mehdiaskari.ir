@@ -985,7 +985,7 @@
           <li><a href="#experience" data-en="Experience">تجربه</a></li>
           <li><a href="#education" data-en="Education">تحصیلات</a></li>
           <li><a href="#skills" data-en="Skills">مهارت‌ها</a></li>
-          <li><a href="/blog/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
           <li><a href="#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
@@ -1008,7 +1008,7 @@
     <a href="#experience" data-en="Experience">تجربه</a>
     <a href="#education" data-en="Education">تحصیلات</a>
     <a href="#skills" data-en="Skills">مهارت‌ها</a>
-    <a href="/blog/" data-en="Blog">وبلاگ</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
     <a href="#contact" data-en="Contact">تماس</a>
   </nav>
 </header>
@@ -1301,8 +1301,8 @@
 <div class="section-divider"><span></span><span></span><span></span></div>
 <section id="blog" class="reveal">
   <div class="section-head"><span class="tag">05</span><h2 data-en="Blog">وبلاگ</h2><div class="rule"></div></div>
-  <div class="blog-grid" id="blog-grid"><noscript><a href="/blog/" style="color:var(--teal)">مشاهده‌ی وبلاگ</a></noscript></div>
-  <div class="blog-more"><a href="/blog/" data-en="All posts">همه‌ی نوشته‌ها</a></div>
+  <div class="blog-grid" id="blog-grid"><noscript><a href="/blog/all/" style="color:var(--teal)">مشاهده‌ی وبلاگ</a></noscript></div>
+  <div class="blog-more"><a href="/blog/all/" data-en="All posts">همه‌ی نوشته‌ها</a></div>
 </section>
 
 <div class="section-divider"><span></span><span></span><span></span></div>
@@ -1628,7 +1628,7 @@
         { icon:'💼', group: lang==='en'?'Go to':'برو به', fa:'تجربه', en:'Experience', run:()=>jump('#experience') },
         { icon:'🎓', group: lang==='en'?'Go to':'برو به', fa:'تحصیلات', en:'Education', run:()=>jump('#education') },
         { icon:'🛠️', group: lang==='en'?'Go to':'برو به', fa:'مهارت‌ها', en:'Skills', run:()=>jump('#skills') },
-        { icon:'📚', group: lang==='en'?'Go to':'برو به', fa:'وبلاگ', en:'Blog', run:()=>{ location.href='/blog/'; } },
+        { icon:'📚', group: lang==='en'?'Go to':'برو به', fa:'وبلاگ', en:'Blog', run:()=>{ location.href='/blog/all/'; } },
         { icon:'✉️', group: lang==='en'?'Go to':'برو به', fa:'تماس', en:'Contact', run:()=>jump('#contact') },
         { icon: theme==='dark' ? '☀️' : '🌙', group: lang==='en'?'Action':'عملیات', fa: theme==='dark' ? 'حالت روشن' : 'حالت تاریک', en: theme==='dark' ? 'Light mode' : 'Dark mode', run:()=>{ applyTheme(theme==='dark'?'light':'dark', innerWidth/2, innerHeight/2); } },
         { icon:'🌐', group: lang==='en'?'Action':'عملیات', fa:'تغییر زبان به EN', en:'Switch language to FA', run:()=> setLang(lang==='en'?'fa':'en') },
