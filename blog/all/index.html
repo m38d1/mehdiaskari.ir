@@ -13,6 +13,7 @@
 <link rel="alternate" type="application/rss+xml" title="وبلاگ مهدی عسکری" href="https://mehdiaskari.ir/blog/rss.xml">
 <title data-en="Blog | Mehdi Askari">وبلاگ | مهدی عسکری</title>
 <meta name="description" content="یادداشت‌های مهدی عسکری درباره برنامه‌ریزی و کنترل پروژه، توسعه وب، شبکه و هوش مصنوعی.">
+<script src="/cover.js" defer></script>
 </head>
 <body>
 <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
@@ -176,6 +177,7 @@
       card.className = 'post-card';
       card.href = '/blog/' + p.slug + '/';
       card.innerHTML =
+        '<div class="cover" data-cover="' + p.slug + '"></div>' +
         '<div class="post-meta"><span class="pdate">' + (lang === 'en' ? p.date : p.dateFa) + '</span>' +
         p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
         '<h3>' + (lang === 'en' && p.titleEn ? p.titleEn : p.title) + '</h3>' +
