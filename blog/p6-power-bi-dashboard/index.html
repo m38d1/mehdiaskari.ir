@@ -101,7 +101,7 @@
 <h3>روش حرفه‌ای: خروجی XER</h3>
 <p>فایل XER یک فایل متنی با ساختار جدولی است که همه جداول P6 را در بر دارد: TASK، TASKPRED، PROJWBS، PROJECT، CALENDAR و غیره. برای خروجی: File → Export → Primavera XER و انتخاب پروژه جاری.</p>
 <p>ساختار XER ساده است و برنامه به‌راحتی می‌تواند آن را بخواند، خط‌به‌خط جدا کند و هر تکه را در جای خودش بگذارد:</p>
-<pre>%T
+<pre dir="ltr" data-lang="XER FILE">%T
 TABLE_NAME
 %F
 FIELD1\tFIELD2\tFIELD3
@@ -122,7 +122,7 @@ VALUE1\tVALUE2\tVALUE3
 <li>کدی بنویسید که فایل را به‌صورت متن بخواند، بر اساس خطوط %T جدا کند و برای هر جدول، هدر و ردیف‌ها را استخراج کند.</li>
 </ol>
 <p>یک تابع نمونه در M برای خواندن XER:</p>
-<pre>(filePath as text) as table =>
+<pre dir="ltr" data-lang="POWER QUERY (M)">(filePath as text) as table =>
 let
     Source = Lines.FromBinary(File.Contents(filePath)),
     Table1 = Table.FromList(Source, Splitter.SplitByNothing()),
@@ -155,7 +155,7 @@ in
 <p>فرض کنید جدولی به نام Task دارید با ستون‌های PlannedUnits، EarnedUnits، ActualUnits، PlannedCost، EarnedCost، ActualCost، DurationDays و PercentComplete.</p>
 
 <h3>شاخص‌های پایه</h3>
-<pre>// انحراف زمان (SV) به واحد ساعت یا هزینه
+<pre dir="ltr" data-lang="DAX">// انحراف زمان (SV) به واحد ساعت یا هزینه
 Schedule Variance = SUM(Task[EarnedUnits]) - SUM(Task[PlannedUnits])
 
 // انحراف هزینه (CV)
@@ -165,14 +165,14 @@ Cost Variance = SUM(Task[EarnedCost]) - SUM(Task[ActualCost])
 Physical % = DIVIDE(SUM(Task[EarnedUnits]), SUM(Task[PlannedUnits]))</pre>
 
 <h3>SPI و CPI</h3>
-<pre>// شاخص عملکرد زمان
+<pre dir="ltr" data-lang="DAX">// شاخص عملکرد زمان
 SPI = DIVIDE(SUM(Task[EarnedUnits]), SUM(Task[PlannedUnits]))
 
 // شاخص عملکرد هزینه
 CPI = DIVIDE(SUM(Task[EarnedCost]), SUM(Task[ActualCost]))</pre>
 
 <h3>برآورد تا پایان و شاخص تکمیل</h3>
-<pre>// برآورد هزینه نهایی (EAC) — ساده شده
+<pre dir="ltr" data-lang="DAX">// برآورد هزینه نهایی (EAC) — ساده شده
 EAC = SUM(Task[PlannedCost]) / DIVIDE(SUM(Task[EarnedCost]), SUM(Task[ActualCost]))
 
 // شاخص عملکرد لازم برای تکمیل در بودجه (TCPI)
@@ -180,7 +180,7 @@ TCPI = DIVIDE(SUM(Task[PlannedCost]) - SUM(Task[EarnedCost]),
               SUM(Task[PlannedCost]) - SUM(Task[ActualCost]))</pre>
 
 <h3>فعالیت‌های بحرانی و Look-ahead</h3>
-<pre>// تعداد فعالیت‌های بحرانی (شناور صفر یا منفی)
+<pre dir="ltr" data-lang="DAX">// تعداد فعالیت‌های بحرانی (شناور صفر یا منفی)
 Critical Count = CALCULATE(COUNTROWS(Task), Task[TotalFloat] <= 0)
 
 // فعالیت‌های در شرف شروع — سه هفته پیش رو
@@ -189,7 +189,7 @@ CALCULATE(COUNTROWS(Task),
     Task[PlannedStart] >= TODAY() && Task[PlannedStart] <= TODAY() + 21)</pre>
 
 <h3>منحنی S (مقادیر تجمعی)</h3>
-<pre>// تجمع برنامه‌ای
+<pre dir="ltr" data-lang="DAX">// تجمع برنامه‌ای
 Cumul Planned =
 CALCULATE(SUM(Task[PlannedUnits]),
     FILTER(ALL(Task[PlannedFinish]), Task[PlannedFinish] <= MAX(DateDim[Date])))
@@ -228,7 +228,7 @@ CALCULATE(SUM(Task[EarnedUnits]),
 
 <h3>اعتبارسنجی داده</h3>
 <p>اولین قانون داشبورد کنترل پروژه: داده کثیف، داشبورد را گمراه‌کننده می‌کند. یک اندازه اعتبارسنجی بسازید که باید صفر باشد:</p>
-<pre>Data Valid = COUNTROWS(FILTER(Task, Task[PlannedStart] < DATE(2020, 1, 1)))</pre>
+<pre dir="ltr" data-lang="DAX">Data Valid = COUNTROWS(FILTER(Task, Task[PlannedStart] < DATE(2020, 1, 1)))</pre>
 
 <h3>تفاوت تقویم</h3>
 <p>P6 مدت فعالیت را بر حسب روز کاری ذخیره می‌کند، نه روز تقویمی. قبل از محاسبه منحنی S و روندها، تاریخ‌ها را با تقویم P6 هماهنگ کنید، وگرنه اعداد دقیق نخواهند بود.</p>
@@ -250,7 +250,7 @@ CALCULATE(SUM(Task[EarnedUnits]),
 
 <h2>اتوماسیون تازه‌سازی</h2>
 <p>برای تازه‌سازی خودکار، یک اسکریپت ساده می‌تواند فایل XER تازه را در مسیر ورودی Power BI کپی کند و Refresh زمان‌بندی‌شده آن را بخواند:</p>
-<pre># PowerShell — کپی XER تازه به مسیر ورودی داشبورد
+<pre dir="ltr" data-lang="POWERSHELL"># PowerShell — کپی XER تازه به مسیر ورودی داشبورد
 $source = "\\p6-server\exports\ProjectExport.xer"
 $dest   = "C:\PowerBI\ProjectData.xer"
 Copy-Item -Path $source -Destination $dest -Force

@@ -266,9 +266,24 @@ main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
 .prose pre{
   direction:ltr; text-align:left; unicode-bidi:isolate;
   font-family:'IBM Plex Mono', monospace; font-size:0.8em;
-  background:rgba(127,127,127,0.12); border:1px solid var(--border-soft);
-  border-radius:12px; padding:18px 20px; overflow-x:auto;
+  background-color:rgba(127,127,127,0.12);
+  background-image:linear-gradient(rgba(127,127,127,0.16), rgba(127,127,127,0.16));
+  background-size:100% 34px; background-repeat:no-repeat;
+  border:1px solid var(--border-soft); border-radius:12px;
+  padding:46px 20px 18px; overflow-x:auto;
   margin:0 0 18px; line-height:1.55; white-space:pre;
+  position:relative;
+}
+.prose pre::before{
+  content:attr(data-lang);
+  position:absolute; top:10px; left:58px;
+  font-family:'IBM Plex Mono', monospace; font-size:9px; letter-spacing:1.4px;
+  color:var(--text-muted); direction:ltr; text-align:left;
+}
+.prose pre::after{
+  content:""; position:absolute; top:13px; left:14px;
+  width:8px; height:8px; border-radius:50%;
+  background:#ff5f57; box-shadow:13px 0 0 #febc2e, 26px 0 0 #28c840;
 }
 .prose a{color:var(--teal); border-bottom:1px dashed var(--teal);}
 .post-foot{
