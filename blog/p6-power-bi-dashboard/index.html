@@ -100,7 +100,7 @@
 
 <h3>روش حرفه‌ای: خروجی XER</h3>
 <p>فایل XER یک فایل متنی با ساختار جدولی است که همه جداول P6 را در بر دارد: TASK، TASKPRED، PROJWBS، PROJECT، CALENDAR و غیره. برای خروجی: File → Export → Primavera XER و انتخاب پروژه جاری.</p>
-<p>ساختار XER ساده و قابل پارس است:</p>
+<p>ساختار XER ساده است و برنامه به‌راحتی می‌تواند آن را بخواند، خط‌به‌خط جدا کند و هر تکه را در جای خودش بگذارد:</p>
 <pre>%T
 TABLE_NAME
 %F
@@ -251,8 +251,8 @@ CALCULATE(SUM(Task[EarnedUnits]),
 <h2>اتوماسیون تازه‌سازی</h2>
 <p>برای تازه‌سازی خودکار، یک اسکریپت ساده می‌تواند فایل XER تازه را در مسیر ورودی Power BI کپی کند و Refresh زمان‌بندی‌شده آن را بخواند:</p>
 <pre># PowerShell — کپی XER تازه به مسیر ورودی داشبورد
-$source = "\\\\p6-server\\exports\\ProjectExport.xer"
-$dest   = "C:\\PowerBI\\ProjectData.xer"
+$source = "\\p6-server\exports\ProjectExport.xer"
+$dest   = "C:\PowerBI\ProjectData.xer"
 Copy-Item -Path $source -Destination $dest -Force
 Write-Output "XER refreshed: $(Get-Date)"</pre>
 <p>بهتر است این کار از طریق Windows Task Scheduler و با حساب کاربری با حداقل دسترسی انجام شود.</p>

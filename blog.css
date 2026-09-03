@@ -263,6 +263,13 @@ main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
   background:rgba(127,127,127,0.15); border:1px solid var(--border-soft);
   padding:2px 7px; border-radius:6px; color:var(--teal);
 }
+.prose pre{
+  direction:ltr; text-align:left; unicode-bidi:isolate;
+  font-family:'IBM Plex Mono', monospace; font-size:0.8em;
+  background:rgba(127,127,127,0.12); border:1px solid var(--border-soft);
+  border-radius:12px; padding:18px 20px; overflow-x:auto;
+  margin:0 0 18px; line-height:1.55; white-space:pre;
+}
 .prose a{color:var(--teal); border-bottom:1px dashed var(--teal);}
 .post-foot{
   display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
