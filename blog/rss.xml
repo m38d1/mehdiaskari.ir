@@ -7,6 +7,13 @@
   <language>fa</language>
   <atom:link href="https://mehdiaskari.ir/blog/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
+    <title>محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</title>
+    <link>https://mehdiaskari.ir/blog/weight-factor-excel-msp/</link>
+    <guid>https://mehdiaskari.ir/blog/weight-factor-excel-msp/</guid>
+    <pubDate>Wed, 03 Sep 2026 00:00:00 +0330</pubDate>
+    <description>وقتی فقط هزینه واقعی (C)، وزن (W) و ارزش/بودجه (V) را داریم، چطور ضریب وزن (W.F) و درصد پیشرفت وزنی کل پروژه را حساب کنیم — آموزش گام‌به‌گام در اکسل و Microsoft Project.</description>
+  </item>
+    <item>
     <title>اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه</title>
     <link>https://mehdiaskari.ir/blog/p6-power-bi-dashboard/</link>
     <guid>https://mehdiaskari.ir/blog/p6-power-bi-dashboard/</guid>

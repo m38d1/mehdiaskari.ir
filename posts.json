@@ -2,6 +2,21 @@
   "updated": "2026-09-02",
   "posts": [
     {
+      "slug": "weight-factor-excel-msp",
+      "title": "محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP",
+      "date": "2026-09-03",
+      "dateFa": "۱۲ شهریور ۱۴۰۵",
+      "tags": [
+        "Excel",
+        "MS Project",
+        "کنترل پروژه",
+        "پیشرفت وزنی"
+      ],
+      "excerpt": "وقتی فقط هزینه واقعی (C)، وزن (W) و ارزش/بودجه (V) را داریم، چطور ضریب وزن (W.F) و درصد پیشرفت وزنی کل پروژه را حساب کنیم — آموزش گام‌به‌گام در اکسل و Microsoft Project.",
+      "titleEn": "Calculating Weight Factor (W.F) and weighted progress from cost, weight and value — in Excel and MSP",
+      "excerptEn": "When you only have actual cost (C), weight (W) and budget/value (V): how to compute the Weight Factor (W.F) and overall weighted progress — step by step in Excel and Microsoft Project."
+    },
+    {
       "slug": "p6-power-bi-dashboard",
       "title": "اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه",
       "date": "2026-09-03",

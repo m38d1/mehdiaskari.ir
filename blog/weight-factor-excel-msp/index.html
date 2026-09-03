@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+<title>محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</title>
+<meta name="description" content="وقتی فقط هزینه واقعی (C)، وزن (W) و ارزش/بودجه (V) را داریم، چطور ضریب وزن (W.F) و درصد پیشرفت وزنی کل پروژه را حساب کنیم — آموزش گام‌به‌گام در اکسل و Microsoft Project.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP">
+<meta property="og:description" content="فرمول عملی محاسبه W.F و پیشرفت وزنی از روی نسبت هزینه، همراه با پیاده‌سازی در اکسل و Microsoft Project.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/weight-factor-excel-msp/">
+<meta property="article:published_time" content="2026-09-03">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/weight-factor-excel-msp/">
+<script src="/cover.js" defer></script>
+</head>
+<body>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="post-head fu">
+    <div class="post-meta"><span class="pdate">۱۲ شهریور ۱۴۰۵</span><span class="tag">Excel</span><span class="tag">MS Project</span><span class="tag">کنترل پروژه</span><span class="tag">پیشرفت وزنی</span></div>
+    <h1>محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</h1>
+<div class="cover post-hero" data-cover="weight-factor-excel-msp"></div>
+  </div>
+  <article class="prose fu d1">
+
+<p>در بسیاری از پروژه‌های صنعتی، برنامه‌ریز وزن (W) هر بسته کاری را می‌داند، بودجه یا ارزش (V) آن را در دست دارد و هزینه واقعی (C) را هم از سیستم مالی می‌گیرد — اما درصد پیشرفت فیزیکی (P) تک‌تک فعالیت‌ها را ندارد. سؤال کلاسیک کنترل‌کننده پروژه دقیقاً همین‌جاست: <strong>با همین سه عدد (C، W، V) چطور ضریب وزن (W.F) و در نهایت درصد پیشرفت وزنی کل پروژه را حساب کنیم؟</strong> این یادداشت یک پاسخ عملی می‌دهد — هم در اکسل و هم در Microsoft Project.</p>
+
+<h2>تعریف مختصر متغیرها</h2>
+<ul>
+<li><strong>W (وزن)</strong>: وزن نسبی بسته کاری؛ مجموعش می‌تواند ۱۰۰ باشد یا هر عدد دیگری (مثلاً مجموع وزن‌ها = ۱۰۰۰).</li>
+<li><strong>V (ارزش / بودجه)</strong>: ارزش پولی یا بودجهٔ تکمیل بسته — معادل BAC (Budget at Completion) آن فعالیت.</li>
+<li><strong>C (هزینه واقعی)</strong>: آنچه تاکنون خرج شده — معادل AC (Actual Cost) یا ACWP.</li>
+<li><strong>W.F (ضریب وزن)</strong>: سهم نرمال‌شدهٔ هر فعالیت از کل پروژه. دو تعریف رایج دارد (در ادامه).</li>
+</ul>
+
+<h2>فرمول پایه</h2>
+
+<h3>۱) محاسبه ضریب وزن (W.F)</h3>
+<p>اگر وزن‌دهی بر مبنای اهمیت فعالیت‌هاست:</p>
+<pre dir="ltr" data-lang="FORMULA">W.F_i = W_i / ΣW</pre>
+<p>اگر ترجیح می‌دهید وزن را بر مبنای پول (ارزش) توزیع کنید — که در پروژه‌های نفت، گاز و پتروشیمی رایج‌تر است:</p>
+<pre dir="ltr" data-lang="FORMULA">W.F_i = V_i / ΣV</pre>
+<p>در هر دو حالت، مجموع تمام W.Fها باید دقیقاً <strong>۱</strong> (یا ۱۰۰٪) باشد؛ این خودش یک چک اعتبارسنجی ساده است.</p>
+
+<h3>۲) پیشرفت وزنی وقتی P (پیشرفت فیزیکی) داریم</h3>
+<pre dir="ltr" data-lang="FORMULA">Weighted Progress = Σ ( W.F_i × P_i ) × 100</pre>
+
+<h3>۳) وقتی فقط C داریم (سناریوی این پست)</h3>
+<p>وقتی درصد فیزیکی نداریم، از <strong>نسبت هزینه</strong> به عنوان برآورد پیشرفت استفاده می‌کنیم:</p>
+<pre dir="ltr" data-lang="FORMULA">Cost Ratio_i = C_i / V_i
+
+Weighted Progress ≈ Σ ( W.F_i × (C_i / V_i) ) × 100</pre>
+<p>یعنی هر فعالیت را به اندازهٔ «سهم هزینه‌ای‌اش از بودجه» پیش رفته فرض می‌کنیم، سپس با ضریب وزنش وزنی‌اش می‌کنیم.</p>
+
+<div class="callout">
+<strong>هشدار مهم:</strong> نسبت هزینه لزوماً برابر پیشرفت فیزیکی نیست. خرید تجهیزات (لاشهٔ پول پیش از کار فیزیکی)، تورم، و فعالیت‌هایی با رفتار غیرخطی (مثل راه‌اندازی) باعث انحراف می‌شوند. نسبت هزینه را «برآورد محافظه‌کارانه» بگیرید و با حداقل یک چک فیزیکی یا مایل‌استون ترکیب کنید.
+</div>
+
+<h2>مثال عددی</h2>
+<p>فرض کنید پروژه ۵ بسته کاری دارد:</p>
+<table class="data">
+<thead><tr><th>فعالیت</th><th>W</th><th>V (میلیون ریال)</th><th>C (هزینه تاکنون)</th><th>W.F = W/ΣW</th><th>نسبت هزینه C/V</th><th>سهم وزنی‌شده</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>20</td><td>200</td><td>80</td><td>0.20</td><td>0.40</td><td>0.080</td></tr>
+<tr><td>B</td><td>30</td><td>300</td><td>120</td><td>0.30</td><td>0.40</td><td>0.120</td></tr>
+<tr><td>C</td><td>15</td><td>150</td><td>60</td><td>0.15</td><td>0.40</td><td>0.060</td></tr>
+<tr><td>D</td><td>25</td><td>250</td><td>50</td><td>0.25</td><td>0.20</td><td>0.050</td></tr>
+<tr><td>E</td><td>10</td><td>100</td><td>100</td><td>0.10</td><td>1.00</td><td>0.100</td></tr>
+<tr><td><strong>جمع</strong></td><td><strong>100</strong></td><td><strong>1000</strong></td><td><strong>410</strong></td><td><strong>1.00</strong></td><td>—</td><td><strong>0.410</strong></td></tr>
+</tbody>
+</table>
+<p>پیشرفت وزنی تخمینی پروژه: <strong>0.410 × 100 = ۴۱٪</strong>. نکتهٔ آموزنده در فعالیت D پیداست: فقط ۲۰٪ بودجه‌اش خرج شده (عقب‌تر از بقیه) و فعالیت E کاملاً تمام شده — دقیقاً همان چیزی که یک عدد واحد «میانگین هزینه کل» (۴۱٪) پنهان می‌کرد ولی وزن‌دهی آن را شفاف نشان داد.</p>
+
+<h2>پیاده‌سازی در اکسل</h2>
+<p>جدول را به این شکل بچینید (سرستون‌ها در سطر ۱، داده‌ها در سطرهای ۲ تا ۶):</p>
+<table class="data">
+<thead><tr><th>ستون</th><th>محتوا</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>نام فعالیت</td></tr>
+<tr><td>B</td><td>W (وزن)</td></tr>
+<tr><td>C</td><td>V (ارزش/بودجه)</td></tr>
+<tr><td>D</td><td>C (هزینه واقعی)</td></tr>
+<tr><td>E</td><td>W.F (ضریب وزن)</td></tr>
+<tr><td>F</td><td>نسبت هزینه</td></tr>
+<tr><td>G</td><td>سهم وزنی‌شده</td></tr>
+</tbody>
+</table>
+<p>فرمول‌ها (برای سطر ۲، سپس کشیدن به پایین):</p>
+<pre dir="ltr" data-lang="EXCEL">E2: = B2 / SUM($B$2:$B$6)
+F2: = D2 / C2
+G2: = E2 * F2
+
+' درصد پیشرفت وزنی کل (مثلاً در G7):
+G7: = SUM(G2:G6) * 100
+
+' نسخه مبتنی بر ارزش (اگر وزن‌دهی بر مبنای پول باشد):
+E2: = C2 / SUM($C$2:$C$6)</pre>
+<p>نکته: علامت <code>$</code> دور محدودهٔ <code>SUM</code> ضروری است تا وقتی فرمول را به پایین می‌کشید، مخرج همیشه کل ستون باقی بماند. ستون G را روی «درصد» فرمت کنید تا عدد نهایی خواناتر شود.</p>
+
+<h2>پیاده‌سازی در Microsoft Project (MSP)</h2>
+<p>MSP به‌تنهایی عددی به نام «W.F» ندارد، اما با <strong>فیلدهای سفارشی (Custom Fields)</strong> و <strong>Rollup</strong> می‌توانید دقیقاً همین محاسبه را درون خود برنامه داشته باشید و در گزارش‌ها بیاورید.</p>
+
+<h3>گام ۱ — فیلدهای پایه</h3>
+<ul>
+<li><strong>Number1 = W (وزن)</strong>: برای هر فعالیت برگ (leaf) مقدار وزن را وارد کنید.</li>
+<li><strong>Number2 = V (ارزش/بودجه)</strong>: می‌توانید همان «Baseline Cost» را بگیرید (بعد از تعریف Baseline) یا دستی وارد کنید.</li>
+<li><strong>هزینه واقعی</strong>: از فیلد داخلی <code>ACWP</code> (هزینه واقعی کار انجام‌شده) استفاده کنید — بعد از ثبت متریال و کار واقعی پر می‌شود.</li>
+</ul>
+
+<h3>گام ۲ — جمع‌کردن وزن در سطح پروژه (Rollup)</h3>
+<p>روی فیلد <strong>Number1</strong> کلیک راست → <em>Custom Fields</em> → بخش <em>Calculation for summary rows</em> را روی <strong>Sum</strong> بگذارید. حالا Task خلاصهٔ پروژه (Project Summary) مقدار ΣW را نشان می‌دهد.</p>
+
+<h3>گام ۳ — فرمول ضریب وزن (W.F)</h3>
+<p>یک فیلد فرمولی جدید (مثلاً <strong>Number3</strong>) با این فرمول تعریف کنید:</p>
+<pre dir="ltr" data-lang="MS PROJECT">Number3 (W.F) =
+[Number1] / [Rollup of Number1 at project summary]</pre>
+<p>عملی‌ترین راه: چون MSP در فرمول به‌سختی «مجموع کل» را مستقیم می‌دهد، مقدار Number1 را در Task خلاصهٔ پروژه (که حاصل Rollup است) به عنوان مخرج به کار ببرید. نتیجه برای هر فعالیت همان W.F_i می‌شود.</p>
+
+<h3>گام ۴ — نسبت هزینه و سهم وزنی‌شده</h3>
+<p>دو فیلد فرمولی دیگر اضافه کنید:</p>
+<pre dir="ltr" data-lang="MS PROJECT">Number4 (Progress Proxy) =
+[ACWP] / [Baseline Cost]
+
+Number5 (Weighted) =
+[Number1] * [Number4] / 100</pre>
+<p>فیلد <strong>Number5</strong> را هم روی <strong>Sum</strong> (Rollup) تنظیم کنید تا در سطح خلاصه جمع شود.</p>
+
+<h3>گام ۵ — درصد پیشرفت وزنی کل</h3>
+<p>در Task خلاصهٔ پروژه:</p>
+<pre dir="ltr" data-lang="MS PROJECT">Weighted Progress % =
+(Sum of Number5) / (Sum of Number1) * 100</pre>
+<p>این عدد را می‌توانید مستقیماً در نوار وضعیت، نمودارها یا گزارش‌های MSP نمایش دهید — بدون نیاز به خروجی به اکسل.</p>
+
+<h2>نکات حرفه‌ای</h2>
+<ul>
+<li><strong>چک ΣW.F = ۱:</strong> همیشه ستون W.F را جمع بگیرید؛ اگر ۱ نشد، احتمالاً مخرج فرمول اشتباه کشیده شده است.</li>
+<li><strong>Procurement را جدا ببینید:</strong> فعالیت‌های خرید تجهیزات معمولاً پول‌شان زود خرج می‌شود ولی فیزیکی دیر؛ نسبت هزینه در آن‌ها کمتر قابل اعتماد است.</li>
+<li><strong>ترکیب با روش ۰-۵۰-۱۰۰ یا مایل‌استون:</strong> برای بسته‌های حساس، وزن را با یک درصد فیزیکیِ حداقلی ترکیب کنید تا خطای نسبت هزینه کم شود.</li>
+<li><strong>تورم:</strong> ارزش (V) را به قیمت روز نگه دارید؛ در پروژه‌های چندساله، V با سال پایهٔ ثابت باعث اشتباه در نسبت می‌شود.</li>
+</ul>
+
+<h2>جمع‌بندی</h2>
+<p>وقتی فقط هزینه (C)، وزن (W) و ارزش (V) دارید، <strong>ضریب وزن (W.F)</strong> پل میان «پولی که خرج شده» و «کار واقعی» است. فرمول ساده است: ابتدا W.F را با تقسیم بر مجموع وزن‌ها نرمال کنید، سپس با نسبت هزینه (C/V) ضرب کنید و در نهایت جمع بگیرید. در <strong>اکسل</strong> این سه فرمول در چند ثانیه حاضر است و در <strong>MS Project</strong> با فیلدهای سفارشی و Rollup، همین عدد به‌صورت زنده و یکپارچه با برنامه به‌روز می‌ماند. نتیجه یک پیشرفت وزنیِ دفاع‌پذیر است که هم برای گزارش به مدیریت کافی است و هم خطاهای پنهان در میانگین سادهٔ هزینه را آشکار می‌کند.</p>
+
+  </article>
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
+    <a class="rss-link" href="/blog/rss.xml">
+      <svg viewBox="0 0 16 16"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
+      RSS
+    </a>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>
