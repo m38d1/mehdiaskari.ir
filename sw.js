@@ -1,5 +1,5 @@
 /* mehdiaskari.ir — offline cache service worker */
-const CACHE = 'mehdiaskari-v24';
+const CACHE = 'mehdiaskari-v25';
 
 const PRECACHE = [
   './',

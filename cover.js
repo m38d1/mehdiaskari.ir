@@ -125,10 +125,35 @@ function coverSVG(slug, variant){
   return '<svg class="cover-art" viewBox="0 0 272 132" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + d + '</svg>';
 }
 window.__coverSVG = coverSVG;
+window.__fillCovers = __fillCovers;
+
+// Fill any [data-cover] element once. Used both at load and for
+// cards injected later (e.g. the home page's async "latest posts" grid).
+function __fillCovers(root){
+  if(!root) return;
+  var els = root.querySelectorAll ? root.querySelectorAll('[data-cover]') : [];
+  for(var i=0;i<els.length;i++){
+    var el = els[i];
+    if(el.__coverDone) continue; el.__coverDone = 1;
+    el.innerHTML = __coverSVG(el.getAttribute('data-cover'));
+  }
+}
 
 document.addEventListener('DOMContentLoaded', function(){
-  document.querySelectorAll('[data-cover]').forEach(function(el){
-    if(el.__coverDone) return; el.__coverDone = 1;
-    el.innerHTML = __coverSVG(el.getAttribute('data-cover'));
-  });
+  __fillCovers(document);
+  // Watch for covers added after load (dynamic posts grids, etc.)
+  if(window.MutationObserver && document.body){
+    var mo = new MutationObserver(function(muts){
+      for(var i=0;i<muts.length;i++){
+        var m = muts[i];
+        for(var j=0;j<m.addedNodes.length;j++){
+          var n = m.addedNodes[j];
+          if(n.nodeType !== 1) continue;
+          if(n.matches && n.matches('[data-cover]')) __fillCovers(n);
+          else if(n.querySelectorAll) __fillCovers(n);
+        }
+      }
+    });
+    mo.observe(document.body, { childList: true, subtree: true });
+  }
 });
