@@ -2,6 +2,21 @@
   "updated": "2026-09-02",
   "posts": [
     {
+      "slug": "p6-power-bi-dashboard",
+      "title": "اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه",
+      "date": "2026-09-03",
+      "dateFa": "۱۲ شهریور ۱۴۰۵",
+      "tags": [
+        "Power BI",
+        "Primavera P6",
+        "کنترل پروژه",
+        "داشبورد"
+      ],
+      "excerpt": "راهنمای گام‌به‌گام استخراج داده از P6، وارد کردن به Power BI، مدل داده، شاخص‌های EVM (SPI، CPI، SV، CV، EAC) و طراحی داشبورد کنترل پروژه — با مثال واقعی از پروژه‌های نفت، گاز، پتروشیمی و نیروگاه.",
+      "titleEn": "Connecting Primavera P6 to Power BI — A Practical Guide to Project Controls Dashboards",
+      "excerptEn": "Step-by-step guide: exporting from P6, importing into Power BI, data modeling, EVM metrics (SPI, CPI, SV, CV, EAC), and dashboard design — with real examples from oil, gas, petrochemical and power projects."
+    },
+    {
       "slug": "pmi-ai-project-patterns",
       "title": "چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است",
       "date": "2026-09-02",

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+<title>اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه | وبلاگ مهدی عسکری</title>
+<meta name="description" content="راهنمای گام‌به‌گام استخراج داده از P6، وارد کردن به Power BI، ساخت مدل، محاسبه شاخص‌های EVM و طراحی داشبورد کنترل پروژه — با مثال واقعی از پروژه‌های صنعتی.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه">
+<meta property="og:description" content="راهنمای گام‌به‌گام استخراج داده از P6، وارد کردن به Power BI، ساخت مدل، محاسبه شاخص‌های EVM و طراحی داشبورد کنترل پروژه — با مثال واقعی از پروژه‌های صنعتی.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/p6-power-bi-dashboard/">
+<meta property="article:published_time" content="2026-09-03">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/p6-power-bi-dashboard/">
+<script src="/cover.js" defer></script>
+</head>
+<body>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="post-head fu">
+    <div class="post-meta"><span class="pdate">۱۲ شهریور ۱۴۰۵</span><span class="tag">Power BI</span><span class="tag">Primavera P6</span><span class="tag">کنترل پروژه</span><span class="tag">داشبورد</span></div>
+    <h1>اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه</h1>
+<div class="cover post-hero" data-cover="p6-power-bi-dashboard"></div>
+  </div>
+  <article class="prose fu d1">
+
+<p>در پروژه‌های صنعتی، داده در Primavera P6 زندگی می‌کند، اما تصمیم‌ها در جلسات گرفته می‌شود. فاصله میان این دو — یعنی نبودِ نمای قابل‌فهم از وضعیت پروژه در لحظه — یکی از ریشه‌های اصلی تأخیر و افزایش هزینه است. این مقاله یک راهنمای عملی است برای پل زدن روی این فاصله: از خروجی گرفتن از P6 تا یک داشبورد تعاملی در Power BI که شاخص‌های کلیدی را در اختیار مدیریت پروژه می‌گذارد.</p>
+
+<h2>چرا Power BI برای کنترل پروژه؟</h2>
+<p>P6 ابزار قدرتمندی در برنامه‌ریزی و زمان‌بندی است، اما در گزارش‌دهی انعطاف‌پذیر نیست. Power BI با اتصال به منابع داده مختلف، محاسبه شاخص‌ها با DAX و مصورسازی تعاملی، این خلأ را پر می‌کند. ترکیب این دو یعنی دقت داده P6 به‌علاوه قدرت بصری Power BI.</p>
+<p>در پروژه‌های نفت، گاز، پتروشیمی و نیروگاه که تعداد فعالیت‌ها به ده‌ها هزار می‌رسد و ذینفعان متعدد گزارش‌های متفاوتی می‌خواهند، یک داشبورد مرکزی می‌تواند پاسخگوی همه باشد: از مدیر پروژه که شاخص‌های SPI و CPI را می‌خواهد تا ناظر که منحنی S فیزیکی را دنبال می‌کند.</p>
+
+<h2>گام ۱: خروجی گرفتن از Primavera P6</h2>
+
+<h3>روش سریع: خروجی CSV</h3>
+<p>ساده‌ترین راه برای شروع، خروجی اکسل/CSV از نمای فعالیت‌ها با ستون‌های زیر است:</p>
+<ul>
+<li>Activity ID، Activity Name و WBS</li>
+<li>Original Duration، Remaining Duration، Actual Duration</li>
+<li>Planned Start، Planned Finish، Actual Start، Actual Finish</li>
+<li>Percent Complete فیزیکی و زمانی</li>
+<li>Budgeted Total Units یا Budgeted Total Cost</li>
+<li>Earned Value و Actual Cost (در صورت وجود داده هزینه)</li>
+<li>Total Float و Free Float</li>
+</ul>
+<p>برای خروجی: در P6 به بخش فعالیت‌ها بروید، ستون‌های مورد نظر را اضافه کنید، سپس File → Export → Export to Excel/CSV. مزیت این روش سادگی و سرعت است؛ عیب آن نیاز به تکرار دستی در هر به‌روزرسانی.</p>
+
+<h3>روش حرفه‌ای: خروجی XER</h3>
+<p>فایل XER یک فایل متنی با ساختار جدولی است که همه جداول P6 را در بر دارد: TASK، TASKPRED، PROJWBS، PROJECT، CALENDAR و غیره. برای خروجی: File → Export → Primavera XER و انتخاب پروژه جاری.</p>
+<p>ساختار XER ساده و قابل پارس است:</p>
+<pre>%T
+TABLE_NAME
+%F
+FIELD1\tFIELD2\tFIELD3
+%R
+VALUE1\tVALUE2\tVALUE3
+%R
+...</pre>
+<p>هر بخش %T یک جدول جدید را شروع می‌کند، %F هدر ستون‌ها را مشخص می‌کند و %R ردیف‌های داده هستند. این ساختار در Power Query به‌راحتی خوانده می‌شود.</p>
+
+<h2>گام ۲: وارد کردن به Power BI</h2>
+
+<h3>وارد کردن CSV</h3>
+<p>ساده است: Power BI → Get Data → Text/CSV → انتخاب فایل → Transform Data. در Power Query ستون‌های تاریخ را به نوع Date تبدیل کنید و مطمئن شوید مقادیر عددی (Duration، Percent Complete) درست پارس شده‌اند.</p>
+
+<h3>وارد کردن XER</h3>
+<ol>
+<li>Get Data → Blank Query → Advanced Editor</li>
+<li>کدی بنویسید که فایل را به‌صورت متن بخواند، بر اساس خطوط %T جدا کند و برای هر جدول، هدر و ردیف‌ها را استخراج کند.</li>
+</ol>
+<p>یک تابع نمونه در M برای خواندن XER:</p>
+<pre>(filePath as text) as table =>
+let
+    Source = Lines.FromBinary(File.Contents(filePath)),
+    Table1 = Table.FromList(Source, Splitter.SplitByNothing()),
+    // صرفاً شروع: فیلتر خطوط کنترل (%T / %F / %R)
+    Filtered = Table.SelectRows(Table1, each
+        Text.StartsWith([Column1], "%T") or
+        Text.StartsWith([Column1], "%F") or
+        Text.StartsWith([Column1], "%R"))
+in
+    Filtered</pre>
+<p>در عمل این تابع را گسترش می‌دهید تا هر جدول (TASK، PROJWBS، CALENDAR، TASKPRED) به‌صورت یک Query جداگانه دربیاید. چند نمونه پیاده‌سازی کامل XER Parser در وب موجود است که می‌توانید پایه قرار دهید.</p>
+
+<h2>گام ۳: مدل داده و روابط</h2>
+<p>بعد از وارد کردن جداول، روابط را برقرار کنید. مدل پیشنهادی:</p>
+<ul>
+<li><strong>TASK</strong>: جدول اصلی فعالیت‌ها با کلید Activity ID</li>
+<li><strong>PROJWBS</strong>: ساختار WBS متصل به TASK از طریق کد WBS</li>
+<li><strong>CALENDAR</strong>: تقویم‌های پروژه</li>
+<li><strong>Date Dimension</strong>: جدول تاریخ جداگانه برای تحلیل زمانی</li>
+</ul>
+<p>روابط کلیدی:</p>
+<ul>
+<li>TASK.WBS_ID ← PROJWBS.WBS_ID</li>
+<li>TASK.calendar_id ← CALENDAR.calendar_id</li>
+<li>TASK.Planned Start / Actual Start → Date Dimension (به‌عنوان رابطه غیرفعال یا از طریق جدول Fact)</li>
+</ul>
+<p>برای منحنی S و تحلیل روند، بهتر است یک جدول Fact Progress داشته باشید که به‌ازای هر فعالیت و هر دوره (هفته/ماه) یک ردیف دارد. در نسخه ساده، مقادیر Current و Plan را مستقیم از جدول TASK می‌خوانید.</p>
+
+<h2>گام ۴: شاخص‌ها و اندازه‌ها با DAX</h2>
+<p>فرض کنید جدولی به نام Task دارید با ستون‌های PlannedUnits، EarnedUnits، ActualUnits، PlannedCost، EarnedCost، ActualCost، DurationDays و PercentComplete.</p>
+
+<h3>شاخص‌های پایه</h3>
+<pre>// انحراف زمان (SV) به واحد ساعت یا هزینه
+Schedule Variance = SUM(Task[EarnedUnits]) - SUM(Task[PlannedUnits])
+
+// انحراف هزینه (CV)
+Cost Variance = SUM(Task[EarnedCost]) - SUM(Task[ActualCost])
+
+// درصد پیشرفت فیزیکی کل
+Physical % = DIVIDE(SUM(Task[EarnedUnits]), SUM(Task[PlannedUnits]))</pre>
+
+<h3>SPI و CPI</h3>
+<pre>// شاخص عملکرد زمان
+SPI = DIVIDE(SUM(Task[EarnedUnits]), SUM(Task[PlannedUnits]))
+
+// شاخص عملکرد هزینه
+CPI = DIVIDE(SUM(Task[EarnedCost]), SUM(Task[ActualCost]))</pre>
+
+<h3>برآورد تا پایان و شاخص تکمیل</h3>
+<pre>// برآورد هزینه نهایی (EAC) — ساده شده
+EAC = SUM(Task[PlannedCost]) / DIVIDE(SUM(Task[EarnedCost]), SUM(Task[ActualCost]))
+
+// شاخص عملکرد لازم برای تکمیل در بودجه (TCPI)
+TCPI = DIVIDE(SUM(Task[PlannedCost]) - SUM(Task[EarnedCost]),
+              SUM(Task[PlannedCost]) - SUM(Task[ActualCost]))</pre>
+
+<h3>فعالیت‌های بحرانی و Look-ahead</h3>
+<pre>// تعداد فعالیت‌های بحرانی (شناور صفر یا منفی)
+Critical Count = CALCULATE(COUNTROWS(Task), Task[TotalFloat] <= 0)
+
+// فعالیت‌های در شرف شروع — سه هفته پیش رو
+Lookahead Count =
+CALCULATE(COUNTROWS(Task),
+    Task[PlannedStart] >= TODAY() && Task[PlannedStart] <= TODAY() + 21)</pre>
+
+<h3>منحنی S (مقادیر تجمعی)</h3>
+<pre>// تجمع برنامه‌ای
+Cumul Planned =
+CALCULATE(SUM(Task[PlannedUnits]),
+    FILTER(ALL(Task[PlannedFinish]), Task[PlannedFinish] <= MAX(DateDim[Date])))
+
+// تجمع ارزش کسب‌شده
+Cumul Earned =
+CALCULATE(SUM(Task[EarnedUnits]),
+    FILTER(ALL(Task[DataDate]), Task[DataDate] <= MAX(DateDim[Date])))</pre>
+
+<h2>گام ۵: طراحی داشبورد</h2>
+<p>داشبورد کنترل پروژه باید در یک یا حداکثر دو صفحه جا شود و سه سطح اطلاعات را نشان دهد:</p>
+
+<h3>سطح ۱ — KPIهای کلان (ردیف بالا)</h3>
+<ul>
+<li><strong>SPI و CPI</strong>: عدد رنگی (سبز بالای ۱، زرد برابر ۱، قرمز زیر ۱)</li>
+<li><strong>SV و CV</strong>: انحراف به واحد یا درصد</li>
+<li><strong>EAC</strong>: پیش‌بینی هزینه نهایی</li>
+<li><strong>تعداد فعالیت‌های بحرانی</strong> و <strong>درصد پیشرفت فیزیکی کل</strong></li>
+</ul>
+
+<h3>سطح ۲ — روندها و توزیع (ردیف وسط)</h3>
+<ul>
+<li><strong>منحنی S</strong>: سه خط Planned، Earned و Actual</li>
+<li><strong>روند SPI/CPI</strong>: تغییر هفتگی یا ماهانه شاخص‌ها</li>
+<li><strong>توزیع WBS</strong>: درصد پیشرفت به‌ازای هر سطح ۲ WBS (نمودار میل‌ای)</li>
+<li><strong>نقشه فعالیت‌های حساس</strong>: نمودار پراکندگی Float در برابر Percent Complete</li>
+</ul>
+
+<h3>سطح ۳ — جزئیات (ردیف پایین)</h3>
+<ul>
+<li><strong>جدول فعالیت‌های بحرانی</strong>: Activity ID، نام، شناور، درصد تکمیل، تاریخ‌های آغاز و پایان</li>
+<li><strong>فیلترهای چندبعدی</strong>: WBS، تقویم، محدوده تاریخ، وضعیت فعالیت</li>
+</ul>
+
+<h2>نکات حرفه‌ای و خطاهای رایج</h2>
+
+<h3>اعتبارسنجی داده</h3>
+<p>اولین قانون داشبورد کنترل پروژه: داده کثیف، داشبورد را گمراه‌کننده می‌کند. یک اندازه اعتبارسنجی بسازید که باید صفر باشد:</p>
+<pre>Data Valid = COUNTROWS(FILTER(Task, Task[PlannedStart] < DATE(2020, 1, 1)))</pre>
+
+<h3>تفاوت تقویم</h3>
+<p>P6 مدت فعالیت را بر حسب روز کاری ذخیره می‌کند، نه روز تقویمی. قبل از محاسبه منحنی S و روندها، تاریخ‌ها را با تقویم P6 هماهنگ کنید، وگرنه اعداد دقیق نخواهند بود.</p>
+
+<h3>Baseline و Data Date</h3>
+<p>قبل از خروجی مطمئن شوید Baseline پیش‌فرض پروژه فعال و Data Date (تاریخ وضعیت) درست تنظیم شده است. برای داشبورد حرفه‌ای، مقادیر Baseline و Current را با هم خروجی بگیرید تا مقایسه «برنامه مصوب در برابر واقع اجرا» ممکن شود.</p>
+
+<h3>تازه‌سازی داده</h3>
+<p>سه رویکرد برای به‌روزرسانی:</p>
+<ol>
+<li><strong>دستی (خروجی مجدد CSV)</strong> — ساده، برای شروع</li>
+<li><strong>اتصال به پایگاه داده P6</strong> — از طریق ODBC در Power Query، در صورت اجازه DBA</li>
+<li><strong>P6 Web Services / EPPM</strong> — حرفه‌ای‌ترین مسیر، با Refresh زمان‌بندی‌شده</li>
+</ol>
+<p>در پروژه‌های صنعتی، رویکرد ترکیبی رایج است: خروجی هفتگی XER توسط برنامه‌ریز، قرار گرفتن در مسیر مشخص شبکه، و تازه‌سازی شبانه Power BI از همان مسیر.</p>
+
+<h3>فعالیت‌های باز و بدون پایان</h3>
+<p>فعالیت‌هایی که Actual Finish ندارند (در حال اجرا) باید جداگانه رسیدگی شوند؛ پیشرفت آنها به Data Date وابسته است، نه به تاریخ امروز.</p>
+
+<h2>اتوماسیون تازه‌سازی</h2>
+<p>برای تازه‌سازی خودکار، یک اسکریپت ساده می‌تواند فایل XER تازه را در مسیر ورودی Power BI کپی کند و Refresh زمان‌بندی‌شده آن را بخواند:</p>
+<pre># PowerShell — کپی XER تازه به مسیر ورودی داشبورد
+$source = "\\\\p6-server\\exports\\ProjectExport.xer"
+$dest   = "C:\\PowerBI\\ProjectData.xer"
+Copy-Item -Path $source -Destination $dest -Force
+Write-Output "XER refreshed: $(Get-Date)"</pre>
+<p>بهتر است این کار از طریق Windows Task Scheduler و با حساب کاربری با حداقل دسترسی انجام شود.</p>
+
+<h2>جمع‌بندی</h2>
+<p>اتصال P6 به Power BI یک کار یک‌باره نیست؛ یک فرآیند است. با هر به‌روزرسانی P6، Data Date عوض می‌شود و داشبورد باید وضعیت جدید را منعکس کند. سه اصل موفقیت:</p>
+<ol>
+<li><strong>اعتبار داده</strong> — بدون داده دقیق P6، داشبورد نه تنها بی‌فایده که گمراه‌کننده است</li>
+<li><strong>سادگی بصری</strong> — یک صفحه که با یک نگاه وضعیت پروژه را بگوید</li>
+<li><strong>تکرارپذیری</strong> — فرآیند تازه‌سازی ساده و قابل اعتماد</li>
+</ol>
+<p>با پیاده‌سازی همین مراحل، از یک برنامه‌ریز با یک نرم‌افزار به یک کنترل‌کننده پروژه با «دیده‌بان داده» تبدیل می‌شوید — همان تفاوتی که در پروژه‌های نفت، گاز، پتروشیمی و نیروگاه نتیجه را می‌سازد.</p>
+
+  </article>
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
+    <a class="rss-link" href="/blog/rss.xml">
+      <svg viewBox="0 0 16 16"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
+      RSS
+    </a>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>
