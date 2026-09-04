@@ -1,6 +1,22 @@
 {
-  "updated": "2026-09-02",
+  "updated": "2026-09-04",
   "posts": [
+    {
+      "slug": "gale-openwrt-custom-firmware",
+      "title": "فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت",
+      "date": "2026-09-04",
+      "dateFa": "۱۳ شهریور ۱۴۰۵",
+      "tags": [
+        "OpenWrt",
+        "Google Wifi",
+        "PassWall",
+        "mwan3",
+        "شبکه"
+      ],
+      "excerpt": "ساخت فریمور سفارشی OpenWrt ۲۵.۱۲.۵ روی Google Wifi (Gale): رفع باگ وای‌فای دایرکت در پس‌وال، مالتی‌WAN واقعی با mwan3 (failover + load balance)، منوی Developer و رمز root خالی.",
+      "titleEn": "Custom Google Wifi (Gale) firmware: PassWall, multi-WAN and direct Wi-Fi",
+      "excerptEn": "Building a custom OpenWrt 25.12.5 firmware for the Google Wifi (Gale): fixing the direct-WiFi bypass bug in PassWall, real multi-WAN with mwan3 (failover + load balance), a Developer menu and an empty root password."
+    },
     {
       "slug": "weight-factor-excel-msp",
       "title": "محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP",

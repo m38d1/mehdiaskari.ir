@@ -7,6 +7,13 @@
   <language>fa</language>
   <atom:link href="https://mehdiaskari.ir/blog/rss.xml" rel="self" type="application/rss+xml"/>
     <item>
+    <title>فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت</title>
+    <link>https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/</link>
+    <guid>https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/</guid>
+    <pubDate>Fri, 04 Sep 2026 00:00:00 +0330</pubDate>
+    <description>ساخت فریمور سفارشی OpenWrt ۲۵.۱۲.۵ روی Google Wifi (Gale): رفع باگ وای‌فای دایرکت در پس‌وال، مالتی‌WAN واقعی با mwan3 (failover + load balance)، منوی Developer و رمز root خالی.</description>
+  </item>
+    <item>
     <title>محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</title>
     <link>https://mehdiaskari.ir/blog/weight-factor-excel-msp/</link>
     <guid>https://mehdiaskari.ir/blog/weight-factor-excel-msp/</guid>
