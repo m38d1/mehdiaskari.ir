@@ -1,0 +1,33 @@
+Creative Commons Attribution-NonCommercial-ShareAlike 4.0
+International (CC BY-NC-SA 4.0)
+
+Applies to all non-code material in this repository, namely:
+
+  * the prose of every article under blog/            (Persian and English text)
+  * images, diagrams and the generated post covers
+  * the site's own design tokens and copy under *.html where the text is the
+    substance rather than the instruction to a machine
+
+The source code of this site -- HTML structure, CSS, JavaScript, the shared
+component layer, the tool engines under lab/, and everything under tools/ -- is
+covered by the MIT license in the LICENSE file next to this one.
+
+You are free to:
+
+  * Share -- copy and redistribute the material in any medium or format
+  * Adapt -- remix, transform, and build upon the material
+
+under the following terms:
+
+  Attribution   You must give appropriate credit, provide a link to this
+                repository, and indicate if changes were made.
+  NonCommercial You may not use the material for commercial purposes.
+  ShareAlike    If you remix, transform, or build upon the material, you must
+                distribute your contributions under the same license.
+
+No attribution is required when the material is not modified, and you do not
+need to comply with the license for uses permitted by applicable exceptions
+such as fair dealing or quotation rights.
+
+The full legal code is available at:
+https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode
