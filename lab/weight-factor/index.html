@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+  <link rel="stylesheet" href="/components.css">
+  <link rel="stylesheet" href="/lab/lab.css">
+<title>ماشین‌حساب ضریب وزن (W.F) و پیشرفت وزنی | مهدی عسکری</title>
+<meta name="description" content="ساختار WBS را از اکسل بچسبانید تا وزن نسبت‌به‌والد (W.F↑)، وزن هر گره نسبت به کل پروژه و درصد پیشرفت وزنی را ببینید. خروجی CSV و جدول آمادهٔ اکسل — بدون سرور.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ماشین‌حساب ضریب وزن (W.F) و پیشرفت وزنی">
+<meta property="og:description" content="ساختار WBS را از اکسل بچسبانید تا وزن نسبت‌به‌والد (W.F↑)، وزن هر گره نسبت به کل پروژه و درصد پیشرفت وزنی را ببینید. خروجی CSV و جدول آمادهٔ اکسل — بدون سرور.">
+<meta property="og:url" content="https://mehdiaskari.ir/lab/weight-factor/">
+
+<link rel="canonical" href="https://mehdiaskari.ir/lab/weight-factor/">
+  <script src="/components.js" defer></script>
+  <script src="/lab/wf-engine.js" defer></script>
+  <script src="/lab/weight-factor/app.js" defer></script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "ماشین‌حساب ضریب وزن (W.F) و پیشرفت وزنی",
+  "url": "https://mehdiaskari.ir/lab/weight-factor/",
+  "description": "ساختار WBS را از اکسل بچسبانید تا وزن نسبت‌به‌والد (W.F↑)، وزن هر گره نسبت به کل پروژه و درصد پیشرفت وزنی را ببینید. خروجی CSV و جدول آمادهٔ اکسل — بدون سرور.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "inLanguage": "fa",
+  "browserRequirements": "Requires JavaScript",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IRR" },
+  "isPartOf": { "@type": "WebSite", "name": "Mehdi Askari", "url": "https://mehdiaskari.ir/" },
+  "about": { "@type": "Article", "name": "محاسبه ضریب وزن (W.F) و پیشرفت وزنی",
+             "url": "https://mehdiaskari.ir/blog/weight-factor-excel-msp/" }
+}
+</script>
+</head>
+<body>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="tool-head fu">
+    <div class="post-meta">
+      <span class="badge teal" data-en="Interactive tool">ابزار تعاملی</span>
+      <span class="badge" data-en="No server, works offline">بدون سرور، آفلاین</span>
+      <span class="badge amber" data-en="Method documented in the article">روشِ مقالهٔ W.F</span>
+    </div>
+    <h1 data-en="Weight Factor (W.F) &amp; Weighted Progress Calculator">ماشین‌حساب ضریب وزن (W.F) و پیشرفت وزنی</h1>
+    <p class="lead" data-en="Paste your WBS from Excel and get the parent-relative weight (W.F↑), each node's final weight against the whole project, and the weighted progress — the exact method from the article, automated.">ساختار WBS را از اکسل کپی کنید و همین‌جا بچسبانید تا وزن نسبت‌به‌والد (<span data-tip="وزن هر گره تقسیم بر وزن والدش؛ زیر هر والد دقیقاً ۱ می‌شود">W.F↑</span>)، وزن نهایی هر گره نسبت به کل پروژه، و درصد پیشرفت وزنی را یک‌جا ببینید — همان روشی که در <a href="/blog/weight-factor-excel-msp/">این مقاله</a> توضیح داده شده.</p>
+  </div>
+
+  <div class="lab-main">
+    <section class="tool-layout">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 data-en="Data">داده‌ها</h2>
+          <span class="panel-hint" data-en="Copy from Excel and paste here">از اکسل کپی کنید و بچسبانید</span>
+        </div>
+
+        <div class="preset-row" role="group" aria-label="نمونه‌ها">
+          <button class="chip active" data-preset="flat" data-en="Example 1 — flat (5 packages)">مثال ۱ — تخت (۵ بسته)</button>
+          <button class="chip" data-preset="hierarchy" data-en="Example 2 — hierarchical">مثال ۲ — سلسله‌مراتبی</button>
+          <button class="chip" data-preset="epcc" data-en="Sample EPCC project (3 levels)">نمونهٔ EPCC (سه‌سطحی)</button>
+        </div>
+
+        <label class="field-label" for="wf-input" data-en="Columns: code · title · parent · W · V · C (tab separated)">ستون‌ها: کد · عنوان · والد · W · V · C (جداسازی با Tab)</label>
+        <textarea id="wf-input" class="wf-input" dir="ltr" spellcheck="false" autocomplete="off" aria-label="داده‌های WBS"></textarea>
+
+        <div class="controls-row">
+          <span class="controls-label" data-en="Weighting basis">مبنای وزن‌دهی</span>
+          <div class="seg" role="group" aria-label="مبنای وزن‌دهی">
+            <button class="seg-opt" data-basis="W" data-en="W (weight)">W (وزن)</button>
+            <button class="seg-opt is-on" data-basis="V" data-en="V (value / budget)">V (ارزش)</button>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary sm" id="wf-run" data-en="Recalculate">محاسبه</button>
+          <button class="btn sm" id="wf-csv" data-en="Export CSV">خروجی CSV</button>
+          <button class="btn sm ghost" id="wf-clear" data-en="Clear">پاک کردن</button>
+        </div>
+
+        <div class="cols-help">
+          <span data-en="Header row is optional. Persian or English headers are recognised. A row with children is treated as a WBS summary and its V/C are rolled up automatically.">سرستون اختیاری است و نام‌های فارسی یا انگلیسی شناخته می‌شوند. سطری که فرزند دارد «خلاصهٔ WBS» حساب می‌شود و V و C آن از فرزندان جمع می‌شود — دقیقاً مثل MSP.</span>
+        </div>
+      </div>
+
+      <aside class="panel summary" aria-live="polite">
+        <div class="big">
+          <div class="big-label" data-en="Weighted project progress">پیشرفت وزنی پروژه</div>
+          <div class="big-num is-empty" id="s-progress">—</div>
+          <div class="big-sub" id="s-diverge"></div>
+        </div>
+        <div class="mini-grid">
+          <div class="mini"><b id="s-nodes">۰</b><small data-en="nodes">گره</small></div>
+          <div class="mini"><b id="s-leaves">۰</b><small data-en="leaf activities">فعالیت برگ</small></div>
+          <div class="mini"><b id="s-depth">۰</b><small data-en="levels">سطح</small></div>
+          <div class="mini"><b id="s-basis">—</b><small data-en="basis used">مبنای مصرفی</small></div>
+          <div class="mini"><b id="s-sumv">—</b><small data-en="total V">جمع V</small></div>
+          <div class="mini"><b id="s-sumc">—</b><small data-en="total C">جمع C</small></div>
+        </div>
+        <div class="checks" id="s-checks"></div>
+        <div class="notices" id="s-notices"></div>
+      </aside>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head">
+        <h2 data-en="Result">نتیجه</h2>
+        <button class="copy-btn" id="wf-copy" data-en="Copy table">کپی جدول</button>
+      </div>
+      <div class="table-wrap">
+        <table class="wf-table">
+          <thead>
+            <tr>
+              <th data-en="Activity">فعالیت</th>
+              <th data-en="W">W</th>
+              <th data-en="V">V</th>
+              <th data-en="C">C</th>
+              <th data-en="W.F up (vs parent)">W.F↑ (نسبت به والد)</th>
+              <th data-en="W.F project">W.F پروژه</th>
+              <th data-en="C / V">C ⁄ V</th>
+              <th data-en="Progress">پیشرفت</th>
+              <th data-en="Weighted share">سهم وزنی</th>
+            </tr>
+          </thead>
+          <tbody id="wf-body"></tbody>
+          <tfoot id="wf-foot"></tfoot>
+        </table>
+      </div>
+      <div class="legend">
+        <span data-en="Rows with a teal dot are WBS summaries: their V and C are rolled up, and their progress is the weighted mean of their children. Only leaf activities carry a weighted share.">سطرهای با نقطهٔ فیروزه‌ای خلاصهٔ WBS هستند: V و C آن‌ها از فرزندان جمع می‌شود و پیشرفتشان میانگین وزنی فرزندان است. سهم وزنی فقط به فعالیت‌های برگ تعلق می‌گیرد.</span>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head"><h2 data-en="How the numbers are produced">این اعداد چطور ساخته می‌شوند</h2></div>
+      <div class="accordion" data-single>
+        <div class="acc-item is-open">
+          <button class="acc-head" data-en="Parent-relative weight (W.F↑)">وزن نسبت‌به‌والد (W.F↑) <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <p data-en="Each node is divided by its own parent, never by the whole project — so the numbers stay readable and survive WBS changes.">هر گره بر والد خودش تقسیم می‌شود، نه بر کل پروژه؛ پس اعداد خوانا می‌مانند و با تغییر WBS نمی‌شکنند.</p>
+            <pre dir="ltr" data-lang="FORMULA">W.F↑_i = V_i / V_parent
+W.F_proj(node) = W.F↑_node × W.F↑_parent × … × W.F↑_root</pre>
+            <p data-en="The check that matters: under every parent the children must sum to exactly 1.">معیار اعتبار: زیر هر والد، مجموع فرزندان باید دقیقاً ۱ شود.</p>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" data-en="Progress from cost only">پیشرفت فقط از هزینه <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="FORMULA">progress_leaf = C_i / V_i
+progress_parent = Σ ( W.F↑_child × progress_child )
+weighted progress = Σ ( W.F_proj_leaf × C_leaf / V_leaf )</pre>
+            <div class="callout">
+              <span class="callout-ic">!</span>
+              <div data-en="A cost ratio is not physical progress. Equipment purchases, inflation and non-linear activities such as commissioning distort it. Treat this as a conservative estimate and cross-check it with at least one physical or milestone measure.">نسبت هزینه لزوماً پیشرفت فیزیکی نیست. خرید تجهیزات، تورم و فعالیت‌های غیرخطی مثل راه‌اندازی آن را منحرف می‌کنند. این را «برآورد محافظه‌کارانه» بگیرید و حداقل با یک سنجش فیزیکی یا مایل‌استون ترکیب کنید.</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" data-en="Equivalent Excel formulas">فرمول‌های معادل در اکسل <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="EXCEL">' flat weight
+E2: = B2 / SUM($B$2:$B$6)
+
+' parent-relative weight, parent V in column H
+E2: = C2 / H2
+
+' weighted progress
+G2: = E2 * (D2 / C2)
+total: = SUM(G2:G6) * 100</pre>
+            <p data-en="The full walkthrough, including the Microsoft Project setup, is in the article.">شرح کامل، شامل تنظیمات Microsoft Project، در <a href="/blog/weight-factor-excel-msp/">مقاله</a> آمده است.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <p class="legend" style="margin-top:22px;text-align:center">
+      <span data-en="Everything runs in your browser. No data leaves this page.">همه‌چیز در مرورگر شما اجرا می‌شود؛ هیچ داده‌ای از این صفحه بیرون نمی‌رود.</span>
+      · <a href="/blog/all/" data-en="All articles">همهٔ مقاله‌ها</a>
+    </p>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>

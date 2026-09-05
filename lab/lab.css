@@ -1,0 +1,209 @@
+/* =========================================================
+   lab.css — styles for the interactive tools under /lab/
+   Theme-aware (html[data-theme]) and RTL-safe: logical
+   properties only, no left/right.
+   Loaded after blog.css and components.css.
+   ========================================================= */
+
+.tool-head{
+  max-width: 1080px; margin: 0 auto; padding: 46px 24px 8px;
+}
+.tool-head h1{
+  font-size: clamp(1.55rem, 3.4vw, 2.35rem); line-height: 1.28; letter-spacing: -.01em;
+  margin: 10px 0 12px;
+}
+.tool-head .lead{
+  font-size: 1.02rem; line-height: 1.95; color: var(--text-muted); max-width: 74ch;
+}
+.tool-src{
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .76rem; color: var(--text-dim); text-decoration: none;
+  border: 1px solid var(--border-soft); border-radius: 100px; padding: 5px 12px;
+  transition: color .2s ease, border-color .2s ease;
+}
+.tool-src:hover{ color: var(--teal); border-color: var(--teal); }
+
+/* ---------- layout ---------- */
+.lab-main{ max-width: 1080px; margin: 0 auto; padding: 0 24px 40px; }
+.tool-layout{
+  display: grid; gap: 18px; margin-top: 26px;
+  grid-template-columns: minmax(0, 1.35fr) minmax(280px, .65fr);
+  align-items: start;
+}
+@media (max-width: 900px){ .tool-layout{ grid-template-columns: 1fr; } }
+
+.panel{
+  background: var(--glass); border: 1px solid var(--border);
+  border-radius: 20px; padding: 20px; backdrop-filter: blur(22px) saturate(180%);
+  box-shadow: var(--card-shadow);
+}
+.panel + .panel{ margin-top: 18px; }
+.panel-head{
+  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  flex-wrap: wrap; margin-bottom: 14px;
+}
+.panel-head h2{ font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; }
+.panel-hint{ font-size: .74rem; color: var(--text-dim); }
+
+/* ---------- input ---------- */
+.preset-row{ display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+
+.field-label{
+  display: block; font-size: .72rem; color: var(--text-muted);
+  margin-bottom: 7px; letter-spacing: .01em;
+}
+.wf-input{
+  width: 100%; min-height: 208px; resize: vertical;
+  font-family: 'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size: .8rem; line-height: 1.75; letter-spacing: .01em;
+  color: var(--text); background: var(--glass-2);
+  border: 1px solid var(--border); border-radius: 14px; padding: 13px 15px;
+  direction: ltr; text-align: left; tab-size: 4;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.wf-input:focus{
+  outline: none; border-color: var(--teal);
+  box-shadow: 0 0 0 3px var(--teal-dim);
+}
+
+.controls-row{
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 14px; flex-wrap: wrap; margin-top: 14px;
+}
+.controls-label{ font-size: .76rem; color: var(--text-muted); }
+.seg{
+  display: inline-flex; gap: 3px; padding: 3px;
+  background: var(--glass-2); border: 1px solid var(--border); border-radius: 100px;
+}
+.seg-opt{
+  font-family: inherit; font-size: .76rem; font-weight: 600; cursor: pointer;
+  border: 0; border-radius: 100px; padding: 7px 14px;
+  background: transparent; color: var(--text-muted);
+  transition: background .18s ease, color .18s ease;
+}
+.seg-opt:hover{ color: var(--text); }
+.seg-opt.is-on{
+  background: linear-gradient(135deg, var(--teal), var(--teal-2)); color: #08090D;
+}
+html[data-theme="light"] .seg-opt.is-on{ color: #fff; }
+
+.actions{ display: flex; gap: 9px; flex-wrap: wrap; margin-top: 16px; }
+.btn.sm{ padding: 8px 16px; font-size: .78rem; }
+.btn.ghost{ background: transparent; }
+
+.cols-help{
+  margin-top: 14px; padding-top: 13px; border-top: 1px dashed var(--border-soft);
+  font-size: .73rem; line-height: 2; color: var(--text-dim);
+}
+.cols-help code{
+  font-family: 'IBM Plex Mono', ui-monospace, monospace; font-size: .72rem;
+  background: var(--glass-2); border: 1px solid var(--border-soft);
+  border-radius: 5px; padding: 1px 6px; color: var(--text-muted);
+}
+
+/* ---------- summary ---------- */
+.summary{ position: sticky; top: 84px; }
+@media (max-width: 900px){ .summary{ position: static; } }
+
+.big{ text-align: center; padding: 4px 0 14px; }
+.big-label{ font-size: .72rem; color: var(--text-dim); letter-spacing: .02em; }
+.big-num{
+  font-size: clamp(2.6rem, 7vw, 3.5rem); font-weight: 800; line-height: 1.05;
+  letter-spacing: -.03em; font-variant-numeric: tabular-nums;
+  background: linear-gradient(135deg, var(--teal), var(--teal-2));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  margin: 6px 0 4px;
+}
+.big-num.is-empty{
+  background: none; -webkit-text-fill-color: currentColor; color: var(--text-dim);
+}
+.big-sub{ font-size: .73rem; color: var(--text-muted); line-height: 1.8; }
+
+.mini-grid{
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px;
+  padding: 13px 0; border-top: 1px solid var(--border-soft); border-bottom: 1px solid var(--border-soft);
+}
+.mini{ text-align: center; }
+.mini b{
+  display: block; font-size: 1.06rem; font-weight: 700;
+  font-variant-numeric: tabular-nums; color: var(--text);
+}
+.mini small{ font-size: .68rem; color: var(--text-dim); }
+
+.checks{ margin-top: 13px; display: grid; gap: 8px; }
+.check{
+  display: grid; grid-template-columns: 18px 1fr; gap: 9px;
+  font-size: .75rem; line-height: 1.7; color: var(--text-muted);
+}
+.check-mark{
+  width: 18px; height: 18px; border-radius: 50%; display: grid; place-items: center;
+  font-size: .68rem; font-weight: 700; flex: none;
+}
+.check.ok .check-mark{ background: var(--teal-dim); color: var(--teal); }
+.check.bad .check-mark{ background: rgba(246,178,85,.18); color: var(--amber); }
+.check.info .check-mark{ background: var(--glass-2); color: var(--text-dim); }
+.check b{ color: var(--text); font-weight: 600; display: block; }
+.check span{ color: var(--text-dim); font-size: .72rem; }
+
+.notices{ margin-top: 13px; display: grid; gap: 7px; }
+.notice{
+  font-size: .73rem; line-height: 1.75; border-radius: 11px; padding: 9px 12px;
+  border: 1px solid var(--border-soft); background: var(--glass-2); color: var(--text-muted);
+}
+.notice.err{ border-color: rgba(246,178,85,.4); color: var(--amber); }
+
+/* ---------- results table ---------- */
+.table-wrap{
+  overflow-x: auto; border: 1px solid var(--border-soft); border-radius: 14px;
+  -webkit-overflow-scrolling: touch;
+}
+.wf-table{ width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 720px; }
+.wf-table th{
+  position: sticky; top: 0; z-index: 1;
+  background: var(--glass-2); backdrop-filter: blur(14px);
+  font-size: .69rem; font-weight: 600; color: var(--text-dim);
+  text-align: start; padding: 10px 12px; white-space: nowrap;
+  border-bottom: 1px solid var(--border);
+}
+.wf-table td{
+  padding: 9px 12px; border-bottom: 1px solid var(--border-soft);
+  color: var(--text-muted); white-space: nowrap;
+}
+.wf-table tbody tr:last-child td{ border-bottom: 0; }
+.wf-table tbody tr:hover td{ background: rgba(127,127,127,.06); }
+.wf-table td.num{ font-variant-numeric: tabular-nums; direction: ltr; text-align: start; }
+.wf-table td.name{ color: var(--text); white-space: normal; min-width: 190px; }
+.wf-table tr.is-summary td.name{ font-weight: 700; }
+.wf-table tr.is-summary td{ background: rgba(127,127,127,.045); }
+.wf-table tfoot td{
+  font-weight: 700; color: var(--text); border-top: 1px solid var(--border);
+  background: var(--glass-2);
+}
+.tree-indent{ display: inline-block; vertical-align: middle; }
+.dot{
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--border); margin-inline-end: 8px; vertical-align: middle;
+}
+tr.is-summary .dot{ background: var(--teal); }
+.wf-bar{
+  display: inline-block; height: 5px; border-radius: 100px; vertical-align: middle;
+  background: linear-gradient(90deg, var(--teal), var(--teal-2));
+  min-width: 2px; max-width: 84px;
+}
+.wf-bar-track{
+  display: inline-block; width: 84px; height: 5px; border-radius: 100px;
+  background: var(--glass-2); vertical-align: middle; margin-inline-start: 8px;
+  overflow: hidden;
+}
+.legend{ margin-top: 12px; font-size: .72rem; color: var(--text-dim); line-height: 1.9; }
+.empty-state{
+  padding: 34px 16px; text-align: center; color: var(--text-dim); font-size: .82rem;
+}
+
+/* ---------- prose blocks inside the lab ---------- */
+.lab-main .prose{ max-width: 1080px; margin: 0 auto; }
+.lab-main .prose h2{ margin-top: 34px; }
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration: .001ms !important; transition-duration: .001ms !important; }
+}

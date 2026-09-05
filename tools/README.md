@@ -72,3 +72,33 @@ copying of header markup or script tags.
   stands down there (no double bindings).
 - `tools/post-template.html` is deliberately outside `blog/` so it is never
   published as a page.
+
+## Interactive tools under `/lab/`
+
+A lab page is generated from the same skeleton as a blog post, so its header,
+theme toggle, language toggle and command palette cannot drift.
+
+```bash
+python3 tools/make-lab-page.py <slug> \
+  --title "…" --description "…" \
+  --main tools/lab-parts/<slug>.part.html
+```
+
+- `tools/lab-parts/<slug>.part.html` holds everything between `<main>` and
+  `</main>` — the only hand-written part.
+- `tools/make-lab-page.py` supplies the chrome, swaps `og:type` to `website`,
+  drops the article-only `published_time` and cover script, adds `/lab/lab.css`,
+  the engine + app scripts, and a `WebApplication` JSON-LD block.
+- Shared styles: `lab/lab.css`. Shared math: `lab/wf-engine.js` (dependency-free,
+  also loadable in Node).
+- After regenerating: add the URL to `sitemap.xml` and `PRECACHE` in `sw.js`,
+  then bump `CACHE`.
+
+### `test-wf-engine.js` — the math is pinned to the article
+
+`node tools/test-wf-engine.js` asserts the engine reproduces both worked
+examples published in `/blog/weight-factor-excel-msp/` (W.F = 0.20/0.30/0.15/
+0.25/0.10 and 41% weighted progress; W.F↑ = 0.30/0.20/0.50 with project weights
+0.18/0.12/0.30), plus the structural guards: orphan parents, self-parenting,
+cycles, all-zero basis, duplicate codes and headerless TSV. CI runs it, so a
+change to `lab/wf-engine.js` that breaks the published numbers fails the build.

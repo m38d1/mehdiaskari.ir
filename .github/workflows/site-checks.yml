@@ -55,6 +55,9 @@ jobs:
             echo "ok      $f"
           done
 
+      - name: W.F engine reproduces the article's worked examples
+        run: node tools/test-wf-engine.js
+
       - name: JSON data files parse
         run: >
           python -c "import json;

@@ -1,5 +1,5 @@
 /* mehdiaskari.ir — offline cache service worker */
-const CACHE = 'mehdiaskari-v32';
+const CACHE = 'mehdiaskari-v33';
 
 const PRECACHE = [
   './',
@@ -13,6 +13,11 @@ const PRECACHE = [
   './cover.js',
   './components.css',
   './components.js',
+  './lab/lab.css',
+  './lab/wf-engine.js',
+  './lab/weight-factor/',
+  './lab/weight-factor/index.html',
+  './lab/weight-factor/app.js',
   './fonts/fonts.css',
   './icon.svg',
   './manifest.webmanifest',
