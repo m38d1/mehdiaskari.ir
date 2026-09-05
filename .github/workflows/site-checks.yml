@@ -1,0 +1,81 @@
+name: site checks
+
+# Guards the work that is easy to undo by accident: the shared UI baseline on
+# every post, hand-edited HTML, the posts.json <-> blog/ contract, and the
+# service-worker cache version that makes visitors actually receive new assets.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: site-checks-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          # check-sw-version.py needs real history to diff against a base.
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          check-latest: false
+
+      - name: Every post is on the shared UI baseline
+        run: python tools/sync-post-ui.py --check
+
+      - name: HTML tag balance
+        run: python tools/check-html.py
+
+      - name: posts.json <-> blog/ folder consistency
+        run: python tools/check-posts.py
+
+      - name: Service-worker cache bumped for changed assets
+        run: python tools/check-sw-version.py
+
+      - name: JavaScript syntax
+        run: |
+          set -e
+          for f in components.js cover.js sw.js; do
+            node --check "$f"
+            echo "ok      $f"
+          done
+
+      - name: JSON data files parse
+        run: >
+          python -c "import json;
+          [json.load(open(f, encoding='utf-8')) for f in ('posts.json','manifest.webmanifest')];
+          print('ok      posts.json, manifest.webmanifest')"
+
+      - name: Summary
+        if: failure()
+        run: |
+          {
+            echo "### A check failed"
+            echo ""
+            echo "If a post is flagged as off-baseline, run this and commit the result:"
+            echo ""
+            echo '```'
+            echo "python3 tools/sync-post-ui.py"
+            echo '```'
+            echo ""
+            echo "New post? Start it on the baseline with:"
+            echo ""
+            echo '```'
+            echo "python3 tools/sync-post-ui.py --add <slug>"
+            echo '```'
+          } >> "$GITHUB_STEP_SUMMARY"

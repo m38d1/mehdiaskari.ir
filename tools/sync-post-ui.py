@@ -8,7 +8,7 @@ for every post under blog/, and it is idempotent — run it as often as you like
 
 Usage:
     python3 tools/sync-post-ui.py                 # patch every existing post
-    python3 tools/sync-post-ui.py --check         # report only, write nothing
+    python3 tools/sync-post-ui.py --check         # report only, write nothing (exit 1 if off-baseline)
     python3 tools/sync-post-ui.py --add <slug>    # create a new post from the template
     python3 tools/sync-post-ui.py --template      # rebuild tools/post-template.html
 """
@@ -228,7 +228,8 @@ def main():
 
     print(f"\n{touched}/{len(posts)} post(s) "
           f"{'need patching' if check_only else 'updated'}.")
-    return 0
+    # In --check mode a dirty baseline is a failure, so CI can gate on it.
+    return 1 if (check_only and touched) else 0
 
 
 if __name__ == '__main__':

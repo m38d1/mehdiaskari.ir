@@ -1,5 +1,30 @@
 # Blog tooling
 
+## Continuous integration
+
+`.github/workflows/site-checks.yml` runs on every push to `main`, every pull
+request, and manually. It is the thing that keeps the baseline from drifting:
+
+| Step | Catches |
+|---|---|
+| `sync-post-ui.py --check` | a post missing the shared UI baseline |
+| `check-html.py` | stray `</button>`, unclosed `<div>`, malformed hand edits |
+| `check-posts.py` | a post page not registered in `posts.json` (or the reverse), empty fields, bad dates/slugs, wrong `canonical`/`og:url` |
+| `check-sw-version.py` | editing `components.*` / `blog.css` / `cover.js` without bumping `CACHE` in `sw.js` — returning visitors would keep the stale copy |
+| `node --check` | JS syntax errors in `components.js`, `cover.js`, `sw.js` |
+| JSON parse | broken `posts.json` / `manifest.webmanifest` |
+
+Run everything locally the same way CI does:
+
+```bash
+python3 tools/sync-post-ui.py --check && \
+python3 tools/check-html.py && \
+python3 tools/check-posts.py && \
+python3 tools/check-sw-version.py
+```
+
+`--check` and the other checkers exit non-zero on a problem, so they gate CI.
+
 ## `sync-post-ui.py` — keep every post on the shared UI baseline
 
 All modern UI behaviour (code copy + highlight + line numbers, reading progress
