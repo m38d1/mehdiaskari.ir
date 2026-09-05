@@ -44,8 +44,9 @@
         <ul>
           <li><a href="/#about" data-en="About">درباره من</a></li>
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
           <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
-          <li><a href="/blog/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
           <li><a href="/#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
@@ -53,7 +54,8 @@
         <button class="lang-opt active" data-lang="fa">فا</button>
         <button class="lang-opt" data-lang="en">EN</button>
       </div>
-      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
         <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
         <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
       </div>
@@ -65,8 +67,9 @@
   <nav class="mobile-menu" id="mobile-menu">
     <a href="/#about" data-en="About">درباره من</a>
     <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
     <a href="/#skills" data-en="Skills">مهارت‌ها</a>
-    <a href="/blog/" data-en="Blog">وبلاگ</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
     <a href="/#contact" data-en="Contact">تماس</a>
   </nav>
 </header>
@@ -124,6 +127,17 @@
 </main>
 
 <footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
 
 <script>
   // i18n (same mechanism as index)

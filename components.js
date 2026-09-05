@@ -89,13 +89,16 @@
   // ---------- Code: copy + highlight ----------
   function escapeHTML(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
   function highlightCode(raw){
-    var text = escapeHTML(raw);
+    var lines = String(raw).replace(/\r/g,'').split('\n');
     var re = /(\/\/[^\n]*|'[^'\n]*|"[^"\n]*"|\b[A-Za-z_][A-Za-z0-9_]*\s*(?=\()|\b\d+(?:\.\d+)?\b)/g;
-    return text.replace(re, function(m){
-      if(/^[\/\'"]/.test(m)) return '<span class="tok-com">'+m+'</span>';
-      if(/^\d/.test(m)) return '<span class="tok-num">'+m+'</span>';
-      return '<span class="tok-fn">'+m+'</span>';
-    });
+    function hl(line){
+      return escapeHTML(line).replace(re, function(m){
+        if(/^[\/\'"]/.test(m)) return '<span class="tok-com">'+m+'</span>';
+        if(/^\d/.test(m)) return '<span class="tok-num">'+m+'</span>';
+        return '<span class="tok-fn">'+m+'</span>';
+      });
+    }
+    return lines.map(function(ln){ return '<span class="cl">' + (hl(ln) || '&#8203;') + '</span>'; }).join('');
   }
   function initCode(root){
     root.querySelectorAll('.prose pre, pre[data-lang]').forEach(function(pre){
@@ -265,10 +268,119 @@
     }, {passive:true});
   }
 
+  // ---------- Language toggle (wire only if page has no own handler) ----------
+  function initLang(){
+    if(window.__siteHasPalette || window.__langBound) return;
+    window.__langBound = 1;
+    // index.html / blog/all already define setLang(); just expose helpers for the palette.
+    if(window.setLang){
+      window.__setLang = function(l){ window.setLang(l); };
+      window.__getLang = function(){ return document.documentElement.dir === 'ltr' ? 'en' : 'fa'; };
+      return;
+    }
+    var langButtons = document.querySelectorAll('.lang-opt');
+    if(!langButtons.length) return;
+    var i18nEls = document.querySelectorAll('[data-en]');
+    i18nEls.forEach(function(el){ if(!el.dataset.fa) el.dataset.fa = el.innerHTML; });
+    var lang = 'fa';
+    function setLang(l){
+      lang = l;
+      document.documentElement.lang = l;
+      document.documentElement.dir = (l === 'en') ? 'ltr' : 'rtl';
+      i18nEls.forEach(function(el){ el.innerHTML = (l === 'en') ? el.dataset.en : el.dataset.fa; });
+      langButtons.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
+    }
+    langButtons.forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.lang); }); });
+    window.__setLang = setLang;
+    window.__getLang = function(){ return lang; };
+  }
+
+  // ---------- Command palette (Ctrl/Cmd+K) ----------
+  function initCmdk(){
+    if(window.__siteHasPalette || window.__cmdkBound) return;
+    var overlay = document.getElementById('cmdk-overlay');
+    var input = document.getElementById('cmdk-input');
+    var list = document.getElementById('cmdk-list');
+    var hintBtn = document.getElementById('cmdk-hint');
+    if(!overlay || !input || !list || !hintBtn) return;
+    window.__cmdkBound = 1;
+    var activeIndex = 0, filtered = [];
+    function getLang(){ return window.__getLang ? window.__getLang() : 'fa'; }
+    function L(fa, en){ return getLang() === 'en' ? en : fa; }
+    function isDark(){ return document.documentElement.getAttribute('data-theme') === 'dark'; }
+    function toggleTheme(){
+      var next = isDark() ? 'light' : 'dark';
+      if(window.applyTheme) window.applyTheme(next, innerWidth/2, innerHeight/2);
+      else document.documentElement.setAttribute('data-theme', next);
+    }
+    function copyText(text, labelEl){
+      if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).catch(function(){}); }
+      if(labelEl){ var o = labelEl.textContent; labelEl.textContent = L('کپی شد!','Copied!'); setTimeout(function(){ labelEl.textContent = o; }, 1200); }
+    }
+    function commands(){
+      var cmds = [];
+      document.querySelectorAll('header nav a').forEach(function(a){
+        var href = a.getAttribute('href');
+        var fa = (a.textContent||'').trim();
+        var en = a.getAttribute('data-en') || fa;
+        cmds.push({ icon:'i-arrow-up', group:L('برو به','Go to'), fa:fa, en:en, run:function(){ location.href = href; } });
+      });
+      cmds.push({ icon: isDark()?'i-sun':'i-moon', group:L('عملیات','Action'), fa: isDark()?'حالت روشن':'حالت تاریک', en: isDark()?'Light mode':'Dark mode', run:toggleTheme });
+      cmds.push({ icon:'i-globe', group:L('عملیات','Action'), fa:'تغییر زبان به انگلیسی', en:'Switch language to English', run:function(){ if(window.__setLang) window.__setLang(getLang()==='en'?'fa':'en'); } });
+      cmds.push({ icon:'i-copy', group:L('کپی','Copy'), fa:'کپی ایمیل', en:'Copy email', run:function(el){ copyText('me@mehdiaskari.ir', el); } });
+      cmds.push({ icon:'i-github', group:L('باز کردن','Open'), fa:'باز کردن گیت‌هاب', en:'Open GitHub', run:function(){ window.open('https://github.com/m38d1','_blank'); } });
+      cmds.push({ icon:'i-download', group:L('عملیات','Action'), fa:'دانلود رزومه (PDF)', en:'Download resume (PDF)', run:function(){ location.href='/resume-fa.pdf'; } });
+      cmds.push({ icon:'i-arrow-up', group:L('عملیات','Action'), fa:'برو به بالای صفحه', en:'Scroll to top', run:function(){ window.scrollTo({top:0, behavior:'smooth'}); } });
+      return cmds;
+    }
+    function renderList(query){
+      var q = (query||'').trim().toLowerCase();
+      var all = commands();
+      filtered = !q ? all : all.filter(function(c){ return c.fa.indexOf(q)!==-1 || c.en.toLowerCase().indexOf(q)!==-1; });
+      activeIndex = 0;
+      if(!filtered.length){ list.innerHTML = '<div class="cmdk-empty">'+L('نتیجه‌ای پیدا نشد','No results')+'</div>'; return; }
+      list.innerHTML = filtered.map(function(c,i){
+        return '<div class="cmdk-item'+(i===0?' active':'')+'" data-i="'+i+'">'+
+          '<span class="cmdk-ic"><svg class="ic" aria-hidden="true"><use href="#'+c.icon+'"/></svg></span>'+
+          '<span class="cmdk-label">'+(getLang()==='en'?c.en:c.fa)+'</span>'+
+          '<span class="cmdk-group">'+c.group+'</span>'+
+        '</div>';
+      }).join('');
+    }
+    function setActive(i){
+      var items = list.querySelectorAll('.cmdk-item');
+      items.forEach(function(el){ el.classList.remove('active'); });
+      if(items[i]){ items[i].classList.add('active'); items[i].scrollIntoView({block:'nearest'}); }
+      activeIndex = i;
+    }
+    function execute(i){
+      var cmd = filtered[i]; if(!cmd) return;
+      var el = list.querySelector('.cmdk-item[data-i="'+i+'"] .cmdk-label');
+      cmd.run(el);
+      if(!/copy|کپی/i.test(cmd.group)) close();
+    }
+    function open(){ overlay.classList.add('open'); input.value=''; renderList(''); setTimeout(function(){ try{ input.focus(); }catch(e){} }, 50); }
+    function close(){ overlay.classList.remove('open'); }
+    window.addEventListener('keydown', function(e){
+      if((e.ctrlKey||e.metaKey) && (e.key==='k'||e.key==='K')){ e.preventDefault(); overlay.classList.contains('open')?close():open(); }
+      else if(e.key==='Escape' && overlay.classList.contains('open')){ close(); }
+    });
+    hintBtn.addEventListener('click', open);
+    overlay.addEventListener('click', function(e){ if(e.target===overlay) close(); });
+    input.addEventListener('input', function(){ renderList(input.value); });
+    input.addEventListener('keydown', function(e){
+      if(e.key==='ArrowDown'){ e.preventDefault(); setActive(Math.min(activeIndex+1, filtered.length-1)); }
+      else if(e.key==='ArrowUp'){ e.preventDefault(); setActive(Math.max(activeIndex-1, 0)); }
+      else if(e.key==='Enter'){ e.preventDefault(); execute(activeIndex); }
+    });
+    list.addEventListener('click', function(e){ var it=e.target.closest('.cmdk-item'); if(it) execute(parseInt(it.dataset.i,10)); });
+  }
+
   function initAll(root){
     initTabs(root); initAccordion(root); initDialog(root); initCode(root);
     initReadingBar(); initTOC(); initReadingTime(); initCounters(root);
     initBlogSearch(root); initCursorGlow();
+    initLang(); initCmdk();
   }
 
   if (document.readyState === 'loading') {

@@ -133,6 +133,30 @@ html[data-theme="light"] [data-tip]:focus-visible::after{ background:#10151C; co
 .tok-com{ color:var(--text-dim); font-style:italic; }
 .tok-op{ color:var(--text-muted); }
 
+/* modern code-block: larger mono, generous line-height, line-number gutter */
+.prose pre{
+  font-family:'IBM Plex Mono', ui-monospace, 'SFMono-Regular', Menlo, Consolas, monospace;
+  font-size:.82rem; line-height:1.75; letter-spacing:.01em;
+  font-feature-settings:'tnum' 1, 'liga' 1;
+  counter-reset:cl;
+  padding:48px 18px 18px;
+}
+.prose pre .cl{
+  display:block; position:relative; counter-increment:cl;
+  padding-inline-start:2.8em; min-height:1.75em;
+  border-radius:6px; transition:background .15s ease;
+}
+.prose pre .cl:hover{ background:rgba(127,127,127,.08); }
+.prose pre .cl::before{
+  content:counter(cl);
+  position:absolute; inset-inline-start:0; top:0; width:1.9em; text-align:right;
+  color:var(--text-dim); opacity:.42; user-select:none;
+  font-variant-numeric:tabular-nums; font-size:.82em;
+}
+.prose pre .cl:only-child{ padding-inline-start:0; }
+.prose pre .cl:only-child::before{ content:none; }
+.prose pre .cl .tok-com{ opacity:.8; }
+
 /* ---------- Reading progress bar ---------- */
 .reading-bar{
   position:fixed; top:0; inset-inline-start:0; height:3px; width:0;
@@ -200,5 +224,58 @@ mark.hl{ background:var(--teal-dim); color:var(--text); border-radius:3px; paddi
   opacity:0; transition:opacity .4s ease;
 }
 .cursor-glow.on{ opacity:1; }
+
+/* ---------- COMMAND PALETTE (Cmd/Ctrl+K) ---------- */
+.cmdk-hint{
+  display:flex; align-items:center; gap:5px;
+  font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--text-dim);
+  border:1px solid var(--border); background:var(--glass-2);
+  padding:5px 9px; border-radius:8px; cursor:pointer; flex-shrink:0;
+  transition:border-color .2s ease, color .2s ease;
+}
+.cmdk-hint:hover, .cmdk-hint:focus-visible{border-color:var(--teal); color:var(--teal);}
+.cmdk-hint kbd{font-family:inherit;}
+@media (max-width:700px){ .cmdk-hint{display:none;} }
+
+.cmdk-overlay{
+  position:fixed; inset:0; z-index:300;
+  background:rgba(5,6,9,0.55); backdrop-filter:blur(6px);
+  display:flex; align-items:flex-start; justify-content:center;
+  padding:12vh 20px 20px;
+  opacity:0; pointer-events:none; transition:opacity .2s ease;
+}
+.cmdk-overlay.open{opacity:1; pointer-events:auto;}
+.cmdk-modal{
+  width:min(560px, 100%); max-height:70vh; display:flex; flex-direction:column;
+  background:var(--glass-2); border:1px solid var(--border);
+  backdrop-filter:blur(28px) saturate(180%);
+  border-radius:18px; overflow:hidden;
+  box-shadow:0 30px 80px -20px rgba(0,0,0,0.55);
+  transform:translateY(-10px) scale(0.98); transition:transform .2s cubic-bezier(.2,.8,.2,1);
+}
+.cmdk-overlay.open .cmdk-modal{transform:translateY(0) scale(1);}
+.cmdk-input-row{display:flex; align-items:center; gap:10px; padding:14px 18px; border-bottom:1px solid var(--border-soft);}
+.cmdk-input-row svg{width:16px; height:16px; fill:var(--text-dim); flex-shrink:0;}
+.cmdk-input{
+  flex:1; background:none; border:none; outline:none; color:var(--text);
+  font-family:'Vazirmatn', sans-serif; font-size:0.95rem;
+}
+.cmdk-input::placeholder{color:var(--text-dim);}
+.cmdk-esc{font-family:'IBM Plex Mono', monospace; font-size:0.68rem; color:var(--text-dim); border:1px solid var(--border-soft); border-radius:6px; padding:2px 7px; flex-shrink:0;}
+.cmdk-list{overflow-y:auto; padding:8px;}
+.cmdk-empty{padding:24px; text-align:center; color:var(--text-dim); font-size:0.85rem;}
+.cmdk-item{
+  display:flex; align-items:center; gap:12px; padding:11px 12px; border-radius:10px;
+  cursor:pointer; font-size:0.88rem; color:var(--text-muted);
+}
+.cmdk-item .cmdk-ic{
+  width:30px; height:30px; border-radius:9px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--glass); border:1px solid var(--border); font-size:0.85rem;
+}
+.cmdk-item .cmdk-label{flex:1; color:var(--text);}
+.cmdk-item .cmdk-group{font-size:0.68rem; color:var(--text-dim); font-family:'IBM Plex Mono', monospace;}
+.cmdk-item.active{background:var(--teal-dim);}
+.cmdk-item.active .cmdk-ic{border-color:var(--teal); color:var(--teal);}
 @media (hover:none){ .cursor-glow{ display:none; } }
 @media (prefers-reduced-motion: reduce){ .cursor-glow{ display:none; } }
