@@ -1,0 +1,6 @@
+# GitHub Pages (classic Jekyll) build settings.
+# The site is plain HTML/CSS/JS; this only keeps repo tooling out of the
+# published output (Jekyll would also eat the {{PLACEHOLDER}} tokens in
+# tools/post-template.html as Liquid variables).
+exclude:
+  - tools
