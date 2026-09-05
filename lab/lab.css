@@ -235,3 +235,49 @@ tr.is-summary .dot{ background: var(--teal); }
 @media (prefers-reduced-motion: reduce){
   *{ animation-duration: .001ms !important; transition-duration: .001ms !important; }
 }
+
+/* ---------- restored-input notice ---------- */
+.restored{
+  display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap;
+  margin-top: 10px; padding: 9px 12px; border-radius: 10px;
+  background: rgba(125,224,201,.10); border: 1px solid var(--border-soft);
+  font-size: .74rem; color: var(--text-muted);
+}
+.restored[hidden]{ display: none; }
+.restored button{
+  background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; color: var(--teal); text-decoration: underline;
+}
+.print-note{ display: none; }
+
+/* ---------- print: a planner exports this table into a report ---------- */
+@media print{
+  @page{ margin: 14mm 12mm; }
+  html{ background: #fff !important; }
+  body{ color: #111 !important; }
+  header, footer, .cursor-glow, .reading-progress, .toc, .cmdk-hint, .cmdk-overlay,
+  .tool-head .post-meta, .panel-head .copy-btn, .preset-row, .controls-row, .actions,
+  .cols-help, .restored, .legend, .tool-layout > .panel:first-child,
+  section.panel:last-of-type, .site-nav, .hero, .bento, .term-card{ display: none !important; }
+
+  .tool-layout, .lab-main, .panel, .summary, .table-wrap{ display: block; width: auto; max-width: none;
+    background: none !important; border: 0 !important; box-shadow: none !important;
+    backdrop-filter: none !important; padding: 0 !important; margin: 0 0 10pt !important; }
+  .table-wrap{ overflow: visible !important; }
+  .wf-table{ min-width: 0; width: 100%; font-size: 9.5pt; }
+  .wf-table th{ position: static; background: #fff !important; color: #111;
+    border-bottom: 1.2pt solid #111; font-size: 8.5pt; }
+  .wf-table td{ color: #333; border-bottom: .4pt solid #bbb; padding: 4pt 6pt; white-space: nowrap; }
+  .wf-table td.name{ white-space: normal; }
+  .wf-table td.key{ color: #111; }
+  .wf-table tfoot td{ background: #f2f2f2 !important; color: #111; border-top: 1.2pt solid #111; }
+  .wf-table thead{ display: table-header-group; }        /* repeat headers across pages */
+  .wf-table tr{ break-inside: avoid; }
+  .big-num, .mini b{ color: #111 !important; }
+  .big, .mini-grid, .checks{ break-inside: avoid; }
+  .check{ background: none !important; border: .4pt solid #999; color: #111; }
+  .check-mark{ border-color: #999 !important; color: #111 !important; }
+  .wf-bar, .wf-bar-track{ -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .print-note{ display: block; margin-top: 8pt; font-size: 8pt; color: #666; }
+  a[href]::after{ content: ""; }                          /* no URL spam on a printed page */
+}

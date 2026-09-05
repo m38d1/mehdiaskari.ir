@@ -27,6 +27,11 @@
         <label class="field-label" for="wf-input" data-en="Columns: code · title · parent · amount (rial). W and C are optional.">ستون‌ها: کد · عنوان · والد · مبلغ (ریال) — ستون‌های W و C اختیاری‌اند</label>
         <textarea id="wf-input" class="wf-input" dir="ltr" spellcheck="false" autocomplete="off" aria-label="داده‌های WBS"></textarea>
 
+        <div class="restored" id="wf-restored" hidden>
+          <span data-en="Your last table was restored from this browser — nothing was uploaded.">آخرین جدولی که وارد کرده بودید از همین مرورگر بازیابی شد؛ هیچ‌چیز بارگذاری نشده است.</span>
+          <button type="button" data-en="Load the sample instead">نمونهٔ پیش‌فرض را بارگذاری کن</button>
+        </div>
+
         <div class="controls-row">
           <span class="controls-label" data-en="Weighting basis">مبنای وزن‌دهی</span>
           <div class="seg" role="group" aria-label="مبنای وزن‌دهی">
@@ -89,6 +94,7 @@
           <tfoot id="wf-foot"></tfoot>
         </table>
       </div>
+      <p class="print-note" data-en="Generated with the W.F calculator at mehdiaskari.ir/lab/weight-factor/">این خروجی با ماشین‌حساب W.F در نشانی mehdiaskari.ir/lab/weight-factor/ ساخته شده است.</p>
       <div class="legend">
         <span data-en="Rows with a teal dot are WBS summaries: their amount is rolled up from their children, and both percentages are shown for that branch. Under every parent the shares add to exactly 100%.">سطرهای با نقطهٔ فیروزه‌ای خلاصهٔ WBS هستند: مبلغشان از فرزندان جمع می‌شود و هر دو درصد برای همان شاخه نمایش داده می‌شود. زیر هر والد، مجموع سهم‌ها دقیقاً ۱۰۰٪ است.</span>
       </div>

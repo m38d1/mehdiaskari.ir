@@ -44,6 +44,9 @@ jobs:
       - name: posts.json <-> blog/ folder consistency
         run: python tools/check-posts.py
 
+      - name: JSON-LD parses and matches posts.json
+        run: python tools/check-schema.py
+
       - name: Service-worker cache bumped for changed assets
         run: python tools/check-sw-version.py
 

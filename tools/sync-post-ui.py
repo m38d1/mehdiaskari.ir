@@ -12,7 +12,9 @@ Usage:
     python3 tools/sync-post-ui.py --add <slug>    # create a new post from the template
     python3 tools/sync-post-ui.py --template      # rebuild tools/post-template.html
 """
+import json
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -21,6 +23,9 @@ BLOG = ROOT / "blog"
 TOOLS = ROOT / "tools"
 TEMPLATE = TOOLS / "post-template.html"
 REF_POST = BLOG / "weight-factor-excel-msp" / "index.html"
+POSTS_JSON = ROOT / "posts.json"
+ARCHIVE = BLOG / "all" / "index.html"
+SITE = "https://mehdiaskari.ir"
 
 # ------------------------------------------------------------------ patches
 CSS_ANCHOR = '<link rel="stylesheet" href="/blog.css">'
@@ -81,6 +86,157 @@ CHECKS = {
     'cmdk hint': 'class="cmdk-hint"',
     'cmdk overlay': 'id="cmdk-overlay"',
 }
+
+# ---------------------------------------------------------------- structured data
+# Regenerated from posts.json on every run, so editing a title or date there
+# propagates into the schema instead of leaving a stale block behind.
+LD_OPEN = '<script type="application/ld+json" data-entity="article">'
+LD_RE = re.compile(r'<script type="application/ld\+json" data-entity="article">.*?</script>', re.S)
+
+
+def load_posts():
+    """slug -> metadata, from the same file the blog cards already read."""
+    if not POSTS_JSON.exists():
+        return {}
+    data = json.loads(POSTS_JSON.read_text(encoding='utf-8'))
+    items = data if isinstance(data, list) else data.get('posts', [])
+    return {p['slug']: p for p in items if isinstance(p, dict) and p.get('slug')}
+
+
+def word_count(html):
+    m = re.search(r'<article\b.*?</article>', html, re.S)
+    if not m:
+        return None
+    text = re.sub(r'<[^>]+>', ' ', m.group(0))
+    text = re.sub(r'&[a-z#0-9]+;', ' ', text, flags=re.I)
+    words = [w for w in re.split(r'[\s\u200c]+', text) if w.strip()]
+    return len(words) or None
+
+
+def last_touched(path):
+    """Real dateModified from git, not a guess — Google compares it to datePublished."""
+    try:
+        out = subprocess.run(
+            ['git', 'log', '-1', '--format=%cd', '--date=short', '--', str(path)],
+            cwd=str(ROOT), capture_output=True, text=True, timeout=15)
+        d = out.stdout.strip()
+        return d if re.fullmatch(r'\d{4}-\d{2}-\d{2}', d) else None
+    except Exception:
+        return None
+
+
+def build_ld(post, html, path=None):
+    published = post.get('date')
+    modified = max(x for x in [published, last_touched(path) if path else None] if x)
+    url = f"{SITE}/blog/{post['slug']}/"
+    tags = [t for t in (post.get('tags') or []) if t]
+
+    article = {
+        '@type': 'BlogPosting',
+        '@id': url + '#article',
+        'mainEntityOfPage': {'@type': 'WebPage', '@id': url},
+        'headline': (post.get('title') or '')[:110],
+        'description': post.get('excerpt') or '',
+        'inLanguage': 'fa-IR',
+        'isAccessibleForFree': True,
+        'url': url,
+        'image': [f'{SITE}/og-image.png'],
+        'author': {'@type': 'Person', 'name': 'Mehdi Askari',
+                   'alternateName': 'مهدی عسکری', 'url': SITE + '/'},
+        'publisher': {'@type': 'Organization', 'name': 'Mehdi Askari', 'url': SITE + '/',
+                      'logo': {'@type': 'ImageObject', 'url': SITE + '/icon.svg'}},
+    }
+    if published:
+        article['datePublished'] = published
+    if modified:
+        article['dateModified'] = modified
+    if tags:
+        article['keywords'] = ', '.join(tags)
+    wc = word_count(html)
+    if wc:
+        article['wordCount'] = wc
+
+    crumbs = {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'خانه', 'item': SITE + '/'},
+            {'@type': 'ListItem', 'position': 2, 'name': 'وبلاگ', 'item': SITE + '/blog/all/'},
+            {'@type': 'ListItem', 'position': 3, 'name': post.get('title') or '', 'item': url},
+        ],
+    }
+
+    body = json.dumps({'@context': 'https://schema.org',
+                       '@graph': [article, crumbs]}, ensure_ascii=False, indent=1)
+    # a literal "</script>" inside a JSON string would close the block early
+    return LD_OPEN + body.replace('<', '\\u003c') + '</script>'
+
+
+def refresh_ld(html, slug, meta, path):
+    """Return (html, changed). No-op when the post is not declared in posts.json."""
+    post = meta.get(slug)
+    if not post:
+        return html, False
+    want = build_ld(post, html, path)
+    found = LD_RE.search(html)
+    if found and found.group(0) == want:
+        return html, False
+    html = LD_RE.sub('', html)
+    html = re.sub(r'\n[ \t]*\n(</head>)', r'\n\1', html, count=1)
+    return html.replace('</head>', want + '\n</head>', 1), True
+
+
+BLOG_LD_OPEN = '<script type="application/ld+json" data-entity="blog">'
+BLOG_LD_RE = re.compile(r'<script type="application/ld\+json" data-entity="blog">.*?</script>', re.S)
+
+
+def build_blog_ld(meta):
+    """The archive page is a Blog, so Google can bind the six postings to one series."""
+    url = SITE + '/blog/all/'
+    order = sorted(meta.values(), key=lambda p: p.get('date') or '', reverse=True)
+    blog = {
+        '@type': 'Blog',
+        '@id': url + '#blog',
+        'mainEntityOfPage': {'@type': 'WebPage', '@id': url},
+        'name': 'یادداشت‌ها و نوشته‌ها',
+        'alternateName': 'Notes & Articles',
+        'description': 'نوشته‌های مهدی عسکری دربارهٔ کنترل پروژه، اکسل، Primavera P6، '
+                       'Microsoft Project و شبکهٔ صنعتی.',
+        'inLanguage': 'fa-IR',
+        'isAccessibleForFree': True,
+        'url': url,
+        'image': [f'{SITE}/og-image.png'],
+        'author': {'@type': 'Person', 'name': 'Mehdi Askari',
+                   'alternateName': 'مهدی عسکری', 'url': SITE + '/'},
+        'publisher': {'@type': 'Organization', 'name': 'Mehdi Askari', 'url': SITE + '/',
+                      'logo': {'@type': 'ImageObject', 'url': SITE + '/icon.svg'}},
+        'blogPost': [{
+            '@type': 'BlogPosting',
+            '@id': f"{SITE}/blog/{p['slug']}/#article",
+            'headline': (p.get('title') or '')[:110],
+            'url': f"{SITE}/blog/{p['slug']}/",
+            'datePublished': p.get('date'),
+        } for p in order if p.get('slug')],
+    }
+    crumbs = {
+        '@type': 'BreadcrumbList',
+        'itemListElement': [
+            {'@type': 'ListItem', 'position': 1, 'name': 'خانه', 'item': SITE + '/'},
+            {'@type': 'ListItem', 'position': 2, 'name': 'وبلاگ', 'item': url},
+        ],
+    }
+    body = json.dumps({'@context': 'https://schema.org',
+                       '@graph': [blog, crumbs]}, ensure_ascii=False, indent=1)
+    return BLOG_LD_OPEN + body.replace('<', '\\u003c') + '</script>'
+
+
+def refresh_blog_ld(html, meta):
+    want = build_blog_ld(meta)
+    found = BLOG_LD_RE.search(html)
+    if found and found.group(0) == want:
+        return html, False
+    html = BLOG_LD_RE.sub('', html)
+    html = re.sub(r'\n[ \t]*\n(</head>)', r'\n\1', html, count=1)
+    return html.replace('</head>', want + '\n</head>', 1), True
 
 
 def patch(html: str):
@@ -227,24 +383,44 @@ def main():
         print('no posts found')
         return 1
 
+    meta = load_posts()
     touched = 0
     for path in posts:
         rel = path.relative_to(ROOT)
+        slug = path.parent.name
         original = path.read_text(encoding='utf-8')
-        gaps = missing(original)
-        if not gaps:
+        updated, changes = patch(original)
+        updated, ld_changed = refresh_ld(updated, slug, meta, path)
+        if ld_changed:
+            changes.append('JSON-LD')
+        if slug not in meta:
+            print(f"warn     {rel}  — not declared in posts.json, schema skipped")
+        if not changes:
             print(f"ok       {rel}")
             continue
-        updated, changes = patch(original)
         touched += 1
         print(f"{'check' if check_only else 'patch '}     {rel}  -> {', '.join(changes)}")
         if not check_only:
             path.write_text(updated, encoding='utf-8')
 
+    # the archive page carries a Blog schema that lists every declared post
+    archive_dirty = False
+    if ARCHIVE.exists() and meta:
+        a_original = ARCHIVE.read_text(encoding='utf-8')
+        a_updated, archive_dirty = refresh_blog_ld(a_original, meta)
+        if archive_dirty:
+            print(f"{'check' if check_only else 'patch '}     "
+                  f"{ARCHIVE.relative_to(ROOT)}  -> Blog schema")
+            if not check_only:
+                ARCHIVE.write_text(a_updated, encoding='utf-8')
+
     print(f"\n{touched}/{len(posts)} post(s) "
           f"{'need patching' if check_only else 'updated'}.")
+    if ARCHIVE.exists():
+        print("archive: " + ("Blog schema needs refreshing" if archive_dirty
+                             else "Blog schema up to date"))
     # In --check mode a dirty baseline is a failure, so CI can gate on it.
-    return 1 if (check_only and touched) else 0
+    return 1 if (check_only and (touched or archive_dirty)) else 0
 
 
 if __name__ == '__main__':

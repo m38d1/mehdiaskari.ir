@@ -48,7 +48,29 @@ JSONLD = """<script type="application/ld+json">
 </script>"""
 
 
-def build(slug, title, description, main_path, with_js=True, with_jsonld=True):
+
+COLLECTION_LD = """<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "{title}",
+  "url": "{url}",
+  "description": "{desc}",
+  "inLanguage": "fa",
+  "isPartOf": { "@type": "WebSite", "name": "Mehdi Askari", "url": "https://mehdiaskari.ir/" },
+  "mainEntity": {
+    "@type": "ItemList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1,
+        "name": "ماشین‌حساب ضریب وزن (W.F) — سهم از والد و سهم از کل",
+        "url": "https://mehdiaskari.ir/lab/weight-factor/" }
+    ]
+  }
+}
+</script>"""
+
+def build(slug, title, description, main_path, with_js=True, with_jsonld=True,
+              collection=False):
     tpl = TEMPLATE.read_text(encoding='utf-8')
     main = Path(main_path).read_text(encoding='utf-8').strip()
 
@@ -74,8 +96,12 @@ def build(slug, title, description, main_path, with_js=True, with_jsonld=True):
         head = head.replace(JS_ANCHOR, scripts)
 
     if with_jsonld:
-        ld = (JSONLD.replace('{title}', title)
+        page_url = 'https://mehdiaskari.ir/lab/' if slug == 'index' \
+                   else f'https://mehdiaskari.ir/lab/{slug}/'
+        template_ld = COLLECTION_LD if collection else JSONLD
+        ld = (template_ld.replace('{title}', title)
                           .replace('{slug}', slug)
+                          .replace('{url}', page_url)
                           .replace('{desc}', description))
         head = head.replace('</head>', '  ' + ld + '\n</head>')
 
@@ -96,9 +122,11 @@ def main():
     ap.add_argument('--no-js', action='store_true',
                     help='omit wf-engine.js and lab/<slug>/app.js (for the landing page)')
     ap.add_argument('--no-jsonld', action='store_true', help='omit the WebApplication block')
+    ap.add_argument('--collection', action='store_true',
+                    help='emit CollectionPage + ItemList instead of WebApplication (the /lab/ index)')
     a = ap.parse_args()
     dest = build(a.slug, a.title, a.description, a.main,
-                 with_js=not a.no_js, with_jsonld=not a.no_jsonld)
+                 with_js=not a.no_js, with_jsonld=not a.no_jsonld, collection=a.collection)
     print(f'wrote {dest.relative_to(ROOT)}')
 
 

@@ -203,6 +203,32 @@
     recompute();
   }
 
+  /* ---------- keep the pasted WBS across reloads ---------- */
+  var STORE = 'lab.wf.v1';
+  function activePreset() {
+    var on = document.querySelector('[data-preset].active');
+    return on ? on.dataset.preset : null;
+  }
+  function saveState() {
+    try {
+      localStorage.setItem(STORE, JSON.stringify({ text: input.value, basis: basis, preset: activePreset() }));
+    } catch (e) { /* private mode / quota — the tool works, it just is not sticky */ }
+  }
+  function restoreState() {
+    var raw = null;
+    try { raw = localStorage.getItem(STORE); } catch (e) { return false; }
+    if (!raw) return false;
+    var st;
+    try { st = JSON.parse(raw); } catch (e) { return false; }
+    if (!st || typeof st.text !== 'string' || !st.text.trim()) return false;
+    input.value = st.text;
+    document.querySelectorAll('[data-preset]').forEach(function (c) {
+      c.classList.toggle('active', c.dataset.preset === st.preset);
+    });
+    setBasis(st.basis === 'W' ? 'W' : 'V');
+    return true;
+  }
+
   function loadPreset(key) {
     var p = E.PRESETS[key];
     if (!p) return;
@@ -211,6 +237,7 @@
       c.classList.toggle('active', c.dataset.preset === key);
     });
     setBasis(p.basis);
+    saveState();
   }
 
   document.querySelectorAll('[data-preset]').forEach(function (chip) {
@@ -224,10 +251,13 @@
   input.addEventListener('input', function () {
     clearTimeout(timer);
     timer = setTimeout(recompute, 420);
+    saveState();
   });
-  input.addEventListener('paste', function () { setTimeout(recompute, 60); });
+  input.addEventListener('paste', function () { setTimeout(function () { recompute(); saveState(); }, 60); });
 
   clrBtn.addEventListener('click', function () {
+    try { localStorage.removeItem(STORE); } catch (e) {}
+    var note = el('wf-restored'); if (note) note.hidden = true;
     input.value = '';
     document.querySelectorAll('[data-preset]').forEach(function (c) { c.classList.remove('active'); });
     recompute();
@@ -288,5 +318,18 @@
     b.addEventListener('click', function () { setTimeout(recompute, 0); });
   });
 
-  loadPreset('rial');
+  if (restoreState()) {
+    var note = el('wf-restored');
+    if (note) {
+      note.hidden = false;
+      var reset = note.querySelector('button');
+      if (reset) reset.addEventListener('click', function () {
+        try { localStorage.removeItem(STORE); } catch (e) {}
+        note.hidden = true;
+        loadPreset('rial');
+      });
+    }
+  } else {
+    loadPreset('rial');
+  }
 })();
