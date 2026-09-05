@@ -9,6 +9,7 @@ Usage:
     python3 tools/check-html.py            # check every .html in the repo
     python3 tools/check-html.py index.html # check specific files
 """
+import re
 import sys
 from html.parser import HTMLParser
 from pathlib import Path
@@ -73,6 +74,29 @@ def check(path: Path):
     return parser.errors
 
 
+CHROME = 'tools/post-template.html'
+
+def check_collisions():
+    """A tool page that queries document.querySelectorAll('[data-x]') unscoped
+    will also match the shared header's own elements whenever the chrome happens
+    to use the same attribute name. The EVM dashboard did exactly that with
+    data-mode, which the theme switch owns -- clicking dark/light silently reset
+    the tool's input shape. Nothing in the DOM warns you.
+    """
+    chrome = ROOT / CHROME
+    if not chrome.exists():
+        return []
+    used = set(re.findall(r'\b(data-[a-z-]+)=', chrome.read_text(encoding='utf-8')))
+    problems = []
+    for js in sorted(ROOT.glob('lab/*/app.js')):
+        src = js.read_text(encoding='utf-8')
+        for attr in set(re.findall(r"document\.querySelectorAll\('\[(data-[a-z-]+)\]", src)):
+            if attr in used:
+                problems.append(f"{js.relative_to(ROOT)}: unscoped [{attr}] also matches the "
+                                f"shared chrome in {CHROME} -- scope it to the tool's own panel")
+    return problems
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
     if args:
@@ -95,7 +119,12 @@ def main():
             print(f"ok    {rel}")
 
     print(f"\n{len(files) - failed}/{len(files)} file(s) balanced.")
-    return 1 if failed else 0
+    collisions = check_collisions()
+    for c in collisions:
+        print(f'FAIL  {c}')
+    if not collisions:
+        print('ok    no tool selector collides with the shared chrome')
+    return 1 if (failed or collisions) else 0
 
 
 if __name__ == '__main__':

@@ -20,6 +20,7 @@
   var manualInput = document.getElementById('evm-manual');
   var manualWrap = document.getElementById('manual-wrap');
 
+  var controls = document.getElementById('evm-controls');
   var mode = 'cumulative';
   var eacMethod = 'typical';
   var lastResult = null;
@@ -265,8 +266,8 @@
   /* ---------- controls ---------- */
   function setMode(m) {
     mode = m === 'periodic' ? 'periodic' : 'cumulative';
-    document.querySelectorAll('[data-mode]').forEach(function (o) {
-      o.classList.toggle('is-on', o.dataset.mode === mode);
+    controls.querySelectorAll('[data-series]').forEach(function (o) {
+      o.classList.toggle('is-on', o.dataset.series === mode);
     });
   }
   function setEac(m) {
@@ -281,7 +282,7 @@
     var p = E && E.PRESETS[key];
     if (!p) return;
     input.value = p.tsv;
-    document.querySelectorAll('[data-preset]').forEach(function (c) {
+    controls.querySelectorAll('[data-preset]').forEach(function (c) {
       c.classList.toggle('active', c.dataset.preset === key);
     });
     setMode(p.mode);
@@ -296,8 +297,8 @@
       localStorage.setItem(STORE, JSON.stringify({
         text: input.value, mode: mode, eac: eacMethod,
         bac: bacInput.value, manual: manualInput.value,
-        preset: (document.querySelector('[data-preset].active') || {}).dataset
-                ? document.querySelector('[data-preset].active').dataset.preset : null
+        preset: (controls.querySelector('[data-preset].active') || {}).dataset
+                ? controls.querySelector('[data-preset].active').dataset.preset : null
       }));
     } catch (e) { /* private mode — the tool works, it just is not sticky */ }
   }
@@ -309,7 +310,7 @@
     try { st = JSON.parse(raw); } catch (e) { return false; }
     if (!st || typeof st.text !== 'string' || !st.text.trim()) return false;
     input.value = st.text;
-    document.querySelectorAll('[data-preset]').forEach(function (c) {
+    controls.querySelectorAll('[data-preset]').forEach(function (c) {
       c.classList.toggle('active', c.dataset.preset === st.preset);
     });
     setMode(st.mode);
@@ -319,13 +320,16 @@
     return true;
   }
 
-  document.querySelectorAll('[data-preset]').forEach(function (chip) {
+  // Scoped to #evm-controls on purpose: the shared header carries its own
+  //  data-mode="dark|light" theme buttons, and an unscoped [data-mode] query
+  //  made clicking the theme toggle silently reset the input shape.
+  controls.querySelectorAll('[data-preset]').forEach(function (chip) {
     chip.addEventListener('click', function () { loadPreset(chip.dataset.preset); });
   });
-  document.querySelectorAll('[data-mode]').forEach(function (o) {
-    o.addEventListener('click', function () { setMode(o.dataset.mode); recompute(); });
+  controls.querySelectorAll('[data-series]').forEach(function (o) {
+    o.addEventListener('click', function () { setMode(o.dataset.series); recompute(); });
   });
-  document.querySelectorAll('[data-eac]').forEach(function (o) {
+  controls.querySelectorAll('[data-eac]').forEach(function (o) {
     o.addEventListener('click', function () { setEac(o.dataset.eac); recompute(); });
   });
   [bacInput, manualInput].forEach(function (f) {
@@ -346,7 +350,7 @@
     input.value = '';
     if (bacInput) bacInput.value = '';
     if (manualInput) manualInput.value = '';
-    document.querySelectorAll('[data-preset]').forEach(function (c) { c.classList.remove('active'); });
+    controls.querySelectorAll('[data-preset]').forEach(function (c) { c.classList.remove('active'); });
     recompute();
     input.focus();
   });

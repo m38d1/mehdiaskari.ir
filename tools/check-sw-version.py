@@ -18,18 +18,33 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 
-# Files served cache-first (or precached) by sw.js.
-WATCHED = {
-    'components.css',
-    'components.js',
+# Files served cache-first by sw.js even when they are not in PRECACHE.
+ALWAYS_WATCHED = {
     'blog.css',
-    'cover.js',
-    'index.html',
-    'posts.json',
-    'manifest.webmanifest',
-    'icon.svg',
 }
 SW = 'sw.js'
+
+
+def watched():
+    """Derive the watched set from PRECACHE in sw.js instead of duplicating it.
+
+    A hand-maintained list went stale the moment /lab/ was precached, so an
+    engine change could pass CI without a cache bump -- and for a calculation
+    tool a stale cached engine means silently wrong numbers for every returning
+    visitor. Whatever sw.js promises to cache is what must force a bump.
+    """
+    text = (ROOT / SW).read_text(encoding='utf-8')
+    block = re.search(r'const\s+PRECACHE\s*=\s*\[(.*?)\]', text, re.S)
+    out = set(ALWAYS_WATCHED)
+    if block:
+        for entry in re.findall(r"'([^']+)'", block.group(1)):
+            if entry == './':
+                out.add('index.html')
+            elif entry.endswith('/'):
+                continue          # directory entries are navigations, not assets
+            else:
+                out.add(entry.lstrip('./'))
+    return out
 
 
 def git(*args):
@@ -63,8 +78,9 @@ def main():
         return 0
 
     changed = {line.strip() for line in (git('diff', '--name-only', base, 'HEAD') or '').splitlines() if line.strip()}
+    watch = watched()
     touched = sorted(p for p in changed
-                     if p in WATCHED or p.startswith('fonts/'))
+                     if p in watch or p.startswith('fonts/'))
 
     if not touched:
         print(f"ok      no cache-sensitive files changed ({len(changed)} file(s) in diff)")
