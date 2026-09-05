@@ -108,10 +108,84 @@ console.log('\n== preset: epcc (3 levels) ==');
   ok(near(result.totals.rootWeightSum, 1, 1e-9), 'root weights sum to 1');
   const sum = result.leaves.reduce((a, n) => a + n.wfProj, 0);
   ok(near(sum, 1, 1e-9), 'leaf weights sum to 1 (no weight lost in the tree)', 'got ' + sum);
-  ok(result.totals.weightedProgress > 0.3 && result.totals.weightedProgress < 0.7,
-     'weighted progress is a sane number', 'got ' + result.totals.weightedProgress);
+  ok(result.basis === 'W', 'basis is W (importance), not V');
+  ok(near(result.totals.weightedProgress, 0.3716981132075472, 1e-9),
+     'weighted progress = 37.17%', 'got ' + result.totals.weightedProgress);
+  ok(near(result.totals.rawCostProgress, 838 / 1550, 1e-9),
+     'raw cost progress = 54.06%', 'got ' + result.totals.rawCostProgress);
+
+  // The point of the whole method: with W != V, weighting must reveal a gap.
+  const info = result.checks.find(c => c.informational);
+  ok(info && info.diverged === true, 'weighted and raw cost progress DIVERGE on this preset');
+  ok(result.totals.weightedProgress < result.totals.rawCostProgress - 0.15,
+     'the gap is large (>15 pts): spend ran ahead of physical work',
+     'gap = ' + ((result.totals.rawCostProgress - result.totals.weightedProgress) * 100).toFixed(2) + ' pts');
+  ok(allGreen(result), 'every gating validation check passes');
 }
 
+console.log('\n== the V-basis identity (weighted == raw cost) ==');
+{
+  const { result } = run('hierarchy');
+  const info = result.checks.find(c => c.informational);
+  ok(result.basis === 'V', 'hierarchy preset uses V');
+  ok(near(result.totals.weightedProgress, result.totals.rawCostProgress, 1e-12),
+     'with basis V the two numbers are algebraically identical');
+  ok(info && info.diverged === false, 'and the engine reports no divergence');
+  ok(info && info.detail.indexOf('\u03a3(V') !== -1,
+     'the note explains the identity rather than blaming the data', info && info.detail);
+}
+
+console.log("\n== preset: rial (amounts only — the tool's default) ==");
+{
+  const { result } = run('rial');
+
+  ok(result.basis === 'V', 'basis stays V');
+  ok(result.hasCost === false, 'no cost column -> hasCost false');
+  ok(result.hasWeight === false, 'no W column -> hasWeight false (the amount must NOT leak into W)');
+  ok(result.errors.length === 0, 'no errors', result.errors.join(' | '));
+  ok(result.totals.sumV === 14500000000, 'total = 14,500,000,000 rial', 'got ' + result.totals.sumV);
+
+  // a parent whose amount cell is blank is rolled up from its children
+  ok(byId(result, '2')._v === 6500000000, 'parent 2 rolls up to 6,500,000,000', 'got ' + byId(result, '2')._v);
+  ok(byId(result, '3')._v === 4000000000, 'parent 3 rolls up to 4,000,000,000', 'got ' + byId(result, '3')._v);
+
+  // the two percentages the tool exists to produce
+  ok(near(byId(result, '2.1').wfUp, 2500 / 6500, 1e-12),
+     '2.1 share of PARENT = 38.46%', 'got ' + byId(result, '2.1').wfUp);
+  ok(near(byId(result, '2.1').wfProj, 2500 / 14500, 1e-12),
+     '2.1 share of PROJECT = 17.24%', 'got ' + byId(result, '2.1').wfProj);
+  ok(near(byId(result, '3.3').wfUp, 0.125, 1e-12), '3.3 share of parent = 12.50%');
+  ok(near(byId(result, '4').wfProj, 1000 / 14500, 1e-12), 'root 4 share of project = 6.90%');
+
+  ok(near(result.totals.rootWeightSum, 1, 1e-12), 'sum of root shares = 1');
+  ok(near(result.leaves.reduce((a, n) => a + n.wfProj, 0), 1, 1e-12), 'sum of leaf shares = 1');
+
+  const perParent = {};
+  result.nodes.forEach(function (n) {
+    if (!n.parent) return;
+    perParent[n.parent] = (perParent[n.parent] || 0) + n.wfUp;
+  });
+  Object.keys(perParent).forEach(function (k) {
+    ok(near(perParent[k], 1, 1e-12), 'children of ' + k + ' add to exactly 100%', 'got ' + perParent[k]);
+  });
+  ok(allGreen(result), 'every gating validation check passes');
+}
+
+console.log('\n== header parsing: an undeclared column must stay empty ==');
+{
+  const rial = Engine.parse('کد\tعنوان\tوالد\tمبلغ (ریال)\nA\tالف\t\t1,000,000').rows[0];
+  ok(rial.v === 1000000, 'مبلغ (ریال) maps to V', 'got ' + rial.v);
+  ok(rial.w === null, 'W is NOT filled from the positional default', 'got ' + rial.w);
+  ok(rial.c === null, 'C is NOT filled from the positional default', 'got ' + rial.c);
+
+  const cost = Engine.parse('کد\tعنوان\tوالد\tهزینه (ریال)\nA\tالف\t\t500').rows[0];
+  ok(cost.c === 500, 'هزینه (ریال) maps to C, not V', 'got c=' + cost.c + ' v=' + cost.v);
+  ok(cost.v === null, 'and V stays empty', 'got ' + cost.v);
+
+  const all3 = Engine.parse('کد\tعنوان\tوالد\tW\tمبلغ (ریال)\tهزینه (ریال)\nA\tالف\t\t4\t9,000\t3,000').rows[0];
+  ok(all3.w === 4 && all3.v === 9000 && all3.c === 3000,
+     'W / V / C resolve independently', JSON.stringify(all3));
+}
 console.log('\n== structural guards ==');
 {
   const bad = Engine.parse('کد\tعنوان\tوالد\tV\tC\n1\tالف\tZZZ\t100\t50').rows;

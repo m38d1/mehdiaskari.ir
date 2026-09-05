@@ -27,13 +27,16 @@
   };
 
   /* ---------- column aliases: Persian + English, case-insensitive ---------- */
+  // Key order matters: the substring pass walks these in order, so 'c' is listed
+  // before 'v' to stop "هزینه (ریال)" from being captured as a value column.
   var ALIASES = {
     id:     ['code', 'id', 'wbs', 'کد', 'شناسه', 'شماره'],
     name:   ['name', 'title', 'activity', 'عنوان', 'نام', 'فعالیت'],
     parent: ['parent', 'pid', 'parent id', 'parent code', 'والد', 'پدر', 'سطح بالادستی'],
     w:      ['w', 'weight', 'وزن'],
-    v:      ['v', 'value', 'budget', 'bac', 'ارزش', 'بودجه', 'قیمت'],
-    c:      ['c', 'cost', 'ac', 'acwp', 'actual', 'هزینه', 'هزینه واقعی', 'مصرف']
+    c:      ['c', 'cost', 'ac', 'acwp', 'actual', 'هزینه', 'مصرف'],
+    v:      ['v', 'value', 'budget', 'bac', 'amount', 'ارزش', 'بودجه', 'قیمت',
+             'مبلغ', 'ریال', 'مبلغ (ریال)']
   };
 
   function norm(s) { return String(s == null ? '' : s).trim().toLowerCase(); }
@@ -86,30 +89,39 @@
 
     if (hasHeader) {
       body = lines.slice(1);
+      // A column the header does not declare must be ABSENT, not left at its
+      // positional default — otherwise a 4-column rial table reads the same
+      // amount into both W and V.
       for (var k in cols) {
         if (!Object.prototype.hasOwnProperty.call(cols, k)) continue;
-        var idx = map.indexOf(k);
-        if (idx !== -1) cols[k] = idx;
+        cols[k] = map.indexOf(k);
       }
+      if (cols.id < 0) cols.id = 0;             // rows still need a key
+      if (cols.name < 0) cols.name = cols.id;   // fall back to the code as the label
     } else {
       warnings.push('سرستون پیدا نشد؛ ترتیب ستون‌ها فرض شد: کد، عنوان، والد، W، V، C');
+    }
+
+    function cell(cells, key) {
+      var i = cols[key];
+      return i >= 0 && cells[i] !== undefined ? cells[i] : '';
     }
 
     var rows = [];
     var seen = {};
     body.forEach(function (line, i) {
       var cells = splitLine(line).map(function (c) { return c.trim(); });
-      var id = cells[cols.id] !== undefined ? cells[cols.id] : '';
+      var id = cell(cells, 'id');
       if (id === '') { warnings.push('سطر ' + (i + 1) + ': کد خالی است، نادیده گرفته شد'); return; }
       if (seen[id]) { warnings.push('کد تکراری «' + id + '» در سطر ' + (i + 1) + ' نادیده گرفته شد'); return; }
       seen[id] = 1;
       rows.push({
         id: String(id),
-        name: cells[cols.name] || String(id),
-        parent: cells[cols.parent] ? String(cells[cols.parent]) : '',
-        w: toNumber(cells[cols.w]),
-        v: toNumber(cells[cols.v]),
-        c: toNumber(cells[cols.c])
+        name: cell(cells, 'name') || String(id),
+        parent: cell(cells, 'parent') ? String(cell(cells, 'parent')) : '',
+        w: toNumber(cell(cells, 'w')),
+        v: toNumber(cell(cells, 'v')),
+        c: toNumber(cell(cells, 'c'))
       });
     });
     return { rows: rows, warnings: warnings };
@@ -297,7 +309,9 @@
               '٪ (اختلاف ' + (divergence >= 0 ? '+' : '') + round(divergence * 100, 2) + ' واحد درصد). ' +
               (Math.abs(divergence) > 1e-4
                 ? 'وزن‌دهی، انحرافی را رو کرده که عدد خام پنهان می‌کرد.'
-                : 'در این داده‌ها وزن با ارزش هم‌تناسب است، پس دو عدد یکی می‌شوند.')
+                : (field === 'v'
+                    ? 'مبنای وزن‌دهی ریال است، پس درصد وزنی همان سهم بودجه است و این دو عدد ریاضیاً یکی‌اند: Σ(Vᵢ/V)×(Cᵢ/Vᵢ) ≡ ΣCᵢ/V. اگر می‌خواهید اهمیت هم وارد شود، ستون W را پر کنید.'
+                    : 'وزن W شما با مبلغ (V) هم‌تناسب است، پس وزن‌دهی اهمیت اطلاعات تازه‌ای اضافه نمی‌کند.'))
     });
 
     var maxDepth = rows.reduce(function (a, r) { return Math.max(a, r.depth); }, 0);
@@ -309,6 +323,8 @@
       checks: checks,
       basis: basis,
       requestedBasis: requestedBasis,
+      hasCost: rows.some(function (r) { return r.c != null && r.c !== 0; }),
+      hasWeight: rows.some(function (r) { return r.w != null && r.w !== 0; }),
       nodes: rows,
       leaves: leaves,
       totals: {
@@ -343,6 +359,24 @@
 
   /* ---------- presets: the two worked examples from the blog post ---------- */
   var PRESETS = {
+    rial: {
+      label: 'ساختار WBS با مبلغ ریالی (پیش‌فرض)',
+      basis: 'V',
+      // Only amounts in rials. Parents left blank are rolled up from their children,
+      // exactly like a WBS summary in P6 / MS Project.
+      tsv: [
+        'کد\tعنوان\tوالد\tمبلغ (ریال)',
+        '1\tمهندسی\t\t3,000,000,000',
+        '2\tتأمین\t\t',
+        '2.1\tپمپ و کمپرسور\t2\t2,500,000,000',
+        '2.2\tمبدل و مخزن\t2\t4,000,000,000',
+        '3\tساخت و نصب\t\t',
+        '3.1\tسازه فلزی\t3\t1,500,000,000',
+        '3.2\tپایپینگ فیلد\t3\t2,000,000,000',
+        '3.3\tعایق و رنگ\t3\t500,000,000',
+        '4\tراه‌اندازی\t\t1,000,000,000'
+      ].join('\n')
+    },
     flat: {
       label: 'مثال ۱ مقاله — تخت (۵ بسته)',
       basis: 'W',
@@ -368,22 +402,26 @@
       ].join('\n')
     },
     epcc: {
-      label: 'پروژهٔ نمونه — EPCC سه‌سطحی',
-      basis: 'V',
+      label: 'پروژهٔ نمونه — EPCC (وزن اهمیت ≠ ارزش)',
+      basis: 'W',
+      // W is deliberately NOT proportional to V: commissioning and field piping carry high
+      // importance on small budgets, while bulk equipment carries low importance on the
+      // biggest spend. That is what makes the weighted number differ from ΣC/ΣV — without
+      // it the tool cannot demonstrate the thesis of the article it implements.
       tsv: [
         'کد\tعنوان\tوالد\tW\tV\tC',
         '1\tمهندسی\t\t\t\t',
-        '1.1\tمهندسی فرآیند\t1\t\t120\t96',
-        '1.2\tمهندسی پایپینگ\t1\t\t180\t90',
-        '1.3\tمهندسی برق\t1\t\t90\t27',
+        '1.1\tمهندسی فرآیند\t1\t6\t120\t96',
+        '1.2\tمهندسی پایپینگ\t1\t8\t180\t90',
+        '1.3\tمهندسی برق\t1\t4\t90\t27',
         '2\tتأمین\t\t\t\t',
-        '2.1\tتجهیزات ثابت\t2\t\t420\t294',
-        '2.2\tتجهیزات دوار\t2\t\t310\t248',
+        '2.1\tتجهیزات ثابت\t2\t3\t420\t294',
+        '2.2\tتجهیزات دوار\t2\t3\t310\t248',
         '3\tساخت و نصب\t\t\t\t',
-        '3.1\tساختار فلزی\t3\t\t150\t45',
-        '3.2\tپایپینگ فیلد\t3\t\t200\t30',
+        '3.1\tسازه فلزی\t3\t9\t150\t45',
+        '3.2\tپایپینگ فیلد\t3\t10\t200\t30',
         '4\tراه‌اندازی\t\t\t\t',
-        '4.1\tکمیسیونینگ\t4\t\t80\t8'
+        '4.1\tکمیسیونینگ\t4\t10\t80\t8'
       ].join('\n')
     }
   };

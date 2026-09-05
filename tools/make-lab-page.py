@@ -81,7 +81,7 @@ def build(slug, title, description, main_path, with_js=True, with_jsonld=True):
 
     out = head + main + '\n\n' + tail
     # slug "index" is the /lab/ landing page itself, not /lab/index/
-    dest = ROOT / 'lab' / ('index.html' if slug == 'index' else slug / 'index.html')
+    dest = ROOT / 'lab' / ('index.html' if slug == 'index' else Path(slug) / 'index.html')
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(out, encoding='utf-8')
     return dest

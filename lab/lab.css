@@ -157,7 +157,7 @@ html[data-theme="light"] .seg-opt.is-on{ color: #fff; }
   overflow-x: auto; border: 1px solid var(--border-soft); border-radius: 14px;
   -webkit-overflow-scrolling: touch;
 }
-.wf-table{ width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 720px; }
+.wf-table{ width: 100%; border-collapse: collapse; font-size: .8rem; min-width: 540px; }
 .wf-table th{
   position: sticky; top: 0; z-index: 1;
   background: var(--glass-2); backdrop-filter: blur(14px);
@@ -172,6 +172,7 @@ html[data-theme="light"] .seg-opt.is-on{ color: #fff; }
 .wf-table tbody tr:last-child td{ border-bottom: 0; }
 .wf-table tbody tr:hover td{ background: rgba(127,127,127,.06); }
 .wf-table td.num{ font-variant-numeric: tabular-nums; direction: ltr; text-align: start; }
+.wf-table td.key{ color: var(--text); font-weight: 600; }
 .wf-table td.name{ color: var(--text); white-space: normal; min-width: 190px; }
 .wf-table tr.is-summary td.name{ font-weight: 700; }
 .wf-table tr.is-summary td{ background: rgba(127,127,127,.045); }

@@ -2,11 +2,11 @@
   <div class="tool-head fu">
     <div class="post-meta">
       <span class="badge teal" data-en="Interactive tool">ابزار تعاملی</span>
-      <span class="badge" data-en="No server, works offline">بدون سرور، آفلاین</span>
+      <span class="badge" data-en="No server, nothing uploaded">بدون سرور، بدون آپلود</span>
       <span class="badge amber" data-en="Method documented in the article">روشِ مقالهٔ W.F</span>
     </div>
-    <h1 data-en="Weight Factor (W.F) &amp; Weighted Progress Calculator">ماشین‌حساب ضریب وزن (W.F) و پیشرفت وزنی</h1>
-    <p class="lead" data-en="Paste your WBS from Excel and get the parent-relative weight (W.F↑), each node's final weight against the whole project, and the weighted progress — the exact method from the article, automated.">ساختار WBS را از اکسل کپی کنید و همین‌جا بچسبانید تا وزن نسبت‌به‌والد (<span data-tip="وزن هر گره تقسیم بر وزن والدش؛ زیر هر والد دقیقاً ۱ می‌شود">W.F↑</span>)، وزن نهایی هر گره نسبت به کل پروژه، و درصد پیشرفت وزنی را یک‌جا ببینید — همان روشی که در <a href="/blog/weight-factor-excel-msp/">این مقاله</a> توضیح داده شده.</p>
+    <h1 data-en="Weight Factor (W.F) — share of parent and share of project">ماشین‌حساب ضریب وزن (W.F) — سهم از والد و سهم از کل</h1>
+    <p class="lead" data-en="Give it the amounts in rials and the WBS structure. You get each node's weight percent against its own parent and against the whole project. Parents left blank are rolled up from their children automatically.">مبلغ‌های ریالی و ساختار WBS را بدهید؛ <strong>درصد وزنی هر گره هم نسبت به والد خودش و هم نسبت به کل پروژه</strong> را می‌گیرید. اگر مبلغ یک والد را خالی بگذارید، از فرزندان جمع می‌شود — دقیقاً مثل خلاصهٔ WBS در P6 و MSP.</p>
   </div>
 
   <div class="lab-main">
@@ -14,23 +14,24 @@
       <div class="panel">
         <div class="panel-head">
           <h2 data-en="Data">داده‌ها</h2>
-          <span class="panel-hint" data-en="Copy from Excel and paste here">از اکسل کپی کنید و بچسبانید</span>
+          <span class="panel-hint" data-en="Copy the amount column from Excel and paste it here">ستون مبلغ را از اکسل کپی کنید و بچسبانید</span>
         </div>
 
         <div class="preset-row" role="group" aria-label="نمونه‌ها">
-          <button class="chip active" data-preset="flat" data-en="Example 1 — flat (5 packages)">مثال ۱ — تخت (۵ بسته)</button>
-          <button class="chip" data-preset="hierarchy" data-en="Example 2 — hierarchical">مثال ۲ — سلسله‌مراتبی</button>
-          <button class="chip" data-preset="epcc" data-en="Sample EPCC project (3 levels)">نمونهٔ EPCC (سه‌سطحی)</button>
+          <button class="chip active" data-preset="rial" data-en="WBS with rial amounts">ساختار ریالی (پیش‌فرض)</button>
+          <button class="chip" data-preset="hierarchy" data-en="Article example 2 — hierarchical">مثال ۲ مقاله</button>
+          <button class="chip" data-preset="flat" data-en="Article example 1 — flat, weighted by W">مثال ۱ مقاله (وزن W)</button>
+          <button class="chip" data-preset="epcc" data-en="EPCC with importance weights">EPCC با وزن اهمیت</button>
         </div>
 
-        <label class="field-label" for="wf-input" data-en="Columns: code · title · parent · W · V · C (tab separated)">ستون‌ها: کد · عنوان · والد · W · V · C (جداسازی با Tab)</label>
+        <label class="field-label" for="wf-input" data-en="Columns: code · title · parent · amount (rial). W and C are optional.">ستون‌ها: کد · عنوان · والد · مبلغ (ریال) — ستون‌های W و C اختیاری‌اند</label>
         <textarea id="wf-input" class="wf-input" dir="ltr" spellcheck="false" autocomplete="off" aria-label="داده‌های WBS"></textarea>
 
         <div class="controls-row">
           <span class="controls-label" data-en="Weighting basis">مبنای وزن‌دهی</span>
           <div class="seg" role="group" aria-label="مبنای وزن‌دهی">
-            <button class="seg-opt" data-basis="W" data-en="W (weight)">W (وزن)</button>
-            <button class="seg-opt is-on" data-basis="V" data-en="V (value / budget)">V (ارزش)</button>
+            <button class="seg-opt is-on" data-basis="V" data-en="V — by rial amount">V — بر اساس ریال</button>
+            <button class="seg-opt" data-basis="W" data-en="W — by importance weight">W — بر اساس اهمیت</button>
           </div>
         </div>
 
@@ -41,13 +42,13 @@
         </div>
 
         <div class="cols-help">
-          <span data-en="Header row is optional. Persian or English headers are recognised. A row with children is treated as a WBS summary and its V/C are rolled up automatically.">سرستون اختیاری است و نام‌های فارسی یا انگلیسی شناخته می‌شوند. سطری که فرزند دارد «خلاصهٔ WBS» حساب می‌شود و V و C آن از فرزندان جمع می‌شود — دقیقاً مثل MSP.</span>
+          <span data-en="Only the amount is needed for the weights. Add a C (cost) column if you also want weighted progress; add a W column only if importance should differ from the money. Header names in Persian or English are recognised, and the header row itself is optional.">برای درصد وزنی فقط مبلغ لازم است. اگر درصد پیشرفت وزنی هم می‌خواهید ستون C (هزینه) را اضافه کنید؛ ستون W را فقط وقتی پر کنید که «اهمیت» باید با «پول» فرق داشته باشد. نام سرستون‌ها فارسی یا انگلیسی شناخته می‌شود و خودِ سطر سرستون هم اختیاری است.</span>
         </div>
       </div>
 
       <aside class="panel summary" aria-live="polite">
         <div class="big">
-          <div class="big-label" data-en="Weighted project progress">پیشرفت وزنی پروژه</div>
+          <div class="big-label" id="s-hero-label" data-en="Sum of weight percentages">جمع درصد وزنی</div>
           <div class="big-num is-empty" id="s-progress">—</div>
           <div class="big-sub" id="s-diverge"></div>
         </div>
@@ -56,8 +57,8 @@
           <div class="mini"><b id="s-leaves">۰</b><small data-en="leaf activities">فعالیت برگ</small></div>
           <div class="mini"><b id="s-depth">۰</b><small data-en="levels">سطح</small></div>
           <div class="mini"><b id="s-basis">—</b><small data-en="basis used">مبنای مصرفی</small></div>
-          <div class="mini"><b id="s-sumv">—</b><small data-en="total V">جمع V</small></div>
-          <div class="mini"><b id="s-sumc">—</b><small data-en="total C">جمع C</small></div>
+          <div class="mini"><b id="s-sumv">—</b><small data-en="total amount (rial)">جمع مبلغ (ریال)</small></div>
+          <div class="mini" id="mini-cost"><b id="s-sumc">—</b><small data-en="total cost (rial)">جمع C (ریال)</small></div>
         </div>
         <div class="checks" id="s-checks"></div>
         <div class="notices" id="s-notices"></div>
@@ -74,14 +75,14 @@
           <thead>
             <tr>
               <th data-en="Activity">فعالیت</th>
-              <th data-en="W">W</th>
-              <th data-en="V">V</th>
-              <th data-en="C">C</th>
-              <th data-en="W.F up (vs parent)">W.F↑ (نسبت به والد)</th>
-              <th data-en="W.F project">W.F پروژه</th>
-              <th data-en="C / V">C ⁄ V</th>
-              <th data-en="Progress">پیشرفت</th>
-              <th data-en="Weighted share">سهم وزنی</th>
+              <th id="th-w" data-en="W">W</th>
+              <th data-en="Amount (rial)">مبلغ (ریال)</th>
+              <th id="th-c" data-en="C">C</th>
+              <th data-en="W.F up — share of parent">W.F↑ — سهم از والد</th>
+              <th data-en="W.F — share of project">W.F — سهم از کل پروژه</th>
+              <th id="th-ratio" data-en="C / V">C ⁄ V</th>
+              <th id="th-progress" data-en="Progress">پیشرفت</th>
+              <th id="th-share" data-en="Weighted share">سهم وزنی</th>
             </tr>
           </thead>
           <tbody id="wf-body"></tbody>
@@ -89,7 +90,7 @@
         </table>
       </div>
       <div class="legend">
-        <span data-en="Rows with a teal dot are WBS summaries: their V and C are rolled up, and their progress is the weighted mean of their children. Only leaf activities carry a weighted share.">سطرهای با نقطهٔ فیروزه‌ای خلاصهٔ WBS هستند: V و C آن‌ها از فرزندان جمع می‌شود و پیشرفتشان میانگین وزنی فرزندان است. سهم وزنی فقط به فعالیت‌های برگ تعلق می‌گیرد.</span>
+        <span data-en="Rows with a teal dot are WBS summaries: their amount is rolled up from their children, and both percentages are shown for that branch. Under every parent the shares add to exactly 100%.">سطرهای با نقطهٔ فیروزه‌ای خلاصهٔ WBS هستند: مبلغشان از فرزندان جمع می‌شود و هر دو درصد برای همان شاخه نمایش داده می‌شود. زیر هر والد، مجموع سهم‌ها دقیقاً ۱۰۰٪ است.</span>
       </div>
     </section>
 
@@ -97,38 +98,39 @@
       <div class="panel-head"><h2 data-en="How the numbers are produced">این اعداد چطور ساخته می‌شوند</h2></div>
       <div class="accordion" data-single>
         <div class="acc-item is-open">
-          <button class="acc-head" data-en="Parent-relative weight (W.F↑)">وزن نسبت‌به‌والد (W.F↑) <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="The two percentages">دو درصد، دو سؤال <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
-            <p data-en="Each node is divided by its own parent, never by the whole project — so the numbers stay readable and survive WBS changes.">هر گره بر والد خودش تقسیم می‌شود، نه بر کل پروژه؛ پس اعداد خوانا می‌مانند و با تغییر WBS نمی‌شکنند.</p>
-            <pre dir="ltr" data-lang="FORMULA">W.F↑_i = V_i / V_parent
-W.F_proj(node) = W.F↑_node × W.F↑_parent × … × W.F↑_root</pre>
-            <p data-en="The check that matters: under every parent the children must sum to exactly 1.">معیار اعتبار: زیر هر والد، مجموع فرزندان باید دقیقاً ۱ شود.</p>
+            <p data-en="Share of parent answers “how much of my own branch is this activity”. Share of project answers “how much of the whole job is it”. The second is the product of the first along the path to the root.">«سهم از والد» جواب می‌دهد این فعالیت چه کسری از شاخهٔ خودش است. «سهم از کل پروژه» جواب می‌دهد چه کسری از کل کار. دومی حاصل‌ضرب اولی در مسیر تا ریشه است.</p>
+            <pre dir="ltr" data-lang="FORMULA">W.F↑_i    = V_i / V_parent
+W.F_proj  = W.F↑_node × W.F↑_parent × … × W.F↑_root
+V_parent  = Σ V_children        (summary rows roll up)</pre>
+            <p data-en="The check that matters: under every parent the children must add to exactly 100%.">معیار اعتبار: زیر هر والد، مجموع سهم فرزندان باید دقیقاً ۱۰۰٪ شود.</p>
           </div></div>
         </div>
         <div class="acc-item">
-          <button class="acc-head" data-en="Progress from cost only">پیشرفت فقط از هزینه <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="Optional: progress from cost">اختیاری: پیشرفت از هزینه <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
-            <pre dir="ltr" data-lang="FORMULA">progress_leaf = C_i / V_i
+            <p data-en="If you also paste a C (cost) column, the tool adds the weighted progress from the article.">اگر ستون C (هزینهٔ واقعی) را هم بچسبانید، ابزار درصد پیشرفت وزنی را هم مطابق مقاله حساب می‌کند.</p>
+            <pre dir="ltr" data-lang="FORMULA">progress_leaf   = C_i / V_i
 progress_parent = Σ ( W.F↑_child × progress_child )
-weighted progress = Σ ( W.F_proj_leaf × C_leaf / V_leaf )</pre>
+weighted        = Σ ( W.F_proj_leaf × C_leaf / V_leaf )</pre>
             <div class="callout">
               <span class="callout-ic">!</span>
-              <div data-en="A cost ratio is not physical progress. Equipment purchases, inflation and non-linear activities such as commissioning distort it. Treat this as a conservative estimate and cross-check it with at least one physical or milestone measure.">نسبت هزینه لزوماً پیشرفت فیزیکی نیست. خرید تجهیزات، تورم و فعالیت‌های غیرخطی مثل راه‌اندازی آن را منحرف می‌کنند. این را «برآورد محافظه‌کارانه» بگیرید و حداقل با یک سنجش فیزیکی یا مایل‌استون ترکیب کنید.</div>
+              <div data-en="A cost ratio is not physical progress. Equipment purchases, inflation and non-linear activities such as commissioning distort it. Treat it as a conservative estimate and cross-check with at least one physical or milestone measure.">نسبت هزینه پیشرفت فیزیکی نیست. خرید تجهیزات، تورم و فعالیت‌های غیرخطی مثل راه‌اندازی آن را منحرف می‌کنند. این را «برآورد محافظه‌کارانه» بگیرید و حداقل با یک سنجش فیزیکی یا مایل‌استون ترکیب کنید.</div>
             </div>
           </div></div>
         </div>
         <div class="acc-item">
           <button class="acc-head" data-en="Equivalent Excel formulas">فرمول‌های معادل در اکسل <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
-            <pre dir="ltr" data-lang="EXCEL">' flat weight
-E2: = B2 / SUM($B$2:$B$6)
+            <pre dir="ltr" data-lang="EXCEL">' share of the whole project
+= C2 / SUM($C$2:$C$6)
 
-' parent-relative weight, parent V in column H
-E2: = C2 / H2
+' share of its own parent (parent total in column H)
+= C2 / H2
 
-' weighted progress
-G2: = E2 * (D2 / C2)
-total: = SUM(G2:G6) * 100</pre>
+' SUMIF by parent code — the usual way to get V_parent
+= C2 / SUMIF($B$2:$B$6, B2, $C$2:$C$6)</pre>
             <p data-en="The full walkthrough, including the Microsoft Project setup, is in the article.">شرح کامل، شامل تنظیمات Microsoft Project، در <a href="/blog/weight-factor-excel-msp/">مقاله</a> آمده است.</p>
           </div></div>
         </div>
@@ -137,6 +139,7 @@ total: = SUM(G2:G6) * 100</pre>
 
     <p class="legend" style="margin-top:22px;text-align:center">
       <span data-en="Everything runs in your browser. No data leaves this page.">همه‌چیز در مرورگر شما اجرا می‌شود؛ هیچ داده‌ای از این صفحه بیرون نمی‌رود.</span>
+      · <a href="/lab/" data-en="All tools">همهٔ ابزارها</a>
       · <a href="/blog/all/" data-en="All articles">همهٔ مقاله‌ها</a>
     </p>
   </div>
