@@ -200,6 +200,33 @@ tr.is-summary .dot{ background: var(--teal); }
   padding: 34px 16px; text-align: center; color: var(--text-dim); font-size: .82rem;
 }
 
+/* ---------- /lab/ landing page ---------- */
+.lab-grid{
+  display: grid; gap: 16px; margin-top: 26px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+}
+.lab-card{
+  display: block; text-decoration: none; color: inherit;
+  background: var(--glass); border: 1px solid var(--border);
+  border-radius: 20px; padding: 20px;
+  backdrop-filter: blur(22px) saturate(180%); box-shadow: var(--card-shadow);
+  transition: transform .25s ease, border-color .25s ease;
+}
+.lab-card:hover, .lab-card:focus-visible{ transform: translateY(-3px); border-color: var(--teal); }
+.lab-card h2{ font-size: 1.04rem; font-weight: 700; line-height: 1.6; margin-bottom: 8px; }
+.lab-card p{ font-size: .82rem; line-height: 1.95; color: var(--text-muted); }
+.lab-card-top{ display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 12px; }
+.lab-card .ic{ width: 20px; height: 20px; fill: none; stroke: var(--teal); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+.lab-card-foot{
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin-top: 15px; padding-top: 13px; border-top: 1px dashed var(--border-soft);
+  font-size: .73rem; color: var(--text-dim);
+}
+.lab-card-foot .ic{ width: 15px; height: 15px; stroke: currentColor; transform: rotate(-45deg); }
+.lab-card:hover .lab-card-foot{ color: var(--teal); }
+.lab-card.is-soon{ opacity: .72; }
+.lab-card.is-soon:hover{ transform: none; border-color: var(--border); }
+
 /* ---------- prose blocks inside the lab ---------- */
 .lab-main .prose{ max-width: 1080px; margin: 0 auto; }
 .lab-main .prose h2{ margin-top: 34px; }

@@ -48,14 +48,15 @@ JSONLD = """<script type="application/ld+json">
 </script>"""
 
 
-def build(slug, title, description, main_path):
+def build(slug, title, description, main_path, with_js=True, with_jsonld=True):
     tpl = TEMPLATE.read_text(encoding='utf-8')
     main = Path(main_path).read_text(encoding='utf-8').strip()
 
     head = tpl.split('<main>')[0]
     tail = '<footer' + tpl.split('<footer')[1]
 
-    head = head.replace('https://mehdiaskari.ir/blog/{{SLUG}}/', f'https://mehdiaskari.ir/lab/{slug}/')
+    lab_url = 'https://mehdiaskari.ir/lab/' if slug == 'index' else f'https://mehdiaskari.ir/lab/{slug}/'
+    head = head.replace('https://mehdiaskari.ir/blog/{{SLUG}}/', lab_url)
     head = head.replace('{{TITLE}}', title).replace('{{DESCRIPTION}}', description)
     head = head.replace('<meta property="og:type" content="article">',
                         '<meta property="og:type" content="website">')
@@ -66,18 +67,21 @@ def build(slug, title, description, main_path):
         sys.exit('template anchors changed — update tools/make-lab-page.py')
 
     head = head.replace(CSS_ANCHOR, CSS_ANCHOR + '\n  <link rel="stylesheet" href="/lab/lab.css">')
-    scripts = (JS_ANCHOR +
-               f'\n  <script src="/lab/wf-engine.js" defer></script>' +
-               f'\n  <script src="/lab/{slug}/app.js" defer></script>')
-    head = head.replace(JS_ANCHOR, scripts)
+    if with_js:
+        scripts = (JS_ANCHOR +
+                   '\n  <script src="/lab/wf-engine.js" defer></script>' +
+                   f'\n  <script src="/lab/{slug}/app.js" defer></script>')
+        head = head.replace(JS_ANCHOR, scripts)
 
-    ld = (JSONLD.replace('{title}', title)
-                  .replace('{slug}', slug)
-                  .replace('{desc}', description))
-    head = head.replace('</head>', '  ' + ld + '\n</head>')
+    if with_jsonld:
+        ld = (JSONLD.replace('{title}', title)
+                          .replace('{slug}', slug)
+                          .replace('{desc}', description))
+        head = head.replace('</head>', '  ' + ld + '\n</head>')
 
     out = head + main + '\n\n' + tail
-    dest = ROOT / 'lab' / slug / 'index.html'
+    # slug "index" is the /lab/ landing page itself, not /lab/index/
+    dest = ROOT / 'lab' / ('index.html' if slug == 'index' else slug / 'index.html')
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(out, encoding='utf-8')
     return dest
@@ -89,8 +93,12 @@ def main():
     ap.add_argument('--title', required=True)
     ap.add_argument('--description', required=True)
     ap.add_argument('--main', required=True)
+    ap.add_argument('--no-js', action='store_true',
+                    help='omit wf-engine.js and lab/<slug>/app.js (for the landing page)')
+    ap.add_argument('--no-jsonld', action='store_true', help='omit the WebApplication block')
     a = ap.parse_args()
-    dest = build(a.slug, a.title, a.description, a.main)
+    dest = build(a.slug, a.title, a.description, a.main,
+                 with_js=not a.no_js, with_jsonld=not a.no_jsonld)
     print(f'wrote {dest.relative_to(ROOT)}')
 
 

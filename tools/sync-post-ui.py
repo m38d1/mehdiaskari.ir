@@ -36,6 +36,17 @@ MENU_SKILLS = '    <a href="/#skills" data-en="Skills">'
 MENU_EDU = ('    <a href="/#education" data-en="Education">تحصیلات</a>\n'
             '    <a href="/#skills" data-en="Skills">')
 
+# "Lab" sits between Skills and Blog on every page. The nav needle is
+# '<li><a href="/lab/"' and the mobile one is '    <a href="/lab/"' — the four
+# spaces never match inside the nav line (it has '<li>' there), so the two
+# insertions cannot short-circuit each other.
+NAV_BLOG = '          <li><a href="/blog/all/" data-en="Blog">'
+NAV_LAB = ('          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>\n'
+           '          <li><a href="/blog/all/" data-en="Blog">')
+MENU_BLOG = '    <a href="/blog/all/" data-en="Blog">'
+MENU_LAB = ('    <a href="/lab/" data-en="Lab">آزمایشگاه</a>\n'
+            '    <a href="/blog/all/" data-en="Blog">')
+
 THEME_ANCHOR = 'class="theme-toggle" role="group"'
 LANG_BLOCK = (
     'class="lang-toggle" role="group" aria-label="زبان / Language">\n'
@@ -64,6 +75,8 @@ CHECKS = {
     'cursor glow': 'cursor-glow',
     'Education (nav)': '<li><a href="/#education"',
     'Education (menu)': '    <a href="/#education"',
+    'Lab (nav)': '<li><a href="/lab/"',
+    'Lab (menu)': '    <a href="/lab/"',
     'lang toggle': 'class="lang-toggle"',
     'cmdk hint': 'class="cmdk-hint"',
     'cmdk overlay': 'id="cmdk-overlay"',
@@ -86,6 +99,8 @@ def patch(html: str):
     sub('<body>\n', '<body>\n' + GLOW + '\n', 'cursor-glow', 'cursor glow')
     sub(NAV_SKILLS, NAV_EDU, '<li><a href="/#education"', 'Education (nav)')
     sub(MENU_SKILLS, MENU_EDU, '    <a href="/#education"', 'Education (menu)')
+    sub(NAV_BLOG, NAV_LAB, '<li><a href="/lab/"', 'Lab (nav)')
+    sub(MENU_BLOG, MENU_LAB, '    <a href="/lab/"', 'Lab (menu)')
     sub(THEME_ANCHOR, LANG_BLOCK, 'class="lang-toggle"', 'lang toggle + cmdk hint')
     sub('</footer>', '</footer>\n\n' + CMDK_OVERLAY + '\n', 'id="cmdk-overlay"', 'cmdk overlay')
     return html, changes

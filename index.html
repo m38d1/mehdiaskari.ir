@@ -1011,6 +1011,7 @@
 <symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
 <symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
 <symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-flask" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6.4L4.7 18a2 2 0 0 0 1.7 3h11.2a2 2 0 0 0 1.7-3L14 9.4V3"/><path d="M7.4 15.2h9.2"/></symbol>
 <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
 <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
 <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
@@ -1035,6 +1036,7 @@
           <li><a href="#experience" data-en="Experience">تجربه</a></li>
           <li><a href="#education" data-en="Education">تحصیلات</a></li>
           <li><a href="#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>
           <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
           <li><a href="#contact" data-en="Contact">تماس</a></li>
         </ul>
@@ -1058,6 +1060,7 @@
     <a href="#experience" data-en="Experience">تجربه</a>
     <a href="#education" data-en="Education">تحصیلات</a>
     <a href="#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/lab/" data-en="Lab">آزمایشگاه</a>
     <a href="/blog/all/" data-en="Blog">وبلاگ</a>
     <a href="#contact" data-en="Contact">تماس</a>
   </nav>
@@ -1351,7 +1354,7 @@
 <section id="blog" class="reveal">
   <div class="section-head"><span class="tag">05</span><h2 data-en="Blog">وبلاگ</h2><div class="rule"></div></div>
   <div class="blog-grid" id="blog-grid"><noscript><a href="/blog/all/" style="color:var(--teal)">مشاهده‌ی وبلاگ</a></noscript></div>
-  <div class="blog-more"><a href="/blog/all/" data-en="All posts">همه‌ی نوشته‌ها</a></div>
+  <div class="blog-more"><a href="/blog/all/" data-en="All posts">همه‌ی نوشته‌ها</a><a href="/lab/" data-en="Interactive tools" style="margin-inline-start:10px">ابزارهای تعاملی</a></div>
 </section>
 
 <div class="section-divider"><span></span><span></span><span></span></div>
@@ -1692,6 +1695,7 @@
         { icon:'i-briefcase', group: lang==='en'?'Go to':'برو به', fa:'تجربه', en:'Experience', run:()=>jump('#experience') },
         { icon:'i-cap', group: lang==='en'?'Go to':'برو به', fa:'تحصیلات', en:'Education', run:()=>jump('#education') },
         { icon:'i-tools', group: lang==='en'?'Go to':'برو به', fa:'مهارت‌ها', en:'Skills', run:()=>jump('#skills') },
+        { icon:'i-flask', group: lang==='en'?'Go to':'برو به', fa:'آزمایشگاه', en:'Lab', run:()=>{ location.href='/lab/'; } },
         { icon:'i-book', group: lang==='en'?'Go to':'برو به', fa:'وبلاگ', en:'Blog', run:()=>{ location.href='/blog/all/'; } },
         { icon:'i-mail', group: lang==='en'?'Go to':'برو به', fa:'تماس', en:'Contact', run:()=>jump('#contact') },
         { icon: theme==='dark' ? 'i-sun' : 'i-moon', group: lang==='en'?'Action':'عملیات', fa: theme==='dark' ? 'حالت روشن' : 'حالت تاریک', en: theme==='dark' ? 'Light mode' : 'Dark mode', run:()=>{ applyTheme(theme==='dark'?'light':'dark', innerWidth/2, innerHeight/2); } },
