@@ -1335,14 +1335,8 @@
       <span class="term-title">zsh — mehdi@askari</span>
     </div>
     <div class="term-body">
-      <div class="term-line" data-cmd="npx install-skills --stack=all" data-en-cmd="npx install-skills --stack=all"></div>
-      <div class="term-out" data-rows='[
-        {"fa":"✓ project-planning-control@12.0.0 نصب شد","en":"✓ project-planning-control@12.0.0 installed"},
-        {"fa":"✓ web-development@8.4.1 نصب شد","en":"✓ web-development@8.4.1 installed"},
-        {"fa":"✓ network-security@6.2.0 نصب شد","en":"✓ network-security@6.2.0 installed"},
-        {"fa":"✓ primavera-p6 + ms-project پیوند خورد","en":"✓ primavera-p6 + ms-project linked"},
-        {"fa":"همه‌چیز آماده‌ست. ✨","en":"All set. ✨"}
-      ]'><div></div><div></div><div></div><div></div><div></div></div>
+      <div class="term-line"></div>
+      <div class="term-out"><div></div><div></div><div></div><div></div><div></div></div>
       <div class="term-cursor-line"><span class="term-prompt">$</span><span class="term-caret"></span></div>
     </div>
   </div>
@@ -1592,59 +1586,106 @@
   }
   document.getElementById('download-resume').addEventListener('click', downloadResume);
 
-  // animated terminal: skills installer (typewriter + staggered output)
+  // animated terminal: rotates through three scenarios, one per visit to the card
   (function(){
     const card = document.getElementById('term-card');
     if(!card) return;
     const cmdEl = card.querySelector('.term-line');
     const outRows = [...card.querySelectorAll('.term-out div')];
-    const rowsData = JSON.parse(card.querySelector('.term-out').dataset.rows);
     const cursorLine = card.querySelector('.term-cursor-line');
-    let played = false;
 
-    function typeCommand(cb){
-      const cmd = lang === 'en' ? cmdEl.dataset.enCmd : cmdEl.dataset.cmd;
+    // Every line here is reproducible from this repo or from the article it names.
+    const SCENARIOS = [
+      {
+        cmd: 'wf --wbs epcc.xer --rollup',
+        rows: [
+          {fa:'12 activities · 8 leaves · 2 levels',      en:'12 activities · 8 leaves · 2 levels'},
+          {fa:'Σ W.F↑ زیر هر والد = 1.000 ✓',             en:'Σ W.F↑ per parent = 1.000 ✓'},
+          {fa:'Σ W.F کل پروژه (برگ‌ها) = 1.000 ✓',         en:'Σ W.F_proj leaves = 1.000 ✓'},
+          {fa:'weighted 37.2%   raw cost 54.1%',          en:'weighted 37.2%   raw cost 54.1%'},
+          {fa:'۱۶٫۹ واحد درصدی که عدد خام پنهان می‌کرد ✨',  en:'the 16.9 points the raw number hid ✨'}
+        ]
+      },
+      {
+        cmd: 'python3 tools/sync-post-ui.py --check',
+        rows: [
+          {fa:'6/6 posts on the shared baseline',         en:'6/6 posts on the shared baseline'},
+          {fa:'15/15 html files balanced',                en:'15/15 html files balanced'},
+          {fa:'84 engine assertions passed',              en:'84 engine assertions passed'},
+          {fa:'CI: site checks ✓',                        en:'CI: site checks ✓'},
+          {fa:'هیچ‌چیز بی‌صدا از ریل نمی‌افتد ✨',           en:'nothing drifts off the rails ✨'}
+        ]
+      },
+      {
+        cmd: 'uci show mwan3',
+        rows: [
+          {fa:'wan wan2 wan3 wan4 · 4 members',           en:'wan wan2 wan3 wan4 · 4 members'},
+          {fa:'passwall2 · wifi-direct · gale',           en:'passwall2 · wifi-direct · gale'},
+          {fa:'sha256 ثبت‌شده پیش و پس از بیلد ✓',         en:'sha256 pinned before + after build ✓'},
+          {fa:'b2a4353ab608c0f73b3c8d44b9d444e3…',        en:'b2a4353ab608c0f73b3c8d44b9d444e3…'},
+          {fa:'هر بیلد، قابل بازتولید ✨',                  en:'every build, reproducible ✨'}
+        ]
+      }
+    ];
+
+    SCENARIOS.forEach(s => {
+      if(s.rows.length !== outRows.length)
+        console.warn('terminal: scenario has ' + s.rows.length + ' rows, markup has ' + outRows.length);
+    });
+
+    let idx = 0, current = null, playing = false, offscreen = true;
+    const pick = o => (lang === 'en' ? (o.en || o.fa) : o.fa);
+
+    function showStatic(){
       cmdEl.innerHTML = '<span class="tc-typed"></span>';
-      const typedEl = cmdEl.querySelector('.tc-typed');
-      let i = 0;
-      const iv = setInterval(()=>{
-        typedEl.textContent = cmd.slice(0, i+1);
-        i++;
-        if(i >= cmd.length){ clearInterval(iv); setTimeout(cb, 250); }
-      }, 32);
-    }
-
-    function revealRows(){
+      cmdEl.querySelector('.tc-typed').textContent = current.cmd;
       outRows.forEach((row, i) => {
-        row.textContent = rowsData[i][lang === 'en' ? 'en' : 'fa'];
-        setTimeout(()=> row.classList.add('show'), i * 380);
-      });
-      setTimeout(()=> cursorLine.classList.add('show'), outRows.length * 380 + 200);
-    }
-
-    function play(){
-      outRows.forEach(r => { r.classList.remove('show'); r.textContent=''; });
-      cursorLine.classList.remove('show');
-      typeCommand(revealRows);
-    }
-
-    function rerenderStatic(){
-      cmdEl.innerHTML = '<span class="tc-typed"></span>';
-      cmdEl.querySelector('.tc-typed').textContent = lang === 'en' ? cmdEl.dataset.enCmd : cmdEl.dataset.cmd;
-      outRows.forEach((row, i) => {
-        row.textContent = rowsData[i][lang === 'en' ? 'en' : 'fa'];
+        row.textContent = pick(current.rows[i]);
         row.classList.add('show');
       });
       cursorLine.classList.add('show');
     }
-    window.__termRerender = () => { if(played) rerenderStatic(); };
 
-    const termIo = new IntersectionObserver((entries)=>{
+    function play(){
+      if(playing) return;
+      playing = true;
+      current = SCENARIOS[idx];
+      idx = (idx + 1) % SCENARIOS.length;
+
+      outRows.forEach(r => { r.classList.remove('show'); r.textContent = ''; });
+      cursorLine.classList.remove('show');
+      cmdEl.innerHTML = '<span class="tc-typed"></span>';
+      const typedEl = cmdEl.querySelector('.tc-typed');
+      const cmd = current.cmd;
+
+      let i = 0;
+      const iv = setInterval(() => {
+        typedEl.textContent = cmd.slice(0, ++i);
+        if(i >= cmd.length){
+          clearInterval(iv);
+          setTimeout(() => {
+            outRows.forEach((row, k) => {
+              row.textContent = pick(current.rows[k]);
+              setTimeout(() => row.classList.add('show'), k * 380);
+            });
+            setTimeout(() => {
+              cursorLine.classList.add('show');
+              playing = false;
+            }, outRows.length * 380 + 200);
+          }, 250);
+        }
+      }, 32);
+    }
+
+    window.__termRerender = () => { if(current) showStatic(); };
+
+    // Re-armed on every entry, so scrolling away and back plays the next scenario.
+    const termIo = new IntersectionObserver((entries) => {
       entries.forEach(e => {
-        if(e.isIntersecting && !played){
-          played = true;
-          play();
-          termIo.unobserve(e.target);
+        if(e.isIntersecting){
+          if(offscreen){ offscreen = false; play(); }
+        } else {
+          offscreen = true;
         }
       });
     }, {threshold:0.4});
