@@ -186,6 +186,49 @@ console.log('\n== header parsing: an undeclared column must stay empty ==');
   ok(all3.w === 4 && all3.v === 9000 && all3.c === 3000,
      'W / V / C resolve independently', JSON.stringify(all3));
 }
+console.log('\n== real-world paste shapes ==');
+{
+  function weights(tsv) {
+    const parsed = Engine.parse(tsv);
+    const r = Engine.compute(parsed.rows, { basis: 'V' });
+    return {
+      r: r,
+      pairs: r.nodes.map(n => n.id + ':' + (n.wfProj * 100).toFixed(2)),
+      sum: r.totals.rootWeightSum
+    };
+  }
+  const shapes = [
+    ['Persian headers + Persian digits',
+     'شماره\tشرح فعالیت\tسطح بالادستی\tمبلغ ریالی\n۱\tخاکبرداری\t\t۱۲,۵۰۰,۰۰۰\n۲\tفونداسیون\t\t۳۷,۵۰۰,۰۰۰'],
+    ['no header, 4 columns (amount is V, not W)',
+     'A\tالف\t\t50000000\nB\tب\t\t150000000'],
+    ['P6 English export',
+     'Activity ID\tActivity Name\tParent\tBudget at Completion\n1000\tEarthworks\t\t12500000\n1010\tFoundation\t\t37500000'],
+    ['code that merely contains the word Activity',
+     'Activity-1\tخاکبرداری\t\t5000\nActivity-2\tفونداسیون\t\t15000']
+  ];
+  shapes.forEach(function (sh) {
+    const w = weights(sh[1]);
+    ok(w.r.errors.length === 0, sh[0] + ': parses cleanly', w.r.errors.join(' | '));
+    ok(w.pairs.map(function (x) { return x.split(':')[1]; }).join(' ') === '25.00 75.00',
+       sh[0] + ': weights are 25% / 75%', 'got ' + w.pairs.join(' '));
+    ok(near(w.sum, 1, 1e-12), sh[0] + ': shares add to 100%');
+  });
+
+  // "Budget at Completion" must not be captured by the single-letter 'c' alias
+  const p6 = Engine.parse('Activity ID\tActivity Name\tParent\tBudget at Completion\n1000\tEarthworks\t\t12500000').rows[0];
+  ok(p6.v === 12500000, 'Budget at Completion resolves to V', 'got v=' + p6.v);
+  ok(p6.c === null, 'and NOT to C', 'got c=' + p6.c);
+}
+
+  // a Persian-digit code must still link to a Latin-digit parent reference
+  const mixed = Engine.parse('کد\tعنوان\tوالد\tمبلغ\n1\tکل\t\t\n۲\tفرزند\t1\t400000000');
+  const mr = Engine.compute(mixed.rows, { basis: 'V' });
+  ok(mixed.rows[1].id === '2', '۲ is stored as "2"', 'got ' + JSON.stringify(mixed.rows[1].id));
+  ok(mr.nodes.length === 2 && byId(mr, '2') && byId(mr, '2').parent === '1',
+     '۲ links to parent 1 across digit systems', JSON.stringify(mr.nodes.map(n => n.id + '->' + n.parent)));
+  ok(near(byId(mr, '2').wfUp, 1, 1e-12), 'and the child is 100% of that parent');
+
 console.log('\n== structural guards ==');
 {
   const bad = Engine.parse('کد\tعنوان\tوالد\tV\tC\n1\tالف\tZZZ\t100\t50').rows;

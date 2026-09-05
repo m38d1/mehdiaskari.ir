@@ -58,6 +58,17 @@ jobs:
       - name: W.F engine reproduces the article's worked examples
         run: node tools/test-wf-engine.js
 
+      # The home page's terminal card quotes this number. Without this guard it
+      # silently goes stale — the exact failure mode the old card content had.
+      - name: Terminal card quotes a current assertion count
+        run: |
+          actual=$(node tools/test-wf-engine.js | grep -oE '^[0-9]+ passed' | grep -oE '[0-9]+')
+          if ! grep -q "${actual} engine assertions passed" index.html; then
+            echo "::error::index.html terminal card shows a stale assertion count (engine reports ${actual})"
+            exit 1
+          fi
+          echo "terminal card matches the engine at ${actual} assertions"
+
       - name: JSON data files parse
         run: >
           python -c "import json;

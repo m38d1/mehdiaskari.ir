@@ -41,6 +41,14 @@
 
   function norm(s) { return String(s == null ? '' : s).trim().toLowerCase(); }
 
+  // Codes are labels, but their digits still have to compare equal: an Excel cell
+  // holding ۱ must link to a parent cell holding 1.
+  function normCode(s) {
+    return String(s == null ? '' : s).trim()
+      .replace(/[\u06f0-\u06f9]/g, function (d) { return String(d.charCodeAt(0) - 0x06f0); })
+      .replace(/[\u0660-\u0669]/g, function (d) { return String(d.charCodeAt(0) - 0x0660); });
+  }
+
   function matchColumn(header) {
     var h = norm(header).replace(/[\u200c\u200e\u200f]/g, '');
     var key, list, i;
@@ -53,7 +61,12 @@
     for (key in ALIASES) {
       if (!Object.prototype.hasOwnProperty.call(ALIASES, key)) continue;
       list = ALIASES[key];
-      for (i = 0; i < list.length; i++) if (h.indexOf(list[i]) !== -1) return key;
+      for (i = 0; i < list.length; i++) {
+        // Single-letter aliases are exact-match only. 'c' is a substring of almost
+        // every English header — "Budget at Completion" would resolve to Cost.
+        if (list[i].length < 2) continue;
+        if (h.indexOf(list[i]) !== -1) return key;
+      }
     }
     return null;
   }
@@ -82,7 +95,10 @@
 
     var header = splitLine(lines[0]).map(function (c) { return c.trim(); });
     var map = header.map(matchColumn);
-    var hasHeader = map.indexOf('id') !== -1 || map.indexOf('name') !== -1;
+    // One accidental match is not a header: a code like "Activity-1" contains the
+    // 'activity' alias, and treating that row as a header silently eats the data.
+    var hasHeader = map.filter(function (m) { return !!m; }).length >= 2 &&
+                    (map.indexOf('id') !== -1 || map.indexOf('name') !== -1);
 
     var cols = { id: 0, name: 1, parent: 2, w: 3, v: 4, c: 5 };
     var body = lines;
@@ -99,7 +115,18 @@
       if (cols.id < 0) cols.id = 0;             // rows still need a key
       if (cols.name < 0) cols.name = cols.id;   // fall back to the code as the label
     } else {
-      warnings.push('سرستون پیدا نشد؛ ترتیب ستون‌ها فرض شد: کد، عنوان، والد، W، V، C');
+      // No header row: guess from the column count instead of always assuming six.
+      // A 4-column paste is code / title / parent / AMOUNT — not W.
+      var nCols = splitLine(lines[0]).length;
+      if (nCols <= 4) {
+        cols = { id: 0, name: 1, parent: 2, w: -1, v: 3, c: -1 };
+        warnings.push('سرستون پیدا نشد؛ ستون چهارم به‌عنوان مبلغ (V) خوانده شد.');
+      } else if (nCols === 5) {
+        cols = { id: 0, name: 1, parent: 2, w: -1, v: 3, c: 4 };
+        warnings.push('سرستون پیدا نشد؛ ترتیب فرضی: کد، عنوان، والد، مبلغ، هزینه');
+      } else {
+        warnings.push('سرستون پیدا نشد؛ ترتیب فرض شد: کد، عنوان، والد، W، V، C');
+      }
     }
 
     function cell(cells, key) {
@@ -116,9 +143,9 @@
       if (seen[id]) { warnings.push('کد تکراری «' + id + '» در سطر ' + (i + 1) + ' نادیده گرفته شد'); return; }
       seen[id] = 1;
       rows.push({
-        id: String(id),
+        id: normCode(id),
         name: cell(cells, 'name') || String(id),
-        parent: cell(cells, 'parent') ? String(cell(cells, 'parent')) : '',
+        parent: normCode(cell(cells, 'parent')),
         w: toNumber(cell(cells, 'w')),
         v: toNumber(cell(cells, 'v')),
         c: toNumber(cell(cells, 'c'))
