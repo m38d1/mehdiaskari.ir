@@ -10,17 +10,17 @@
 <link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/blog.css">
-<link rel="stylesheet" href="/components.css">
-<title>چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است | وبلاگ مهدی عسکری</title>
-<meta name="description" content="از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است.">
+  <link rel="stylesheet" href="/components.css">
+<title>{{TITLE}} | مهدی عسکری</title>
+<meta name="description" content="{{DESCRIPTION}}">
 <meta property="og:type" content="article">
-<meta property="og:title" content="چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است">
-<meta property="og:description" content="از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است.">
-<meta property="og:url" content="https://mehdiaskari.ir/blog/pmi-ai-project-patterns/">
-<meta property="article:published_time" content="2026-09-02">
-<link rel="canonical" href="https://mehdiaskari.ir/blog/pmi-ai-project-patterns/">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESCRIPTION}}">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/{{SLUG}}/">
+<meta property="article:published_time" content="{{DATE_ISO}}">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/{{SLUG}}/">
 <script src="/cover.js" defer></script>
-<script src="/components.js" defer></script>
+  <script src="/components.js" defer></script>
 </head>
 <body>
 <div class="cursor-glow" aria-hidden="true"></div>
@@ -50,17 +50,17 @@
           <li><a href="/#about" data-en="About">درباره من</a></li>
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
           <li><a href="/#education" data-en="Education">تحصیلات</a></li>
-          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
           <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
           <li><a href="/#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
       <div class="lang-toggle" role="group" aria-label="زبان / Language">
-        <button class="lang-opt" data-lang="fa">فا</button>
-        <button class="lang-opt" data-lang="en">EN</button>
-      </div>
-      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
-      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
         <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
         <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
       </div>
@@ -81,30 +81,44 @@
 
 <main>
   <div class="post-head fu">
-    <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">مدیریت پروژه</span><span class="tag">هوش مصنوعی</span><span class="tag">PMI</span></div>
-    <h1>چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است</h1>
-<div class="cover post-hero" data-cover="pmi-ai-project-patterns"></div>
+    <div class="post-meta"><span class="pdate">{{DATE_FA}}</span><span class="badge teal">برچسب ۱</span><span class="badge teal">برچسب ۲</span></div>
+    <h1>{{TITLE}}</h1>
+<div class="cover post-hero" data-cover="{{SLUG}}"></div>
   </div>
   <article class="prose fu d1">
+    <p class="lead">مقدمه‌ی کوتاه: مسئله چیست و خواننده در پایان این نوشته به چه جوابی می‌رسد.</p>
 
-<p>در ماه‌های اخیر، <strong>Project Management Institute</strong> چند گواهینامه و مسیر یادگیری کاملاً مبتنی بر هوش مصنوعی عرضه کرده است؛ از CPMAI تا الگوهای هفت‌گانه‌ی پروژه‌های AI. این یعنی یک تغییر نگرش جدی: پروژه‌های هوش مصنوعی با پروژه‌های سنتی تفاوت بنیادین دارند.</p>
+    <h2>بخش اول</h2>
+    <p>متن بخش. برای اشاره به یک اصطلاح می‌توانید از <span data-tip="توضیح کوتاه اصطلاح"> tooltip </span> استفاده کنید.</p>
 
-<h2>چرا روش‌های کلاسیک کافی نیستند؟</h2>
-<p>در پروژه‌ی سنتی، خروجی از ابتدا قابل تعریف است؛ در پروژه‌ی AI، نتیجه‌ی مدل تا وارد چرخه‌ی داده نشوید معلوم نیست. سه تفاوت کلیدی:</p>
-<ul>
-<li><strong>عدم قطعیت خروجی:</strong> کیفیت مدل تا پایلوت واقعی قابل تضمین نیست.</li>
-<li><strong>وابستگی به داده:</strong> بخش عمده‌ی بودجه و زمان صرف آماده‌سازی داده می‌شود، نه مدل‌سازی.</li>
-<li><strong>تکرار بی‌پایان:</strong> تحویل، پایان پروژه نیست؛ هر بازخورد یک چرخه‌ی جدید است.</li>
-</ul>
+    <h3>زیربخش</h3>
+    <p>بلوک‌های کد خودکار شماره‌خط، هایلایت و دکمه‌ی کپی می‌گیرند:</p>
+    <pre dir="ltr" data-lang="EXCEL">=SUMIF($H$2:$H$6, H2, $C$2:$C$6) / SUM($C$2:$C$6)</pre>
 
-<h2>الگوهای هفت‌گانه از نگاه عملی</h2>
-<p>الگوهایی مثل «پیش‌بینی»، «تشخیص ناهنجاری» و «تولید محتوا» هر کدام ریسک و ساختار حاکمیتی متفاوتی می‌خواهند. انتخاب اشتباه الگو، رایج‌ترین علت شکست پروژه‌های AI در سازمان‌هاست — قبل از حتی یک خط کد.</p>
+    <h2>بخش دوم</h2>
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>نکته:</strong> این یک جعبه‌ی توجه است.</div>
+    </div>
 
-<blockquote>پروژه‌ی AI موفق، اول یک مسئله‌ی مدیریتی درست‌تعریف‌شده است، بعد یک مسئله‌ی فنی.</blockquote>
+    <div class="tabs" data-single>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="a" aria-selected="true">زبانه‌ی اول</button>
+        <button class="tab" data-tab="b" aria-selected="false">زبانه‌ی دوم</button>
+      </div>
+      <div class="tab-panel is-active" data-panel="a"><p>محتوای زبانه‌ی اول.</p></div>
+      <div class="tab-panel" data-panel="b"><p>محتوای زبانه‌ی دوم.</p></div>
+    </div>
 
-<h2>جمع‌بندی</h2>
-<p>اگر برنامه‌ریز یا کنترل‌کار پروژه هستید، یادگیری این چارچوب‌ها نه یک انتخاب، بلکه الزام ده سال آینده‌ی شغلی است. تجربه‌ی من: شروع از گواهینامه‌های کوتاه PMI مثل <code>Generative AI Overview for Project Managers</code> بهترین نقطه‌ی ورود است.</p>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">سؤال پرتکرار؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>پاسخ کوتاه و مفید.</div></div>
+      </div>
+    </div>
 
+    <h2>جمع‌بندی</h2>
+    <p>خلاصه‌ی سه‌خطی + قدم بعدی برای خواننده.</p>
   </article>
   <div class="post-foot fu d2">
     <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
@@ -127,7 +141,6 @@
     <div class="cmdk-list" id="cmdk-list"></div>
   </div>
 </div>
-
 
 <script>
   const root = document.documentElement;

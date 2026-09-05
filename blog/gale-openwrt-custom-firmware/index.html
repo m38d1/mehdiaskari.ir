@@ -10,6 +10,7 @@
 <link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/blog.css">
+<link rel="stylesheet" href="/components.css">
 <title>فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت | وبلاگ مهدی عسکری</title>
 <meta name="description" content="ساخت فریمور سفارشی OpenWrt ۲۵.۱۲.۵ برای Google Wifi (Gale): رفع باگ وای‌فای دایرکت در PassWall، مالتی‌WAN با mwan3 (failover + load balance)، منوی Developer و رمز root خالی.">
 <meta property="og:type" content="article">
@@ -19,8 +20,10 @@
 <meta property="article:published_time" content="2026-09-04">
 <link rel="canonical" href="https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/">
 <script src="/cover.js" defer></script>
+<script src="/components.js" defer></script>
 </head>
 <body>
+<div class="cursor-glow" aria-hidden="true"></div>
 <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
 <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
@@ -46,11 +49,17 @@
         <ul>
           <li><a href="/#about" data-en="About">درباره من</a></li>
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
           <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
           <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
           <li><a href="/#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+        <button class="lang-opt" data-lang="fa">فا</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+      </div>
+      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
       <div class="theme-toggle" role="group" aria-label="حالت نمایش">
         <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
         <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
@@ -63,6 +72,7 @@
   <nav class="mobile-menu" id="mobile-menu">
     <a href="/#about" data-en="About">درباره من</a>
     <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
     <a href="/#skills" data-en="Skills">مهارت‌ها</a>
     <a href="/blog/all/" data-en="Blog">وبلاگ</a>
     <a href="/#contact" data-en="Contact">تماس</a>
@@ -225,6 +235,18 @@ b2a4353ab608c0f73b3c8d44b9d444e3053b5685bd6d0a1386d799a118523a2e
 </main>
 
 <footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
 
 <script>
   const root = document.documentElement;
