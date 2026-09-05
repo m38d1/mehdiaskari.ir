@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+  <link rel="stylesheet" href="/components.css">
+  <link rel="stylesheet" href="/lab/lab.css">
+<title>داشبورد EVM — CPI، SPI، EAC و منحنی S | مهدی عسکری</title>
+<meta name="description" content="سری PV / EV / AC را بچسبانید و CV، SV، CPI، SPI، سه روش EAC، ETC، VAC و هر دو TCPI را بگیرید؛ به‌همراه منحنی S قابل چاپ. بدون سرور، همه‌چیز در مرورگر.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="داشبورد EVM — CPI، SPI، EAC و منحنی S">
+<meta property="og:description" content="سری PV / EV / AC را بچسبانید و CV، SV، CPI، SPI، سه روش EAC، ETC، VAC و هر دو TCPI را بگیرید؛ به‌همراه منحنی S قابل چاپ. بدون سرور، همه‌چیز در مرورگر.">
+<meta property="og:url" content="https://mehdiaskari.ir/lab/evm/">
+
+<link rel="canonical" href="https://mehdiaskari.ir/lab/evm/">
+  <script src="/components.js" defer></script>
+  <script src="/lab/evm-engine.js" defer></script>
+  <script src="/lab/evm/app.js" defer></script>
+<script type="application/ld+json" data-entity="article">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BlogPosting",
+   "@id": "https://mehdiaskari.ir/lab/evm/#article",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mehdiaskari.ir/lab/evm/"
+   },
+   "headline": "محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP",
+   "description": "وقتی فقط هزینه واقعی (C)، وزن (W) و ارزش/بودجه (V) را داریم، چطور ضریب وزن (W.F) و درصد پیشرفت وزنی کل پروژه را حساب کنیم — آموزش گام‌به‌گام در اکسل و Microsoft Project.",
+   "inLanguage": "fa-IR",
+   "isAccessibleForFree": true,
+   "url": "https://mehdiaskari.ir/lab/evm/",
+   "image": [
+    "https://mehdiaskari.ir/og-image.png"
+   ],
+   "author": {
+    "@type": "Person",
+    "name": "Mehdi Askari",
+    "alternateName": "مهدی عسکری",
+    "url": "https://mehdiaskari.ir/"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "Mehdi Askari",
+    "url": "https://mehdiaskari.ir/",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://mehdiaskari.ir/icon.svg"
+    }
+   },
+   "datePublished": "2026-09-03",
+   "dateModified": "2026-09-05",
+   "keywords": "Excel, MS Project, کنترل پروژه, پیشرفت وزنی",
+   "wordCount": 2150
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "خانه",
+     "item": "https://mehdiaskari.ir/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "وبلاگ",
+     "item": "https://mehdiaskari.ir/blog/all/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP",
+     "item": "https://mehdiaskari.ir/lab/evm/"
+    }
+   ]
+  }
+ ]
+}</script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "داشبورد EVM — CPI، SPI، EAC و منحنی S",
+  "url": "https://mehdiaskari.ir/lab/evm/",
+  "description": "سری PV / EV / AC را بچسبانید و CV، SV، CPI، SPI، سه روش EAC، ETC، VAC و هر دو TCPI را بگیرید؛ به‌همراه منحنی S قابل چاپ. بدون سرور، همه‌چیز در مرورگر.",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Any",
+  "inLanguage": "fa",
+  "browserRequirements": "Requires JavaScript",
+  "offers": { "@type": "Offer", "price": "0", "priceCurrency": "IRR" },
+  "isPartOf": { "@type": "WebSite", "name": "Mehdi Askari", "url": "https://mehdiaskari.ir/" },
+  "about": { "@type": "Article", "name": "محاسبه ضریب وزن (W.F) و پیشرفت وزنی",
+             "url": "https://mehdiaskari.ir/blog/weight-factor-excel-msp/" }
+}
+</script>
+</head>
+<body>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/lab/" data-en="Lab">آزمایشگاه</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="tool-head fu">
+    <div class="post-meta">
+      <span class="badge teal" data-en="Interactive tool">ابزار تعاملی</span>
+      <span class="badge" data-en="No server, nothing uploaded">بدون سرور، بدون آپلود</span>
+      <span class="badge amber" data-en="PMBOK formulas">فرمول‌های PMBOK</span>
+    </div>
+    <h1 data-en="EVM dashboard — CPI, SPI, EAC and the S-curve">داشبورد EVM — CPI، SPI، EAC و منحنی S</h1>
+    <p class="lead" data-en="Paste the PV / EV / AC series and get the whole earned-value set: CV, SV, CPI, SPI, three EAC forecasts, ETC, VAC and both TCPIs — plus an S-curve you can print into a report.">سری زمانی PV / EV / AC را بچسبانید و کل مجموعهٔ ارزش‌افزوده را بگیرید: CV، SV، CPI، SPI، سه پیش‌بینی EAC، ETC، VAC و هر دو TCPI — به‌همراه منحنی S که می‌شود آن را در گزارش چاپ کرد.</p>
+  </div>
+
+  <div class="lab-main">
+    <section class="tool-layout">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 data-en="Data">داده‌ها</h2>
+          <span class="panel-hint" data-en="One row per reporting period">هر سطر یک دورهٔ گزارش</span>
+        </div>
+
+        <div class="preset-row" role="group" aria-label="نمونه‌ها">
+          <button class="chip active" data-preset="textbook" data-en="PMBOK textbook case">مثال PMBOK</button>
+          <button class="chip" data-preset="slowstart" data-en="Construction project, negative variance">پروژهٔ ساختمانی</button>
+          <button class="chip" data-preset="periodic" data-en="Periodic input">ورودی دوره‌ای</button>
+        </div>
+
+        <label class="field-label" for="evm-input" data-en="Columns: period · PV · EV · AC (· BAC optional)">ستون‌ها: دوره · PV · EV · AC (· BAC اختیاری)</label>
+        <textarea id="evm-input" class="wf-input" dir="ltr" spellcheck="false" autocomplete="off" aria-label="داده‌های ارزش افزوده"></textarea>
+
+        <div class="restored" id="evm-restored" hidden>
+          <span data-en="Your last table was restored from this browser — nothing was uploaded.">آخرین جدول واردکرده از همین مرورگر بازیابی شد؛ هیچ‌چیز بارگذاری نشده است.</span>
+          <button type="button" data-en="Load the sample instead">نمونهٔ پیش‌فرض را بارگذاری کن</button>
+        </div>
+
+        <div class="controls-row">
+          <span class="controls-label" data-en="Input shape">قالب ورودی</span>
+          <div class="seg" role="group" aria-label="قالب ورودی">
+            <button class="seg-opt is-on" data-mode="cumulative" data-en="Cumulative">تجمعی</button>
+            <button class="seg-opt" data-mode="periodic" data-en="Per period">دوره‌ای</button>
+          </div>
+        </div>
+
+        <div class="controls-row">
+          <span class="controls-label" data-en="EAC method">روش EAC</span>
+          <div class="seg" role="group" aria-label="روش EAC">
+            <button class="seg-opt is-on" data-eac="typical" data-en="Typical — BAC / CPI">تیپیکال</button>
+            <button class="seg-opt" data-eac="atypical" data-en="Atypical — AC + (BAC − EV)">آتایپیکال</button>
+            <button class="seg-opt" data-eac="composite" data-en="Composite — AC + (BAC−EV)/(CPI×SPI)">ترکیبی</button>
+            <button class="seg-opt" data-eac="manual" data-en="Management estimate">دستی</button>
+          </div>
+        </div>
+
+        <div class="num-row">
+          <label class="num-field">
+            <span data-en="BAC (leave blank to take it from the plan)">BAC (خالی = از برنامه)</span>
+            <input type="text" id="evm-bac" dir="ltr" inputmode="decimal" placeholder="مثلاً 100000">
+          </label>
+          <label class="num-field" id="manual-wrap" hidden>
+            <span data-en="Your EAC">EAC دستی شما</span>
+            <input type="text" id="evm-manual" dir="ltr" inputmode="decimal" placeholder="0">
+          </label>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary sm" id="evm-run" data-en="Recalculate">محاسبه</button>
+          <button class="btn sm" id="evm-csv" data-en="Export CSV">خروجی CSV</button>
+          <button class="btn sm" id="evm-print" data-en="Print">چاپ</button>
+          <button class="btn sm ghost" id="evm-clear" data-en="Clear">پاک کردن</button>
+        </div>
+
+        <div class="cols-help">
+          <span data-en="The most common way to get a wrong EVM number is to feed cumulative figures to a tool expecting per-period ones, or the reverse. Pick the shape your export actually is — the tool warns you when cumulative figures go backwards.">رایج‌ترین منبع عدد غلط در EVM این است که ارقام تجمعی را به ابزاری بدهی که دوره‌ای می‌خواهد، یا برعکس. قالبی که خروجی‌ات واقعاً دارد را انتخاب کن؛ اگر ارقام تجمعی عقب بروند، ابزار هشدار می‌دهد.</span>
+        </div>
+      </div>
+
+      <aside class="panel summary" aria-live="polite">
+        <div class="big">
+          <div class="big-label" id="s-hero-label" data-en="Estimate at completion">برآورد تا تکمیل (EAC)</div>
+          <div class="big-num is-empty" id="s-eac">—</div>
+          <div class="big-sub" id="s-vac"></div>
+        </div>
+        <div class="mini-grid">
+          <div class="mini"><b id="s-cpi">—</b><small data-en="CPI — cost efficiency">CPI — کارایی هزینه</small></div>
+          <div class="mini"><b id="s-spi">—</b><small data-en="SPI — schedule efficiency">SPI — کارایی زمان</small></div>
+          <div class="mini"><b id="s-bac">—</b><small id="s-bac-label" data-en="BAC">BAC بودجهٔ کل</small></div>
+          <div class="mini"><b id="s-etc">—</b><small data-en="ETC — to complete">ETC — باقی‌مانده</small></div>
+          <div class="mini"><b id="s-tcpi">—</b><small data-en="TCPI against BAC">TCPI نسبت به BAC</small></div>
+          <div class="mini"><b id="s-periods">۰</b><small data-en="periods">دوره</small></div>
+        </div>
+        <div class="checks" id="s-checks"></div>
+        <div class="notices" id="s-notices"></div>
+      </aside>
+    </section>
+
+    <section class="panel chart-panel" style="margin-top:18px">
+      <div class="panel-head">
+        <h2 data-en="S-curve">منحنی S</h2>
+        <div class="chart-legend">
+          <span class="lg pv" data-en="PV — planned">PV — برنامه</span>
+          <span class="lg ev" data-en="EV — earned">EV — عملکرد</span>
+          <span class="lg ac" data-en="AC — actual">AC — هزینهٔ واقعی</span>
+        </div>
+      </div>
+      <div class="chart-wrap" id="evm-chart" dir="ltr"></div>
+      <div class="legend">
+        <span data-en="The gap between EV and PV is the schedule variance; the gap between EV and AC is the cost variance. Where the three lines converge at the right edge is where the plan ends.">فاصلهٔ EV تا PV همان انحراف زمانی و فاصلهٔ EV تا AC همان انحراف هزینه است. جایی که سه خط در لبهٔ راست به هم می‌رسند، پایان برنامه است.</span>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head">
+        <h2 data-en="Per period">به تفکیک دوره</h2>
+        <button class="copy-btn" id="evm-copy" data-en="Copy table">کپی جدول</button>
+      </div>
+      <div class="table-wrap">
+        <table class="wf-table evm-table">
+          <thead>
+            <tr>
+              <th data-en="Period">دوره</th>
+              <th>PV</th><th>EV</th><th>AC</th>
+              <th data-en="Cumulative PV">PV تجمعی</th>
+              <th data-en="Cumulative EV">EV تجمعی</th>
+              <th data-en="Cumulative AC">AC تجمعی</th>
+              <th>CPI</th><th>SPI</th>
+              <th data-en="Cost variance">CV</th>
+              <th data-en="Schedule variance">SV</th>
+            </tr>
+          </thead>
+          <tbody id="evm-body"></tbody>
+          <tfoot id="evm-foot"></tfoot>
+        </table>
+      </div>
+      <p class="print-note" data-en="Generated with the EVM dashboard at mehdiaskari.ir/lab/evm/">این خروجی با داشبورد EVM در نشانی mehdiaskari.ir/lab/evm/ ساخته شده است.</p>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head"><h2 data-en="What each number means">هر عدد چه می‌گوید</h2></div>
+      <div class="accordion" data-single>
+        <div class="acc-item">
+          <button class="acc-head" data-en="The four core ratios">چهار نسبت اصلی <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="FORMULA">CV  = EV − AC      SV  = EV − PV
+CPI = EV / AC      SPI = EV / PV</pre>
+            <p data-en="CPI below 1 means you are getting less than one rial of work per rial spent. SPI below 1 means you have earned less than the plan said you would by now. Neither one tells you how big the problem is on its own — the variance in rials does.">CPI کمتر از ۱ یعنی به ازای هر ریال خرج‌شده، کمتر از یک ریال کار تحویل گرفته‌ای. SPI کمتر از ۱ یعنی کمتر از آنچه برنامه تا امروز می‌گفت عملکرد داشته‌ای. هیچ‌کدام به‌تنهایی بزرگی مشکل را نمی‌گوید — این ریالِ انحراف است که اندازه را نشان می‌دهد.</p>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" data-en="Which EAC method to use">کدام روش EAC <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="FORMULA">typical    EAC = BAC / CPI
+atypical   EAC = AC + (BAC − EV)
+composite  EAC = AC + (BAC − EV) / (CPI × SPI)</pre>
+            <p data-en="Typical assumes today's cost efficiency continues for all remaining work — the right choice when the overrun is systemic. Atypical assumes the remaining work lands exactly on budget, which is the choice when the cause is genuinely one-off. Composite penalises you for being behind schedule as well as over budget, so it is the most conservative of the three and the one most often used in claims.">تیپیکال فرض می‌کند کارایی هزینهٔ امروز بر کل کار باقی‌مانده ادامه دارد — انتخاب درست وقتی انحراف ساختاری است. آتایپیکال فرض می‌کند کار باقی‌مانده دقیقاً روی بودجه تمام می‌شود — انتخابی برای وقتی که علت واقعاً یک‌باره بوده. ترکیبی هم عقب‌بودن زمانی را تنبیه می‌کند، پس محافظه‌کارانه‌ترین سه روش است و در ادعاهای قراردادی پرکاربردتر.</p>
+            <div class="callout">
+              <span class="callout-ic">!</span>
+              <div data-en="Never mix methods between reporting periods. Switching from typical to atypical to make the number look better is the classic EVM red flag, and an auditor spots it by comparing EAC to AC across two periods.">هرگز بین دوره‌های گزارش روش را عوض نکن. جابه‌جایی از تیپیکال به آتایپیکال برای قشنگ‌تر شدن عدد، پرچم‌قرمز کلاسیک EVM است و ممیز با مقایسهٔ EAC به AC در دو دوره آن را می‌گیرد.</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" data-en="TCPI — the number people skip">TCPI — عددی که رد می‌شوند <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="FORMULA">TCPI(BAC) = (BAC − EV) / (BAC − AC)
+TCPI(EAC) = (BAC − EV) / (EAC − AC)</pre>
+            <p data-en="TCPI answers the only question a client cares about: at what efficiency must the remaining work be done? Above 1.0 you must outperform your own baseline. Above 1.2 it is usually not recoverable by working harder — it needs re-scoping, a schedule change or a claim.">TCPI به تنها سؤالی که کارفرما برایش اهمیت قائل است جواب می‌دهد: کار باقی‌مانده باید با چه کارایی انجام شود؟ بالای ۱٫۰ یعنی باید از خط پایهٔ خودت هم بهتر عمل کنی. بالای ۱٫۲ معمولاً با بیشتر کار کردن قابل جبران نیست — نیاز به بازتعریف دامنه، تغییر زمان‌بندی یا ادعا دارد.</p>
+            <p data-en="Note the identity: when EAC was derived as BAC / CPI, TCPI(EAC) equals CPI exactly. It is only informative when the EAC comes from somewhere else.">یک نکتهٔ ریاضی: وقتی EAC از BAC/CPI آمده باشد، TCPI(EAC) دقیقاً برابر CPI می‌شود. این عدد فقط وقتی اطلاعات تازه دارد که EAC از جای دیگری آمده باشد.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <p class="legend" style="margin-top:22px;text-align:center">
+      <span data-en="Everything runs in your browser. No data leaves this page.">همه‌چیز در مرورگر شما اجرا می‌شود؛ هیچ داده‌ای از این صفحه بیرون نمی‌رود.</span>
+      · <a href="/lab/" data-en="All tools">همهٔ ابزارها</a>
+      · <a href="/lab/weight-factor/" data-en="Weight factor calculator">ماشین‌حساب ضریب وزن</a>
+    </p>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>

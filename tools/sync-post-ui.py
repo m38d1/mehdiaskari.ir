@@ -48,6 +48,12 @@ MENU_EDU = ('    <a href="/#education" data-en="Education">تحصیلات</a>\n'
 NAV_BLOG = '          <li><a href="/blog/all/" data-en="Blog">'
 NAV_LAB = ('          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>\n'
            '          <li><a href="/blog/all/" data-en="Blog">')
+# The site had no chart glyph at all, which is odd for a dashboard person.
+SPRITE_ANCHOR = '<symbol id="i-tools" viewBox="0 0 24 24">'
+SPRITE_ICON = ('<symbol id="i-chart" viewBox="0 0 24 24">'
+               '<path d="M4 20V4M4 20h16"/>'
+               '<path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol>')
+
 MENU_BLOG = '    <a href="/blog/all/" data-en="Blog">'
 MENU_LAB = ('    <a href="/lab/" data-en="Lab">آزمایشگاه</a>\n'
             '    <a href="/blog/all/" data-en="Blog">')
@@ -82,6 +88,7 @@ CHECKS = {
     'Education (menu)': '    <a href="/#education"',
     'Lab (nav)': '<li><a href="/lab/"',
     'Lab (menu)': '    <a href="/lab/"',
+    'chart icon': '<symbol id="i-chart"',
     'lang toggle': 'class="lang-toggle"',
     'cmdk hint': 'class="cmdk-hint"',
     'cmdk overlay': 'id="cmdk-overlay"',
@@ -258,6 +265,7 @@ def patch(html: str):
     sub(NAV_BLOG, NAV_LAB, '<li><a href="/lab/"', 'Lab (nav)')
     sub(MENU_BLOG, MENU_LAB, '    <a href="/lab/"', 'Lab (menu)')
     sub(THEME_ANCHOR, LANG_BLOCK, 'class="lang-toggle"', 'lang toggle + cmdk hint')
+    sub(SPRITE_ANCHOR, SPRITE_ICON + SPRITE_ANCHOR, '<symbol id="i-chart"', 'chart icon')
     sub('</footer>', '</footer>\n\n' + CMDK_OVERLAY + '\n', 'id="cmdk-overlay"', 'cmdk overlay')
     return html, changes
 

@@ -75,8 +75,11 @@
     var t = String(s == null ? '' : s).trim()
       .replace(/[\u06f0-\u06f9]/g, function (d) { return String(d.charCodeAt(0) - 0x06f0); })
       .replace(/[\u0660-\u0669]/g, function (d) { return String(d.charCodeAt(0) - 0x0660); })
-      .replace(/[,،\s]/g, '')
-      .replace(/%$/, '');
+      // Excel in a Persian locale uses U+066C for thousands and U+066B as the
+      // decimal mark; without these, ۴۰٬۰۰۰ parses as NaN and the row vanishes.
+      .replace(/[\u066c،,\s]/g, '')
+      .replace(/\u066b/g, '.')
+      .replace(/[\u066a%]$/, '');
     if (t === '' || t === '-' || t === '—') return null;
     var n = Number(t);
     return isFinite(n) ? n : null;

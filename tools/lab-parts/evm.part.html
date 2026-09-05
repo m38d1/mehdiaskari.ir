@@ -1,0 +1,177 @@
+<main>
+  <div class="tool-head fu">
+    <div class="post-meta">
+      <span class="badge teal" data-en="Interactive tool">ابزار تعاملی</span>
+      <span class="badge" data-en="No server, nothing uploaded">بدون سرور، بدون آپلود</span>
+      <span class="badge amber" data-en="PMBOK formulas">فرمول‌های PMBOK</span>
+    </div>
+    <h1 data-en="EVM dashboard — CPI, SPI, EAC and the S-curve">داشبورد EVM — CPI، SPI، EAC و منحنی S</h1>
+    <p class="lead" data-en="Paste the PV / EV / AC series and get the whole earned-value set: CV, SV, CPI, SPI, three EAC forecasts, ETC, VAC and both TCPIs — plus an S-curve you can print into a report.">سری زمانی PV / EV / AC را بچسبانید و کل مجموعهٔ ارزش‌افزوده را بگیرید: CV، SV، CPI، SPI، سه پیش‌بینی EAC، ETC، VAC و هر دو TCPI — به‌همراه منحنی S که می‌شود آن را در گزارش چاپ کرد.</p>
+  </div>
+
+  <div class="lab-main">
+    <section class="tool-layout">
+      <div class="panel">
+        <div class="panel-head">
+          <h2 data-en="Data">داده‌ها</h2>
+          <span class="panel-hint" data-en="One row per reporting period">هر سطر یک دورهٔ گزارش</span>
+        </div>
+
+        <div class="preset-row" role="group" aria-label="نمونه‌ها">
+          <button class="chip active" data-preset="textbook" data-en="PMBOK textbook case">مثال PMBOK</button>
+          <button class="chip" data-preset="slowstart" data-en="Construction project, negative variance">پروژهٔ ساختمانی</button>
+          <button class="chip" data-preset="periodic" data-en="Periodic input">ورودی دوره‌ای</button>
+        </div>
+
+        <label class="field-label" for="evm-input" data-en="Columns: period · PV · EV · AC (· BAC optional)">ستون‌ها: دوره · PV · EV · AC (· BAC اختیاری)</label>
+        <textarea id="evm-input" class="wf-input" dir="ltr" spellcheck="false" autocomplete="off" aria-label="داده‌های ارزش افزوده"></textarea>
+
+        <div class="restored" id="evm-restored" hidden>
+          <span data-en="Your last table was restored from this browser — nothing was uploaded.">آخرین جدول واردکرده از همین مرورگر بازیابی شد؛ هیچ‌چیز بارگذاری نشده است.</span>
+          <button type="button" data-en="Load the sample instead">نمونهٔ پیش‌فرض را بارگذاری کن</button>
+        </div>
+
+        <div class="controls-row">
+          <span class="controls-label" data-en="Input shape">قالب ورودی</span>
+          <div class="seg" role="group" aria-label="قالب ورودی">
+            <button class="seg-opt is-on" data-mode="cumulative" data-en="Cumulative">تجمعی</button>
+            <button class="seg-opt" data-mode="periodic" data-en="Per period">دوره‌ای</button>
+          </div>
+        </div>
+
+        <div class="controls-row">
+          <span class="controls-label" data-en="EAC method">روش EAC</span>
+          <div class="seg" role="group" aria-label="روش EAC">
+            <button class="seg-opt is-on" data-eac="typical" data-en="Typical — BAC / CPI">تیپیکال</button>
+            <button class="seg-opt" data-eac="atypical" data-en="Atypical — AC + (BAC − EV)">آتایپیکال</button>
+            <button class="seg-opt" data-eac="composite" data-en="Composite — AC + (BAC−EV)/(CPI×SPI)">ترکیبی</button>
+            <button class="seg-opt" data-eac="manual" data-en="Management estimate">دستی</button>
+          </div>
+        </div>
+
+        <div class="num-row">
+          <label class="num-field">
+            <span data-en="BAC (leave blank to take it from the plan)">BAC (خالی = از برنامه)</span>
+            <input type="text" id="evm-bac" dir="ltr" inputmode="decimal" placeholder="مثلاً 100000">
+          </label>
+          <label class="num-field" id="manual-wrap" hidden>
+            <span data-en="Your EAC">EAC دستی شما</span>
+            <input type="text" id="evm-manual" dir="ltr" inputmode="decimal" placeholder="0">
+          </label>
+        </div>
+
+        <div class="actions">
+          <button class="btn primary sm" id="evm-run" data-en="Recalculate">محاسبه</button>
+          <button class="btn sm" id="evm-csv" data-en="Export CSV">خروجی CSV</button>
+          <button class="btn sm" id="evm-print" data-en="Print">چاپ</button>
+          <button class="btn sm ghost" id="evm-clear" data-en="Clear">پاک کردن</button>
+        </div>
+
+        <div class="cols-help">
+          <span data-en="The most common way to get a wrong EVM number is to feed cumulative figures to a tool expecting per-period ones, or the reverse. Pick the shape your export actually is — the tool warns you when cumulative figures go backwards.">رایج‌ترین منبع عدد غلط در EVM این است که ارقام تجمعی را به ابزاری بدهی که دوره‌ای می‌خواهد، یا برعکس. قالبی که خروجی‌ات واقعاً دارد را انتخاب کن؛ اگر ارقام تجمعی عقب بروند، ابزار هشدار می‌دهد.</span>
+        </div>
+      </div>
+
+      <aside class="panel summary" aria-live="polite">
+        <div class="big">
+          <div class="big-label" id="s-hero-label" data-en="Estimate at completion">برآورد تا تکمیل (EAC)</div>
+          <div class="big-num is-empty" id="s-eac">—</div>
+          <div class="big-sub" id="s-vac"></div>
+        </div>
+        <div class="mini-grid">
+          <div class="mini"><b id="s-cpi">—</b><small data-en="CPI — cost efficiency">CPI — کارایی هزینه</small></div>
+          <div class="mini"><b id="s-spi">—</b><small data-en="SPI — schedule efficiency">SPI — کارایی زمان</small></div>
+          <div class="mini"><b id="s-bac">—</b><small id="s-bac-label" data-en="BAC">BAC بودجهٔ کل</small></div>
+          <div class="mini"><b id="s-etc">—</b><small data-en="ETC — to complete">ETC — باقی‌مانده</small></div>
+          <div class="mini"><b id="s-tcpi">—</b><small data-en="TCPI against BAC">TCPI نسبت به BAC</small></div>
+          <div class="mini"><b id="s-periods">۰</b><small data-en="periods">دوره</small></div>
+        </div>
+        <div class="checks" id="s-checks"></div>
+        <div class="notices" id="s-notices"></div>
+      </aside>
+    </section>
+
+    <section class="panel chart-panel" style="margin-top:18px">
+      <div class="panel-head">
+        <h2 data-en="S-curve">منحنی S</h2>
+        <div class="chart-legend">
+          <span class="lg pv" data-en="PV — planned">PV — برنامه</span>
+          <span class="lg ev" data-en="EV — earned">EV — عملکرد</span>
+          <span class="lg ac" data-en="AC — actual">AC — هزینهٔ واقعی</span>
+        </div>
+      </div>
+      <div class="chart-wrap" id="evm-chart" dir="ltr"></div>
+      <div class="legend">
+        <span data-en="The gap between EV and PV is the schedule variance; the gap between EV and AC is the cost variance. Where the three lines converge at the right edge is where the plan ends.">فاصلهٔ EV تا PV همان انحراف زمانی و فاصلهٔ EV تا AC همان انحراف هزینه است. جایی که سه خط در لبهٔ راست به هم می‌رسند، پایان برنامه است.</span>
+      </div>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head">
+        <h2 data-en="Per period">به تفکیک دوره</h2>
+        <button class="copy-btn" id="evm-copy" data-en="Copy table">کپی جدول</button>
+      </div>
+      <div class="table-wrap">
+        <table class="wf-table evm-table">
+          <thead>
+            <tr>
+              <th data-en="Period">دوره</th>
+              <th>PV</th><th>EV</th><th>AC</th>
+              <th data-en="Cumulative PV">PV تجمعی</th>
+              <th data-en="Cumulative EV">EV تجمعی</th>
+              <th data-en="Cumulative AC">AC تجمعی</th>
+              <th>CPI</th><th>SPI</th>
+              <th data-en="Cost variance">CV</th>
+              <th data-en="Schedule variance">SV</th>
+            </tr>
+          </thead>
+          <tbody id="evm-body"></tbody>
+          <tfoot id="evm-foot"></tfoot>
+        </table>
+      </div>
+      <p class="print-note" data-en="Generated with the EVM dashboard at mehdiaskari.ir/lab/evm/">این خروجی با داشبورد EVM در نشانی mehdiaskari.ir/lab/evm/ ساخته شده است.</p>
+    </section>
+
+    <section class="panel" style="margin-top:18px">
+      <div class="panel-head"><h2 data-en="What each number means">هر عدد چه می‌گوید</h2></div>
+      <div class="accordion" data-single>
+        <div class="acc-item">
+          <button class="acc-head" data-en="The four core ratios">چهار نسبت اصلی <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="FORMULA">CV  = EV − AC      SV  = EV − PV
+CPI = EV / AC      SPI = EV / PV</pre>
+            <p data-en="CPI below 1 means you are getting less than one rial of work per rial spent. SPI below 1 means you have earned less than the plan said you would by now. Neither one tells you how big the problem is on its own — the variance in rials does.">CPI کمتر از ۱ یعنی به ازای هر ریال خرج‌شده، کمتر از یک ریال کار تحویل گرفته‌ای. SPI کمتر از ۱ یعنی کمتر از آنچه برنامه تا امروز می‌گفت عملکرد داشته‌ای. هیچ‌کدام به‌تنهایی بزرگی مشکل را نمی‌گوید — این ریالِ انحراف است که اندازه را نشان می‌دهد.</p>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" data-en="Which EAC method to use">کدام روش EAC <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="FORMULA">typical    EAC = BAC / CPI
+atypical   EAC = AC + (BAC − EV)
+composite  EAC = AC + (BAC − EV) / (CPI × SPI)</pre>
+            <p data-en="Typical assumes today's cost efficiency continues for all remaining work — the right choice when the overrun is systemic. Atypical assumes the remaining work lands exactly on budget, which is the choice when the cause is genuinely one-off. Composite penalises you for being behind schedule as well as over budget, so it is the most conservative of the three and the one most often used in claims.">تیپیکال فرض می‌کند کارایی هزینهٔ امروز بر کل کار باقی‌مانده ادامه دارد — انتخاب درست وقتی انحراف ساختاری است. آتایپیکال فرض می‌کند کار باقی‌مانده دقیقاً روی بودجه تمام می‌شود — انتخابی برای وقتی که علت واقعاً یک‌باره بوده. ترکیبی هم عقب‌بودن زمانی را تنبیه می‌کند، پس محافظه‌کارانه‌ترین سه روش است و در ادعاهای قراردادی پرکاربردتر.</p>
+            <div class="callout">
+              <span class="callout-ic">!</span>
+              <div data-en="Never mix methods between reporting periods. Switching from typical to atypical to make the number look better is the classic EVM red flag, and an auditor spots it by comparing EAC to AC across two periods.">هرگز بین دوره‌های گزارش روش را عوض نکن. جابه‌جایی از تیپیکال به آتایپیکال برای قشنگ‌تر شدن عدد، پرچم‌قرمز کلاسیک EVM است و ممیز با مقایسهٔ EAC به AC در دو دوره آن را می‌گیرد.</div>
+            </div>
+          </div></div>
+        </div>
+        <div class="acc-item">
+          <button class="acc-head" data-en="TCPI — the number people skip">TCPI — عددی که رد می‌شوند <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="acc-body"><div>
+            <pre dir="ltr" data-lang="FORMULA">TCPI(BAC) = (BAC − EV) / (BAC − AC)
+TCPI(EAC) = (BAC − EV) / (EAC − AC)</pre>
+            <p data-en="TCPI answers the only question a client cares about: at what efficiency must the remaining work be done? Above 1.0 you must outperform your own baseline. Above 1.2 it is usually not recoverable by working harder — it needs re-scoping, a schedule change or a claim.">TCPI به تنها سؤالی که کارفرما برایش اهمیت قائل است جواب می‌دهد: کار باقی‌مانده باید با چه کارایی انجام شود؟ بالای ۱٫۰ یعنی باید از خط پایهٔ خودت هم بهتر عمل کنی. بالای ۱٫۲ معمولاً با بیشتر کار کردن قابل جبران نیست — نیاز به بازتعریف دامنه، تغییر زمان‌بندی یا ادعا دارد.</p>
+            <p data-en="Note the identity: when EAC was derived as BAC / CPI, TCPI(EAC) equals CPI exactly. It is only informative when the EAC comes from somewhere else.">یک نکتهٔ ریاضی: وقتی EAC از BAC/CPI آمده باشد، TCPI(EAC) دقیقاً برابر CPI می‌شود. این عدد فقط وقتی اطلاعات تازه دارد که EAC از جای دیگری آمده باشد.</p>
+          </div></div>
+        </div>
+      </div>
+    </section>
+
+    <p class="legend" style="margin-top:22px;text-align:center">
+      <span data-en="Everything runs in your browser. No data leaves this page.">همه‌چیز در مرورگر شما اجرا می‌شود؛ هیچ داده‌ای از این صفحه بیرون نمی‌رود.</span>
+      · <a href="/lab/" data-en="All tools">همهٔ ابزارها</a>
+      · <a href="/lab/weight-factor/" data-en="Weight factor calculator">ماشین‌حساب ضریب وزن</a>
+    </p>
+  </div>
+</main>

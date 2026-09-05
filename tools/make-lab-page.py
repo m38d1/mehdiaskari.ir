@@ -63,14 +63,17 @@ COLLECTION_LD = """<script type="application/ld+json">
     "itemListElement": [
       { "@type": "ListItem", "position": 1,
         "name": "ماشین‌حساب ضریب وزن (W.F) — سهم از والد و سهم از کل",
-        "url": "https://mehdiaskari.ir/lab/weight-factor/" }
+        "url": "https://mehdiaskari.ir/lab/weight-factor/" },
+      { "@type": "ListItem", "position": 2,
+        "name": "داشبورد EVM — CPI، SPI، EAC و منحنی S",
+        "url": "https://mehdiaskari.ir/lab/evm/" }
     ]
   }
 }
 </script>"""
 
 def build(slug, title, description, main_path, with_js=True, with_jsonld=True,
-              collection=False):
+              collection=False, engine='wf-engine.js'):
     tpl = TEMPLATE.read_text(encoding='utf-8')
     main = Path(main_path).read_text(encoding='utf-8').strip()
 
@@ -91,7 +94,7 @@ def build(slug, title, description, main_path, with_js=True, with_jsonld=True,
     head = head.replace(CSS_ANCHOR, CSS_ANCHOR + '\n  <link rel="stylesheet" href="/lab/lab.css">')
     if with_js:
         scripts = (JS_ANCHOR +
-                   '\n  <script src="/lab/wf-engine.js" defer></script>' +
+                   f'\n  <script src="/lab/{engine}" defer></script>' +
                    f'\n  <script src="/lab/{slug}/app.js" defer></script>')
         head = head.replace(JS_ANCHOR, scripts)
 
@@ -122,11 +125,14 @@ def main():
     ap.add_argument('--no-js', action='store_true',
                     help='omit wf-engine.js and lab/<slug>/app.js (for the landing page)')
     ap.add_argument('--no-jsonld', action='store_true', help='omit the WebApplication block')
+    ap.add_argument('--engine', default='wf-engine.js',
+                    help='shared engine file under /lab/ that this tool loads')
     ap.add_argument('--collection', action='store_true',
                     help='emit CollectionPage + ItemList instead of WebApplication (the /lab/ index)')
     a = ap.parse_args()
     dest = build(a.slug, a.title, a.description, a.main,
-                 with_js=not a.no_js, with_jsonld=not a.no_jsonld, collection=a.collection)
+                 with_js=not a.no_js, with_jsonld=not a.no_jsonld, collection=a.collection,
+                 engine=a.engine)
     print(f'wrote {dest.relative_to(ROOT)}')
 
 

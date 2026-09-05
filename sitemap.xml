@@ -7,6 +7,12 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://mehdiaskari.ir/lab/evm/</loc>
+    <lastmod>2026-09-05</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://mehdiaskari.ir/lab/weight-factor/</loc>
     <lastmod>2026-09-05</lastmod>
     <changefreq>monthly</changefreq>

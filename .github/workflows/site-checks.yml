@@ -47,13 +47,18 @@ jobs:
       - name: JSON-LD parses and matches posts.json
         run: python tools/check-schema.py
 
+      - name: RSS feed is current and carries full text
+        run: python tools/make-rss.py --check
+
       - name: Service-worker cache bumped for changed assets
         run: python tools/check-sw-version.py
 
       - name: JavaScript syntax
         run: |
           set -e
-          for f in components.js cover.js sw.js; do
+          for f in components.js cover.js sw.js \
+                    lab/wf-engine.js lab/evm-engine.js \
+                    lab/weight-factor/app.js lab/evm/app.js; do
             node --check "$f"
             echo "ok      $f"
           done
@@ -63,14 +68,18 @@ jobs:
 
       # The home page's terminal card quotes this number. Without this guard it
       # silently goes stale — the exact failure mode the old card content had.
+      - name: EVM engine reproduces the PMBOK worked example
+        run: node tools/test-evm-engine.js
+
       - name: Terminal card quotes a current assertion count
         run: |
-          actual=$(node tools/test-wf-engine.js | grep -oE '^[0-9]+ passed' | grep -oE '[0-9]+')
-          if ! grep -q "${actual} engine assertions passed" index.html; then
-            echo "::error::index.html terminal card shows a stale assertion count (engine reports ${actual})"
+          wf=$(node tools/test-wf-engine.js | grep -oE '^[0-9]+ passed' | grep -oE '[0-9]+')
+          evm=$(node tools/test-evm-engine.js | grep -oE '^[0-9]+ passed' | grep -oE '[0-9]+')
+          if ! grep -q "${wf} W.F + ${evm} EVM assertions passed" index.html; then
+            echo "::error::index.html terminal card is stale (engines report ${wf} W.F / ${evm} EVM)"
             exit 1
           fi
-          echo "terminal card matches the engine at ${actual} assertions"
+          echo "terminal card matches both engines: ${wf} W.F + ${evm} EVM"
 
       - name: JSON data files parse
         run: >

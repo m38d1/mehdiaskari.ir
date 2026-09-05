@@ -1,52 +1,679 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
 <channel>
   <title>وبلاگ مهدی عسکری</title>
   <link>https://mehdiaskari.ir/blog/</link>
   <description>یادداشت‌های مهدی عسکری درباره برنامه‌ریزی و کنترل پروژه، توسعه وب، شبکه و هوش مصنوعی</description>
   <language>fa</language>
   <atom:link href="https://mehdiaskari.ir/blog/rss.xml" rel="self" type="application/rss+xml"/>
-    <item>
+  <item>
     <title>فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت</title>
     <link>https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/</link>
-    <guid>https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/</guid>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/</guid>
     <pubDate>Fri, 04 Sep 2026 00:00:00 +0330</pubDate>
     <description>ساخت فریمور سفارشی OpenWrt ۲۵.۱۲.۵ روی Google Wifi (Gale): رفع باگ وای‌فای دایرکت در پس‌وال، مالتی‌WAN واقعی با mwan3 (failover + load balance)، منوی Developer و رمز root خالی.</description>
+    <content:encoded><![CDATA[
+<p>Google Wifi نسل اول (برد <strong>Gale</strong>، کد <code>AC-1304</code>) یک روتر ارزان و کم‌مصرف با چیپست ipq40xx است که زیر نظر پروژهٔ OpenWrt به‌خوبی پشتیبانی می‌شود. در این نوشته، مسیر ساخت یک فریمور سفارشی روی <strong>OpenWrt ۲۵.۱۲.۵</strong> (زیرشاخهٔ <code>ipq40xx/chromium</code>) را مرور می‌کنم: از رفع یک باگ عجیب در وای‌فای دایرکت گرفته تا مالتی‌WAN واقعی با <strong>mwan3</strong> و یک منوی اختصاصی در پنل.</p>
+
+<h2>۱. هدف‌های فریمور</h2>
+<p>فریمور سفارشی با سه ایدهٔ اصلی بسته شد:</p>
+<ul>
+  <li><strong>پس‌وال (PassWall)</strong> به‌عنوان پروکسی پیش‌فرض، با لیست دایرکت/بلاک دستی و بدون نودِ پیش‌فرض (کاربر نود خودش را می‌دهد).</li>
+  <li><strong>وای‌فای دایرکت</strong> («Google Router Direct») که ترافیکش <em>اصلاً</em> وارد پروکسی نشود — این بزرگ‌ترین چالش بود.</li>
+  <li><strong>مالتی‌WAN</strong>: یک کابل + تا ۳ وصلهٔ بی‌سیم به‌عنوان WANهای فرعی، با failover و load balance هم‌زمان.</li>
+</ul>
+
+<h2>۲. رفع باگ وای‌فای دایرکت (پچ nftables)</h2>
+<p>در نسخه‌های قبل، SSID دایرکت (زیرشبکهٔ <code>۱۹۲.۱۶۸.۱۱.۰/۲۴</code> روی بریج <code>br-direct</code>) اشتباه وارد زنجیرهٔ پروکسی پس‌وال می‌شد. علت: پس‌وال در حالت «پیش‌فرض = پروکسی»، بدون فیلتر رابطِ ورودی، کل ترافیک را می‌گرفت. راه‌حل، تزریق یک قانون <code>return</code> در ابتدای زنجیره‌های پس‌وال بود — از طریق override کردن فایل <code>/usr/share/passwall/nftables.sh</code>:</p>
+
+<pre><code>nft "insert rule $NFTABLE_NAME PSW_MANGLE ip saddr 192.168.11.0/24 counter return comment \"direct-bypass\""
+nft "insert rule $NFTABLE_NAME PSW_MANGLE_V6 iifname \"br-direct\" counter return comment \"direct-bypass\""
+nft "insert rule $NFTABLE_NAME PSW_NAT ip saddr 192.168.11.0/24 counter return comment \"direct-bypass\""
+nft "insert rule $NFTABLE_NAME PSW_DNS ip saddr 192.168.11.0/24 counter return comment \"direct-bypass\""</code></pre>
+
+<p>دقت کنید: چون شبکهٔ دایرکت IPv6 ندارد، خط ششم از تطبیق اشتباهِ «کل IPv6» به تطبیق بر اساس <strong>نام بریج</strong> (<code>iifname "br-direct"</code>) تغییر یافت تا واقعاً فقط ترافیک آن بریج از پروکسی خارج شود. با این پچ، دستگاه‌هایی که به «Google Router Direct» وصل می‌شوند مستقیم و بدون پروکسی بیرون می‌روند.</p>
+
+<h2>۳. مالتی‌WAN با mwan3 (failover + load balance)</h2>
+<p>بستهٔ <code>mwan3</code> سیاست‌محور عمل می‌کند: هر وصله را health-check می‌کند (با <code>track_ip</code>) و ترافیک را بر اساس سیاست مسیر می‌دهد. ما یک سیاست <code>balanced</code> ساختیم که هر ۴ وصله را با وزن مساوی می‌پذیرد — یعنی هم توزیع بار (load balance) و هم جایگزینی خودکار (failover).</p>
+
+<p>تنظیمات از طریق <code>/etc/uci-defaults/99-mwan</code> اعمال می‌شود:</p>
+
+<pre><code># وصله‌های WAN فرعی: DHCP از هر مودم/روتر مقصد
+for n in wan2 wan3 wan4; do
+  uci -q set network.$n='interface'
+  uci -q set network.$n.proto='dhcp'
+  uci -q set network.$n.peerdns='0'
+  uci -q set network.$n.metric='0'
+done
+
+# افزودن wan2/3/4 به زون wan در فایروال
+for i in $(seq 0 9); do
+  [ "$(uci -q get firewall.@zone[$i].name)" = "wan" ] && {
+    uci -q add_list firewall.@zone[$i].network='wan2'
+    uci -q add_list firewall.@zone[$i].network='wan3'
+    uci -q add_list firewall.@zone[$i].network='wan4'
+    break
+  }
+done
+
+# mwan3: اینترفیس‌ها + ترکینگ (فقط IPv4)
+for n in wan wan2 wan3 wan4; do
+  uci -q set mwan3.$n='interface'
+  uci -q set mwan3.$n.enabled='1'
+  uci -q add_list mwan3.$n.track_ip='8.8.8.8'
+  uci -q add_list mwan3.$n.track_ip='1.1.1.1'
+  uci -q set mwan3.$n.family='ipv4'
+  uci -q set mwan3.$n.interval='5'
+  uci -q set mwan3.$n.down='3'
+  uci -q set mwan3.$n.up='3'
+done
+
+# اعضا با وزن مساوی
+for n in wan wan2 wan3 wan4; do
+  uci -q set mwan3.${n}_m1_w1='member'
+  uci -q set mwan3.${n}_m1_w1.interface="$n"
+  uci -q set mwan3.${n}_m1_w1.metric='1'
+  uci -q set mwan3.${n}_m1_w1.weight='1'
+done
+
+# سیاست balanced + قانون پیش‌فرض
+uci -q set mwan3.balanced='policy'
+uci -q add_list mwan3.balanced.use_member='wan_m1_w1'
+uci -q add_list mwan3.balanced.use_member='wan2_m1_w1'
+uci -q add_list mwan3.balanced.use_member='wan3_m1_w1'
+uci -q add_list mwan3.balanced.use_member='wan4_m1_w1'
+uci -q set mwan3.default_rule='rule'
+uci -q set mwan3.default_rule.dest_ip='0.0.0.0/0'
+uci -q set mwan3.default_rule.use_policy='balanced'
+uci commit mwan3</code></pre>
+
+<p>وصله‌های بی‌سیم (STA) در <code>/etc/uci-defaults/99-wan-wifi</code> به‌صورت <strong>غیرفعال</strong> و با SSID/رمز پیش‌فرض تعریف می‌شوند؛ کاربر در پنل پرشان می‌کند و فعال‌شان می‌کند:</p>
+
+<pre><code>uci -q set wireless.wifinet_wan2='wifi-iface'
+uci -q set wireless.wifinet_wan2.device='radio0'      # 2.4GHz
+uci -q set wireless.wifinet_wan2.network='wan2'
+uci -q set wireless.wifinet_wan2.mode='sta'
+uci -q set wireless.wifinet_wan2.ssid='SET-WAN2-SSID'
+uci -q set wireless.wifinet_wan2.encryption='psk2'
+uci -q set wireless.wifinet_wan2.key='change-me-wan2'
+uci -q set wireless.wifinet_wan2.disabled='1'
+# wan3 -> radio1 (5GHz)، wan4 -> radio0 (یک رادیو دو VAP ستا می‌گیرد)</code></pre>
+
+<p>سناریوهای پیشنهادی: <strong>۱ کابل + ۲ وای‌فای</strong> ایده‌آل است (یکی روی ۲.۴GHz، یکی روی ۵GHz). اگر ۳ وای‌فای بخواهید، یک رادیو باید ۲ VAP ستا داشته باشد — روی Gale با ۲ رادیو شدنی است.</p>
+
+<div class="callout">
+<strong>نکتهٔ هم‌زیستی:</strong> پس‌وال (زنجیرهٔ <code>inet passwall</code>) و mwan3 (جدول <code>inet mwan3</code>) هر دو به prerouting وصله می‌شوند؛ در تست روی دستگاه تداخلی دیده نشد، اما چون mwan3 فعلاً IPv4 است، خروجی‌های IPv6 را جداگانه چک کنید.
+</div>
+
+<h2>۴. منوی Developer و رمز root خالی</h2>
+<p>یک آیتم منو به نام <strong>Developer</strong> زیر Network و پیش از Logout اضافه شد که صفحهٔ changelog (نسخه‌های ۸ تا ۱۳) را نشان می‌دهد، همراه با «برنامه‌نویسی: مهدی عسکری» و لینک <a href="https://mehdiaskari.ir">mehdiaskari.ir</a>. تعریف منو در <code>/usr/share/luci/menu.d/luci-app-dev.json</code> است:</p>
+
+<pre><code>{
+  "admin/dev": {
+    "title": "Developer",
+    "action": { "type": "view", "path": "dev/changelog" },
+    "order": 60
+  }
+}</code></pre>
+
+<p>همچنین رمز root در اولین بوت پاک می‌شود (<code>/etc/uci-defaults/99-root-empty</code> → <code>passwd -d root</code>) تا ورود به پنل و SSH بدون رمز باشد. پنل OpenWrt ۲۵.۱۲ هم صفحهٔ اجبارِ تغییر رمز در اولین ورود ندارد، پس این تنظیم پایدار می‌ماند.</p>
+
+<h2>۵. بیلد با ImageBuilder + داکر</h2>
+<p>بیلد روی ImageBuilder رسمی (فرمت <code>.tar.zst</code>) داخل یک کانتینر Alpine انجام شد. دو نکتهٔ فنی که در مسیر رخ داد:</p>
+<ul>
+  <li>mwan3 به صورت legacy به <code>iptables</code> وابسته است که چند فایل افزونه (<code>libxt_*.so</code>) را می‌خواهد؛ این فایل‌ها در rootfs به‌صورت «شبح» (ghosting) غیرقابل‌خواندن درمی‌آمدند و cp نهایی شکست می‌خورد. فایل‌های واقعی را از داخل بستهٔ <code>.apk</code> (با <code>apk extract --allow-untrusted</code>) استخراج و در overlay قرار دادم.</li>
+  <li>سپس در Makefile، پیش از کپیِ نهایی rootfs، این شبح‌ها حذف و نسخهٔ واقعی رونویسی شد تا تصویر به‌درستی بسته شود.</li>
+</ul>
+
+<h2>۶. نصب و بکاپ</h2>
+<p>روتر از طریق <code>sysupgrade</code> (با حفظ تنظیمات) آپدیت شد؛ چون آدرس LAN روی <code>۱۹۲.۱۶۸.۱۰.۱</code> ثابت است و پس از فلش، اسکریپت‌های mwan3/STA به‌صورت دستی اعمال شدند. همیشه پیش و پس از بیلد، sha256 ثبت می‌شود:</p>
+
+<pre><code># factory  (فلش از فریمور کارخانه / USB)
+b2a4353ab608c0f73b3c8d44b9d444e3053b5685bd6d0a1386d799a118523a2e
+# sysupgrade (آپدیت از روی OpenWrt موجود)
+42176e2b4d50f1e4315f7df76fd040f5e1086844fd79c59c3c603a162a14a8a6</code></pre>
+
+<p>چک: <code>shasum -a 256 -c sha256.txt</code></p>
+
+<h2>۷. چنج‌لاگ (v8 → v13)</h2>
+<table class="data">
+<thead><tr><th>نسخه</th><th>نکتهٔ کلیدی</th></tr></thead>
+<tbody>
+<tr><td>v8</td><td>وای‌فای دو‑بانده + netmon (مانیتورینگ)</td></tr>
+<tr><td>v9</td><td>مهاجرت از PassWall2 به PassWall1</td></tr>
+<tr><td>v10</td><td>تمام کلاینت‌های پروتکل (xray/sing-box/ss-rust/…)</td></tr>
+<tr><td>v11</td><td>ایران‌دایرکت با geoip:IR + geoview</td></tr>
+<tr><td>v12</td><td>ایران‌دایرکت با IP/دامنهٔ واقعی (۲۷۷۲ بازه + ۳۶۵ دامنه) و بلاک تبلیغات</td></tr>
+<tr><td>v13</td><td>مالتی‌WAN mwan3 (failover+load balance)، رفع باگ دایرکت، منوی Developer، رمز root خالی</td></tr>
+</tbody>
+</table>
+
+<blockquote>نتیجه: Gale با این فریمور، یک روتر چند‑WANِ کوچک و بی‌صدا می‌شود که ترافیک دایرکتش را بدون پروکسی عبور می‌دهد و پهنای باند چند اینترنت را ترکیب می‌کند.</blockquote>
+]]></content:encoded>
+    <category>OpenWrt</category>
+    <category>Google Wifi</category>
+    <category>PassWall</category>
+    <category>mwan3</category>
+    <category>شبکه</category>
   </item>
-    <item>
+  <item>
     <title>محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</title>
     <link>https://mehdiaskari.ir/blog/weight-factor-excel-msp/</link>
-    <guid>https://mehdiaskari.ir/blog/weight-factor-excel-msp/</guid>
-    <pubDate>Wed, 03 Sep 2026 00:00:00 +0330</pubDate>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/weight-factor-excel-msp/</guid>
+    <pubDate>Thu, 03 Sep 2026 00:00:00 +0330</pubDate>
     <description>وقتی فقط هزینه واقعی (C)، وزن (W) و ارزش/بودجه (V) را داریم، چطور ضریب وزن (W.F) و درصد پیشرفت وزنی کل پروژه را حساب کنیم — آموزش گام‌به‌گام در اکسل و Microsoft Project.</description>
+    <content:encoded><![CDATA[
+<p>در بسیاری از پروژه‌های صنعتی، برنامه‌ریز وزن (W) هر بسته کاری را می‌داند، بودجه یا ارزش (V) آن را در دست دارد و هزینه واقعی (C) را هم از سیستم مالی می‌گیرد — اما درصد پیشرفت فیزیکی (P) تک‌تک فعالیت‌ها را ندارد. سؤال کلاسیک کنترل‌کننده پروژه دقیقاً همین‌جاست: <strong>با همین سه عدد (C، W، V) چطور ضریب وزن (W.F) و در نهایت درصد پیشرفت وزنی کل پروژه را حساب کنیم؟</strong> این یادداشت یک پاسخ عملی می‌دهد — هم در اکسل و هم در Microsoft Project.</p>
+
+<div class="callout">
+<span class="callout-ic">→</span>
+<div><strong>همین روش را به‌صورت ابزار آنلاین دارید:</strong> <a href="https://mehdiaskari.ir/lab/weight-factor/">ماشین‌حساب ضریب وزن (W.F) و پیشرفت وزنی</a> — ساختار WBS را از اکسل بچسبانید تا W.F↑، وزن پروژهٔ هر گره و درصد پیشرفت وزنی را با اعتبارسنجی خودکار ببینید. خروجی CSV هم می‌دهد.</div>
+</div>
+
+<h2>تعریف مختصر متغیرها</h2>
+<ul>
+<li><strong>W (وزن)</strong>: وزن نسبی بسته کاری؛ مجموعش می‌تواند ۱۰۰ باشد یا هر عدد دیگری (مثلاً مجموع وزن‌ها = ۱۰۰۰).</li>
+<li><strong>V (ارزش / بودجه)</strong>: ارزش پولی یا بودجهٔ تکمیل بسته — معادل BAC (Budget at Completion) آن فعالیت.</li>
+<li><strong>C (هزینه واقعی)</strong>: آنچه تاکنون خرج شده — معادل AC (Actual Cost) یا ACWP.</li>
+<li><strong>W.F (ضریب وزن)</strong>: سهم نرمال‌شدهٔ هر فعالیت از کل پروژه. دو تعریف رایج دارد (در ادامه).</li>
+</ul>
+
+<h2>فرمول پایه</h2>
+
+<h3>۱) محاسبه ضریب وزن (W.F)</h3>
+<p>اگر وزن‌دهی بر مبنای اهمیت فعالیت‌هاست:</p>
+<pre dir="ltr" data-lang="FORMULA">W.F_i = W_i / ΣW</pre>
+<p>اگر ترجیح می‌دهید وزن را بر مبنای پول (ارزش) توزیع کنید — که در پروژه‌های نفت، گاز و پتروشیمی رایج‌تر است:</p>
+<pre dir="ltr" data-lang="FORMULA">W.F_i = V_i / ΣV</pre>
+<p>در هر دو حالت، مجموع تمام W.Fها باید دقیقاً <strong>۱</strong> (یا ۱۰۰٪) باشد؛ این خودش یک چک اعتبارسنجی ساده است.</p>
+
+<h3>۲) پیشرفت وزنی وقتی P (پیشرفت فیزیکی) داریم</h3>
+<pre dir="ltr" data-lang="FORMULA">Weighted Progress = Σ ( W.F_i × P_i ) × 100</pre>
+
+<h3>۳) وقتی فقط C داریم (سناریوی این پست)</h3>
+<p>وقتی درصد فیزیکی نداریم، از <strong>نسبت هزینه</strong> به عنوان برآورد پیشرفت استفاده می‌کنیم:</p>
+<pre dir="ltr" data-lang="FORMULA">Cost Ratio_i = C_i / V_i
+
+Weighted Progress ≈ Σ ( W.F_i × (C_i / V_i) ) × 100</pre>
+<p>یعنی هر فعالیت را به اندازهٔ «سهم هزینه‌ای‌اش از بودجه» پیش رفته فرض می‌کنیم، سپس با ضریب وزنش وزنی‌اش می‌کنیم.</p>
+
+<div class="callout">
+<strong>هشدار مهم:</strong> نسبت هزینه لزوماً برابر پیشرفت فیزیکی نیست. خرید تجهیزات (لاشهٔ پول پیش از کار فیزیکی)، تورم، و فعالیت‌هایی با رفتار غیرخطی (مثل راه‌اندازی) باعث انحراف می‌شوند. نسبت هزینه را «برآورد محافظه‌کارانه» بگیرید و با حداقل یک چک فیزیکی یا مایل‌استون ترکیب کنید.
+</div>
+
+<h2>مثال عددی</h2>
+<p>فرض کنید پروژه ۵ بسته کاری دارد:</p>
+<table class="data">
+<thead><tr><th>فعالیت</th><th>W</th><th>V (میلیون ریال)</th><th>C (هزینه تاکنون)</th><th>W.F = W/ΣW</th><th>نسبت هزینه C/V</th><th>سهم وزنی‌شده</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>20</td><td>200</td><td>80</td><td>0.20</td><td>0.40</td><td>0.080</td></tr>
+<tr><td>B</td><td>30</td><td>300</td><td>120</td><td>0.30</td><td>0.40</td><td>0.120</td></tr>
+<tr><td>C</td><td>15</td><td>150</td><td>60</td><td>0.15</td><td>0.40</td><td>0.060</td></tr>
+<tr><td>D</td><td>25</td><td>250</td><td>50</td><td>0.25</td><td>0.20</td><td>0.050</td></tr>
+<tr><td>E</td><td>10</td><td>100</td><td>100</td><td>0.10</td><td>1.00</td><td>0.100</td></tr>
+<tr><td><strong>جمع</strong></td><td><strong>100</strong></td><td><strong>1000</strong></td><td><strong>410</strong></td><td><strong>1.00</strong></td><td>—</td><td><strong>0.410</strong></td></tr>
+</tbody>
+</table>
+<p>پیشرفت وزنی تخمینی پروژه: <strong>0.410 × 100 = ۴۱٪</strong>. نکتهٔ آموزنده در فعالیت D پیداست: فقط ۲۰٪ بودجه‌اش خرج شده (عقب‌تر از بقیه) و فعالیت E کاملاً تمام شده — دقیقاً همان چیزی که یک عدد واحد «میانگین هزینه کل» (۴۱٪) پنهان می‌کرد ولی وزن‌دهی آن را شفاف نشان داد.</p>
+
+<h2>روش سلسله‌مراتبی: وزن نسبت به سطح بالادستی (WBS)</h2>
+<p>در پروژه‌های واقعی، وزن‌دهی تخت (همه فعالیت‌ها نسبت به کل پروژه) خوانایی کمی دارد و با ساختار WBS همخوانی ندارد. روش حرفه‌ای این است که وزن هر گره را <strong>نسبت به سطح بالادستی خودش (والد)</strong> تعریف کنیم — یعنی مجموع وزن فرزندان هر گره دقیقاً ۱۰۰٪ از آن والد باشد.</p>
+<p>این دقیقاً همان چیزی است که مد نظر شماست: <em>اگر وزن نسبت‌به‌کل‌پروژه (همان «ارزش وزنی پروژه») و قیمت/ارزش (V) را داشته باشیم</em>، وزن نسبت‌به‌والد را از این دو به‌دست می‌آوریم:</p>
+<pre dir="ltr" data-lang="FORMULA">W.F↑_i  =  V_i / V_parent
+
+' یا معادلش — اگر وزن پروژهٔ خودِ گره و والد را داشته باشید:
+W.F↑_i  =  W.F_proj(i) / W.F_proj(parent)
+
+' و وزن پروژهٔ نهاییِ گره = حاصل‌ضرب وزن‌های نسبت‌به‌والد در مسیر تا ریشه:
+W.F_proj(node)  =  W.F↑_node × W.F↑_parent × … × W.F↑_root</pre>
+<p>مثلاً اگر وزن پروژهٔ بسته الف را دارید (۰٫۱۸) و وزن پروژهٔ والدش — مثلاً «اجرا» (۰٫۶۰) — را هم دارید، وزن نسبت‌به‌والد = ۰٫۱۸ ⁄ ۰٫۶۰ = <strong>۰٫۳۰</strong> خواهد بود؛ بدون اینکه نیازی به جمع‌کردن کل پروژه باشد. اگر به‌جای وزن پروژه، فقط قیمت (V) را دارید، همان رابطهٔ اول کافی است: ۰٫۳۰ = ۳۰۰ ⁄ ۱۰۰۰.</p>
+
+<h3>مثال دوسطحی</h3>
+<p>فرض کنید پروژه دو WBS بالا دارد: «مهندسی» (وزن پروژه ۰٫۴۰) و «اجرا» (وزن پروژه ۰٫۶۰). زیر «اجرا» سه بسته با قیمت‌های زیر قرار دارد:</p>
+<table class="data">
+<thead><tr><th>بسته</th><th>والد</th><th>V (میلیون)</th><th>W.F↑ (نسبت به والد)</th><th>وزن پروژه</th></tr></thead>
+<tbody>
+<tr><td>الف</td><td>اجرا</td><td>300</td><td>300/1000 = 0.30</td><td>0.60 × 0.30 = 0.18</td></tr>
+<tr><td>ب</td><td>اجرا</td><td>200</td><td>200/1000 = 0.20</td><td>0.60 × 0.20 = 0.12</td></tr>
+<tr><td>ج</td><td>اجرا</td><td>500</td><td>500/1000 = 0.50</td><td>0.60 × 0.50 = 0.30</td></tr>
+<tr><td><strong>جمع زیر اجرا</strong></td><td>اجرا</td><td><strong>1000</strong></td><td><strong>1.00</strong></td><td><strong>0.60</strong></td></tr>
+</tbody>
+</table>
+<p>توجه کنید: زیر «اجرا» جمع W.F↑ها دقیقاً <strong>۱</strong> است (یعنی ۱۰۰٪ والد)، و جمع وزن پروژهٔ فرزندان (۰٫۱۸ + ۰٫۱۲ + ۰٫۳۰ = ۰٫۶۰) دقیقاً برابر وزن پروژهٔ خودِ «اجرا» می‌شود. این خاصیت در هر سطح تکرار می‌شود و چک‌کردن را ساده می‌کند — کافی است در هر گره مجموع فرزندانش ۱ باشد.</p>
+
+<h2>پیاده‌سازی در اکسل</h2>
+<p>جدول را به این شکل بچینید (سرستون‌ها در سطر ۱، داده‌ها در سطرهای ۲ تا ۶):</p>
+<table class="data">
+<thead><tr><th>ستون</th><th>محتوا</th></tr></thead>
+<tbody>
+<tr><td>A</td><td>نام فعالیت</td></tr>
+<tr><td>B</td><td>W (وزن)</td></tr>
+<tr><td>C</td><td>V (ارزش/بودجه)</td></tr>
+<tr><td>D</td><td>C (هزینه واقعی)</td></tr>
+<tr><td>E</td><td>W.F (ضریب وزن)</td></tr>
+<tr><td>F</td><td>نسبت هزینه</td></tr>
+<tr><td>G</td><td>سهم وزنی‌شده</td></tr>
+</tbody>
+</table>
+<p>فرمول‌ها (برای سطر ۲، سپس کشیدن به پایین):</p>
+<pre dir="ltr" data-lang="EXCEL">E2: = B2 / SUM($B$2:$B$6)
+F2: = D2 / C2
+G2: = E2 * F2
+
+' درصد پیشرفت وزنی کل (مثلاً در G7):
+G7: = SUM(G2:G6) * 100
+
+' نسخه مبتنی بر ارزش (اگر وزن‌دهی بر مبنای پول باشد):
+E2: = C2 / SUM($C$2:$C$6)</pre>
+<p>نکته: علامت <code>$</code> دور محدودهٔ <code>SUM</code> ضروری است تا وقتی فرمول را به پایین می‌کشید، مخرج همیشه کل ستون باقی بماند. ستون G را روی «درصد» فرمت کنید تا عدد نهایی خواناتر شود.</p>
+
+<h3>نسخه والد‌نسبت (در اکسل)</h3>
+<p>یک ستون «والد» (متن) اضافه کنید. وزن نسبت‌به‌والد را با <code>SUMIF</code> می‌گیریم — یعنی قیمت گره تقسیم‌بر مجموع قیمت همه فرزندان همان والد:</p>
+<pre dir="ltr" data-lang="EXCEL">H2 (والد): متن، مثلاً "اجرا"
+I2 (W.F نسبت‌به‌والد): = C2 / SUMIF($H$2:$H$6, H2, $C$2:$C$6)
+J2 (وزن پروژه):        = I2 * (وزن پروژهٔ والد از جدول سطح بالا)
+
+' چک: جمع I برای هر والد باید ۱ باشد
+= SUMIF($H$2:$H$6, "اجرا", $I$2:$I$6)</pre>
+<p>اگر وزن پروژهٔ والد را از قبل دارید (همان «ارزش وزنی پروژه»)، نیازی به جمع کل پروژه نیست؛ فقط در امتداد مسیر WBS ضرب کنید.</p>
+
+<h2>پیاده‌سازی در Microsoft Project (MSP)</h2>
+<p>MSP به‌تنهایی عددی به نام «W.F» ندارد، اما با <strong>فیلدهای سفارشی (Custom Fields)</strong> و <strong>Rollup</strong> می‌توانید دقیقاً همین محاسبه را درون خود برنامه داشته باشید و در گزارش‌ها بیاورید.</p>
+
+<h3>گام ۱ — فیلدهای پایه</h3>
+<ul>
+<li><strong>Number1 = W (وزن)</strong>: برای هر فعالیت برگ (leaf) مقدار وزن را وارد کنید.</li>
+<li><strong>Number2 = V (ارزش/بودجه)</strong>: می‌توانید همان «Baseline Cost» را بگیرید (بعد از تعریف Baseline) یا دستی وارد کنید.</li>
+<li><strong>هزینه واقعی</strong>: از فیلد داخلی <code>ACWP</code> (هزینه واقعی کار انجام‌شده) استفاده کنید — بعد از ثبت متریال و کار واقعی پر می‌شود.</li>
+</ul>
+
+<h3>گام ۲ — جمع‌کردن وزن در سطح پروژه (Rollup)</h3>
+<p>روی فیلد <strong>Number1</strong> کلیک راست → <em>Custom Fields</em> → بخش <em>Calculation for summary rows</em> را روی <strong>Sum</strong> بگذارید. حالا Task خلاصهٔ پروژه (Project Summary) مقدار ΣW را نشان می‌دهد.</p>
+
+<h3>گام ۳ — فرمول ضریب وزن (W.F)</h3>
+<p>یک فیلد فرمولی جدید (مثلاً <strong>Number3</strong>) با این فرمول تعریف کنید:</p>
+<pre dir="ltr" data-lang="MS PROJECT">Number3 (W.F) =
+[Number1] / [Rollup of Number1 at project summary]</pre>
+<p>عملی‌ترین راه: چون MSP در فرمول به‌سختی «مجموع کل» را مستقیم می‌دهد، مقدار Number1 را در Task خلاصهٔ پروژه (که حاصل Rollup است) به عنوان مخرج به کار ببرید. نتیجه برای هر فعالیت همان W.F_i می‌شود.</p>
+
+<h3>گام ۴ — نسبت هزینه و سهم وزنی‌شده</h3>
+<p>دو فیلد فرمولی دیگر اضافه کنید:</p>
+<pre dir="ltr" data-lang="MS PROJECT">Number4 (Progress Proxy) =
+[ACWP] / [Baseline Cost]
+
+Number5 (Weighted) =
+[Number1] * [Number4] / 100</pre>
+<p>فیلد <strong>Number5</strong> را هم روی <strong>Sum</strong> (Rollup) تنظیم کنید تا در سطح خلاصه جمع شود.</p>
+
+<h3>گام ۵ — درصد پیشرفت وزنی کل</h3>
+<p>در Task خلاصهٔ پروژه:</p>
+<pre dir="ltr" data-lang="MS PROJECT">Weighted Progress % =
+(Sum of Number5) / (Sum of Number1) * 100</pre>
+<p>این عدد را می‌توانید مستقیماً در نوار وضعیت، نمودارها یا گزارش‌های MSP نمایش دهید — بدون نیاز به خروجی به اکسل.</p>
+
+<h3>والد‌نسبت در MSP</h3>
+<p>چون MSP ساختار WBS را می‌شناسد، والد هر فعالیت همان Task خلاصهٔ بالادستی است. کافی است فیلد ارزش (Number2) را روی <strong>Sum</strong> (Rollup) تنظیم کنید تا در سطح خلاصهٔ والد جمع شود، سپس فرمول والد‌نسبت را بنویسید:</p>
+<pre dir="ltr" data-lang="MS PROJECT">Number6 (W.F relative to parent) =
+[Number2] / [Rollup of Number2 at parent summary]</pre>
+<p>وزن پروژهٔ هر گره را با ضرب در امتداد مسیر WBS (همان‌طور که در فرمول بالا آمد) به‌دست آورید. مزیت این روش: وقتی ساختار WBS تغییر می‌کند یا بسته‌ای جابجا می‌شود، وزن نسبت‌به‌والد ثابت می‌ماند و فقط جمع‌های سطح بالاتر تصحیح می‌شوند.</p>
+
+<h2>نکات حرفه‌ای</h2>
+<ul>
+<li><strong>چک ΣW.F = ۱ (در هر سطح):</strong> در روش تخت، جمع کل W.Fها باید ۱ باشد؛ در روش سلسله‌مراتبی، مجموع W.F↑ فرزندانِ <em>هر</em> گره باید ۱ باشد. اگر نشد، مخرج فرمول اشتباه کشیده شده است.</li>
+<li><strong>Procurement را جدا ببینید:</strong> فعالیت‌های خرید تجهیزات معمولاً پول‌شان زود خرج می‌شود ولی فیزیکی دیر؛ نسبت هزینه در آن‌ها کمتر قابل اعتماد است.</li>
+<li><strong>ترکیب با روش ۰-۵۰-۱۰۰ یا مایل‌استون:</strong> برای بسته‌های حساس، وزن را با یک درصد فیزیکیِ حداقلی ترکیب کنید تا خطای نسبت هزینه کم شود.</li>
+<li><strong>تورم:</strong> ارزش (V) را به قیمت روز نگه دارید؛ در پروژه‌های چندساله، V با سال پایهٔ ثابت باعث اشتباه در نسبت می‌شود.</li>
+</ul>
+
+<h2>جمع‌بندی</h2>
+<p>وقتی فقط هزینه (C)، وزن (W) و ارزش (V) دارید، <strong data-tip="Weight Factor = ضریب وزن: سهم نرمال‌شدهٔ هر فعالیت از کل پروژه">ضریب وزن (W.F)</strong> پل میان «پولی که خرج شده» و «کار واقعی» است. فرمول ساده است: ابتدا W.F را با تقسیم بر مجموع وزن‌ها نرمال کنید، سپس با نسبت هزینه (C/V) ضرب کنید و در نهایت جمع بگیرید. در <strong>اکسل</strong> این سه فرمول در چند ثانیه حاضر است و در <strong>MS Project</strong> با فیلدهای سفارشی و Rollup، همین عدد به‌صورت زنده و یکپارچه با برنامه به‌روز می‌ماند. نتیجه یک پیشرفت وزنیِ دفاع‌پذیر است که هم برای گزارش به مدیریت کافی است و هم خطاهای پنهان در میانگین سادهٔ هزینه را آشکار می‌کند.</p>
+
+<h2>مقایسهٔ سریع: اکسل در برابر MSP</h2>
+<p>هر دو روش همان خروجی را می‌دهند؛ انتخاب بستگی به این دارد که داده‌ها و وزن‌ها را کجا نگه می‌دارید. روی زبانهٔ مورد نظر کلیک کنید:</p>
+<div class="tabs">
+  <div class="tab-list" role="tablist">
+    <button class="tab" data-tab="excel" aria-selected="true">اکسل</button>
+    <button class="tab" data-tab="msp">MS Project</button>
+  </div>
+  <h3>اکسل</h3>
+<p>وزن نسبت‌به‌والد با <code>SUMIF</code>:</p>
+    <pre dir="ltr" data-lang="EXCEL">I2 (W.F نسبت‌به‌والد) = C2 / SUMIF($H$2:$H$6, H2, $C$2:$C$6)
+J2 (وزن پروژه)        = I2 * (وزن پروژهٔ والد)</pre>
+    <p>پیشرفت وزنی کل (در G۷): <code>=SUM(G2:G6)*100</code></p>
+
+  <h3>MS Project</h3>
+<p>فیلد فرمولی والد‌نسبت (بعد از Rollup روی فیلد ارزش):</p>
+    <pre dir="ltr" data-lang="MS PROJECT">Number6 (W.F relative to parent) =
+[Number2] / [Rollup of Number2 at parent summary]
+
+Weighted Progress % =
+(Sum of Number5) / (Sum of Number1) * 100</pre>
+    <p>مزیت MSP: وقتی ساختار WBS جابجا شود، وزن نسبت‌به‌والد ثابت می‌ماند.</p>
+
+</div>
+
+<p style="margin-top:6px"><button class="btn primary" data-dialog="dlg-formulas">مشاهدهٔ یک‌جای تمام فرمول‌ها</button></p>
+
+<h2>سوالات متداول</h2>
+<div class="accordion" data-single>
+  <div class="acc-item">
+    <button class="acc-head">تفاوت W.F وزنی و W.F ارزشی چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div>در روش وزنی، W.F = W_i / ΣW و در روش ارزشی، W.F = V_i / ΣV. هر دو نرمال‌اند (جمعشان ۱)؛ تفاوت در این است که وزن‌دهی را بر چه اساسی توزیع می‌کنید. در پروژه‌های صنعتی معمولاً روش ارزشی (بر مبنای پول) طبیعی‌تر است.</div>
+  </div>
+  <div class="acc-item">
+    <button class="acc-head">چرا نسبت هزینه همیشه با پیشرفت فیزیکی یکی نیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div>خرید تجهیزات پول را زود خرج می‌کند ولی کار فیزیکی دیر انجام می‌شود؛ تورم و فعالیت‌های غیرخطی (مثل راه‌اندازی) هم منحرف‌کننده‌اند. نسبت هزینه را «برآورد محافظه‌کارانه» بگیرید و با یک چک فیزیکی ترکیب کنید.</div>
+  </div>
+  <div class="acc-item">
+    <button class="acc-head">والد‌نسبت چه فرقی با وزن کل‌پروژه دارد؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div>وزن کل‌پروژه سهم گره را از کل پروژه می‌دهد؛ والد‌نسبت سهمش را از والدِ بلافصل. رابطه: W.F↑ = W.F_پروژه(گره) / W.F_پروژه(والد). والد‌نسبت در هر سطح جمعش ۱ می‌شود و وقتی WBS تغییر می‌کند، ثابت می‌ماند.</div>
+  </div>
+  <div class="acc-item">
+    <button class="acc-head">آیا MSP خودش W.F را حساب می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <div>نه به‌طور مستقیم؛ MSP فیلد «W.F» ندارد. اما با فیلدهای سفارشی (Custom Fields) و Rollup دقیقاً همین محاسبه را درون خود برنامه زنده نگه می‌دارد — همان‌طور که در بخش MSP توضیح داده شد.</div>
+  </div>
+</div>
+
+<button class="dialog-close" aria-label="بستن"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+    <h3>فرمول‌های یک‌جا</h3>
+    <div class="prose-compact">
+      <p>ضریب وزن (تخت):</p>
+      <pre dir="ltr" data-lang="FORMULA">W.F_i = W_i / ΣW   (یا  V_i / ΣV)</pre>
+      <p>والد‌نسبت (سلسله‌مراتبی):</p>
+      <pre dir="ltr" data-lang="FORMULA">W.F↑_i = V_i / V_parent
+W.F↑_i = W.F_proj(i) / W.F_proj(parent)</pre>
+      <p>پیشرفت وزنی (وقتی فقط هزینه داریم):</p>
+      <pre dir="ltr" data-lang="FORMULA">Weighted Progress ≈ Σ ( W.F_i × (C_i / V_i) ) × 100</pre>
+    </div>
+]]></content:encoded>
+    <category>Excel</category>
+    <category>MS Project</category>
+    <category>کنترل پروژه</category>
+    <category>پیشرفت وزنی</category>
   </item>
-    <item>
+  <item>
     <title>اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه</title>
     <link>https://mehdiaskari.ir/blog/p6-power-bi-dashboard/</link>
-    <guid>https://mehdiaskari.ir/blog/p6-power-bi-dashboard/</guid>
-    <pubDate>Wed, 03 Sep 2026 00:00:00 +0330</pubDate>
-    <description>راهنمای گام‌به‌گام استخراج داده از P6 و ساخت داشبورد کنترل پروژه در Power BI.</description>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/p6-power-bi-dashboard/</guid>
+    <pubDate>Thu, 03 Sep 2026 00:00:00 +0330</pubDate>
+    <description>راهنمای گام‌به‌گام استخراج داده از P6، وارد کردن به Power BI، مدل داده، شاخص‌های EVM (SPI، CPI، SV، CV، EAC) و طراحی داشبورد کنترل پروژه — با مثال واقعی از پروژه‌های نفت، گاز، پتروشیمی و نیروگاه.</description>
+    <content:encoded><![CDATA[
+<p>در پروژه‌های صنعتی، داده در Primavera P6 زندگی می‌کند، اما تصمیم‌ها در جلسات گرفته می‌شود. فاصله میان این دو — یعنی نبودِ نمای قابل‌فهم از وضعیت پروژه در لحظه — یکی از ریشه‌های اصلی تأخیر و افزایش هزینه است. این مقاله یک راهنمای عملی است برای پل زدن روی این فاصله: از خروجی گرفتن از P6 تا یک داشبورد تعاملی در Power BI که شاخص‌های کلیدی را در اختیار مدیریت پروژه می‌گذارد.</p>
+
+<h2>چرا Power BI برای کنترل پروژه؟</h2>
+<p>P6 ابزار قدرتمندی در برنامه‌ریزی و زمان‌بندی است، اما در گزارش‌دهی انعطاف‌پذیر نیست. Power BI با اتصال به منابع داده مختلف، محاسبه شاخص‌ها با DAX و مصورسازی تعاملی، این خلأ را پر می‌کند. ترکیب این دو یعنی دقت داده P6 به‌علاوه قدرت بصری Power BI.</p>
+<p>در پروژه‌های نفت، گاز، پتروشیمی و نیروگاه که تعداد فعالیت‌ها به ده‌ها هزار می‌رسد و ذینفعان متعدد گزارش‌های متفاوتی می‌خواهند، یک داشبورد مرکزی می‌تواند پاسخگوی همه باشد: از مدیر پروژه که شاخص‌های SPI و CPI را می‌خواهد تا ناظر که منحنی S فیزیکی را دنبال می‌کند.</p>
+
+<h2>گام ۱: خروجی گرفتن از Primavera P6</h2>
+
+<h3>روش سریع: خروجی CSV</h3>
+<p>ساده‌ترین راه برای شروع، خروجی اکسل/CSV از نمای فعالیت‌ها با ستون‌های زیر است:</p>
+<ul>
+<li>Activity ID، Activity Name و WBS</li>
+<li>Original Duration، Remaining Duration، Actual Duration</li>
+<li>Planned Start، Planned Finish، Actual Start، Actual Finish</li>
+<li>Percent Complete فیزیکی و زمانی</li>
+<li>Budgeted Total Units یا Budgeted Total Cost</li>
+<li>Earned Value و Actual Cost (در صورت وجود داده هزینه)</li>
+<li>Total Float و Free Float</li>
+</ul>
+<p>برای خروجی: در P6 به بخش فعالیت‌ها بروید، ستون‌های مورد نظر را اضافه کنید، سپس File → Export → Export to Excel/CSV. مزیت این روش سادگی و سرعت است؛ عیب آن نیاز به تکرار دستی در هر به‌روزرسانی.</p>
+
+<h3>روش حرفه‌ای: خروجی XER</h3>
+<p>فایل XER یک فایل متنی با ساختار جدولی است که همه جداول P6 را در بر دارد: TASK، TASKPRED، PROJWBS، PROJECT، CALENDAR و غیره. برای خروجی: File → Export → Primavera XER و انتخاب پروژه جاری.</p>
+<p>ساختار XER ساده است و برنامه به‌راحتی می‌تواند آن را بخواند، خط‌به‌خط جدا کند و هر تکه را در جای خودش بگذارد:</p>
+<pre dir="ltr" data-lang="XER FILE">%T
+TABLE_NAME
+%F
+FIELD1\tFIELD2\tFIELD3
+%R
+VALUE1\tVALUE2\tVALUE3
+%R
+...</pre>
+<p>هر بخش %T یک جدول جدید را شروع می‌کند، %F هدر ستون‌ها را مشخص می‌کند و %R ردیف‌های داده هستند. این ساختار در Power Query به‌راحتی خوانده می‌شود.</p>
+
+<h2>گام ۲: وارد کردن به Power BI</h2>
+
+<h3>وارد کردن CSV</h3>
+<p>ساده است: Power BI → Get Data → Text/CSV → انتخاب فایل → Transform Data. در Power Query ستون‌های تاریخ را به نوع Date تبدیل کنید و مطمئن شوید مقادیر عددی (Duration، Percent Complete) درست پارس شده‌اند.</p>
+
+<h3>وارد کردن XER</h3>
+<ol>
+<li>Get Data → Blank Query → Advanced Editor</li>
+<li>کدی بنویسید که فایل را به‌صورت متن بخواند، بر اساس خطوط %T جدا کند و برای هر جدول، هدر و ردیف‌ها را استخراج کند.</li>
+</ol>
+<p>یک تابع نمونه در M برای خواندن XER:</p>
+<pre dir="ltr" data-lang="POWER QUERY (M)">(filePath as text) as table =>
+let
+    Source = Lines.FromBinary(File.Contents(filePath)),
+    Table1 = Table.FromList(Source, Splitter.SplitByNothing()),
+    // صرفاً شروع: فیلتر خطوط کنترل (%T / %F / %R)
+    Filtered = Table.SelectRows(Table1, each
+        Text.StartsWith([Column1], "%T") or
+        Text.StartsWith([Column1], "%F") or
+        Text.StartsWith([Column1], "%R"))
+in
+    Filtered</pre>
+<p>در عمل این تابع را گسترش می‌دهید تا هر جدول (TASK، PROJWBS، CALENDAR، TASKPRED) به‌صورت یک Query جداگانه دربیاید. چند نمونه پیاده‌سازی کامل XER Parser در وب موجود است که می‌توانید پایه قرار دهید.</p>
+
+<h2>گام ۳: مدل داده و روابط</h2>
+<p>بعد از وارد کردن جداول، روابط را برقرار کنید. مدل پیشنهادی:</p>
+<ul>
+<li><strong>TASK</strong>: جدول اصلی فعالیت‌ها با کلید Activity ID</li>
+<li><strong>PROJWBS</strong>: ساختار WBS متصل به TASK از طریق کد WBS</li>
+<li><strong>CALENDAR</strong>: تقویم‌های پروژه</li>
+<li><strong>Date Dimension</strong>: جدول تاریخ جداگانه برای تحلیل زمانی</li>
+</ul>
+<p>روابط کلیدی:</p>
+<ul>
+<li>TASK.WBS_ID ← PROJWBS.WBS_ID</li>
+<li>TASK.calendar_id ← CALENDAR.calendar_id</li>
+<li>TASK.Planned Start / Actual Start → Date Dimension (به‌عنوان رابطه غیرفعال یا از طریق جدول Fact)</li>
+</ul>
+<p>برای منحنی S و تحلیل روند، بهتر است یک جدول Fact Progress داشته باشید که به‌ازای هر فعالیت و هر دوره (هفته/ماه) یک ردیف دارد. در نسخه ساده، مقادیر Current و Plan را مستقیم از جدول TASK می‌خوانید.</p>
+
+<h2>گام ۴: شاخص‌ها و اندازه‌ها با DAX</h2>
+<p>فرض کنید جدولی به نام Task دارید با ستون‌های PlannedUnits، EarnedUnits، ActualUnits، PlannedCost، EarnedCost، ActualCost، DurationDays و PercentComplete.</p>
+
+<h3>شاخص‌های پایه</h3>
+<pre dir="ltr" data-lang="DAX">// انحراف زمان (SV) به واحد ساعت یا هزینه
+Schedule Variance = SUM(Task[EarnedUnits]) - SUM(Task[PlannedUnits])
+
+// انحراف هزینه (CV)
+Cost Variance = SUM(Task[EarnedCost]) - SUM(Task[ActualCost])
+
+// درصد پیشرفت فیزیکی کل
+Physical % = DIVIDE(SUM(Task[EarnedUnits]), SUM(Task[PlannedUnits]))</pre>
+
+<h3>SPI و CPI</h3>
+<pre dir="ltr" data-lang="DAX">// شاخص عملکرد زمان
+SPI = DIVIDE(SUM(Task[EarnedUnits]), SUM(Task[PlannedUnits]))
+
+// شاخص عملکرد هزینه
+CPI = DIVIDE(SUM(Task[EarnedCost]), SUM(Task[ActualCost]))</pre>
+
+<h3>برآورد تا پایان و شاخص تکمیل</h3>
+<pre dir="ltr" data-lang="DAX">// برآورد هزینه نهایی (EAC) — ساده شده
+EAC = SUM(Task[PlannedCost]) / DIVIDE(SUM(Task[EarnedCost]), SUM(Task[ActualCost]))
+
+// شاخص عملکرد لازم برای تکمیل در بودجه (TCPI)
+TCPI = DIVIDE(SUM(Task[PlannedCost]) - SUM(Task[EarnedCost]),
+              SUM(Task[PlannedCost]) - SUM(Task[ActualCost]))</pre>
+
+<h3>فعالیت‌های بحرانی و Look-ahead</h3>
+<pre dir="ltr" data-lang="DAX">// تعداد فعالیت‌های بحرانی (شناور صفر یا منفی)
+Critical Count = CALCULATE(COUNTROWS(Task), Task[TotalFloat] <= 0)
+
+// فعالیت‌های در شرف شروع — سه هفته پیش رو
+Lookahead Count =
+CALCULATE(COUNTROWS(Task),
+    Task[PlannedStart] >= TODAY() && Task[PlannedStart] <= TODAY() + 21)</pre>
+
+<h3>منحنی S (مقادیر تجمعی)</h3>
+<pre dir="ltr" data-lang="DAX">// تجمع برنامه‌ای
+Cumul Planned =
+CALCULATE(SUM(Task[PlannedUnits]),
+    FILTER(ALL(Task[PlannedFinish]), Task[PlannedFinish] <= MAX(DateDim[Date])))
+
+// تجمع ارزش کسب‌شده
+Cumul Earned =
+CALCULATE(SUM(Task[EarnedUnits]),
+    FILTER(ALL(Task[DataDate]), Task[DataDate] <= MAX(DateDim[Date])))</pre>
+
+<h2>گام ۵: طراحی داشبورد</h2>
+<p>داشبورد کنترل پروژه باید در یک یا حداکثر دو صفحه جا شود و سه سطح اطلاعات را نشان دهد:</p>
+
+<h3>سطح ۱ — KPIهای کلان (ردیف بالا)</h3>
+<ul>
+<li><strong>SPI و CPI</strong>: عدد رنگی (سبز بالای ۱، زرد برابر ۱، قرمز زیر ۱)</li>
+<li><strong>SV و CV</strong>: انحراف به واحد یا درصد</li>
+<li><strong>EAC</strong>: پیش‌بینی هزینه نهایی</li>
+<li><strong>تعداد فعالیت‌های بحرانی</strong> و <strong>درصد پیشرفت فیزیکی کل</strong></li>
+</ul>
+
+<h3>سطح ۲ — روندها و توزیع (ردیف وسط)</h3>
+<ul>
+<li><strong>منحنی S</strong>: سه خط Planned، Earned و Actual</li>
+<li><strong>روند SPI/CPI</strong>: تغییر هفتگی یا ماهانه شاخص‌ها</li>
+<li><strong>توزیع WBS</strong>: درصد پیشرفت به‌ازای هر سطح ۲ WBS (نمودار میل‌ای)</li>
+<li><strong>نقشه فعالیت‌های حساس</strong>: نمودار پراکندگی Float در برابر Percent Complete</li>
+</ul>
+
+<h3>سطح ۳ — جزئیات (ردیف پایین)</h3>
+<ul>
+<li><strong>جدول فعالیت‌های بحرانی</strong>: Activity ID، نام، شناور، درصد تکمیل، تاریخ‌های آغاز و پایان</li>
+<li><strong>فیلترهای چندبعدی</strong>: WBS، تقویم، محدوده تاریخ، وضعیت فعالیت</li>
+</ul>
+
+<h2>نکات حرفه‌ای و خطاهای رایج</h2>
+
+<h3>اعتبارسنجی داده</h3>
+<p>اولین قانون داشبورد کنترل پروژه: داده کثیف، داشبورد را گمراه‌کننده می‌کند. یک اندازه اعتبارسنجی بسازید که باید صفر باشد:</p>
+<pre dir="ltr" data-lang="DAX">Data Valid = COUNTROWS(FILTER(Task, Task[PlannedStart] < DATE(2020, 1, 1)))</pre>
+
+<h3>تفاوت تقویم</h3>
+<p>P6 مدت فعالیت را بر حسب روز کاری ذخیره می‌کند، نه روز تقویمی. قبل از محاسبه منحنی S و روندها، تاریخ‌ها را با تقویم P6 هماهنگ کنید، وگرنه اعداد دقیق نخواهند بود.</p>
+
+<h3>Baseline و Data Date</h3>
+<p>قبل از خروجی مطمئن شوید Baseline پیش‌فرض پروژه فعال و Data Date (تاریخ وضعیت) درست تنظیم شده است. برای داشبورد حرفه‌ای، مقادیر Baseline و Current را با هم خروجی بگیرید تا مقایسه «برنامه مصوب در برابر واقع اجرا» ممکن شود.</p>
+
+<h3>تازه‌سازی داده</h3>
+<p>سه رویکرد برای به‌روزرسانی:</p>
+<ol>
+<li><strong>دستی (خروجی مجدد CSV)</strong> — ساده، برای شروع</li>
+<li><strong>اتصال به پایگاه داده P6</strong> — از طریق ODBC در Power Query، در صورت اجازه DBA</li>
+<li><strong>P6 Web Services / EPPM</strong> — حرفه‌ای‌ترین مسیر، با Refresh زمان‌بندی‌شده</li>
+</ol>
+<p>در پروژه‌های صنعتی، رویکرد ترکیبی رایج است: خروجی هفتگی XER توسط برنامه‌ریز، قرار گرفتن در مسیر مشخص شبکه، و تازه‌سازی شبانه Power BI از همان مسیر.</p>
+
+<h3>فعالیت‌های باز و بدون پایان</h3>
+<p>فعالیت‌هایی که Actual Finish ندارند (در حال اجرا) باید جداگانه رسیدگی شوند؛ پیشرفت آنها به Data Date وابسته است، نه به تاریخ امروز.</p>
+
+<h2>اتوماسیون تازه‌سازی</h2>
+<p>برای تازه‌سازی خودکار، یک اسکریپت ساده می‌تواند فایل XER تازه را در مسیر ورودی Power BI کپی کند و Refresh زمان‌بندی‌شده آن را بخواند:</p>
+<pre dir="ltr" data-lang="POWERSHELL"># PowerShell — کپی XER تازه به مسیر ورودی داشبورد
+$source = "\\p6-server\exports\ProjectExport.xer"
+$dest   = "C:\PowerBI\ProjectData.xer"
+Copy-Item -Path $source -Destination $dest -Force
+Write-Output "XER refreshed: $(Get-Date)"</pre>
+<p>بهتر است این کار از طریق Windows Task Scheduler و با حساب کاربری با حداقل دسترسی انجام شود.</p>
+
+<h2>جمع‌بندی</h2>
+<p>اتصال P6 به Power BI یک کار یک‌باره نیست؛ یک فرآیند است. با هر به‌روزرسانی P6، Data Date عوض می‌شود و داشبورد باید وضعیت جدید را منعکس کند. سه اصل موفقیت:</p>
+<ol>
+<li><strong>اعتبار داده</strong> — بدون داده دقیق P6، داشبورد نه تنها بی‌فایده که گمراه‌کننده است</li>
+<li><strong>سادگی بصری</strong> — یک صفحه که با یک نگاه وضعیت پروژه را بگوید</li>
+<li><strong>تکرارپذیری</strong> — فرآیند تازه‌سازی ساده و قابل اعتماد</li>
+</ol>
+<p>با پیاده‌سازی همین مراحل، از یک برنامه‌ریز با یک نرم‌افزار به یک کنترل‌کننده پروژه با «دیده‌بان داده» تبدیل می‌شوید — همان تفاوتی که در پروژه‌های نفت، گاز، پتروشیمی و نیروگاه نتیجه را می‌سازد.</p>
+]]></content:encoded>
+    <category>Power BI</category>
+    <category>Primavera P6</category>
+    <category>کنترل پروژه</category>
+    <category>داشبورد</category>
   </item>
   <item>
     <title>چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است</title>
     <link>https://mehdiaskari.ir/blog/pmi-ai-project-patterns/</link>
-    <guid>https://mehdiaskari.ir/blog/pmi-ai-project-patterns/</guid>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/pmi-ai-project-patterns/</guid>
     <pubDate>Wed, 02 Sep 2026 00:00:00 +0330</pubDate>
-    <description>از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک کافی نیستند.</description>
+    <description>از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است.</description>
+    <content:encoded><![CDATA[
+<p>در ماه‌های اخیر، <strong>Project Management Institute</strong> چند گواهینامه و مسیر یادگیری کاملاً مبتنی بر هوش مصنوعی عرضه کرده است؛ از CPMAI تا الگوهای هفت‌گانه‌ی پروژه‌های AI. این یعنی یک تغییر نگرش جدی: پروژه‌های هوش مصنوعی با پروژه‌های سنتی تفاوت بنیادین دارند.</p>
+
+<h2>چرا روش‌های کلاسیک کافی نیستند؟</h2>
+<p>در پروژه‌ی سنتی، خروجی از ابتدا قابل تعریف است؛ در پروژه‌ی AI، نتیجه‌ی مدل تا وارد چرخه‌ی داده نشوید معلوم نیست. سه تفاوت کلیدی:</p>
+<ul>
+<li><strong>عدم قطعیت خروجی:</strong> کیفیت مدل تا پایلوت واقعی قابل تضمین نیست.</li>
+<li><strong>وابستگی به داده:</strong> بخش عمده‌ی بودجه و زمان صرف آماده‌سازی داده می‌شود، نه مدل‌سازی.</li>
+<li><strong>تکرار بی‌پایان:</strong> تحویل، پایان پروژه نیست؛ هر بازخورد یک چرخه‌ی جدید است.</li>
+</ul>
+
+<h2>الگوهای هفت‌گانه از نگاه عملی</h2>
+<p>الگوهایی مثل «پیش‌بینی»، «تشخیص ناهنجاری» و «تولید محتوا» هر کدام ریسک و ساختار حاکمیتی متفاوتی می‌خواهند. انتخاب اشتباه الگو، رایج‌ترین علت شکست پروژه‌های AI در سازمان‌هاست — قبل از حتی یک خط کد.</p>
+
+<blockquote>پروژه‌ی AI موفق، اول یک مسئله‌ی مدیریتی درست‌تعریف‌شده است، بعد یک مسئله‌ی فنی.</blockquote>
+
+<h2>جمع‌بندی</h2>
+<p>اگر برنامه‌ریز یا کنترل‌کار پروژه هستید، یادگیری این چارچوب‌ها نه یک انتخاب، بلکه الزام ده سال آینده‌ی شغلی است. تجربه‌ی من: شروع از گواهینامه‌های کوتاه PMI مثل <code>Generative AI Overview for Project Managers</code> بهترین نقطه‌ی ورود است.</p>
+]]></content:encoded>
+    <category>مدیریت پروژه</category>
+    <category>هوش مصنوعی</category>
+    <category>PMI</category>
   </item>
   <item>
     <title>از کد تا گانت‌چارت: داستان یک تغییر مسیر</title>
     <link>https://mehdiaskari.ir/blog/from-code-to-gantt/</link>
-    <guid>https://mehdiaskari.ir/blog/from-code-to-gantt/</guid>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/from-code-to-gantt/</guid>
     <pubDate>Wed, 02 Sep 2026 00:00:00 +0330</pubDate>
-    <description>چطور یک توسعه‌دهنده‌ی وب به برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید.</description>
+    <description>چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.</description>
+    <content:encoded><![CDATA[
+<p>سال‌ها به‌عنوان توسعه‌دهنده‌ی وب کار کردم؛ بعد مسیرم به برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید — نیروگاه، پالایشگاه، پتروشیمی. سؤالی که همیشه پرسیده می‌شود: «چرا؟» جواب کوتاه: چون همان چیزهایی که در کد عاشقشان بودم، در مقیاس بزرگ‌تر پیدا کردم.</p>
+
+<h2>مشترکات پنهان</h2>
+<ul>
+<li><strong>دیباگ ≈ کنترل انحرافات:</strong> هر دو یعنی یافتن ریشه‌ی اختلاف بین «آنچه باید باشد» و «آنچه هست».</li>
+<li><strong>رفکتور ≈ بازبرنامه‌ریزی:</strong> هر دو یعنی بهبود ساختار بدون توقف عملیات.</li>
+<li><strong>لاگ ≈ گزارش پیشرفت:</strong> هر دو بدون داده، فقط حدس‌اند.</li>
+</ul>
+
+<h2>چیزی که توسعه‌دهندگی به من داد</h2>
+<p>نگاه سیستمی و عادت خودکارسازی. وقتی در نیروگاه دیدم گزارش‌های دوره‌ای روزها وقت می‌گیرد، همان نگاه توسعه‌دهنده فعال شد: داشبورد، ماکرو، قالب استاندارد — نتیجه، گزارش‌گیری که ساعت‌ها طول می‌کشید به چند دقیقه رسید.</p>
+
+<h2>چیزی که صنعت به من داد</h2>
+<p>درک «قید واقعی». در کد، اگر چیزی خراب شود ری‌استارت می‌کنیم؛ در پروژه‌ی صنعتی با چند هزار نفر و میلیون‌ها دلار، هر تصمیم وزن واقعی دارد. این وزن، مهندس بهتری‌ات می‌کند.</p>
+]]></content:encoded>
+    <category>مسیر شغلی</category>
+    <category>توسعه وب</category>
   </item>
   <item>
     <title>پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم</title>
     <link>https://mehdiaskari.ir/blog/network-lessons-industrial-site/</link>
-    <guid>https://mehdiaskari.ir/blog/network-lessons-industrial-site/</guid>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/network-lessons-industrial-site/</guid>
     <pubDate>Wed, 02 Sep 2026 00:00:00 +0330</pubDate>
-    <description>درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی.</description>
+    <description>درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه.</description>
+    <content:encoded><![CDATA[
+<p>طراحی و نگهداری شبکه در سایت صنعتی با دفتر کار یک زمین تا زمین فرق دارد. این پنج درس را از تجربه‌ی میدانی یاد گرفتم:</p>
+
+<h2>۱. پایداری از سرعت مهم‌تر است</h2>
+<p>در دفتر، لگِ دو ثانیه‌ای آزاردهنده است؛ در سایت صنعتی، قطعیِ دو ثانیه‌ای می‌تواند یعنی توقف یک واحد. طراحی برای دسترس‌پذیری، نه پهنای باند.</p>
+
+<h2>۲. جداسازی شبکه‌ها نجات‌بخش است</h2>
+<p>شبکه‌ی اتوماسیون، اداری و مدیریتی باید کاملاً تفکیک شوند — VLAN و فایروال بین‌لایه‌ای. وقتی یک لپ‌تاپ آلوده وارد شبکه‌ی اداری می‌شود، نباید راهی به شبکه‌ی کنترل داشته باشد.</p>
+
+<h2>۳. مستندسازی، هدیه‌ای به خودِ آینده‌تان</h2>
+<p>نقشه‌ی به‌روز توپولوژی و برچسب‌گذاری درست کابل‌ها؛ در شب خرابی، باارزش‌ترین دارایی تیم هستند.</p>
+
+<h2>۴. تغییر، همیشه در پنجره‌ی نگهداری</h2>
+<p>هیچ تغییری — حتی آپدیت کوچک — خارج از پنجره‌ی مصوب انجام نمی‌شود. این انضباط در دنیای نرم‌افزار هم همین‌قدر ارزشمند است.</p>
+
+<h2>۵. مانیتورینگ یعنی دیدن قبل از قطعی</h2>
+<p>داشبورد پایش که رشد تدریجی خطا در یک سوئیچ را هفته‌ها قبل از خرابی نشان دهد، بهانه‌ی «غافلگیری» را از بین می‌برد.</p>
+
+<blockquote>در سایت صنعتی، شبکه زیرساخت نیست؛ ستون فقرات است.</blockquote>
+]]></content:encoded>
+    <category>شبکه</category>
+    <category>زیرساخت</category>
   </item>
 </channel>
 </rss>
