@@ -7,6 +7,383 @@
   <language>fa</language>
   <atom:link href="https://mehdiaskari.ir/blog/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
+    <title>لود بالانسینگ و فیلترهای پیشرفته در MikroTik</title>
+    <link>https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/</guid>
+    <pubDate>Sun, 06 Sep 2026 00:00:00 +0330</pubDate>
+    <description>ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.</description>
+    <content:encoded><![CDATA[
+<p class="lead">در شبکه‌های متوسط‑به‑بالا، توزیع ترافیک بین چند مسیر اینترنتی و فیلتر کردن بسته‌ها برای امنیت ضروری است. MikroTik RouterOS ابزارهای قدرتمندی برای لود بالانسینگ و فیلترهای پیشرفته دارد؛ این مقاله گام‌به‌گام نحوه ترکیب PCC، Nth، Mangle و فیلترها را نشان می‌دهد.</p>
+
+  <h2>۱. لود بالانسینگ با PCC (Per Connection Classifier)</h2>
+  <p>پروتکل‌های TCP/UDP هرکدام یک ترکیب از آی‌پی مبدا/مقصد و پورت‌ها دارند. با <code>pcc</code> می‌توان هر ترکیب را به یک مسیر خاص ارجاع داد تا ترافیک به‌صورت یکنواخت بین ISP‑های مختلف تقسیم شود.</p>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>نکته:</strong> برای ترافیک وب (پورت 80/443) بهتر است از <code>pcc src-dst-port</code> استفاده کنید؛ این کار باعث می‌شود تمام درخواست‌های یک کاربر به یک مسیر برود و نشست‌ها ثابت بمانند.</div>
+  </div>
+
+  <h2>۲. توزیع لود با Nth (Nth routing)</h2>
+  <p>در صورتی که می‌خواهید هر N‑مین بسته را به مسیر دوم بفرستید، از <code>nth</code> استفاده کنید. این روش برای ترافیک‌های UDP یا DNS که نیازی به حفظ نشست ندارند، مناسب است.</p>
+
+  <h2>۳. علامت‌گذاری بسته‌ها با Mangle</h2>
+  <p>قبل از فیلتر، بسته‌ها را با <code>mangle</code> علامت‌گذاری کنید تا بتوانید در فیلترهای بعدی به‌راحتی آن‌ها را شناسایی کنید.</p>
+  <pre dir="ltr" data-lang="MikroTik"><code>/ip firewall mangle
+add chain=prerouting protocol=tcp src-address=10.0.0.0/24 action=mark-connection new-connection-mark=isp1_conn passthrough=yes
+add chain=prerouting protocol=tcp src-address=10.0.0.0/24 action=mark-connection new-connection-mark=isp2_conn passthrough=yes nth=2</code></pre>
+
+  <h2>۴. فیلترهای Firewall برای امنیت</h2>
+  <p>پس از علامت‌گذاری، می‌توانید فیلترهای دقیق‌تری بنویسید؛ به‌عنوان مثال، بسته‌های غیرمجاز یا حملات DDoS را قبل از خروج از router مسدود کنید.</p>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>پیشنهاد:</strong> از <code>connection-state=invalid</code> برای حذف بسته‌های خراب استفاده کنید؛ این کار بار روی ISP‑ها را کاهش می‌دهد.</div>
+  </div>
+
+  <h2>۵. مثال کامل پیکربندی</h2>
+  <pre dir="ltr" data-lang="MikroTik"><code># تعریف مسیرهای ISP
+/ip route
+add gateway=1.1.1.1 distance=1 routing-table=isp1
+add gateway=2.2.2.2 distance=1 routing-table=isp2
+
+# استفاده از PCC برای توزیع
+/ip firewall mangle
+add chain=prerouting src-address=0.0.0.0/0 action=mark-routing new-routing-mark=to-isp1 passthrough=yes per-connection-classifier=both-addresses:2/0
+add chain=prerouting src-address=0.0.0.0/0 action=mark-routing new-routing-mark=to-isp2 passthrough=yes per-connection-classifier=both-addresses:2/1
+
+# فیلترهای امنیتی
+/ip firewall filter
+add chain=forward connection-state=invalid action=drop comment="Drop invalid packets"
+add chain=forward protocol=tcp dst-port=80,443 connection-state=new action=accept in-interface=ether1 out-interface=ether2 comment="Allow web traffic"
+</code></pre>
+
+  <h2>۶. چک‌لیست پیش از اجرا</h2>
+  <ul>
+    <li>آدرس‌های IP ISP‌ها و مسیرهای پیش‌فرض را بررسی کنید.</li>
+    <li>تست PCC با <code>ping</code> و <code>traceroute</code> برای اطمینان از توزیع یکنواخت.</li>
+    <li>قواعد فیلتر را ابتدا در حالت <code>log</code> اجرا کنید تا بسته‌های مسدود شده را ببینید.</li>
+    <li>بعد از اطمینان، حالت <code>drop</code> را فعال کنید.</li>
+  </ul>
+
+  <h2>۷. سوالات متداول</h2>
+  <div class="accordion" data-single>
+    <div class="acc-item">
+      <button class="acc-head">آیا PCC برای تمام پروتکل‌ها کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div>پروتکل‌های TCP و UDP به‌خوبی با PCC کار می‌کنند؛ برای ICMP یا پروتکل‌های دیگر بهتر است از Nth یا مسیریابی استاتیک استفاده کنید.</div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-head">چگونه می‌توانم ترافیک P2P را مسدود کنم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div>از فیلترهای <code>layer7-protocol=p2p</code> یا <code>protocol=tcp dst-port=6881-6999</code> استفاده کنید؛ حتماً قبل از فعال‌سازی، لاگ کنید تا از عدم قطع ترافیک ضروری اطمینان حاصل کنید.</div>
+    </div>
+  </div>
+
+  <h2>جمع‌بندی</h2>
+  <p>با ترکیب PCC، Nth، Mangle و فیلترهای دقیق می‌توانید ترافیک را به‌صورت هوشمند بین ISP‑های مختلف تقسیم کنید و در عین حال امنیت شبکه را ارتقا دهید.</p>
+]]></content:encoded>
+    <category>MikroTik</category>
+    <category>شبکه</category>
+    <category>لود بالانسینگ</category>
+  </item>
+  <item>
+    <title>هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد</title>
+    <link>https://mehdiaskari.ir/blog/msp-power-tricks/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/msp-power-tricks/</guid>
+    <pubDate>Sun, 06 Sep 2026 00:00:00 +0330</pubDate>
+    <description>Deadline به‌جای Constraint، تقویم سطح فعالیت، Inactivate Tasks برای سناریوسازی، Lead/Lag قابل‌ردیابی با فیلد سفارشی، Baseline دوم، فیلترهای جلسهٔ هفتگی و میله‌های گانت شرطی — هفت ترفند MSP از تجربهٔ پروژه‌های صنعتی.</description>
+    <content:encoded><![CDATA[
+<p class="lead">MS Project را همه بلدند باز کنند؛ ولی همان‌جایی که برنامهٔ واقعیِ یک نیروگاه یا پالایشگاه باید «زنده» بماند، یک‌سری قابلیت‌ها هستند که بیشتر برنامه‌ریزها سال‌ها بعد از اولین پروژه‌شان کشف می‌کنند. این هفت ترفند، همان‌هایی هستند که بعد از سال‌ها کار با MSP در پروژه‌های صنعتی بیشترین دردسر را برای من حل کرده‌اند — با مسیر دقیق منو و دلیل اینکه چرا کار می‌کنند.</p>
+
+    <h2>۱. Deadline به‌جای Constraint</h2>
+    <p>شایع‌ترین اشتباهی که در فایل‌های ورودی پیمانکارها می‌بینم: برای «تاریخ موعد تحویل» از محدودیت‌های سخت مثل <strong>Must Finish On</strong> یا <strong>Finish No Later Than</strong> استفاده می‌کنند. نتیجه؟ برنامه سرریز محدودیت می‌شود، مسیر بحرانی مصنوعی می‌سازد و هر بار Schedule تازه می‌گیرید، هشدارهای عجیب می‌بینید.</p>
+    <div class="callout">
+      <span class="callout-ic">→</span>
+      <div><strong>ترفند:</strong> به‌جای Constraint از <strong>Deadline</strong> استفاده کنید (ستون Deadline، یا دابل‌کلیک روی فعالیت → Advanced). Deadline تاریخ را «قفل» نمی‌کند؛ فقط اگر کار از موعد بگذرد، یک فلش قرمز روی نمودار گانت نشان می‌دهد و در ستون Total Slack اثر می‌گذارد. برنامه روان می‌ماند و موعد هم ناپدید نمی‌شود.</div>
+    </div>
+    <p>قاعدهٔ عملی من: <strong>Constraint فقط برای دو حالت</strong> — تاریخ اجباری قراردادی (مثل تاریخ گشایش LC که واقعاً در دست ما نیست) و محدودیت جفتی با برنامهٔ مرجع کارفرما. بقیهٔ تاریخ‌های «موعد»، همیشه Deadline.</p>
+
+    <h2>۲. Task Calendar — تقویم سطح فعالیت</h2>
+    <p>خیلی‌ها فکر می‌کنند برای این‌که کاری در روز جمعه هم جلو برود باید تقویم کل پروژه را عوض کنند. اشتباه است — تقویم پروژه را خراب می‌کنید. MSP یک لایهٔ تقویم دیگر دارد: <strong>Task Calendar</strong>.</p>
+    <p>مثال واقعی: تست جوش و بازرسی VT در کارگاه باید در شیفت روز کار کند، ولی فعالیت «سردکردن ری‌اکتور» باید ۲۴ ساعته و ۷ روز هفته اجرا شود. دابل‌کلیک روی فعالیت → Advanced → Calendar → تقویم «۲۴ Hours» را اختصاص دهید. نکتهٔ مهم: تیک <strong>Scheduling ignores resource calendars</strong> را خاموش نگه دارید مگر این‌که واقعاً می‌خواهید تقویم منبع نادیده گرفته شود — وگرنه هشدار مکرر می‌گیرید.</p>
+
+    <h2>۳. Inactivate Tasks — سناریوسازی بدون حذف</h2>
+    <p>برای تحلیل what-if در جلسات، بیشتر افراد یک نسخهٔ کپی از فایل می‌سازند («Project-final-v2-new-rev.mpp»!). روش درست: انتخاب فعالیت‌ها و زدن <strong>Inactivate</strong> (تب Task → گروه Schedule). فعالیت غیرفعال می‌ماند ولی از محاسبهٔ مسیر بحرانی، ارزش کسب‌شده و گزارش‌ها حذف می‌شود؛ رنگش هم خاکستری می‌شود تا خودتان گم نشوید.</p>
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>هشدار:</strong> Inactivate فقط در نسخهٔ <strong>Project Professional</strong> هست، نه Standard. و اگر فایل را به P6 یا نرم‌افزار دیگری Export می‌کنید، اول فعالیت‌های غیرفعال را حذف یا فیلتر کنید.</div>
+    </div>
+
+    <h2>۴. Lead/Lag قابل‌ردیابی با فیلد سفارشی</h2>
+    <p>لَگ‌هایی که داخل وابستگی‌ها (SS+۱۴d) قایم شده‌اند، کابوس به‌روزرسانی دوره‌ای هستند: هیچ گزارشی نشان‌شان نمی‌دهد و در Rev جدید یکی دو روز جابجا می‌شوند و همه چیز می‌خزد.</p>
+    <p>راه‌حل: لَگ‌ها را صفر نگه دارید و مدت تأخیر را در یک <strong>فیلد عددی سفارشی</strong> (مثلاً Number1 با عنوان «Lag») روی فعالیت بریزید. بعد در ستون پیش‌نیازها، با فرمول ساده شمارهٔ فعالیت پیش‌نیاز + مقدار Lag را کنار هم ببینید:</p>
+    <pre dir="ltr" data-lang="MSP FORMULA">Text1 = [Predecessors] &amp; " +" &amp; [Number1] &amp; "d"</pre>
+    <p>حالا یک فیلتر ساده (Number1 &gt; 0) کل لَگ‌های پروژه را یک‌جا به شما نشان می‌دهد — و در جلسهٔ به‌روزرسانی، دفاعش هم آسان است چون لَگ به‌عنوان دادهٔ برنامه دیده می‌شود، نه یک عدد قایم‌شده در رابط.</p>
+
+    <h2>۵. Baseline دوم — حافظهٔ جلسات مصوبه</h2>
+    <p>Baseline فقط یکی نیست. فرض کنید برنامهٔ Rev.A مصوب شده، بعد از سه ماه Rev.B تأیید می‌شود. اگر Baseline را روی نسخهٔ جدید ست کنید، تاریخچهٔ انحراف نسبت به مصوبهٔ اول می‌سوزد — همان چیزی که در دعوای claims باید نشان بدهید.</p>
+    <p>ترتیب درست: <strong>Project → Set Baseline → Set baseline: Baseline1</strong> (نه Baseline اصلی). بعد ستون‌های Variance مربوط به Baseline1 را در جدول Tracking نمایش دهید. این‌طوری همیشه «برنامهٔ مبنا» و «برنامهٔ بازنگری‌شده» را هم‌زمان دارید و می‌توانید انحراف‌ها را نسبت به هر دو گزارش کنید.</p>
+
+    <h2>۶. Automatic Filtering برای جلسهٔ هفتگی</h2>
+    <p>در جلسهٔ هفتگی نمی‌خواهید ۱۲هزار خط WBS را ورق بزنید. دو راه‌میان‌بُر:</p>
+    <ul>
+      <li><strong>Highlight</strong> (تب View → Filter → Highlight): فعالیت‌ها فیلتر نمی‌شوند، فقط هایلایت می‌شوند — عالی برای «مسیر بحرانی امروز» کنار کل برنامه.</li>
+      <li><strong>AutoFilter پیشرفته</strong>: روی ستون Finish، فیلتر Between = [تاریخ Data Date] تا [+۱۴ روز] → گزارش <em>Look-ahead دوهفته‌ای</em> در ده ثانیه. همین فیلتر را به‌عنوان فیلتر سفارشی ذخیره کنید تا هفتهٔ بعد فقط یک کلیک باشد.</li>
+    </ul>
+
+    <h2>۷. گانت‌چارت که مدیریت می‌فهمد: Bar Styles شرطی</h2>
+    <p>رنگِ میله‌ها لازم نیست برای همه یکسان باشد. در <strong>Format → Bar Styles</strong> می‌توانید سطر جدیدی تعریف کنید که فقط فعالیت‌هایی را رنگی کند که در فیلد سفارشی‌شان مقدار خاصی دارند — مثلاً میلهٔ «فعالیت‌های تأخیرخوردهٔ این دوره» را قرمز، «تازه شروع‌شده» را آبی و milestoneهای نزدیک (Deadline ≤ ۳۰ روز) را لوزی نارنجی بکشد. شرطش را در ستون Show For … Tasks می‌نویسید (مثلاً Normal، و در Filters همان فیلد سفارشی).</p>
+    <p>نتیجه: فایل MSP به‌جای «یک کوه خط»، گزارشی بصری می‌شود که مدیر پروژه در ده ثانیه می‌خواند.</p>
+
+    <h2>جمع‌بندی — کدام ترفند را اول اجرا کنم؟</h2>
+    <p>اگر فقط سه‌تایش را می‌خواهید این‌ها را اعمال کنید: <strong>Deadline به‌جای Constraint</strong> (سلامت منطق برنامه)، <strong>Lag قابل‌ردیابی</strong> (پایداری به‌روزرسانی دوره‌ای) و <strong>Baseline دوم</strong> (دفاع‌پذیری در جلسات و claims). بقیه برای گزارش‌سازی و جلسات عالی‌اند.</p>
+    <p>اگر اهل محاسبات ارزش کسب‌شده هم هستید، داشبورد <a href="https://mehdiaskari.ir/lab/evm/">EVM آنلاین سایت</a> و یادداشت <a href="https://mehdiaskari.ir/blog/weight-factor-excel-msp/">محاسبهٔ ضریب وزن در اکسل و MSP</a> مکمل همین ترفندها هستند؛ و برای کنار هم گذاشتن MSP با P6، یادداشت <a href="https://mehdiaskari.ir/blog/p6-global-change/">Global Change در Primavera P6</a> را دنبال کنید.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">آیا Deadline روی مسیر بحرانی اثر می‌گذارد؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>غیرمستقیم بله: اگر فعالیت از Deadline بگذرد، Total Slack منفی می‌شود و MSP آن را بحرانی گزارش می‌کند (مگر آستانهٔ بحرانی‌بودن را تغییر داده باشید). خود Deadline زنجیره‌ای نمی‌سازد و منطق شبکه را قفل نمی‌کند — همان کاری که Constraint می‌کند.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">تفاوت Total Slack و Free Slack چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>Total Slack شوکی است که فعالیت بدون به‌خطر انداختن <strong>پایان کل پروژه</strong> (یا یک محدودیت) دارد؛ Free Slack شوکی است که بدون جابجا کردن <strong>جانشین مستقیمش</strong> دارد. برای مدیریت منابع، Free Slack نگاه دقیق‌تری است؛ برای گزارش بحرانی‌بودن، Total Slack.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Inactivate Task در گزارش‌های قبلی چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>هیچ — تاریخچهٔ Baseline دست نمی‌خورد. فعالیت غیرفعال در محاسبات کنار گذاشته می‌شود ولی داده‌هایش باقی می‌ماند؛ به همین دلیل برای claims بهتر از حذف کردن است. فقط مراقب باشید فیلترهای گزارش شما فعالیت‌های غیرفعال را نشان ندهند (در فیلتر، Active Tasks را شرط کنید).</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">فیلد Number1 و Text1 را همین‌طور در دسترس دارم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>بله؛ MSP در هر جدول (Task/Resource/Assignment) چندین فیلد عددی و متنی خام (Number1..10، Text1..30 و ...) دارد که از طریق Custom Fields می‌توانید rename، فرمول و Graphical Indicator به‌شان بدهید. اگر فایل را با دیگری ردوبدل می‌کنید، نام فیلدها را در مپینگ import/export هماهنگ نگه دارید.</div>
+      </div>
+    </div>
+]]></content:encoded>
+    <category>MS Project</category>
+    <category>برنامه‌ریزی</category>
+    <category>کنترل پروژه</category>
+  </item>
+  <item>
+    <title>Global Change در Primavera P6؛ دستیار خاموشِ برنامه‌ریز</title>
+    <link>https://mehdiaskari.ir/blog/p6-global-change/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/p6-global-change/</guid>
+    <pubDate>Sun, 06 Sep 2026 00:00:00 +0330</pubDate>
+    <description>پنج سناریوی واقعی Global Change در P6: اصلاح گروهی مدت‌ها، تخصیص خودکار تقویم، ساخت Activity Code ترکیبی، مستندسازی لَگ‌ها و هم‌خوان‌سازی Remaining Duration با درصد پیشرفت — به‌همراه قواعد امنیتی و چک‌لیست اجرا.</description>
+    <content:encoded><![CDATA[
+<p class="lead">اگر از MSP به P6 آمده باشید، اولین چیزی که کمتان می‌آید «پرکردن چند سلول به‌صورت گروهی» است. P6 همین‌جا یک سلاح دارد که کمتر کسی تا تهش می‌رود: <strong>Global Change</strong> (مسیر: Tools ← Global Change) — یک موتور If/Then/Else روی کل دیتابیسِ فعالیت‌ها که می‌تواند در چند ثانیه کاری را بکند که دستی چند روز وقت می‌برد. این پست پنج سناریوی واقعی از پروژه‌های صنعتی را با دقیق‌ترین جزئیات می‌نویسد، به‌علاوهٔ قواعد امنیتی که فایل شما را نجات می‌دهد.</p>
+
+    <h2>منطق Global Change در ۳۰ ثانیه</h2>
+    <p>هر Global Change سه بخش دارد:</p>
+    <ul>
+      <li><strong>If</strong> — شرط انتخاب سطرها (مثلاً Activity Status = Not Started و WBS = زیرمجموعهٔ خاک‌برداری).</li>
+      <li><strong>Then</strong> — کاری که باید انجام شود (تغییر فیلد، محاسبهٔ فرمول، حذف مقدار).</li>
+      <li><strong>Else</strong> — اختیاری؛ برای سطرهایی که شرط را پاس نکردند.</li>
+    </ul>
+    <p>قبل از اجرا، P6 دکمهٔ <strong>Change Preview</strong> دارد: سطرهای انتخاب‌شده را با مقدار «قبل و بعد» نشان می‌دهد. این پیش‌نمایش همان چیزی است که تفاوت بین یک برنامه‌ریز حرفه‌ای و یک کاربر خطرناک است — همیشه Preview را کامل بخوانید.</p>
+
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>قاعدهٔ طلایی:</strong> قبل از هر Global Change یک <strong>Export XER</strong> بگیرید. Global Change «Undo» ندارد؛ Ctrl+Z کار نمی‌کند. XER همان حکم فایل بکاپ در بایگانی پروژه است.</div>
+    </div>
+
+    <h2>سناریو ۱ — اصلاح گروهی مدت‌ها بر اساس ردهٔ فعالیت</h2>
+    <p>موقعیت: برنامهٔ تفصیلی P6 می‌خواهد بازبینی شود و طبق دستورالعمل جدید، تمام فعالیت‌های ردهٔ <em>قراردادکار</em> باید سقف مدت ۱۵ روزه داشته باشند و بقیه ۳۰ روزه.</p>
+    <p>پیاده‌سازی:</p>
+    <ol>
+      <li>If: Activity Code «رده» = قراردادکار</li>
+      <li>Then: Original Duration = 15d</li>
+      <li>Else: Original Duration = 30d</li>
+    </ol>
+    <p>همین. P6 مدت‌ها را بازنویسی می‌کند و schedule بعدی، تاریخ‌های تازه را می‌ریزد. نکتهٔ حرفه‌ای: اگر می‌خواهید فقط مدت‌های بزرگ‌تر از سقف اصلاح شود (نه کوتاه‌تر)، شرط را دوخطی کنید: If Activity Status = Not Started <em>and</em> Original Duration &gt; 15d → Then 15d. این‌طوری برنامهٔ خودتان که زیر سقف است دست نمی‌خورد.</p>
+
+    <h2>سناریو ۲ — تخصیص خودکار تقویم به فعالیت‌های مشکل‌دار</h2>
+    <p>واردات از MSP یا Excel معمولاً تقویم‌ها را به‌هم می‌ریزد: چند فعالیت «۲۴ Hours» که باید شیفت‌بندی کارگاه باشند. سناریو:</p>
+    <ol>
+      <li>If: Activity Type = Task Dependent <em>and</em> Calendar = 24 Hours</li>
+      <li>Then: Calendar = Shift 8h (تقویم سفارشی خودتان)</li>
+    </ol>
+    <p>این سناریو را ذخیره کنید (Save As با نام «CalFix») — بعد از هر Import دوباره اجرایش کنید. Global Change ذخیره‌شده مثل یک اسکریپت همیشگی کار می‌کند و ریتم کاری «Import → پاک‌سازی → Schedule» را قابل تکرار نگه می‌دارد.</p>
+
+    <h2>سناریو ۳ — Activity Code ترکیبی برای گزارش‌های چندلایه</h2>
+    <p>کارفرما گزارشی می‌خواهد که هم بر اساس سیستم (سیویل/مکانیک/برق) و هم بر اساس منطقه (Zone A/B) باشد. دو Activity Code دارید ولی کد ترکیبی ندارید. Global Change می‌سازد:</p>
+    <ol>
+      <li>یک Activity Code جدید به نام «SysZone» تعریف کنید.</li>
+      <li>Global Change: Then: SysZone = System &amp; "-" &amp; Zone</li>
+    </ol>
+    <p>عملگر &amp; رشته‌ها را می‌چسباند. حالا در Layoutها و Reportها یک بُعد مرتبهٔ بالاتر دارید. این ترفند در فایل‌های بزرگ (بیش از ۱۰هزار فعالیت) تفاوت زمین تا آسمان می‌سازد چون P6 گزارش‌گیری کدترکیبی را از خودش ندارد.</p>
+
+    <h2>سناریو ۴ — خنثی‌سازی لَگ‌های قایم‌شده قبل از تحلیل تأخیر</h2>
+    <p>وقتی برنامه برای <strong>تحلیل تأخیر</strong> یا بروزرسانی مصوبه می‌رود، لَگ‌های داخل رابط‌ها (SS + 7d) مدام نتیجه را می‌چرخانند. یک Global Change امن نمی‌تواند «لَگ» را صفر کند (لَگ فیلد مستقیمی در If/Then ندارد)، ولی می‌تواند نقش‌های مشابه را فاش کند: فیلدی به نام «Lag Ref» بسازید و دستی مقدار لَگ هر رابط را همان‌جا مستند کنید؛ بعد با Global Change مقدار «Lag Ref» را به‌عنوان یادداشت فعالیت (Notebook) بنویسید تا در گزارش‌ها دیده شود. مسیر حرفه‌ای‌تر: از خود Scheduler Options، مسیر Multiple Float Paths را فعال کنید تا وابستگی‌های پشت انحراف‌ها را ببینید.</p>
+
+    <h2>سناریو ۵ — محاسبهٔ Remaining Duration از درصد پیشرفت واقعی</h2>
+    <p>وضعیت رایج: کارگاه درصد پیشرفت فیزیکی را گزارش کرده (مثلاً ۴۰٪) ولی Remaining Duration را پر نکرده. با فرمول‌دار کردن یک فیلد عددی و Global Change می‌شود هم‌خوانی ساخت — وگرنه P6 با درصد و مدت ناسازگار، مبنای EVM را خراب می‌کند:</p>
+    <pre dir="ltr" data-lang="P6 GC">If: Physical % Complete &gt; 0 and Remaining Duration != 0
+Then: Remaining Duration = Original Duration * (1 - Physical % Complete / 100)</pre>
+    <p>پس از اجرا، مقایسه کنید: ستون‌های Remaining Duration و Physical % باید با هم بخوانند. این هم‌خوانی شرط لازم برای داشبورد EVM است — همان چیزی که در <a href="https://mehdiaskari.ir/lab/evm/">داشبورد EVM سایت</a> و پست <a href="https://mehdiaskari.ir/blog/p6-power-bi-dashboard/">داشبورد Power BI روی دادهٔ P6</a> سراغش را گرفته‌ایم.</p>
+
+    <h2>Global Change در برابر راه‌های دیگر — جدول تصمیم</h2>
+    <div class="tabs" data-single>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="a" aria-selected="true">چه زمانی Global Change؟</button>
+        <button class="tab" data-tab="b" aria-selected="false">چه زمانی نه؟</button>
+        <button class="tab" data-tab="c" aria-selected="false">جایگزین‌ها</button>
+      </div>
+      <h3>چه زمانی Global Change؟</h3>
+<p>وقتی قانون «تکرارشونده» دارید: تخصیص تقویم، کدترکیبی، هم‌خوان‌سازی درصد/مدت، اصلاح گروهی مدت بر اساس رده. هر چیزی که بتوان گفت «همهٔ سطرهایی که فلان شرط را دارند، فلان فیلدشان برابر فلان چیز شود».</p>
+
+      <h3>چه زمانی نه؟</h3>
+<p>وقتی تغییر «برای هر سطر متفاوت» است (مثلاً ۳۰۰ مقدار دستی جدید) — آن‌جا جدول‌بندی Excel و Import بهتر است. وقتی ساختار WBS را می‌خواهید جابجا کنید یا رابط‌ها را بازطراحی کنید — این‌ها ابزار دیگری می‌خواهند. و وقتی پروژه دیتابیس اشتراکی دارد و در ساعت کاری هستید: تغییر گروهی روی دیتابیس زنده، با هماهنگی مدیر دیتابیس.</p>
+
+      <h3>جایگزین‌ها</h3>
+<p><strong>Filter + Edit گروهی</strong> برای تغییر سادهٔ یک‌فیلدی؛ <strong>Fill Down</strong> در Layoutها؛ <strong>Import Excel/XER</strong> برای داده‌های جدولی بزرگ؛ و <strong>Claim Digger</strong> برای مقایسهٔ دو Rev (نه تغییر گروهی، ولی مکمل جلسهٔ بازبینی است).</p>
+
+    </div>
+
+    <h2>جمع‌بندی — چک‌لیست امن اجرا</h2>
+    <p>Global Change را مثل یک ابزار جراحی ببینید: چک‌لیستِ پنج‌مرحله‌ای من بعد از چند سال استفاده:</p>
+    <ol>
+      <li>XER بکاپ بگیر (بدون استثنا).</li>
+      <li>Change Preview را کامل بخوان — تعداد سطرها باید با حدست بخواند؛ اگر نه، شرط را باریک‌تر کن.</li>
+      <li>اول روی کپی پروژه یا Layout بی‌خطر تست کن، بعد دیتابیس اصلی.</li>
+      <li>پس از اجرا، Schedule بگیر و سه ستون را مقایسه کن: Critical، Total Float، Data Date.</li>
+      <li>هر Global Change تکراری را Save As کن با نام معنادار — این همان اتوماسیون ارزان شماست.</li>
+    </ol>
+    <p>و اگر تازه از MSP آمده‌اید، ترفندهای مشابه MSP را در <a href="https://mehdiaskari.ir/blog/msp-power-tricks/">هفت ترفند MS Project</a> و مبنای پیشرفت وزنی را در <a href="https://mehdiaskari.ir/blog/weight-factor-excel-msp/">محاسبهٔ ضریب وزن (W.F)</a> بخوانید.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">Global Change روی Resource Assignments هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>بله؛ در بخش Advanced می‌توانید به تخصیص منابع (Resource Assignment) دست بزنید — مثلاً Budgeted Units را بر اساس مدت بازمحاسبه کنید. ولی حواستان باشد که واحدها با نرخ‌ها و Bucket Planning درگیرند؛ تغییر گروهی واحدها راحت‌تر از هر چیز دیگری EVM پروژه را به‌هم می‌ریزد.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">آیا Global Change قابل Undo است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>خیر. P6 برای Global Change تاریخچه/Undo ندارد. تنها راه برگشت، Import همان XER بکاپ یا بازگردانی دیتابیس است. به همین دلیل Preview و بکاپ اجباری‌اند، نه پیشنهاد.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">چرا Global Change روی بعضی سطرها اجرا نمی‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>سه علت رایج: (۱) فیلتر Layout فعلی سطرها را پنهان کرده — Global Change روی دادهٔ پنهان هم ممکن است اجرا شود یا نشود بسته به تنظیم؛ (۲) سطرهای Selected در حالت «Selected activities» بسته شده؛ (۳) فیلد مقصد در آن Activity Type قابل ویرایش نیست (مثلاً Milestoneها مدت صفر دارند). پیام خطای پایین پنجره را بخوانید؛ P6 معمولاً دقیق می‌گوید کدام سطرها skip شدند.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">در نسخهٔ Cloud/Primavera P6 EPPM هم همین مسیر هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>بله، Global Change در EPPM هم هست ولی رابط کمی فرق دارد (از منوی Activities، بخش Tools). منطق If/Then/Else و Preview یکسان است؛ فقط دسترسی کاربر می‌تواند توسط Admin محدود شده باشد.</div>
+      </div>
+    </div>
+]]></content:encoded>
+    <category>Primavera P6</category>
+    <category>کنترل پروژه</category>
+    <category>اتوماسیون</category>
+  </item>
+  <item>
+    <title>Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی</title>
+    <link>https://mehdiaskari.ir/blog/power-query-site-progress/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/power-query-site-progress/</guid>
+    <pubDate>Sun, 06 Sep 2026 00:00:00 +0330</pubDate>
+    <description>از بیست فایل اکسل پیمانکار تا یک جدول تمیز و قابل‌گزارش با Power Query: پوشه‌خوانی خودکار، پاک‌سازی فرمول‌دار، Merge با WBS استاندارد و مدل ستاره‌ای برای داشبورد — با فرمول‌های M آماده و چک‌لیست کنترل کیفیت داده.</description>
+    <content:encoded><![CDATA[
+<p class="lead">هر هفته همان سناریو: بیست پیمانکار، بیست فایل اکسل با ستون‌های کمی فرق‌دار، و شما وسط جلسهٔ کنترل پروژه نشسته‌اید و باید تا عصر یک جدول تمیز از پیشرفت فیزیکی تحویل بدهید. Power Query (داخل خود اکسل، بدون نصب هیچ‌چیز) این خط تولید را یک‌بار می‌سازد و بعد از آن، هر هفته فقط دکمهٔ Refresh را می‌زنید. این پست یک خط تولید واقعی را قدم‌به‌قدم می‌سازد — با فرمول‌های M آماده‌ی کپی.</p>
+
+    <h2>معماری کلی: پوشه، پاک‌سازی، Lookup، گزارش</h2>
+    <p>خط تولید چهار ایستگاه دارد:</p>
+    <ol>
+      <li><strong>پوشه‌خوانی:</strong> همهٔ فایل‌های پیمانکار از یک پوشهٔ شبکه خوانده می‌شوند (Folder Connector).</li>
+      <li><strong>پاک‌سازی:</strong> سرستون‌های بی‌قاعده، ردیف‌های خالی، فرمت‌های درصدی خراب و نام‌های متفاوت فعالیت‌ها یکدست می‌شوند.</li>
+      <li><strong>Lookup:</strong> هر سطر به WBS اصلی پروژه وصل می‌شود تا کد و وزنِ استاندارد برگردد.</li>
+      <li><strong>تحویل:</strong> جدول نهایی در یک شیت تمیز، آمادهٔ PivotTable یا Power BI.</li>
+    </ol>
+    <p>قاعدهٔ طلایی: <strong>هیچ‌وقت روی فایل خام پیمانکار تغییر دستی ندهید.</strong> تمام پاک‌سازی داخل Power Query ثبت می‌شود؛ فایل خام فقط خوانده می‌شود. این تفکیک باعث می‌شود هفتهٔ بعد، با فایل‌های جدیدِ همان قالب، صفر دقیقه کار دستی داشته باشید.</p>
+
+    <h2>ایستگاه ۱ — Folder Connector به‌جای Copy-Paste</h2>
+    <p>مسیر: Data ← Get Data ← From File ← From Folder. آدرس پوشهٔ گزارش‌های هفتگی را بدهید (مثلاً <code>\\server\progress\w36</code>). Power Query هر فایل را باز می‌کند، شیت و بازهٔ داده را می‌گیرد و همه را زیر هم می‌چیند. نکته‌های حرفه‌ای:</p>
+    <ul>
+      <li>در پنجرهٔ Combine، به‌جای «Combine &amp; Transform» گزینهٔ <strong>Transform Data</strong> را بزنید — کنترل بیشتری روی فایل‌های بد دارید.</li>
+      <li>ستون <strong>Source.Name</strong> را نگه دارید؛ بعداً می‌فهمید کدام پیمانکار چه فرستاده.</li>
+      <li>قالب پوشه را هفتگی نگه دارید (w36, w37, ...) و در Query فقط به پوشهٔ «هفتهٔ جاری» اشاره کنید — با یک پارامتر (Manage Parameters) که هر هفته عوض می‌شود.</li>
+    </ul>
+    <pre dir="ltr" data-lang="POWER QUERY M">let
+  Source = Folder.Files("\\server\progress\&amp;" &amp; ParWeek),
+  OnlyXlsx = Table.SelectRows(Source, each Text.EndsWith([Extension], ".xlsx")),
+  Filtered = Table.SelectRows(OnlyXlsx, each not Text.StartsWith([Name], "~$"))
+in
+  Filtered</pre>
+
+    <h2>ایستگاه ۲ — پاک‌سازی: جایی که ۸۰٪ زمان می‌رود</h2>
+    <p>دو فاجعهٔ همیشگی گزارش‌های کارگاهی: درصد به‌صورت متن («۴۰٪» یا 0.40 بدون فرمت) و کد فعالیت با فاصلهٔ اضافه («A-120 »). هر دو در Query حل می‌شوند:</p>
+    <pre dir="ltr" data-lang="POWER QUERY M">= Table.TransformColumns(PromotedHeaders,
+    {{"Activity ID", Text.Trim, type text},
+     {"Physical %", each try Number.From(Text.Remove(_, "%")) otherwise null, type number}})</pre>
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>ترفند:</strong> برای سرستون‌های پیمانکارهایی که هر هفته یک ستون اضافه می‌کنند، از <strong>Table.SelectColumns با MissingField.UseNull</strong> استفاده کنید؛ Query به‌جای خطا، ستون غایب را null می‌گیرد و جدول نهایی هرگز نمی‌شکند.</div>
+    </div>
+    <p>و برای فایل‌هایی که با Merge cells آمده‌اند: اول <strong>Unpivot</strong> را فراموش نکنید — اگر گزارش در قالب «ماتریس هفته‌ها» است (فعالیت × هفته)، Unpivot ستون‌های هفته را به دو ستون Week و Progress تبدیل می‌کند و جدول از حالت افقیِ شکننده به عمودیِ قابل‌گزارش می‌رود.</p>
+
+    <h2>ایستگاه ۳ — Lookup با WBS استاندارد (مثل VLOOKUP ولی سندشده)</h2>
+    <p>جدول مرجع WBS (کد فعالیت، عنوان، وزن، سیستم) را یک‌بار در یک فایل «Master» بسازید و در Query به‌عنوان Query دوم وارد کنید. سپس Merge Queries:</p>
+    <ol>
+      <li>Home ← Merge Queries ← جدول پیشرفت، ستون Activity ID.</li>
+      <li>جدول Master، ستون Activity Code.</li>
+      <li>Join Kind = Left Outer (تمام ردیف‌های پیشرفت بماند، مطابقت‌ها بیاید).</li>
+    </ol>
+    <p>بعد Expand کنید و وزن استاندارد و نام سیستم را بیاورید. حالا یک پرسش کلیدی: چند ردیف match نشد؟ یک ستون شرطی بسازید که اگر وزن null بود، «⚠» بگذارد. این همان کنترل کیفیت دادهٔ شماست — قبل از آن‌که عدد غلط به داشبورد برسد، فهرست کدهای خارج از WBS را دارید.</p>
+
+    <h2>ایستگاه ۴ — سودو-مدل ستاره‌ای داخل اکسل</h2>
+    <p>خروجی نهایی را به‌صورت دو جدول مدل کنید (حتی بدون Power Pivot هم جواب می‌دهد، ولی با Power Pivot عالی است):</p>
+    <ul>
+      <li><strong>FactProgress:</strong> هفته، کد فعالیت، پیمانکار، پیشرفت فیزیکی، مقدار پیشرفت.</li>
+      <li><strong>DimWBS:</strong> کد فعالیت، عنوان، وزن، سیستم، WBS والد.</li>
+    </ul>
+    <p>رابطه بر اساس کد فعالیت. از این به بعد، گزارش هفتگی یک PivotTable است: ردیف = سیستم، ستون = هفته، مقدار = وزن × پیشرفت. اگر خواستید سراغ Power BI بروید، همین دو جدول را همان‌طور منتقل می‌کنید — مسیر کامل داشبورد P6 + Power BI را در <a href="https://mehdiaskari.ir/blog/p6-power-bi-dashboard/">پست داشبورد Power BI</a> نوشته‌ام و مبنای وزن‌دهی را در <a href="https://mehdiaskari.ir/blog/weight-factor-excel-msp/">محاسبهٔ ضریب وزن (W.F)</a>.</p>
+
+    <h2>چک‌لیست کنترل کیفیت — قبل از انتشار هر گزارش</h2>
+    <p>این پنج چک، ۹۰٪ شرمندگی‌های جلسه را می‌گیرد:</p>
+    <div class="tabs" data-single>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="a" aria-selected="true">چک‌های داده</button>
+        <button class="tab" data-tab="b" aria-selected="false">چک‌های گزارش</button>
+      </div>
+      <h3>چک‌های داده</h3>
+<ul>
+          <li>تعداد ردیف‌های این هفته در مقایسه با هفتهٔ قبل — پرش غیرعادی یعنی فایل تکراری در پوشه.</li>
+          <li>ردیف‌های بدون Match با WBS — باید صفر یا مستند باشد.</li>
+          <li>درصدهای خارج از بازهٔ ۰ تا ۱۰۰ — تقریباً همیشه فرمت خراب است، نه پیشرفت واقعی.</li>
+          <li>کدهای فعالیت تکراری در یک فایل پیمانکار — نشانهٔ Merge ناموفق هنگام تجمیع.</li>
+        </ul>
+
+      <h3>چک‌های گزارش</h3>
+<ul>
+          <li>Data Date گزارش با هفتهٔ پوشه یکی است؟</li>
+          <li>جمع پیشرفت وزنی با گزارش دورهٔ قبل «جمع‌پذیر» است (نه تصحیح دستی)؟</li>
+          <li>پیمانکار جدید، در DimWBS اضافه شده یا در «متفرقه» افتاده؟</li>
+        </ul>
+
+    </div>
+
+    <h2>جمع‌بندی</h2>
+    <p>Power Query آن «برنامه‌نویسی بدون برنامه‌نویس» است که برنامه‌ریز و کنترل پروژه بیش از هر ابزار دیگری به آن نیاز دارد: یک‌بار می‌سازید، هر هفته فقط Refresh می‌زنید، و کنترل کیفیت داده به‌جای حافظهٔ شخصی، در خود Query ثبت می‌شود. از همین هفته شروع کنید با یک پوشه و دو فایل — بعد از دو دورهٔ گزارش‌دهی دیگر برنمی‌گردید به روش دستی.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">Power Query در نسخهٔ اکسل من هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>در Excel 2016 به بعد به‌صورت داخلی در تب Data هست (Get &amp; Transform). برای 2010/2013 افزونهٔ جداگانهٔ Power Query مایکروسافت را می‌شود نصب کرد. مک هم از نسخه‌های جدیدتر پشتیبانی می‌کند، ولی Folder Connector در مک محدودتر است — بهتر است فایل‌ها را لوکال نگه دارید.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">اگر پیمانکار قالب فایلش را عوض کند چه؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>Query یا خطا می‌دهد یا ستون‌ها را null می‌گیرد — هر دو علامت خوبی‌اند چون قبل از گزارش، شما را خبر می‌کنند. راه‌حل بلندمدت: قالب گزارش هفتگی را با یک Template قفل‌شده به پیمانکارها بدهید و در چک‌لیست ورودی، همین دو ستون کلیدی (Activity ID و Physical %) را بسننجید.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">عملکرد Refresh روی فایل‌های سنگین چطور است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>سه اهرم اصلی: (۱) فیلتر فایل‌های غیرضروری را در همان Query اول انجام دهید (قبل از هر Expand)؛ (۲) Table.Buffer فقط برای جدول‌های مرجع کوچک، نه دادهٔ اصلی؛ (۳) در Query Options، گزینهٔ Fast Data Load را در سفارشی‌سازی ویرایشگر فعال نگه دارید. برای صدها فایل، بهتر است داده را در Power Pivot یا Power BI لود کنید نه شیت اکسل.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">تا کجا می‌شود بدون Power BI جلو رفت؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>تا PivotTable چندصفحه‌ای، S-curve ساده با Sparkline و داشبورد با Slicer — یعنی ۸۰٪ نیازهای گزارش دوره‌ای. Power BI وقتی لازم می‌شود که خوانندهٔ گزارش زیاد شود، تحلیل مقایسه‌ای بین پروژه‌ها بخواهید، یا مدل به‌روزرسانی خودکار و سرور بخورد.</div>
+      </div>
+    </div>
+]]></content:encoded>
+    <category>Power Query</category>
+    <category>اکسل</category>
+    <category>کنترل پروژه</category>
+    <category>داده</category>
+  </item>
+  <item>
     <title>فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت</title>
     <link>https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/</link>
     <guid isPermaLink="true">https://mehdiaskari.ir/blog/gale-openwrt-custom-firmware/</guid>

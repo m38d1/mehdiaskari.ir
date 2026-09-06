@@ -10,39 +10,39 @@
 <link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/fonts/fonts.css">
 <link rel="stylesheet" href="/blog.css">
-<link rel="stylesheet" href="/components.css">
-<title>از کد تا گانت‌چارت: داستان یک تغییر مسیر | وبلاگ مهدی عسکری</title>
-<meta name="description" content="چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.">
+  <link rel="stylesheet" href="/components.css">
+<title>لود بالانسینگ و فیلترهای پیشرفته در MikroTik | مهدی عسکری</title>
+<meta name="description" content="آموزش گام‌به‌گام لود بالانسینگ در MikroTik RouterOS با PCC و Nth، علامت‌گذاری بسته‌ها با Mangle و نوشتن فیلترهای امنیتی پیشرفته — همراه با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="از کد تا گانت‌چارت: داستان یک تغییر مسیر">
-<meta property="og:description" content="چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.">
-<meta property="og:url" content="https://mehdiaskari.ir/blog/from-code-to-gantt/">
+<meta property="og:title" content="لود بالانسینگ و فیلترهای پیشرفته در MikroTik">
+<meta property="og:description" content="ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی MikroTik.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/">
 <meta property="og:site_name" content="مهدی عسکری">
 <meta property="og:locale" content="fa_IR">
 <meta property="og:image" content="https://mehdiaskari.ir/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="از کد تا گانت‌چارت: داستان یک تغییر مسیر">
-<meta name="twitter:description" content="چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.">
+<meta name="twitter:title" content="لود بالانسینگ و فیلترهای پیشرفته در MikroTik">
+<meta name="twitter:description" content="ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.">
 <meta name="twitter:image" content="https://mehdiaskari.ir/og-image.png">
-<meta property="article:published_time" content="2026-09-02">
-<link rel="canonical" href="https://mehdiaskari.ir/blog/from-code-to-gantt/">
+<meta property="article:published_time" content="2026-09-06">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/">
 <script src="/cover.js" defer></script>
-<script src="/components.js" defer></script>
+  <script src="/components.js" defer></script>
 <script type="application/ld+json" data-entity="article">{
  "@context": "https://schema.org",
  "@graph": [
   {
    "@type": "BlogPosting",
-   "@id": "https://mehdiaskari.ir/blog/from-code-to-gantt/#article",
+   "@id": "https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/#article",
    "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "https://mehdiaskari.ir/blog/from-code-to-gantt/"
+    "@id": "https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/"
    },
-   "headline": "از کد تا گانت‌چارت: داستان یک تغییر مسیر",
-   "description": "چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.",
+   "headline": "لود بالانسینگ و فیلترهای پیشرفته در MikroTik",
+   "description": "ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.",
    "inLanguage": "fa-IR",
    "isAccessibleForFree": true,
-   "url": "https://mehdiaskari.ir/blog/from-code-to-gantt/",
+   "url": "https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/",
    "image": [
     "https://mehdiaskari.ir/og-image.png"
    ],
@@ -61,10 +61,10 @@
      "url": "https://mehdiaskari.ir/icon.svg"
     }
    },
-   "datePublished": "2026-09-02",
-   "dateModified": "2026-09-05",
-   "keywords": "مسیر شغلی, توسعه وب",
-   "wordCount": 182
+   "datePublished": "2026-09-06",
+   "dateModified": "2026-09-06",
+   "keywords": "MikroTik, شبکه, لود بالانسینگ",
+   "wordCount": 484
   },
   {
    "@type": "BreadcrumbList",
@@ -84,8 +84,8 @@
     {
      "@type": "ListItem",
      "position": 3,
-     "name": "از کد تا گانت‌چارت: داستان یک تغییر مسیر",
-     "item": "https://mehdiaskari.ir/blog/from-code-to-gantt/"
+     "name": "لود بالانسینگ و فیلترهای پیشرفته در MikroTik",
+     "item": "https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/"
     }
    ]
   }
@@ -120,18 +120,18 @@
           <li><a href="/#about" data-en="About">درباره من</a></li>
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
           <li><a href="/#education" data-en="Education">تحصیلات</a></li>
-          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
           <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>
           <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
           <li><a href="/#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
       <div class="lang-toggle" role="group" aria-label="زبان / Language">
-        <button class="lang-opt" data-lang="fa">فا</button>
-        <button class="lang-opt" data-lang="en">EN</button>
-      </div>
-      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
-      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
         <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
         <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
       </div>
@@ -153,28 +153,76 @@
 
 <main>
   <div class="post-head fu">
-    <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">مسیر شغلی</span><span class="tag">توسعه وب</span></div>
-    <h1>از کد تا گانت‌چارت: داستان یک تغییر مسیر</h1>
-<div class="cover post-hero" data-cover="from-code-to-gantt"></div>
+    <div class="post-meta"><span class="pdate">۱۵ شهریور ۱۴۰۵</span><span class="badge teal">MikroTik</span><span class="badge teal">شبکه</span><span class="badge teal">لود بالانسینگ</span></div>
+    <h1>لود بالانسینگ و فیلترهای پیشرفته در MikroTik</h1>
+<div class="cover post-hero" data-cover="mikrotik-load-balancing-filters"></div>
   </div>
   <article class="prose fu d1">
+  <p class="lead">در شبکه‌های متوسط‑به‑بالا، توزیع ترافیک بین چند مسیر اینترنتی و فیلتر کردن بسته‌ها برای امنیت ضروری است. MikroTik RouterOS ابزارهای قدرتمندی برای لود بالانسینگ و فیلترهای پیشرفته دارد؛ این مقاله گام‌به‌گام نحوه ترکیب PCC، Nth، Mangle و فیلترها را نشان می‌دهد.</p>
 
-<p>سال‌ها به‌عنوان توسعه‌دهنده‌ی وب کار کردم؛ بعد مسیرم به برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید — نیروگاه، پالایشگاه، پتروشیمی. سؤالی که همیشه پرسیده می‌شود: «چرا؟» جواب کوتاه: چون همان چیزهایی که در کد عاشقشان بودم، در مقیاس بزرگ‌تر پیدا کردم.</p>
+  <h2>۱. لود بالانسینگ با PCC (Per Connection Classifier)</h2>
+  <p>پروتکل‌های TCP/UDP هرکدام یک ترکیب از آی‌پی مبدا/مقصد و پورت‌ها دارند. با <code>pcc</code> می‌توان هر ترکیب را به یک مسیر خاص ارجاع داد تا ترافیک به‌صورت یکنواخت بین ISP‑های مختلف تقسیم شود.</p>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>نکته:</strong> برای ترافیک وب (پورت 80/443) بهتر است از <code>pcc src-dst-port</code> استفاده کنید؛ این کار باعث می‌شود تمام درخواست‌های یک کاربر به یک مسیر برود و نشست‌ها ثابت بمانند.</div>
+  </div>
 
-<h2>مشترکات پنهان</h2>
-<ul>
-<li><strong>دیباگ ≈ کنترل انحرافات:</strong> هر دو یعنی یافتن ریشه‌ی اختلاف بین «آنچه باید باشد» و «آنچه هست».</li>
-<li><strong>رفکتور ≈ بازبرنامه‌ریزی:</strong> هر دو یعنی بهبود ساختار بدون توقف عملیات.</li>
-<li><strong>لاگ ≈ گزارش پیشرفت:</strong> هر دو بدون داده، فقط حدس‌اند.</li>
-</ul>
+  <h2>۲. توزیع لود با Nth (Nth routing)</h2>
+  <p>در صورتی که می‌خواهید هر N‑مین بسته را به مسیر دوم بفرستید، از <code>nth</code> استفاده کنید. این روش برای ترافیک‌های UDP یا DNS که نیازی به حفظ نشست ندارند، مناسب است.</p>
 
-<h2>چیزی که توسعه‌دهندگی به من داد</h2>
-<p>نگاه سیستمی و عادت خودکارسازی. وقتی در نیروگاه دیدم گزارش‌های دوره‌ای روزها وقت می‌گیرد، همان نگاه توسعه‌دهنده فعال شد: داشبورد، ماکرو، قالب استاندارد — نتیجه، گزارش‌گیری که ساعت‌ها طول می‌کشید به چند دقیقه رسید.</p>
+  <h2>۳. علامت‌گذاری بسته‌ها با Mangle</h2>
+  <p>قبل از فیلتر، بسته‌ها را با <code>mangle</code> علامت‌گذاری کنید تا بتوانید در فیلترهای بعدی به‌راحتی آن‌ها را شناسایی کنید.</p>
+  <pre dir="ltr" data-lang="MikroTik"><code>/ip firewall mangle
+add chain=prerouting protocol=tcp src-address=10.0.0.0/24 action=mark-connection new-connection-mark=isp1_conn passthrough=yes
+add chain=prerouting protocol=tcp src-address=10.0.0.0/24 action=mark-connection new-connection-mark=isp2_conn passthrough=yes nth=2</code></pre>
 
-<h2>چیزی که صنعت به من داد</h2>
-<p>درک «قید واقعی». در کد، اگر چیزی خراب شود ری‌استارت می‌کنیم؛ در پروژه‌ی صنعتی با چند هزار نفر و میلیون‌ها دلار، هر تصمیم وزن واقعی دارد. این وزن، مهندس بهتری‌ات می‌کند.</p>
+  <h2>۴. فیلترهای Firewall برای امنیت</h2>
+  <p>پس از علامت‌گذاری، می‌توانید فیلترهای دقیق‌تری بنویسید؛ به‌عنوان مثال، بسته‌های غیرمجاز یا حملات DDoS را قبل از خروج از router مسدود کنید.</p>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>پیشنهاد:</strong> از <code>connection-state=invalid</code> برای حذف بسته‌های خراب استفاده کنید؛ این کار بار روی ISP‑ها را کاهش می‌دهد.</div>
+  </div>
 
-  </article>
+  <h2>۵. مثال کامل پیکربندی</h2>
+  <pre dir="ltr" data-lang="MikroTik"><code># تعریف مسیرهای ISP
+/ip route
+add gateway=1.1.1.1 distance=1 routing-table=isp1
+add gateway=2.2.2.2 distance=1 routing-table=isp2
+
+# استفاده از PCC برای توزیع
+/ip firewall mangle
+add chain=prerouting src-address=0.0.0.0/0 action=mark-routing new-routing-mark=to-isp1 passthrough=yes per-connection-classifier=both-addresses:2/0
+add chain=prerouting src-address=0.0.0.0/0 action=mark-routing new-routing-mark=to-isp2 passthrough=yes per-connection-classifier=both-addresses:2/1
+
+# فیلترهای امنیتی
+/ip firewall filter
+add chain=forward connection-state=invalid action=drop comment="Drop invalid packets"
+add chain=forward protocol=tcp dst-port=80,443 connection-state=new action=accept in-interface=ether1 out-interface=ether2 comment="Allow web traffic"
+</code></pre>
+
+  <h2>۶. چک‌لیست پیش از اجرا</h2>
+  <ul>
+    <li>آدرس‌های IP ISP‌ها و مسیرهای پیش‌فرض را بررسی کنید.</li>
+    <li>تست PCC با <code>ping</code> و <code>traceroute</code> برای اطمینان از توزیع یکنواخت.</li>
+    <li>قواعد فیلتر را ابتدا در حالت <code>log</code> اجرا کنید تا بسته‌های مسدود شده را ببینید.</li>
+    <li>بعد از اطمینان، حالت <code>drop</code> را فعال کنید.</li>
+  </ul>
+
+  <h2>۷. سوالات متداول</h2>
+  <div class="accordion" data-single>
+    <div class="acc-item">
+      <button class="acc-head">آیا PCC برای تمام پروتکل‌ها کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="acc-body"><div>پروتکل‌های TCP و UDP به‌خوبی با PCC کار می‌کنند؛ برای ICMP یا پروتکل‌های دیگر بهتر است از Nth یا مسیریابی استاتیک استفاده کنید.</div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-head">چگونه می‌توانم ترافیک P2P را مسدود کنم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="acc-body"><div>از فیلترهای <code>layer7-protocol=p2p</code> یا <code>protocol=tcp dst-port=6881-6999</code> استفاده کنید؛ حتماً قبل از فعال‌سازی، لاگ کنید تا از عدم قطع ترافیک ضروری اطمینان حاصل کنید.</div></div>
+    </div>
+  </div>
+
+  <h2>جمع‌بندی</h2>
+  <p>با ترکیب PCC، Nth، Mangle و فیلترهای دقیق می‌توانید ترافیک را به‌صورت هوشمند بین ISP‑های مختلف تقسیم کنید و در عین حال امنیت شبکه را ارتقا دهید.</p>
+</article>
   <div class="post-foot fu d2">
     <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
     <a class="rss-link" href="/blog/rss.xml">
@@ -196,7 +244,6 @@
     <div class="cmdk-list" id="cmdk-list"></div>
   </div>
 </div>
-
 
 <script>
   const root = document.documentElement;

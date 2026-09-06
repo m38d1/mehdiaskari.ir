@@ -1,6 +1,63 @@
 {
-  "updated": "2026-09-04",
+  "updated": "2026-09-06",
   "posts": [
+    {
+      "slug": "mikrotik-load-balancing-filters",
+      "title": "لود بالانسینگ و فیلترهای پیشرفته در MikroTik",
+      "date": "2026-09-06",
+      "dateFa": "۱۵ شهریور ۱۴۰۵",
+      "tags": [
+        "MikroTik",
+        "شبکه",
+        "لود بالانسینگ"
+      ],
+      "excerpt": "ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.",
+      "titleEn": "Load balancing and advanced filters in MikroTik",
+      "excerptEn": "Combining PCC, Nth, Mangle and firewall filters to distribute traffic across multiple ISPs and harden the network — with ready-made RouterOS configs and a pre-deployment checklist."
+    },
+    {
+      "slug": "msp-power-tricks",
+      "title": "هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد",
+      "date": "2026-09-06",
+      "dateFa": "۱۵ شهریور ۱۴۰۵",
+      "tags": [
+        "MS Project",
+        "برنامه‌ریزی",
+        "کنترل پروژه"
+      ],
+      "excerpt": "Deadline به‌جای Constraint، تقویم سطح فعالیت، Inactivate Tasks برای سناریوسازی، Lead/Lag قابل‌ردیابی با فیلد سفارشی، Baseline دوم، فیلترهای جلسهٔ هفتگی و میله‌های گانت شرطی — هفت ترفند MSP از تجربهٔ پروژه‌های صنعتی.",
+      "titleEn": "Seven MS Project tricks that will save your schedule",
+      "excerptEn": "Deadline instead of constraints, task calendars, Inactivate Tasks for what-if, traceable lead/lag via custom fields, a second baseline, meeting filters and conditional Gantt bars — seven MSP tricks from industrial practice."
+    },
+    {
+      "slug": "p6-global-change",
+      "title": "Global Change در Primavera P6؛ دستیار خاموشِ برنامه‌ریز",
+      "date": "2026-09-06",
+      "dateFa": "۱۵ شهریور ۱۴۰۵",
+      "tags": [
+        "Primavera P6",
+        "کنترل پروژه",
+        "اتوماسیون"
+      ],
+      "excerpt": "پنج سناریوی واقعی Global Change در P6: اصلاح گروهی مدت‌ها، تخصیص خودکار تقویم، ساخت Activity Code ترکیبی، مستندسازی لَگ‌ها و هم‌خوان‌سازی Remaining Duration با درصد پیشرفت — به‌همراه قواعد امنیتی و چک‌لیست اجرا.",
+      "titleEn": "Global Change in Primavera P6: the planner's silent assistant",
+      "excerptEn": "Five real-world P6 Global Change scenarios: bulk duration fixes, automatic calendar assignment, composite activity codes, lag documentation, and aligning Remaining Duration with percent complete — plus safety rules and an execution checklist."
+    },
+    {
+      "slug": "power-query-site-progress",
+      "title": "Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی",
+      "date": "2026-09-06",
+      "dateFa": "۱۵ شهریور ۱۴۰۵",
+      "tags": [
+        "Power Query",
+        "اکسل",
+        "کنترل پروژه",
+        "داده"
+      ],
+      "excerpt": "از بیست فایل اکسل پیمانکار تا یک جدول تمیز و قابل‌گزارش با Power Query: پوشه‌خوانی خودکار، پاک‌سازی فرمول‌دار، Merge با WBS استاندارد و مدل ستاره‌ای برای داشبورد — با فرمول‌های M آماده و چک‌لیست کنترل کیفیت داده.",
+      "titleEn": "Power Query: a data pipeline for site progress reports",
+      "excerptEn": "From twenty contractor Excel files to one clean, reportable table with Power Query: folder ingestion, formula-driven cleanup, merging against a standard WBS and a star-schema layout for dashboards — with ready-made M formulas and a data-QA checklist."
+    },
     {
       "slug": "gale-openwrt-custom-firmware",
       "title": "فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت",

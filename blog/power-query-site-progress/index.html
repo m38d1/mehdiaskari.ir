@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+  <link rel="stylesheet" href="/components.css">
+<title>Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی | مهدی عسکری</title>
+<meta name="description" content="تجمیع خودکار گزارش‌های هفتگی اکسلِ پیشرفت کارگاهی با Power Query: پوشهٔ گزارش‌ها، پاک‌سازی فایل‌های پیمانکار، Lookup هم‌خوان با WBS و سودو-مدل ستاره‌ای برای داشبورد. با فرمول‌های M آماده و چک‌لیست کنترل کیفیت داده.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی">
+<meta property="og:description" content="از ۲۰ فایل اکسل پیمانکار تا یک جدول تمیز با Power Query: پوشه‌خوانی خودکار، پاک‌سازی، Lookup با WBS و مدل ستاره‌ای برای داشبورد پیشرفت.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/power-query-site-progress/">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="https://mehdiaskari.ir/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی">
+<meta name="twitter:description" content="از بیست فایل اکسل پیمانکار تا یک جدول تمیز و قابل‌گزارش با Power Query: پوشه‌خوانی خودکار، پاک‌سازی فرمول‌دار، Merge با WBS استاندارد و مدل ستاره‌ای برای داشبورد — با فرمول‌های M آماده و چک‌لیست کنترل کیفیت داده.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/og-image.png">
+<meta property="article:published_time" content="2026-09-06">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/power-query-site-progress/">
+<script src="/cover.js" defer></script>
+  <script src="/components.js" defer></script>
+<script type="application/ld+json" data-entity="article">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BlogPosting",
+   "@id": "https://mehdiaskari.ir/blog/power-query-site-progress/#article",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mehdiaskari.ir/blog/power-query-site-progress/"
+   },
+   "headline": "Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی",
+   "description": "از بیست فایل اکسل پیمانکار تا یک جدول تمیز و قابل‌گزارش با Power Query: پوشه‌خوانی خودکار، پاک‌سازی فرمول‌دار، Merge با WBS استاندارد و مدل ستاره‌ای برای داشبورد — با فرمول‌های M آماده و چک‌لیست کنترل کیفیت داده.",
+   "inLanguage": "fa-IR",
+   "isAccessibleForFree": true,
+   "url": "https://mehdiaskari.ir/blog/power-query-site-progress/",
+   "image": [
+    "https://mehdiaskari.ir/og-image.png"
+   ],
+   "author": {
+    "@type": "Person",
+    "name": "Mehdi Askari",
+    "alternateName": "مهدی عسکری",
+    "url": "https://mehdiaskari.ir/"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "Mehdi Askari",
+    "url": "https://mehdiaskari.ir/",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://mehdiaskari.ir/icon.svg"
+    }
+   },
+   "datePublished": "2026-09-06",
+   "dateModified": "2026-09-06",
+   "keywords": "Power Query, اکسل, کنترل پروژه, داده",
+   "wordCount": 1169
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "خانه",
+     "item": "https://mehdiaskari.ir/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "وبلاگ",
+     "item": "https://mehdiaskari.ir/blog/all/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی",
+     "item": "https://mehdiaskari.ir/blog/power-query-site-progress/"
+    }
+   ]
+  }
+ ]
+}</script>
+</head>
+<body>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/lab/" data-en="Lab">آزمایشگاه</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="post-head fu">
+    <div class="post-meta"><span class="pdate">۱۵ شهریور ۱۴۰۵</span><span class="badge teal">Power Query</span><span class="badge teal">اکسل</span><span class="badge teal">کنترل پروژه</span></div>
+    <h1>Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی</h1>
+<div class="cover post-hero" data-cover="power-query-site-progress"></div>
+  </div>
+  <article class="prose fu d1">
+    <p class="lead">هر هفته همان سناریو: بیست پیمانکار، بیست فایل اکسل با ستون‌های کمی فرق‌دار، و شما وسط جلسهٔ کنترل پروژه نشسته‌اید و باید تا عصر یک جدول تمیز از پیشرفت فیزیکی تحویل بدهید. Power Query (داخل خود اکسل، بدون نصب هیچ‌چیز) این خط تولید را یک‌بار می‌سازد و بعد از آن، هر هفته فقط دکمهٔ Refresh را می‌زنید. این پست یک خط تولید واقعی را قدم‌به‌قدم می‌سازد — با فرمول‌های M آماده‌ی کپی.</p>
+
+    <h2>معماری کلی: پوشه، پاک‌سازی، Lookup، گزارش</h2>
+    <p>خط تولید چهار ایستگاه دارد:</p>
+    <ol>
+      <li><strong>پوشه‌خوانی:</strong> همهٔ فایل‌های پیمانکار از یک پوشهٔ شبکه خوانده می‌شوند (Folder Connector).</li>
+      <li><strong>پاک‌سازی:</strong> سرستون‌های بی‌قاعده، ردیف‌های خالی، فرمت‌های درصدی خراب و نام‌های متفاوت فعالیت‌ها یکدست می‌شوند.</li>
+      <li><strong>Lookup:</strong> هر سطر به WBS اصلی پروژه وصل می‌شود تا کد و وزنِ استاندارد برگردد.</li>
+      <li><strong>تحویل:</strong> جدول نهایی در یک شیت تمیز، آمادهٔ PivotTable یا Power BI.</li>
+    </ol>
+    <p>قاعدهٔ طلایی: <strong>هیچ‌وقت روی فایل خام پیمانکار تغییر دستی ندهید.</strong> تمام پاک‌سازی داخل Power Query ثبت می‌شود؛ فایل خام فقط خوانده می‌شود. این تفکیک باعث می‌شود هفتهٔ بعد، با فایل‌های جدیدِ همان قالب، صفر دقیقه کار دستی داشته باشید.</p>
+
+    <h2>ایستگاه ۱ — Folder Connector به‌جای Copy-Paste</h2>
+    <p>مسیر: Data ← Get Data ← From File ← From Folder. آدرس پوشهٔ گزارش‌های هفتگی را بدهید (مثلاً <code>\\server\progress\w36</code>). Power Query هر فایل را باز می‌کند، شیت و بازهٔ داده را می‌گیرد و همه را زیر هم می‌چیند. نکته‌های حرفه‌ای:</p>
+    <ul>
+      <li>در پنجرهٔ Combine، به‌جای «Combine &amp; Transform» گزینهٔ <strong>Transform Data</strong> را بزنید — کنترل بیشتری روی فایل‌های بد دارید.</li>
+      <li>ستون <strong>Source.Name</strong> را نگه دارید؛ بعداً می‌فهمید کدام پیمانکار چه فرستاده.</li>
+      <li>قالب پوشه را هفتگی نگه دارید (w36, w37, ...) و در Query فقط به پوشهٔ «هفتهٔ جاری» اشاره کنید — با یک پارامتر (Manage Parameters) که هر هفته عوض می‌شود.</li>
+    </ul>
+    <pre dir="ltr" data-lang="POWER QUERY M">let
+  Source = Folder.Files("\\server\progress\&amp;" &amp; ParWeek),
+  OnlyXlsx = Table.SelectRows(Source, each Text.EndsWith([Extension], ".xlsx")),
+  Filtered = Table.SelectRows(OnlyXlsx, each not Text.StartsWith([Name], "~$"))
+in
+  Filtered</pre>
+
+    <h2>ایستگاه ۲ — پاک‌سازی: جایی که ۸۰٪ زمان می‌رود</h2>
+    <p>دو فاجعهٔ همیشگی گزارش‌های کارگاهی: درصد به‌صورت متن («۴۰٪» یا 0.40 بدون فرمت) و کد فعالیت با فاصلهٔ اضافه («A-120 »). هر دو در Query حل می‌شوند:</p>
+    <pre dir="ltr" data-lang="POWER QUERY M">= Table.TransformColumns(PromotedHeaders,
+    {{"Activity ID", Text.Trim, type text},
+     {"Physical %", each try Number.From(Text.Remove(_, "%")) otherwise null, type number}})</pre>
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>ترفند:</strong> برای سرستون‌های پیمانکارهایی که هر هفته یک ستون اضافه می‌کنند، از <strong>Table.SelectColumns با MissingField.UseNull</strong> استفاده کنید؛ Query به‌جای خطا، ستون غایب را null می‌گیرد و جدول نهایی هرگز نمی‌شکند.</div>
+    </div>
+    <p>و برای فایل‌هایی که با Merge cells آمده‌اند: اول <strong>Unpivot</strong> را فراموش نکنید — اگر گزارش در قالب «ماتریس هفته‌ها» است (فعالیت × هفته)، Unpivot ستون‌های هفته را به دو ستون Week و Progress تبدیل می‌کند و جدول از حالت افقیِ شکننده به عمودیِ قابل‌گزارش می‌رود.</p>
+
+    <h2>ایستگاه ۳ — Lookup با WBS استاندارد (مثل VLOOKUP ولی سندشده)</h2>
+    <p>جدول مرجع WBS (کد فعالیت، عنوان، وزن، سیستم) را یک‌بار در یک فایل «Master» بسازید و در Query به‌عنوان Query دوم وارد کنید. سپس Merge Queries:</p>
+    <ol>
+      <li>Home ← Merge Queries ← جدول پیشرفت، ستون Activity ID.</li>
+      <li>جدول Master، ستون Activity Code.</li>
+      <li>Join Kind = Left Outer (تمام ردیف‌های پیشرفت بماند، مطابقت‌ها بیاید).</li>
+    </ol>
+    <p>بعد Expand کنید و وزن استاندارد و نام سیستم را بیاورید. حالا یک پرسش کلیدی: چند ردیف match نشد؟ یک ستون شرطی بسازید که اگر وزن null بود، «⚠» بگذارد. این همان کنترل کیفیت دادهٔ شماست — قبل از آن‌که عدد غلط به داشبورد برسد، فهرست کدهای خارج از WBS را دارید.</p>
+
+    <h2>ایستگاه ۴ — سودو-مدل ستاره‌ای داخل اکسل</h2>
+    <p>خروجی نهایی را به‌صورت دو جدول مدل کنید (حتی بدون Power Pivot هم جواب می‌دهد، ولی با Power Pivot عالی است):</p>
+    <ul>
+      <li><strong>FactProgress:</strong> هفته، کد فعالیت، پیمانکار، پیشرفت فیزیکی، مقدار پیشرفت.</li>
+      <li><strong>DimWBS:</strong> کد فعالیت، عنوان، وزن، سیستم، WBS والد.</li>
+    </ul>
+    <p>رابطه بر اساس کد فعالیت. از این به بعد، گزارش هفتگی یک PivotTable است: ردیف = سیستم، ستون = هفته، مقدار = وزن × پیشرفت. اگر خواستید سراغ Power BI بروید، همین دو جدول را همان‌طور منتقل می‌کنید — مسیر کامل داشبورد P6 + Power BI را در <a href="/blog/p6-power-bi-dashboard/">پست داشبورد Power BI</a> نوشته‌ام و مبنای وزن‌دهی را در <a href="/blog/weight-factor-excel-msp/">محاسبهٔ ضریب وزن (W.F)</a>.</p>
+
+    <h2>چک‌لیست کنترل کیفیت — قبل از انتشار هر گزارش</h2>
+    <p>این پنج چک، ۹۰٪ شرمندگی‌های جلسه را می‌گیرد:</p>
+    <div class="tabs" data-single>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="a" aria-selected="true">چک‌های داده</button>
+        <button class="tab" data-tab="b" aria-selected="false">چک‌های گزارش</button>
+      </div>
+      <div class="tab-panel is-active" data-panel="a">
+        <ul>
+          <li>تعداد ردیف‌های این هفته در مقایسه با هفتهٔ قبل — پرش غیرعادی یعنی فایل تکراری در پوشه.</li>
+          <li>ردیف‌های بدون Match با WBS — باید صفر یا مستند باشد.</li>
+          <li>درصدهای خارج از بازهٔ ۰ تا ۱۰۰ — تقریباً همیشه فرمت خراب است، نه پیشرفت واقعی.</li>
+          <li>کدهای فعالیت تکراری در یک فایل پیمانکار — نشانهٔ Merge ناموفق هنگام تجمیع.</li>
+        </ul>
+      </div>
+      <div class="tab-panel" data-panel="b">
+        <ul>
+          <li>Data Date گزارش با هفتهٔ پوشه یکی است؟</li>
+          <li>جمع پیشرفت وزنی با گزارش دورهٔ قبل «جمع‌پذیر» است (نه تصحیح دستی)؟</li>
+          <li>پیمانکار جدید، در DimWBS اضافه شده یا در «متفرقه» افتاده؟</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>جمع‌بندی</h2>
+    <p>Power Query آن «برنامه‌نویسی بدون برنامه‌نویس» است که برنامه‌ریز و کنترل پروژه بیش از هر ابزار دیگری به آن نیاز دارد: یک‌بار می‌سازید، هر هفته فقط Refresh می‌زنید، و کنترل کیفیت داده به‌جای حافظهٔ شخصی، در خود Query ثبت می‌شود. از همین هفته شروع کنید با یک پوشه و دو فایل — بعد از دو دورهٔ گزارش‌دهی دیگر برنمی‌گردید به روش دستی.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">Power Query در نسخهٔ اکسل من هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>در Excel 2016 به بعد به‌صورت داخلی در تب Data هست (Get &amp; Transform). برای 2010/2013 افزونهٔ جداگانهٔ Power Query مایکروسافت را می‌شود نصب کرد. مک هم از نسخه‌های جدیدتر پشتیبانی می‌کند، ولی Folder Connector در مک محدودتر است — بهتر است فایل‌ها را لوکال نگه دارید.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">اگر پیمانکار قالب فایلش را عوض کند چه؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>Query یا خطا می‌دهد یا ستون‌ها را null می‌گیرد — هر دو علامت خوبی‌اند چون قبل از گزارش، شما را خبر می‌کنند. راه‌حل بلندمدت: قالب گزارش هفتگی را با یک Template قفل‌شده به پیمانکارها بدهید و در چک‌لیست ورودی، همین دو ستون کلیدی (Activity ID و Physical %) را بسننجید.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">عملکرد Refresh روی فایل‌های سنگین چطور است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>سه اهرم اصلی: (۱) فیلتر فایل‌های غیرضروری را در همان Query اول انجام دهید (قبل از هر Expand)؛ (۲) Table.Buffer فقط برای جدول‌های مرجع کوچک، نه دادهٔ اصلی؛ (۳) در Query Options، گزینهٔ Fast Data Load را در سفارشی‌سازی ویرایشگر فعال نگه دارید. برای صدها فایل، بهتر است داده را در Power Pivot یا Power BI لود کنید نه شیت اکسل.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">تا کجا می‌شود بدون Power BI جلو رفت؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>تا PivotTable چندصفحه‌ای، S-curve ساده با Sparkline و داشبورد با Slicer — یعنی ۸۰٪ نیازهای گزارش دوره‌ای. Power BI وقتی لازم می‌شود که خوانندهٔ گزارش زیاد شود، تحلیل مقایسه‌ای بین پروژه‌ها بخواهید، یا مدل به‌روزرسانی خودکار و سرور بخورد.</div></div>
+      </div>
+    </div>
+  </article>
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
+    <a class="rss-link" href="/blog/rss.xml">
+      <svg viewBox="0 0 16 16"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
+      RSS
+    </a>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>

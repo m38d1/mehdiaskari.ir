@@ -196,6 +196,40 @@ BLOG_LD_OPEN = '<script type="application/ld+json" data-entity="blog">'
 BLOG_LD_RE = re.compile(r'<script type="application/ld\+json" data-entity="blog">.*?</script>', re.S)
 
 
+def esc_attr(text):
+    """Escape text for use inside a double-quoted HTML attribute."""
+    return (str(text).replace('&', '&amp;').replace('<', '&lt;')
+            .replace('>', '&gt;').replace('"', '&quot;'))
+
+
+def refresh_social(html, slug, meta):
+    """Return (html, changed).
+
+    Social cards (WhatsApp/Telegram/X/LinkedIn) only render an image and a
+    title when og:image/og:site_name/og:locale and the twitter:* twins are
+    present. Every post gets them right after og:url, derived from posts.json
+    so the card text can never drift from the card data.
+    """
+    if '<meta property="og:image"' in html:
+        return html, False
+    post = meta.get(slug) or {}
+    title = esc_attr(post.get('title') or 'مهدی عسکری')
+    desc = esc_attr(post.get('excerpt') or '')
+    block = (
+        '<meta property="og:site_name" content="مهدی عسکری">\n'
+        '<meta property="og:locale" content="fa_IR">\n'
+        '<meta property="og:image" content="' + SITE + '/og-image.png">\n'
+        '<meta name="twitter:card" content="summary_large_image">\n'
+        '<meta name="twitter:title" content="' + title + '">\n'
+        '<meta name="twitter:description" content="' + desc + '">\n'
+        '<meta name="twitter:image" content="' + SITE + '/og-image.png">'
+    )
+    anchor = '<meta property="og:url" content="' + SITE + '/blog/' + slug + '/">'
+    if anchor not in html:
+        return html, False
+    return html.replace(anchor, anchor + '\n' + block, 1), True
+
+
 def build_blog_ld(meta):
     """The archive page is a Blog, so Google can bind the six postings to one series."""
     url = SITE + '/blog/all/'
@@ -398,6 +432,9 @@ def main():
         slug = path.parent.name
         original = path.read_text(encoding='utf-8')
         updated, changes = patch(original)
+        updated, soc_changed = refresh_social(updated, slug, meta)
+        if soc_changed:
+            changes.append('social meta')
         updated, ld_changed = refresh_ld(updated, slug, meta, path)
         if ld_changed:
             changes.append('JSON-LD')

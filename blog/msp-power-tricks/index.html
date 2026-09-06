@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+  <link rel="stylesheet" href="/components.css">
+<title>هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد | مهدی عسکری</title>
+<meta name="description" content="هفت ترفند کمترشناخته‌شدهٔ Microsoft Project: Deadline به‌جای Constraint، Task Calendar، Inactivate Tasks، فیلد عددی برای Lead/Lag قابل‌ردیابی، Baseline دوم، Custom Toolbar و Automatic Filtering — برای هر برنامه‌ریز صنعتی.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد">
+<meta property="og:description" content="Deadline به‌جای Constraint، Task Calendar، Inactivate Tasks، Lead/Lag قابل‌ردیابی، Baseline دوم و ... — هفت ترفند عملی MSP برای برنامه‌ریزهای صنعتی.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/msp-power-tricks/">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="https://mehdiaskari.ir/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد">
+<meta name="twitter:description" content="Deadline به‌جای Constraint، تقویم سطح فعالیت، Inactivate Tasks برای سناریوسازی، Lead/Lag قابل‌ردیابی با فیلد سفارشی، Baseline دوم، فیلترهای جلسهٔ هفتگی و میله‌های گانت شرطی — هفت ترفند MSP از تجربهٔ پروژه‌های صنعتی.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/og-image.png">
+<meta property="article:published_time" content="2026-09-06">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/msp-power-tricks/">
+<script src="/cover.js" defer></script>
+  <script src="/components.js" defer></script>
+<script type="application/ld+json" data-entity="article">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BlogPosting",
+   "@id": "https://mehdiaskari.ir/blog/msp-power-tricks/#article",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mehdiaskari.ir/blog/msp-power-tricks/"
+   },
+   "headline": "هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد",
+   "description": "Deadline به‌جای Constraint، تقویم سطح فعالیت، Inactivate Tasks برای سناریوسازی، Lead/Lag قابل‌ردیابی با فیلد سفارشی، Baseline دوم، فیلترهای جلسهٔ هفتگی و میله‌های گانت شرطی — هفت ترفند MSP از تجربهٔ پروژه‌های صنعتی.",
+   "inLanguage": "fa-IR",
+   "isAccessibleForFree": true,
+   "url": "https://mehdiaskari.ir/blog/msp-power-tricks/",
+   "image": [
+    "https://mehdiaskari.ir/og-image.png"
+   ],
+   "author": {
+    "@type": "Person",
+    "name": "Mehdi Askari",
+    "alternateName": "مهدی عسکری",
+    "url": "https://mehdiaskari.ir/"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "Mehdi Askari",
+    "url": "https://mehdiaskari.ir/",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://mehdiaskari.ir/icon.svg"
+    }
+   },
+   "datePublished": "2026-09-06",
+   "dateModified": "2026-09-06",
+   "keywords": "MS Project, برنامه‌ریزی, کنترل پروژه",
+   "wordCount": 1197
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "خانه",
+     "item": "https://mehdiaskari.ir/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "وبلاگ",
+     "item": "https://mehdiaskari.ir/blog/all/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد",
+     "item": "https://mehdiaskari.ir/blog/msp-power-tricks/"
+    }
+   ]
+  }
+ ]
+}</script>
+</head>
+<body>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/lab/" data-en="Lab">آزمایشگاه</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="post-head fu">
+    <div class="post-meta"><span class="pdate">۱۵ شهریور ۱۴۰۵</span><span class="badge teal">MS Project</span><span class="badge teal">برنامه‌ریزی</span><span class="badge teal">کنترل پروژه</span></div>
+    <h1>هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد</h1>
+<div class="cover post-hero" data-cover="msp-power-tricks"></div>
+  </div>
+  <article class="prose fu d1">
+    <p class="lead">MS Project را همه بلدند باز کنند؛ ولی همان‌جایی که برنامهٔ واقعیِ یک نیروگاه یا پالایشگاه باید «زنده» بماند، یک‌سری قابلیت‌ها هستند که بیشتر برنامه‌ریزها سال‌ها بعد از اولین پروژه‌شان کشف می‌کنند. این هفت ترفند، همان‌هایی هستند که بعد از سال‌ها کار با MSP در پروژه‌های صنعتی بیشترین دردسر را برای من حل کرده‌اند — با مسیر دقیق منو و دلیل اینکه چرا کار می‌کنند.</p>
+
+    <h2>۱. Deadline به‌جای Constraint</h2>
+    <p>شایع‌ترین اشتباهی که در فایل‌های ورودی پیمانکارها می‌بینم: برای «تاریخ موعد تحویل» از محدودیت‌های سخت مثل <strong>Must Finish On</strong> یا <strong>Finish No Later Than</strong> استفاده می‌کنند. نتیجه؟ برنامه سرریز محدودیت می‌شود، مسیر بحرانی مصنوعی می‌سازد و هر بار Schedule تازه می‌گیرید، هشدارهای عجیب می‌بینید.</p>
+    <div class="callout">
+      <span class="callout-ic">→</span>
+      <div><strong>ترفند:</strong> به‌جای Constraint از <strong>Deadline</strong> استفاده کنید (ستون Deadline، یا دابل‌کلیک روی فعالیت → Advanced). Deadline تاریخ را «قفل» نمی‌کند؛ فقط اگر کار از موعد بگذرد، یک فلش قرمز روی نمودار گانت نشان می‌دهد و در ستون Total Slack اثر می‌گذارد. برنامه روان می‌ماند و موعد هم ناپدید نمی‌شود.</div>
+    </div>
+    <p>قاعدهٔ عملی من: <strong>Constraint فقط برای دو حالت</strong> — تاریخ اجباری قراردادی (مثل تاریخ گشایش LC که واقعاً در دست ما نیست) و محدودیت جفتی با برنامهٔ مرجع کارفرما. بقیهٔ تاریخ‌های «موعد»، همیشه Deadline.</p>
+
+    <h2>۲. Task Calendar — تقویم سطح فعالیت</h2>
+    <p>خیلی‌ها فکر می‌کنند برای این‌که کاری در روز جمعه هم جلو برود باید تقویم کل پروژه را عوض کنند. اشتباه است — تقویم پروژه را خراب می‌کنید. MSP یک لایهٔ تقویم دیگر دارد: <strong>Task Calendar</strong>.</p>
+    <p>مثال واقعی: تست جوش و بازرسی VT در کارگاه باید در شیفت روز کار کند، ولی فعالیت «سردکردن ری‌اکتور» باید ۲۴ ساعته و ۷ روز هفته اجرا شود. دابل‌کلیک روی فعالیت → Advanced → Calendar → تقویم «۲۴ Hours» را اختصاص دهید. نکتهٔ مهم: تیک <strong>Scheduling ignores resource calendars</strong> را خاموش نگه دارید مگر این‌که واقعاً می‌خواهید تقویم منبع نادیده گرفته شود — وگرنه هشدار مکرر می‌گیرید.</p>
+
+    <h2>۳. Inactivate Tasks — سناریوسازی بدون حذف</h2>
+    <p>برای تحلیل what-if در جلسات، بیشتر افراد یک نسخهٔ کپی از فایل می‌سازند («Project-final-v2-new-rev.mpp»!). روش درست: انتخاب فعالیت‌ها و زدن <strong>Inactivate</strong> (تب Task → گروه Schedule). فعالیت غیرفعال می‌ماند ولی از محاسبهٔ مسیر بحرانی، ارزش کسب‌شده و گزارش‌ها حذف می‌شود؛ رنگش هم خاکستری می‌شود تا خودتان گم نشوید.</p>
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>هشدار:</strong> Inactivate فقط در نسخهٔ <strong>Project Professional</strong> هست، نه Standard. و اگر فایل را به P6 یا نرم‌افزار دیگری Export می‌کنید، اول فعالیت‌های غیرفعال را حذف یا فیلتر کنید.</div>
+    </div>
+
+    <h2>۴. Lead/Lag قابل‌ردیابی با فیلد سفارشی</h2>
+    <p>لَگ‌هایی که داخل وابستگی‌ها (SS+۱۴d) قایم شده‌اند، کابوس به‌روزرسانی دوره‌ای هستند: هیچ گزارشی نشان‌شان نمی‌دهد و در Rev جدید یکی دو روز جابجا می‌شوند و همه چیز می‌خزد.</p>
+    <p>راه‌حل: لَگ‌ها را صفر نگه دارید و مدت تأخیر را در یک <strong>فیلد عددی سفارشی</strong> (مثلاً Number1 با عنوان «Lag») روی فعالیت بریزید. بعد در ستون پیش‌نیازها، با فرمول ساده شمارهٔ فعالیت پیش‌نیاز + مقدار Lag را کنار هم ببینید:</p>
+    <pre dir="ltr" data-lang="MSP FORMULA">Text1 = [Predecessors] &amp; " +" &amp; [Number1] &amp; "d"</pre>
+    <p>حالا یک فیلتر ساده (Number1 &gt; 0) کل لَگ‌های پروژه را یک‌جا به شما نشان می‌دهد — و در جلسهٔ به‌روزرسانی، دفاعش هم آسان است چون لَگ به‌عنوان دادهٔ برنامه دیده می‌شود، نه یک عدد قایم‌شده در رابط.</p>
+
+    <h2>۵. Baseline دوم — حافظهٔ جلسات مصوبه</h2>
+    <p>Baseline فقط یکی نیست. فرض کنید برنامهٔ Rev.A مصوب شده، بعد از سه ماه Rev.B تأیید می‌شود. اگر Baseline را روی نسخهٔ جدید ست کنید، تاریخچهٔ انحراف نسبت به مصوبهٔ اول می‌سوزد — همان چیزی که در دعوای claims باید نشان بدهید.</p>
+    <p>ترتیب درست: <strong>Project → Set Baseline → Set baseline: Baseline1</strong> (نه Baseline اصلی). بعد ستون‌های Variance مربوط به Baseline1 را در جدول Tracking نمایش دهید. این‌طوری همیشه «برنامهٔ مبنا» و «برنامهٔ بازنگری‌شده» را هم‌زمان دارید و می‌توانید انحراف‌ها را نسبت به هر دو گزارش کنید.</p>
+
+    <h2>۶. Automatic Filtering برای جلسهٔ هفتگی</h2>
+    <p>در جلسهٔ هفتگی نمی‌خواهید ۱۲هزار خط WBS را ورق بزنید. دو راه‌میان‌بُر:</p>
+    <ul>
+      <li><strong>Highlight</strong> (تب View → Filter → Highlight): فعالیت‌ها فیلتر نمی‌شوند، فقط هایلایت می‌شوند — عالی برای «مسیر بحرانی امروز» کنار کل برنامه.</li>
+      <li><strong>AutoFilter پیشرفته</strong>: روی ستون Finish، فیلتر Between = [تاریخ Data Date] تا [+۱۴ روز] → گزارش <em>Look-ahead دوهفته‌ای</em> در ده ثانیه. همین فیلتر را به‌عنوان فیلتر سفارشی ذخیره کنید تا هفتهٔ بعد فقط یک کلیک باشد.</li>
+    </ul>
+
+    <h2>۷. گانت‌چارت که مدیریت می‌فهمد: Bar Styles شرطی</h2>
+    <p>رنگِ میله‌ها لازم نیست برای همه یکسان باشد. در <strong>Format → Bar Styles</strong> می‌توانید سطر جدیدی تعریف کنید که فقط فعالیت‌هایی را رنگی کند که در فیلد سفارشی‌شان مقدار خاصی دارند — مثلاً میلهٔ «فعالیت‌های تأخیرخوردهٔ این دوره» را قرمز، «تازه شروع‌شده» را آبی و milestoneهای نزدیک (Deadline ≤ ۳۰ روز) را لوزی نارنجی بکشد. شرطش را در ستون Show For … Tasks می‌نویسید (مثلاً Normal، و در Filters همان فیلد سفارشی).</p>
+    <p>نتیجه: فایل MSP به‌جای «یک کوه خط»، گزارشی بصری می‌شود که مدیر پروژه در ده ثانیه می‌خواند.</p>
+
+    <h2>جمع‌بندی — کدام ترفند را اول اجرا کنم؟</h2>
+    <p>اگر فقط سه‌تایش را می‌خواهید این‌ها را اعمال کنید: <strong>Deadline به‌جای Constraint</strong> (سلامت منطق برنامه)، <strong>Lag قابل‌ردیابی</strong> (پایداری به‌روزرسانی دوره‌ای) و <strong>Baseline دوم</strong> (دفاع‌پذیری در جلسات و claims). بقیه برای گزارش‌سازی و جلسات عالی‌اند.</p>
+    <p>اگر اهل محاسبات ارزش کسب‌شده هم هستید، داشبورد <a href="/lab/evm/">EVM آنلاین سایت</a> و یادداشت <a href="/blog/weight-factor-excel-msp/">محاسبهٔ ضریب وزن در اکسل و MSP</a> مکمل همین ترفندها هستند؛ و برای کنار هم گذاشتن MSP با P6، یادداشت <a href="/blog/p6-global-change/">Global Change در Primavera P6</a> را دنبال کنید.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">آیا Deadline روی مسیر بحرانی اثر می‌گذارد؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>غیرمستقیم بله: اگر فعالیت از Deadline بگذرد، Total Slack منفی می‌شود و MSP آن را بحرانی گزارش می‌کند (مگر آستانهٔ بحرانی‌بودن را تغییر داده باشید). خود Deadline زنجیره‌ای نمی‌سازد و منطق شبکه را قفل نمی‌کند — همان کاری که Constraint می‌کند.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">تفاوت Total Slack و Free Slack چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>Total Slack شوکی است که فعالیت بدون به‌خطر انداختن <strong>پایان کل پروژه</strong> (یا یک محدودیت) دارد؛ Free Slack شوکی است که بدون جابجا کردن <strong>جانشین مستقیمش</strong> دارد. برای مدیریت منابع، Free Slack نگاه دقیق‌تری است؛ برای گزارش بحرانی‌بودن، Total Slack.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">Inactivate Task در گزارش‌های قبلی چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>هیچ — تاریخچهٔ Baseline دست نمی‌خورد. فعالیت غیرفعال در محاسبات کنار گذاشته می‌شود ولی داده‌هایش باقی می‌ماند؛ به همین دلیل برای claims بهتر از حذف کردن است. فقط مراقب باشید فیلترهای گزارش شما فعالیت‌های غیرفعال را نشان ندهند (در فیلتر، Active Tasks را شرط کنید).</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">فیلد Number1 و Text1 را همین‌طور در دسترس دارم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>بله؛ MSP در هر جدول (Task/Resource/Assignment) چندین فیلد عددی و متنی خام (Number1..10، Text1..30 و ...) دارد که از طریق Custom Fields می‌توانید rename، فرمول و Graphical Indicator به‌شان بدهید. اگر فایل را با دیگری ردوبدل می‌کنید، نام فیلدها را در مپینگ import/export هماهنگ نگه دارید.</div></div>
+      </div>
+    </div>
+  </article>
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
+    <a class="rss-link" href="/blog/rss.xml">
+      <svg viewBox="0 0 16 16"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
+      RSS
+    </a>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>
