@@ -92,6 +92,7 @@ CHECKS = {
     'lang toggle': 'class="lang-toggle"',
     'cmdk hint': 'class="cmdk-hint"',
     'cmdk overlay': 'id="cmdk-overlay"',
+    'social meta': '<meta property="og:image"',
 }
 
 # ---------------------------------------------------------------- structured data
