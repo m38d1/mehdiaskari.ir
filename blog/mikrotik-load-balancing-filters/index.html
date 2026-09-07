@@ -12,7 +12,7 @@
 <link rel="stylesheet" href="/blog.css">
   <link rel="stylesheet" href="/components.css">
 <title>لود بالانسینگ و فیلترهای پیشرفته در MikroTik | مهدی عسکری</title>
-<meta name="description" content="آموزش گام‌به‌گام لود بالانسینگ در MikroTik RouterOS با PCC و Nth، علامت‌گذاری بسته‌ها با Mangle و نوشتن فیلترهای امنیتی پیشرفته — همراه با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.">
+<meta name="description" content="راهنمای گام‌به‌گام لود بالانسینگ دو ISP در RouterOS 7: مسیرهای مستقل و failover با check-gateway، mangle سه‌لایه، نسبت‌های غیرمساوی با PCC، Nth برای UDP و فایروال لبهٔ سخت‌گیرانه — با کدهای آماده و چک‌لیست تست.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="لود بالانسینگ و فیلترهای پیشرفته در MikroTik">
 <meta property="og:description" content="ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی MikroTik.">
@@ -158,70 +158,192 @@
 <div class="cover post-hero" data-cover="mikrotik-load-balancing-filters"></div>
   </div>
   <article class="prose fu d1">
-  <p class="lead">در شبکه‌های متوسط‑به‑بالا، توزیع ترافیک بین چند مسیر اینترنتی و فیلتر کردن بسته‌ها برای امنیت ضروری است. MikroTik RouterOS ابزارهای قدرتمندی برای لود بالانسینگ و فیلترهای پیشرفته دارد؛ این مقاله گام‌به‌گام نحوه ترکیب PCC، Nth، Mangle و فیلترها را نشان می‌دهد.</p>
+  <p class="lead">سناریو را از همان دفتر کاری شروع می‌کنیم که همهٔ ما می‌شناسیم: یک لینک اینترنت که بدترین ساعت ممکن قطع می‌شود، یک ISP دوم که ارزان‌تر است ولی در ساعات شلوغی نفس کم می‌آورد، و ده‌ها کاربر که ترافیکشان از یک روتر MikroTik می‌گذرد. در این نوشته قدم‌به‌قدم پیکربندی می‌کنیم تا ترافیک بین دو ISP تقسیم شود، با قطع یکی از لینک‌ها شبکه نفس نکشد و فایروال روتر هم در حد یک روتر لبهٔ واقعی سخت‌گیرانه باشد. همهٔ کدها برای RouterOS 7 نوشته شده‌اند و تفاوت‌های نسخهٔ ۶ را هم جداگانه می‌بینید.</p>
 
-  <h2>۱. لود بالانسینگ با PCC (Per Connection Classifier)</h2>
-  <p>پروتکل‌های TCP/UDP هرکدام یک ترکیب از آی‌پی مبدا/مقصد و پورت‌ها دارند. با <code>pcc</code> می‌توان هر ترکیب را به یک مسیر خاص ارجاع داد تا ترافیک به‌صورت یکنواخت بین ISP‑های مختلف تقسیم شود.</p>
-  <div class="callout">
-    <span class="callout-ic">i</span>
-    <div><strong>نکته:</strong> برای ترافیک وب (پورت 80/443) بهتر است از <code>pcc src-dst-port</code> استفاده کنید؛ این کار باعث می‌شود تمام درخواست‌های یک کاربر به یک مسیر برود و نشست‌ها ثابت بمانند.</div>
-  </div>
-
-  <h2>۲. توزیع لود با Nth (Nth routing)</h2>
-  <p>در صورتی که می‌خواهید هر N‑مین بسته را به مسیر دوم بفرستید، از <code>nth</code> استفاده کنید. این روش برای ترافیک‌های UDP یا DNS که نیازی به حفظ نشست ندارند، مناسب است.</p>
-
-  <h2>۳. علامت‌گذاری بسته‌ها با Mangle</h2>
-  <p>قبل از فیلتر، بسته‌ها را با <code>mangle</code> علامت‌گذاری کنید تا بتوانید در فیلترهای بعدی به‌راحتی آن‌ها را شناسایی کنید.</p>
-  <pre dir="ltr" data-lang="MikroTik"><code>/ip firewall mangle
-add chain=prerouting protocol=tcp src-address=10.0.0.0/24 action=mark-connection new-connection-mark=isp1_conn passthrough=yes
-add chain=prerouting protocol=tcp src-address=10.0.0.0/24 action=mark-connection new-connection-mark=isp2_conn passthrough=yes nth=2</code></pre>
-
-  <h2>۴. فیلترهای Firewall برای امنیت</h2>
-  <p>پس از علامت‌گذاری، می‌توانید فیلترهای دقیق‌تری بنویسید؛ به‌عنوان مثال، بسته‌های غیرمجاز یا حملات DDoS را قبل از خروج از router مسدود کنید.</p>
-  <div class="callout">
-    <span class="callout-ic">i</span>
-    <div><strong>پیشنهاد:</strong> از <code>connection-state=invalid</code> برای حذف بسته‌های خراب استفاده کنید؛ این کار بار روی ISP‑ها را کاهش می‌دهد.</div>
-  </div>
-
-  <h2>۵. مثال کامل پیکربندی</h2>
-  <pre dir="ltr" data-lang="MikroTik"><code># تعریف مسیرهای ISP
-/ip route
-add gateway=1.1.1.1 distance=1 routing-table=isp1
-add gateway=2.2.2.2 distance=1 routing-table=isp2
-
-# استفاده از PCC برای توزیع
-/ip firewall mangle
-add chain=prerouting src-address=0.0.0.0/0 action=mark-routing new-routing-mark=to-isp1 passthrough=yes per-connection-classifier=both-addresses:2/0
-add chain=prerouting src-address=0.0.0.0/0 action=mark-routing new-routing-mark=to-isp2 passthrough=yes per-connection-classifier=both-addresses:2/1
-
-# فیلترهای امنیتی
-/ip firewall filter
-add chain=forward connection-state=invalid action=drop comment="Drop invalid packets"
-add chain=forward protocol=tcp dst-port=80,443 connection-state=new action=accept in-interface=ether1 out-interface=ether2 comment="Allow web traffic"
-</code></pre>
-
-  <h2>۶. چک‌لیست پیش از اجرا</h2>
+  <h2>سناریو و نقشهٔ شبکه</h2>
+  <p>سه رابط در بازی است؛ اسم‌ها و آدرس‌ها را از همین‌جا ثابت می‌کنیم تا کدهای مراحل بعد دقیقاً همین سناریو را پوشش دهند:</p>
   <ul>
-    <li>آدرس‌های IP ISP‌ها و مسیرهای پیش‌فرض را بررسی کنید.</li>
-    <li>تست PCC با <code>ping</code> و <code>traceroute</code> برای اطمینان از توزیع یکنواخت.</li>
-    <li>قواعد فیلتر را ابتدا در حالت <code>log</code> اجرا کنید تا بسته‌های مسدود شده را ببینید.</li>
-    <li>بعد از اطمینان، حالت <code>drop</code> را فعال کنید.</li>
+    <li><strong>ether1</strong> — لینک ISP اول (پهنای‌باند اصلی): <code dir="ltr">192.0.2.2/30</code> با گیت‌وی <code dir="ltr">192.0.2.1</code></li>
+    <li><strong>ether2</strong> — لینک ISP دوم (پشتیبان یا ارزان‌تر): <code dir="ltr">198.51.100.2/30</code> با گیت‌وی <code dir="ltr">198.51.100.1</code></li>
+    <li><strong>bridge-lan</strong> — شبکهٔ داخلی (پورت‌های ۳ به بعد و بی‌سیم): <code dir="ltr">10.10.10.1/24</code></li>
+  </ul>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>ترفند گام صفر:</strong> قبل از هر تغییری بکاپ متنی بگیرید. برخلاف فایل باینری <code dir="ltr">.backup</code>، خروجی export را می‌توانید در گیت نگه دارید، diff بگیرید و خط‌به‌خط بازبینی کنید — این همان چیزی است که یک بازگشت اضطراری را به یک کار دو دقیقه‌ای تبدیل می‌کند:</div>
+  </div>
+  <pre dir="ltr" data-lang="RouterOS"><code>/system backup save name=before-lb
+/export file=before-lb</code></pre>
+
+  <h2>گام ۱ — بالا آوردن دو WAN</h2>
+  <p>اول آدرس‌ها و بعد NAT. نکتهٔ مهم این است که برای هر WAN یک قاعدهٔ masquerade جداگانه می‌نویسیم؛ یک قاعدهٔ سراسری وقتی ترافیک بین دو مسیر تقسیم می‌شود، بسته‌هایی را که از WAN دیگر خارج می‌شوند بدون ترجمهٔ درست رها می‌کند و سایت‌های مقصد بسته‌های «بی‌منبع» می‌بینند:</p>
+  <pre dir="ltr" data-lang="RouterOS"><code>/ip address
+add address=192.0.2.2/30 interface=ether1 comment="WAN1 - main ISP"
+add address=198.51.100.2/30 interface=ether2 comment="WAN2 - backup ISP"
+
+/ip firewall nat
+add chain=srcnat out-interface=ether1 action=masquerade comment="NAT out WAN1"
+add chain=srcnat out-interface=ether2 action=masquerade comment="NAT out WAN2"
+
+/ip dns
+set servers=1.1.1.1,8.8.8.8 allow-remote-requests=yes</code></pre>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>اگر WAN شما با DHCP آدرس می‌گیرد:</strong> حتماً <code dir="ltr">add-default-route=no</code> و <code dir="ltr">use-peer-dns=no</code> بگذارید. مسیر پیش‌فرضی که DHCP کلاینت تزریق می‌کند فقط به جدول main می‌رود و هرگز نمی‌تواند ترافیک mark شده را ببرد؛ همان یک قاعدهٔ خودکار کافی است تا کل لود بالانسینگ شما بی‌صدا بی‌اثر شود.</div>
+  </div>
+
+  <h2>گام ۲ — مسیرهای مستقل و failover خودکار</h2>
+  <p>در RouterOS 7 برای هر ISP یک جدول مسیریابی جدا می‌سازیم؛ این جدول‌ها فقط توسط routing-mark استفاده می‌شوند. بعد در جدول main هم دو مسیر پیش‌فرض با distance متفاوت می‌گذاریم تا اگر ISP اول مرد، کل شبکه خودکار روی ISP دوم بیفتد — بدون هیچ اسکریپتی:</p>
+  <pre dir="ltr" data-lang="RouterOS"><code>/routing table
+add name=via-isp1 fib
+add name=via-isp2 fib
+
+/ip route
+# dedicated tables used by routing marks
+add dst-address=0.0.0.0/0 gateway=192.0.2.1 routing-table=via-isp1 check-gateway=ping
+add dst-address=0.0.0.0/0 gateway=198.51.100.1 routing-table=via-isp2 check-gateway=ping
+# main table: ISP1 primary, ISP2 automatic failover
+add dst-address=0.0.0.0/0 gateway=192.0.2.1 distance=1 check-gateway=ping
+add dst-address=0.0.0.0/0 gateway=198.51.100.1 distance=2 check-gateway=ping</code></pre>
+  <p><code dir="ltr">check-gateway=ping</code> هر ده ثانیه گیت‌وی را ping می‌کند و بعد از دو شکست، آن مسیر را از جدول حذف می‌کند؛ یعنی قطعی را حداکثر در حدود بیست ثانیه می‌فهمید. یک قاعدهٔ امنیتی هم اینجا کار می‌کند که خیلی‌ها نمی‌دانند: اگر ترافیکی با routing-mark به جدولی فرستاده شود که مسیر فعالی ندارد، RouterOS به‌طور خودکار به جدول main برمی‌گردد. پس وقتی ISP1 از دسترس خارج شود، ترافیک mark شدهٔ «به-ISP1» هم بدون هیچ تغییری از ISP2 می‌گذرد.</p>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>ترفند حرفه‌ای‌تر:</strong> گیت‌وی زنده بودنِ مودم را نشان می‌دهد، نه زنده بودن اینترنت. با مسیر بازگشتی (recursive) به یک IP عمومی مثل <code dir="ltr">1.1.1.1</code> probe بزنید تا «مودم روشن ولی اینترنت قطع» هم تشخیص داده شود؛ در RouterOS 7 یعنی gateway مسیر اصلی را همان IP عمومی بگذارید و گیت‌وی واقعی را با <code dir="ltr">scope=10 target-scope=10</code> به‌عنوان مسیر host تعریف کنید.</div>
+  </div>
+
+  <h2>گام ۳ — منطق Mangle در سه لایه</h2>
+  <p>قلب کار همین‌جاست. سه قانون طلایی را به ترتیب بنویسید و جای هیچ‌کدام را عوض نکنید:</p>
+  <ol>
+    <li><strong>هر اتصالی که از بیرون وارد یکی از WANها شده، پاسخش هم از همان WAN بیرون برود.</strong> وگرنه بانک‌ها، ریموت‌دسکتاپ و هر سرویس session محوری از هم می‌پاشد.</li>
+    <li><strong>فقط اتصال‌های جدید شبکهٔ داخلی با PCC تقسیم شوند</strong> — قید <code dir="ltr">connection-mark=no-mark</code> در اینجا یک قید تزئینی نیست؛ تضمین می‌کند اتصال‌های از قبل mark شده دوباره طبقه‌بندی نشوند.</li>
+    <li><strong>routing-mark از connection-mark مشتق شود، نه مستقیم از PCC.</strong> به این ترتیب تصمیم فقط یک بار برای هر اتصال گرفته می‌شود و تمام بسته‌های آن اتصال از یک مسیر می‌روند.</li>
+  </ol>
+  <pre dir="ltr" data-lang="RouterOS"><code>/ip firewall mangle
+# 1) inbound WAN connections keep their own path
+add chain=prerouting in-interface=ether1 connection-mark=no-mark action=mark-connection new-connection-mark=to-isp1 passthrough=yes
+add chain=prerouting in-interface=ether2 connection-mark=no-mark action=mark-connection new-connection-mark=to-isp2 passthrough=yes
+# 2) classify every NEW connection from the LAN with PCC (50/50)
+add chain=prerouting in-interface=bridge-lan connection-mark=no-mark per-connection-classifier=both-addresses:2/0 action=mark-connection new-connection-mark=to-isp1 passthrough=yes
+add chain=prerouting in-interface=bridge-lan connection-mark=no-mark per-connection-classifier=both-addresses:2/1 action=mark-connection new-connection-mark=to-isp2 passthrough=yes
+# 3) translate the connection mark into a routing mark
+add chain=prerouting connection-mark=to-isp1 action=mark-routing new-routing-mark=via-isp1 passthrough=no
+add chain=prerouting connection-mark=to-isp2 action=mark-routing new-routing-mark=via-isp2 passthrough=no</code></pre>
+  <p>قواعد فایروال در RouterOS از بالا به پایین خوانده می‌شوند و اولین تطبیق برنده است؛ پس ترتیب همین بلوک را دقیقاً حفظ کنید. <code dir="ltr">passthrough=no</code> در لایهٔ سوم یعنی «کار تمام شد، بسته را رها کن» و از خوردن دو بار کانتر جلوگیری می‌کند.</p>
+
+  <h2>گام ۴ — PCC در عمق: کلاس‌بندی و نسبت دلخواه</h2>
+  <p><code dir="ltr">per-connection-classifier</code> سه پارامتر دارد: هش چه چیزی باشد، چند bucket بسازد و بسته به کدام bucket بخورد. حالت‌های پرکاربرد:</p>
+  <ul>
+    <li><code dir="ltr">both-addresses</code> — هش روی IP مبدأ و مقصد؛ بهترین انتخاب پیش‌فرض. یک کاربر همیشه روی یک bucket می‌افتد و سرعت هر دانلودِ تکی همان یک لینک می‌ماند.</li>
+    <li><code dir="ltr">both-addresses-and-ports</code> — دانه‌درشت‌تر؛ تعداد اتصال هم در هش می‌آید و توزیع یکنواخت‌تر می‌شود، ولی دو اتصال از یک مرورگر می‌توانند از دو ISP بروند که برای اکثر سایت‌ها مشکلی ندارد.</li>
+    <li><code dir="ltr">src-address</code> — کل کاربر روی یک لینک؛ وقتی می‌خواهید مثلاً اتاق سرور همیشه از ISP2 خارج شود.</li>
+  </ul>
+  <p>عدد بعد از دونقطه تعداد bucketها است و عدد بعد از ممیز، شمارهٔ bucket. چون هش به‌طور یکنواخت پخش می‌شود، می‌توانید نسبت غیرمساوی هم بسازید — ترفندی که تقریباً هیچ‌جا مستند نمی‌شود: به‌جای دو bucket ده bucket بسازید و هفت‌تای آن‌ها را به ISP پرسرعت بدهید:</p>
+  <pre dir="ltr" data-lang="RouterOS"><code># ~70/30 split: buckets 0..6 go to ISP1, buckets 7..9 to ISP2
+add chain=prerouting in-interface=bridge-lan connection-mark=no-mark per-connection-classifier=both-addresses:10/0 action=mark-connection new-connection-mark=to-isp1 passthrough=yes
+add chain=prerouting in-interface=bridge-lan connection-mark=no-mark per-connection-classifier=both-addresses:10/1 action=mark-connection new-connection-mark=to-isp1 passthrough=yes
+# ... repeat the same rule for buckets 10/2 up to 10/6 (to-isp1)
+add chain=prerouting in-interface=bridge-lan connection-mark=no-mark per-connection-classifier=both-addresses:10/7 action=mark-connection new-connection-mark=to-isp2 passthrough=yes
+# ... and for buckets 10/8 and 10/9 (to-isp2)</code></pre>
+  <div class="callout">
+    <span class="callout-ic">i</span>
+    <div><strong>استثناهای اجباری را بالای PCC بگذارید:</strong> سایت‌های بانکی، درگاه پرداخت و سرورهایی که IP خروجی برایشان مهم است را با یک address-list جدا کنید و قبل از قواعد PCC به یک ISP مشخص ببندید. قاعدهٔ کلی mangle: هرچه خاص‌تر، بالاتر.</div>
+  </div>
+
+  <h2>گام ۵ — Nth: تقسیم بسته‌محور برای UDP</h2>
+  <p>PCC در سطح اتصال تصمیم می‌گیرد؛ Nth در سطح بسته. <code dir="ltr">nth=2,1</code> یعنی «از هر دو بسته، دومی» را تطبیق بده. برای TCP هیچ‌وقت مناسب نیست (بسته‌های یک اتصال از دو مسیر مختلف = فاجعه)، ولی برای ترافیکی که state ندارد — مثل فوروارد دوبارهٔ کوئری‌های DNS به دو رِزالور، یا رله‌های UDP — راه‌حل تمیزی است:</p>
+  <pre dir="ltr" data-lang="RouterOS"><code>/ip firewall mangle
+add chain=prerouting protocol=udp dst-port=53 dst-address=10.10.10.1 in-interface=bridge-lan nth=2,1 action=mark-connection new-connection-mark=to-isp2 passthrough=yes
+add chain=prerouting protocol=udp dst-port=53 dst-address=10.10.10.1 in-interface=bridge-lan connection-mark=no-mark action=mark-connection new-connection-mark=to-isp1 passthrough=yes</code></pre>
+  <p>قاعدهٔ دوم عمداً بعد از Nth می‌آید: هر کوئری‌ای که bucket دوم را نخورد، به ISP1 می‌رود. اگر این الگو را حفظ کنید، هرگز نیازی به شمارش معکوس کانترهای Nth ندارید.</p>
+
+  <h2>گام ۶ — فایروال: از «باز بودن همه» تا روتر لبهٔ واقعی</h2>
+  <p>با وجود لود بالانسینگ، سطح حملهٔ شما دو برابر شده است: دو مسیر ورودی به شبکه. زنجیرهٔ input را سخت ببندید و در forward فقط ترافیک state دار و داخلی را بپذیرید:</p>
+  <pre dir="ltr" data-lang="RouterOS"><code>/ip firewall filter
+# --- input: protect the router itself
+add chain=input connection-state=established,related action=accept
+add chain=input connection-state=invalid action=drop
+add chain=input in-interface=bridge-lan action=accept
+add chain=input in-interface=ether1 protocol=icmp action=accept
+add chain=input in-interface=ether2 protocol=icmp action=accept
+add chain=input action=drop comment="drop everything else from WAN"
+# --- forward: police what crosses the router
+add chain=forward connection-state=established,related,untracked action=accept
+add chain=forward connection-state=invalid action=drop
+add chain=forward in-interface=bridge-lan action=accept
+add chain=forward in-interface=ether1,ether2 connection-nat-state=!dstnat action=drop</code></pre>
+  <p>قاعدهٔ آخر ستون فقرات امنیت است: از بیرون فقط ترافیکی اجازهٔ عبور دارد که شما عمداً برای آن dstnat (port forwarding) نوشته‌اید؛ هر چیز دیگری drop می‌شود. اگر لازم است از بیرون Winbox بزنید، یک address-list از IPهای دفتر بسازید و یک قاعدهٔ accept محدود به همان لیست، قبل از قاعدهٔ drop نهایی بگذارید — و هرگز پورت Winbox را به کل اینترنت باز نگذارید.</p>
+
+  <h2>گام ۷ — تست، اندازه‌گیری و تیونینگ</h2>
+  <p>لود بالانسینگ بدون اندازه‌گیری فقط یک حدس است. این چهار دستور عادت روزمرهٔ شما باید شوند:</p>
+  <pre dir="ltr" data-lang="RouterOS"><code>/ip route print where routing-table=via-isp1
+/ip firewall connection print count-only where connection-mark=to-isp1
+/ip firewall connection print count-only where connection-mark=to-isp2
+/tool torch ether1 port=any</code></pre>
+  <ul>
+    <li><strong>تست failover:</strong> کابل WAN1 را بکشید؛ حدود بیست ثانیه بعد (دو بار ping ناموفق) مسیر از جدول حذف می‌شود و ترافیک به‌صورت شفاف از ISP2 می‌گذرد. دست بکشید و برگردد، همان‌قدر طول می‌کشد.</li>
+    <li><strong>تست توزیع:</strong> کانتر قواعد PCC را ده دقیقه نگاه کنید. اختلاف بیش از ۵–۱۰ درصد طبیعی است (ترافیک شما متقارن نیست)، ولی اگر همه‌چیز روی یک bucket است، احتمالاً همهٔ کاربران پشت یک NAT مشترک‌اند — به <code dir="ltr">both-addresses-and-ports</code> سوئیچ کنید.</li>
+    <li><strong>تیونینگ NAT سنگین:</strong> در دفاتر شلوغ جدول connection tracking زود پر می‌شود؛ <code dir="ltr">tcp-established-timeout</code> را از ۲۴ ساعت به ۱–۲ ساعت کم کنید و در Raw جدول قاعدهٔ drop برای SYN flood از WAN اضافه کنید.</li>
   </ul>
 
-  <h2>۷. سوالات متداول</h2>
+  <h2>اشکال‌یابی و نکته‌های نسخه‌ها</h2>
+  <div class="tabs" data-single>
+    <div class="tab-list" role="tablist">
+      <button class="tab" data-tab="trouble" aria-selected="true">خطاهای رایج</button>
+      <button class="tab" data-tab="versions" aria-selected="false">RouterOS 6 در برابر 7</button>
+      <button class="tab" data-tab="checklist" aria-selected="false">چک‌لیست تست نهایی</button>
+    </div>
+    <div class="tab-panel is-active" data-panel="trouble">
+      <ul>
+        <li><strong>برخی سایت‌ها یا اپ بانکی باز نمی‌شود</strong> — اتصال‌های قبلی‌اش روی bucket دیگری گیر کرده یا IP خروجی را عوض کرده. همان address-list استثنا را بسازید و به یک ISP ببندید؛ بعد از اعمال، اتصال‌های قدیمی را با <code dir="ltr">/ip firewall connection remove [find]</code> پاک کنید.</li>
+        <li><strong>بعد از قطعی ISP، همه‌چیز چند دقیقه قفل است</strong> — جدول connection tracking پر از اتصال‌های مرده است. یا صبر کنید تا timeout بخورند یا همان دستور remove را بزنید.</li>
+        <li><strong>port forwarding جواب می‌دهد ولی پاسخ به مشتری نمی‌رسد</strong> — لایهٔ اول Mangle را ننوشته‌اید؛ پاسخ دارد از WAN دیگر برمی‌گردد و سرویس گیرنده آن را نمی‌شناسد.</li>
+        <li><strong>سرعت دانلودِ تکی جمع نشد</strong> — طبیعی است؛ تقسیم در سطح اتصال است نه بایت. برای جمع‌شدن سرعت یک فایل باید downloader چنداتصاله استفاده کنید.</li>
+      </ul>
+    </div>
+    <div class="tab-panel" data-panel="versions">
+      <ul>
+        <li>در نسخهٔ ۶ جدول مسیریابی جداگانه وجود ندارد؛ به‌جای <code dir="ltr">routing-table=via-isp1</code> روی خود مسیر <code dir="ltr">routing-mark=via-isp1</code> می‌نویسید.</li>
+        <li><code dir="ltr">check-gateway=ping</code> در هر دو نسخه یکسان است و منطق failover فرقی نمی‌کند.</li>
+        <li>در نسخهٔ ۶ قواعد mangle همین‌اند؛ فقط نام جداول را به routing-mark مسیرها گره بزنید.</li>
+        <li>قبل از ارتقا از ۶ به ۷ همیشه export بگیرید — چند دستور network-related تغییر نام داده‌اند و اسکریپت‌های خام ممکن است بشکنند.</li>
+      </ul>
+    </div>
+    <div class="tab-panel" data-panel="checklist">
+      <ul>
+        <li>از دو کلاینت مختلف سایت تشخیص IP را باز کنید؛ باید هر دو IP عمومی را ببینید.</li>
+        <li>کابل هر WAN را جدا بکشید و برگردانید؛ قطعی در ~۲۰ ثانیه باید بدون قطع شدن اتصال‌های جدید جبران شود.</li>
+        <li>یک port forwarding واقعی را از بیرون (موبایل با دیتا) تست کنید، نه از داخل شبکه.</li>
+        <li>کانتر قواعد PCC را ببینید؛ نسبت تقریباً مطابق bucketهاست؟</li>
+        <li><code dir="ltr">/export</code> نهایی را در گیت کامیت کنید؛ پیکربندیِ بی‌نسخهٔ کنترل، پیکربندیِ گمشدهٔ فرداست.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2>سؤالات متداول</h2>
   <div class="accordion" data-single>
     <div class="acc-item">
       <button class="acc-head">آیا PCC برای تمام پروتکل‌ها کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="acc-body"><div>پروتکل‌های TCP و UDP به‌خوبی با PCC کار می‌کنند؛ برای ICMP یا پروتکل‌های دیگر بهتر است از Nth یا مسیریابی استاتیک استفاده کنید.</div></div>
+      <div class="acc-body"><div>برای TCP و UDP بله، چون مفهوم اتصال دارند. ICMP و پروتکل‌های بی‌state با PCC طبقه‌بندی نمی‌شوند و از جدول main (یعنی ISP اصلی) می‌روند — که معمولاً همان چیزی است که می‌خواهید، چون ping های تستی شما از مسیر ثابت می‌گذرند.</div></div>
     </div>
     <div class="acc-item">
-      <button class="acc-head">چگونه می‌توانم ترافیک P2P را مسدود کنم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      <div class="acc-body"><div>از فیلترهای <code>layer7-protocol=p2p</code> یا <code>protocol=tcp dst-port=6881-6999</code> استفاده کنید؛ حتماً قبل از فعال‌سازی، لاگ کنید تا از عدم قطع ترافیک ضروری اطمینان حاصل کنید.</div></div>
+      <button class="acc-head">نسبت ۷۰/۳۰ یا هر عدد دیگری ممکن است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="acc-body"><div>بله؛ به‌جای دو bucket ده bucket بسازید (گام ۴) و تعداد bucketهای هر ISP را متناسب با ظرفیتش انتخاب کنید. ۵/۵، ۷/۳ و ۸/۲ همه با همین الگو ساخته می‌شوند؛ برای نسبت‌های دقیق‌تر denominator را بزرگ‌تر بگیرید.</div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-head">ECMP بهتر از PCC نیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="acc-body"><div>ECMP ساده‌تر است (چند gateway در یک مسیر) ولی تصمیمش را با هش داخلی و بسته‌به‌بسته می‌گیرد و کنترل استثناها را از شما می‌گیرد. برای شبکهٔ اداری که بانک و ریموت‌دسکتاپ دارد، کنترل در سطح اتصال با PCC انتخاب مطمئن‌تری است.</div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-head">با دو WAN چطور port forwarding درست کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="acc-body"><div>dstnat را روی هر WAN جدا تعریف کنید و لایهٔ اول Mangle (گام ۳) را حتماً بنویسید. آن قاعده تضمین می‌کند پاسخِ هر اتصالِ ورودی از همان دروازه‌ای برگردد که آمده — بدون آن، دوربین‌ها و سرویس‌های ریموت عملاً غیرقابل استفاده می‌شوند.</div></div>
+    </div>
+    <div class="acc-item">
+      <button class="acc-head">چطور یک IP خاص را همیشه از یک ISP بفرستم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <div class="acc-body"><div>یک address-list بسازید و یک قاعدهٔ mark-connection بر اساس <code dir="ltr">dst-address-list</code> بالاتر از قواعد PCC اضافه کنید. همان الگوی استثنای سایت‌های بانکی است؛ ترتیب قواعد، همه‌چیز است.</div></div>
     </div>
   </div>
 
   <h2>جمع‌بندی</h2>
-  <p>با ترکیب PCC، Nth، Mangle و فیلترهای دقیق می‌توانید ترافیک را به‌صورت هوشمند بین ISP‑های مختلف تقسیم کنید و در عین حال امنیت شبکه را ارتقا دهید.</p>
+  <p>چارچوبی که ساختیم سه لایه دارد: مسیرهای مستقل با check-gateway برای failover بی‌سکریپت، mangle سه‌لایه برای تقسیم در سطح اتصال، و فایروال زنجیره‌ای برای سطح حملهٔ دوتایی. اگر همین ترتیب را حفظ کنید، افزودن ISP سوم یعنی فقط تکرار همین الگو با یک bucket دیگر. اگر با OpenWrt کار می‌کنید، منطق mwan3 دقیقاً همین است؛ تجربهٔ من با OpenWrt را در <a href="/blog/gale-openwrt-custom-firmware/">فریمور سفارشی Google Wifi (Gale)</a> و درس‌های واقعی میدانی را در <a href="/blog/network-lessons-industrial-site/">درس‌های شبکه از یک سایت صنعتی</a> خوانده‌اید.</p>
 </article>
   <div class="post-foot fu d2">
     <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
