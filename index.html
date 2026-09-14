@@ -950,6 +950,53 @@
   .egg-body .l3{color:#63D471;}
   .egg-body .l4{color:var(--text); direction:rtl; text-align:right; display:block; margin-top:6px; font-family:'Vazirmatn', sans-serif; font-size:0.86rem;}
 
+  /* ---------- VISUAL LAYER — decode, tilt, dot pop, ripple, theme disc, reveal fallback ---------- */
+  /* eyebrow decode: keep the pill from resizing on every swap (desktop) */
+  @media (min-width:560px){ .eyebrow-text{white-space:nowrap;} }
+  .eyebrow-text.decoding{color:var(--teal-2);}
+
+  /* soft 3D tilt — JS opts cards in (pointer:fine + motion-safe only).
+     Placed after .info-card:hover on purpose: same specificity, later wins,
+     so the tilt transform composes the hover lift instead of fighting it. */
+  .tool-card{transition:transform .28s cubic-bezier(.2,.8,.2,1);}
+  .tool-card.tiltable, .info-card.tiltable{
+    transform:perspective(760px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(var(--tilt-lift,0px));
+  }
+  /* keep the hover lift alive under the tilt (same specificity, later wins) */
+  .tool-card.tiltable:hover, .info-card.tiltable:hover{
+    transform:perspective(760px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(-3px);
+  }
+
+  /* timeline dot pop — one overshoot, then settle (spring for state changes) */
+  @keyframes dotPop{
+    0%{ transform:scale(.7); } 60%{ transform:scale(1.22); } 100%{ transform:scale(1); }
+  }
+  .gantt-item.lit .rail .dot{ animation:dotPop .45s cubic-bezier(.34,1.4,.64,1) both; }
+
+  /* click ripple — confirm feedback, decaying overlay (not layout motion) */
+  .ripple-able{position:relative; overflow:hidden;}
+  .ripple{
+    position:absolute; border-radius:50%; pointer-events:none; opacity:.28;
+    background:radial-gradient(circle, var(--teal) 0%, transparent 68%);
+    transform:scale(0); animation:rippleOut .45s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  @keyframes rippleOut{ to{ transform:scale(2.2); opacity:0; } }
+
+  /* expanding-disc theme swap for browsers without View Transitions (Firefox).
+     Chrome/Edge keep the existing ::view-transition circle. */
+  .theme-disc{
+    position:fixed; z-index:9998; border-radius:50%; pointer-events:none;
+    background:var(--disc-bg);
+    transform:scale(0); animation:discGrow .5s cubic-bezier(.2,.7,.2,1) forwards;
+  }
+  @keyframes discGrow{ from{ transform:scale(0); } to{ transform:scale(1); } }
+
+  @media(prefers-reduced-motion: reduce){
+    .tool-card.tiltable, .info-card.tiltable, .gantt-card.tiltable{ transform:none; }
+    .ripple, .theme-disc{ display:none; }
+    .gantt-item.lit .rail .dot{ animation:none; }
+  }
+
   /* ---------- PRINT ---------- */
   @media print{
     html{
@@ -1477,7 +1524,23 @@
 
   function applyTheme(next, x, y){
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if(theme === next || !document.startViewTransition || reduce){ theme = next; render(); return; }
+    if(theme === next || reduce){ theme = next; render(); return; }
+    // Firefox/Safari without View Transitions: expanding disc from the click point
+    if(!document.startViewTransition){
+      const d = document.createElement('div');
+      d.className = 'theme-disc';
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      d.style.cssText = 'left:' + (x - rad) + 'px;top:' + (y - rad) + 'px;width:' + rad * 2 + 'px;height:' + rad * 2 + 'px';
+      theme = next; render();                       // sample the NEW theme's bg for the disc
+      d.style.setProperty('--disc-bg', getComputedStyle(root).getPropertyValue('--bg').trim() || '#08090D');
+      theme = next === 'dark' ? 'light' : 'dark';   // flip back; the growing disc reveals the new look
+      render();
+      document.body.appendChild(d);
+      const finish = () => { theme = next; render(); d.remove(); };
+      d.addEventListener('animationend', finish, {once:true});
+      setTimeout(finish, 700);                      // safety net if the event never fires
+      return;
+    }
     const vt = document.startViewTransition(() => { theme = next; render(); });
     vt.ready.then(() => {
       const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
@@ -1529,11 +1592,47 @@
   ];
   let actIdx = 0;
   const eyebrowText = document.getElementById('eyebrow-text');
-  setInterval(()=>{
+  const SCR_FA = 'ابپتثجچحخدذرزژسشصضطظعغفقکگلمنوهی۰۱۲۳۴۵۶۷۸۹';
+  const SCR_EN = 'abcdefghijklmnopqrstuvwxyz0123456789<>/{}[]=+*#%$';
+  const scrScratch = document.createElement('div');
+  let scrTimer = 0;
+  function swapEyebrow(){
     actIdx = (actIdx + 1) % activitiesFa.length;
     const list = lang === 'en' ? activitiesEn : activitiesFa;
-    eyebrowText.innerHTML = '<span>' + list[actIdx] + '</span>';
-  }, 2800);
+    const raw = list[actIdx];
+    clearInterval(scrTimer);
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced){ eyebrowText.innerHTML = '<span>' + raw + '</span>'; return; }
+    // decode-scramble: text resolves glyph-by-glyph in reading order, ~360ms
+    scrScratch.innerHTML = raw;
+    const txt = scrScratch.textContent;
+    const pool = lang === 'en' ? SCR_EN : SCR_FA;
+    const n = txt.length;
+    const frames = 22;
+    eyebrowText.classList.add('decoding');
+    const span = document.createElement('span');
+    eyebrowText.textContent = '';
+    eyebrowText.appendChild(span);
+    let f = 0;
+    scrTimer = setInterval(()=>{
+      f++;
+      const revealed = Math.floor(n * (1 - Math.pow(1 - f / frames, 2))); // ease-out reveal
+      let out = '';
+      for(let i = 0; i < n; i++){
+        const ch = txt[i];
+        out += (i < revealed || ch === ' ' || ch === '‌' || ch === '‍')
+          ? ch : pool[(Math.random() * pool.length) | 0];
+      }
+      if(f >= frames){
+        clearInterval(scrTimer);
+        eyebrowText.classList.remove('decoding');
+        eyebrowText.innerHTML = '<span>' + raw + '</span>';
+        return;
+      }
+      span.textContent = out;
+    }, 16);
+  }
+  setInterval(swapEyebrow, 2800);
 
   // cursor spotlight (desktop only, respects reduced motion)
   const spotlight = document.getElementById('spotlight');
@@ -1906,6 +2005,56 @@
     window.addEventListener('scroll', () => { if(!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
     window.addEventListener('resize', update, {passive:true});
     update();
+  })();
+
+  // soft 3D tilt on cards — desktop, motion-safe only; max 3.5deg, springs back on leave
+  (function(){
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const fine = window.matchMedia && window.matchMedia('(pointer: fine)').matches;
+    if(reduced || !fine) return;
+    document.querySelectorAll('.tool-card, .info-card').forEach(el => {
+      el.classList.add('tiltable');
+      let raf = 0, tx = 0, ty = 0;
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        ty = (px * 3.5).toFixed(2);            // rotateY follows horizontal position
+        tx = (-py * 3.5).toFixed(2);           // rotateX follows vertical position
+        if(!raf) raf = requestAnimationFrame(() => {
+          raf = 0;
+          el.style.setProperty('--tilt-x', tx + 'deg');
+          el.style.setProperty('--tilt-y', ty + 'deg');
+        });
+      }, {passive:true});
+      el.addEventListener('pointerleave', () => {
+        if(raf){ cancelAnimationFrame(raf); raf = 0; }
+        el.style.setProperty('--tilt-x', '0deg');
+        el.style.setProperty('--tilt-y', '0deg');
+      });
+    });
+  })();
+
+  // click ripple — press confirmation on primary buttons and toggles
+  (function(){
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(reduced) return;
+    const SEL = '.btn-download, .theme-opt, .lang-opt, .scroll-top';
+    document.querySelectorAll(SEL).forEach(el => el.classList.add('ripple-able'));
+    document.addEventListener('pointerdown', (e) => {
+      const el = e.target.closest && e.target.closest(SEL);
+      if(!el) return;
+      const r = el.getBoundingClientRect();
+      const size = Math.max(r.width, r.height) * 1.6;
+      const s = document.createElement('span');
+      s.className = 'ripple';
+      s.style.width = s.style.height = size + 'px';
+      s.style.left = (e.clientX - r.left - size / 2) + 'px';
+      s.style.top = (e.clientY - r.top - size / 2) + 'px';
+      el.appendChild(s);
+      s.addEventListener('animationend', () => s.remove(), {once:true});
+      setTimeout(() => s.remove(), 600);
+    }, {passive:true});
   })();
 
   setLang('fa');
