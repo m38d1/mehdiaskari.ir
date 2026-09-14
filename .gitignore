@@ -1,3 +1,6 @@
 __pycache__/
 *.pyc
 .DS_Store
+
+# backups (zip + git bundle) — never publish via GitHub Pages
+backup/

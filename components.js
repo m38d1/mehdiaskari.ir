@@ -205,6 +205,41 @@
     nums.forEach(function(n){ io.observe(n); });
   }
 
+  // ---------- Card 3D tilt (blog-card on home, post-card on /blog/all/) ----------
+  function initTilt(root){
+    if(!(window.matchMedia
+      && window.matchMedia('(pointer: fine)').matches
+      && !window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+    var SEL = '.blog-card, .post-card';
+    var els = [];
+    if(root.matches && root.matches(SEL)) els.push(root);
+    root.querySelectorAll(SEL).forEach(function(x){ els.push(x); });
+    els.forEach(function(el){
+      if(el.__tiltBound) return; el.__tiltBound = 1;
+      el.classList.add('tiltable');
+      var raf = 0, ev = null;
+      el.addEventListener('pointermove', function(e){
+        ev = e;
+        if(raf) return;
+        raf = requestAnimationFrame(function(){
+          raf = 0;
+          if(!ev) return;
+          var r = el.getBoundingClientRect();
+          if(!r.width || !r.height) return;
+          var px = (ev.clientX - r.left) / r.width - 0.5;
+          var py = (ev.clientY - r.top) / r.height - 0.5;
+          el.style.setProperty('--tilt-x', (-py * 3.5).toFixed(2) + 'deg');
+          el.style.setProperty('--tilt-y', (px * 3.5).toFixed(2) + 'deg');
+        });
+      }, {passive:true});
+      el.addEventListener('pointerleave', function(){
+        if(raf){ cancelAnimationFrame(raf); raf = 0; }
+        el.style.setProperty('--tilt-x', '0deg');
+        el.style.setProperty('--tilt-y', '0deg');
+      });
+    });
+  }
+
   // ---------- Blog search / filter ----------
   function initBlogSearch(root){
     var grid = document.getElementById('post-grid');
@@ -379,7 +414,7 @@
   function initAll(root){
     initTabs(root); initAccordion(root); initDialog(root); initCode(root);
     initReadingBar(); initTOC(); initReadingTime(); initCounters(root);
-    initBlogSearch(root); initCursorGlow();
+    initBlogSearch(root); initTilt(root); initCursorGlow();
     initLang(); initCmdk();
   }
 

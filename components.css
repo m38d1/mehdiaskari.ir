@@ -279,3 +279,18 @@ mark.hl{ background:var(--teal-dim); color:var(--text); border-radius:3px; paddi
 .cmdk-item.active .cmdk-ic{border-color:var(--teal); color:var(--teal);}
 @media (hover:none){ .cursor-glow{ display:none; } }
 @media (prefers-reduced-motion: reduce){ .cursor-glow{ display:none; } }
+
+/* ---------- Card 3D tilt — opted in by components.js on blog/post cards
+   (pointer:fine + motion-safe only). The .tiltable variants outrank the
+   plain .blog-card:hover / .post-card:hover lift rules by specificity, so
+   the tilt composes with the same lift instead of fighting it. ---------- */
+.blog-card.tiltable, .post-card.tiltable{
+  transform:perspective(760px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(0);
+  transition:transform .28s cubic-bezier(.2,.8,.2,1), border-color .25s ease, box-shadow .25s ease;
+}
+.blog-card.tiltable:hover{transform:perspective(760px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(-4px);}
+.post-card.tiltable:hover{transform:perspective(760px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg)) translateY(-3px);}
+@media (prefers-reduced-motion: reduce){
+  .blog-card.tiltable, .post-card.tiltable,
+  .blog-card.tiltable:hover, .post-card.tiltable:hover{ transform:none; }
+}

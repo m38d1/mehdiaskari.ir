@@ -435,7 +435,31 @@
 
   .hero-actions{
     max-width:960px; margin:28px auto 0; padding:0 24px;
-    display:flex; justify-content:center;
+    display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+  }
+  /* live Tehran clock — quiet mono pill next to the CTA */
+  .hero-clock{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'Vazirmatn', sans-serif; font-size:0.8rem; font-weight:500;
+    color:var(--text-muted);
+    border:1px solid var(--border); border-radius:100px; padding:10px 16px;
+    background:var(--glass);
+    backdrop-filter:blur(14px) saturate(160%);
+    -webkit-backdrop-filter:blur(14px) saturate(160%);
+  }
+  .hero-clock .hc-dot{
+    width:7px; height:7px; border-radius:50%; flex-shrink:0;
+    background:var(--teal); box-shadow:0 0 8px var(--teal);
+    animation:hcPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes hcPulse{ 0%,100%{opacity:1;} 50%{opacity:.45;} }
+  .hero-clock .hc-time{
+    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
+    direction:ltr; unicode-bidi:isolate; letter-spacing:.02em;
+    color:var(--text); font-variant-numeric:tabular-nums;
+  }
+  @media(prefers-reduced-motion: reduce){
+    .hero-clock .hc-dot{ animation:none; opacity:1; }
   }
   .btn-download{
     position:relative; display:inline-flex; align-items:center; gap:10px;
@@ -1160,6 +1184,10 @@
     <span class="ic-wrap"><svg viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/></svg></span>
     <span data-en="Download Resume (PDF)">دانلود رزومه (PDF)</span>
   </button>
+  <span class="hero-clock" title="ساعت رسمی تهران">
+    <span class="hc-dot"></span><span data-en="Tehran">تهران</span>
+    <span class="hc-time" id="hero-clock">--:--:--</span>
+  </span>
 </div>
 
 <div class="section-divider"><span></span><span></span><span></span></div>
@@ -1648,15 +1676,26 @@
 
     const magneticBtn = document.getElementById('download-resume');
     if(magneticBtn){
-      magneticBtn.addEventListener('mousemove', (e)=>{
+      let mRaf = 0, mEv = null;
+      const mApply = () => {
+        mRaf = 0;
+        if(!mEv) return;
         const r = magneticBtn.getBoundingClientRect();
-        const relX = e.clientX - (r.left + r.width / 2);
-        const relY = e.clientY - (r.top + r.height / 2);
+        const relX = mEv.clientX - (r.left + r.width / 2);
+        const relY = mEv.clientY - (r.top + r.height / 2);
         const dx = Math.max(-10, Math.min(10, relX * 0.18));
         const dy = Math.max(-8, Math.min(8, relY * 0.28));
         magneticBtn.style.transform = `translate(${dx}px, ${dy - 2}px) scale(1.015)`;
+      };
+      magneticBtn.addEventListener('mousemove', (e)=>{
+        mEv = e;
+        if(!mRaf) mRaf = requestAnimationFrame(mApply);
+      }, {passive:true});
+      magneticBtn.addEventListener('mouseleave', ()=>{
+        mEv = null;
+        if(mRaf){ cancelAnimationFrame(mRaf); mRaf = 0; }
+        magneticBtn.style.transform = '';
       });
-      magneticBtn.addEventListener('mouseleave', ()=>{ magneticBtn.style.transform = ''; });
     }
   }
 
@@ -2055,6 +2094,28 @@
       s.addEventListener('animationend', () => s.remove(), {once:true});
       setTimeout(() => s.remove(), 600);
     }, {passive:true});
+  })();
+
+  // live Tehran clock — ticks once per second, pauses when the tab is hidden
+  (function(){
+    const el = document.getElementById('hero-clock');
+    if(!el) return;
+    let fmt = null;
+    try{
+      fmt = new Intl.DateTimeFormat('en-GB', {timeZone:'Asia/Tehran', hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'});
+    }catch(e){}
+    function paint(){
+      if(fmt){ el.textContent = fmt.format(new Date()); return; }
+      // fallback: manual UTC+3:30 (pre-Intl engines only)
+      const t = new Date(Date.now() + (new Date().getTimezoneOffset() * 60000) + 12600000);
+      const p = n => (n < 10 ? '0' : '') + n;
+      el.textContent = p(t.getHours()) + ':' + p(t.getMinutes()) + ':' + p(t.getSeconds());
+    }
+    let timer = null;
+    function start(){ if(!timer){ paint(); timer = setInterval(paint, 1000); } }
+    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
+    start();
+    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
   })();
 
   setLang('fa');
