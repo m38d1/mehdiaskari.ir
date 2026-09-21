@@ -180,7 +180,58 @@
     meta.appendChild(rt);
   }
 
-  // ---------- Stat counters ----------
+  // ---------- Related posts (post pages only) ----------
+  function initRelated(){
+    if(document.querySelector('.related-sec')) return;
+    var article = document.querySelector('article.prose');
+    var cover = document.querySelector('[data-cover]');
+    var foot = document.querySelector('.post-foot');
+    if(!article || !cover || !foot) return;
+    var slug = cover.getAttribute('data-cover') || '';
+    function isEn(){ return document.documentElement.lang === 'en' || document.documentElement.dir === 'ltr'; }
+    function esc(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+    function pick(posts){
+      var cur = null, rest = [];
+      posts.forEach(function(p){ if(p.slug === slug) cur = p; else rest.push(p); });
+      var curTags = (cur && cur.tags) || [];
+      rest.forEach(function(p){
+        var s = 0;
+        (p.tags || []).forEach(function(t){ if(curTags.indexOf(t) !== -1) s++; });
+        p.__score = s;
+      });
+      rest.sort(function(a, b){ return (b.__score - a.__score) || (String(b.date || '') < String(a.date || '') ? -1 : 1); });
+      return rest.slice(0, 3);
+    }
+    function render(posts){
+      var old = document.querySelector('.related-sec');
+      if(old) old.remove();
+      var list = pick(posts);
+      if(!list.length) return;
+      var en = isEn();
+      var sec = document.createElement('section');
+      sec.className = 'related-sec';
+      var html = '<h2>' + (en ? 'Related posts' : 'نوشته‌های مرتبط') + '</h2><div class="post-grid">';
+      list.forEach(function(p){
+        var tags = (p.tags || []).slice(0, 3).map(function(t){ return '<span class="tag">' + esc(t) + '</span>'; }).join('');
+        html += '<a class="post-card" href="/blog/' + esc(p.slug) + '/">'
+          + '<div class="post-meta"><span class="pdate">' + esc(p.dateFa || '') + '</span>' + tags + '</div>'
+          + '<h3>' + esc(p.title) + '</h3>'
+          + '<p>' + esc(p.excerpt || '') + '</p>'
+          + '<span class="read">' + (en ? 'Read article' : 'خواندن نوشته') + '</span></a>';
+      });
+      html += '</div><div class="blog-more"><a href="/blog/all/">' + (en ? 'All posts' : 'همه‌ی نوشته‌ها') + '</a></div>';
+      sec.innerHTML = html;
+      foot.parentNode.insertBefore(sec, foot);
+    }
+    fetch('/posts.json').then(function(r){ return r.ok ? r.json() : null; }).then(function(d){
+      if(!d || !d.posts) return;
+      render(d.posts);
+      document.querySelectorAll('.lang-opt').forEach(function(b){
+        if(b.__relBound) return; b.__relBound = 1;
+        b.addEventListener('click', function(){ setTimeout(function(){ render(d.posts); }, 50); });
+      });
+    }).catch(function(){});
+  }
   function animateCount(el){
     var target = parseFloat(el.getAttribute('data-count')) || 0;
     var suffix = el.getAttribute('data-suffix') || '';
@@ -413,7 +464,7 @@
 
   function initAll(root){
     initTabs(root); initAccordion(root); initDialog(root); initCode(root);
-    initReadingBar(); initTOC(); initReadingTime(); initCounters(root);
+    initReadingBar(); initTOC(); initReadingTime(); initRelated(); initCounters(root);
     initBlogSearch(root); initTilt(root); initCursorGlow();
     initLang(); initCmdk();
   }

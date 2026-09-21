@@ -2,6 +2,20 @@
   "updated": "2026-09-06",
   "posts": [
     {
+      "slug": "schedule-health-checks",
+      "title": "پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید",
+      "date": "2026-09-21",
+      "dateFa": "۳۰ شهریور ۱۴۰۵",
+      "tags": [
+        "کنترل پروژه",
+        "MS Project",
+        "Primavera P6"
+      ],
+      "excerpt": "سرهای باز، لگ منفی، قیدهای سخت، شناوری بالا و تاریخ‌های نامعتبر — پنج چکی که با فیلترهای ساده MSP و P6 برنامه را قبل از هر به‌روزرسانی دوره‌ای سالم نگه می‌دارند.",
+      "titleEn": "Five schedule health checks to run before every update",
+      "excerptEn": "Open ends, negative lags, hard constraints, high float and invalid dates — five simple MSP/P6 filter checks that keep your schedule healthy before every update."
+    },
+    {
       "slug": "mikrotik-load-balancing-filters",
       "title": "لود بالانسینگ و فیلترهای پیشرفته در MikroTik",
       "date": "2026-09-06",

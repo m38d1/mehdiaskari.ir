@@ -7,6 +7,73 @@
   <language>fa</language>
   <atom:link href="https://mehdiaskari.ir/blog/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
+    <title>پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید</title>
+    <link>https://mehdiaskari.ir/blog/schedule-health-checks/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/schedule-health-checks/</guid>
+    <pubDate>Mon, 21 Sep 2026 00:00:00 +0330</pubDate>
+    <description>سرهای باز، لگ منفی، قیدهای سخت، شناوری بالا و تاریخ‌های نامعتبر — پنج چکی که با فیلترهای ساده MSP و P6 برنامه را قبل از هر به‌روزرسانی دوره‌ای سالم نگه می‌دارند.</description>
+    <content:encoded><![CDATA[
+<p class="lead">قبل از اینکه درصدهای پیشرفت دوره را وارد برنامه کنید، پنج دقیقه برای سلامت خودِ برنامه وقت بگذارید: سرهای باز، لگ‌های منفی، قیدهای سخت، شناوری‌های غیرواقعی و تاریخ‌های نامعتبر، همان چیزهایی هستند که یک به‌روزرسانی تمیز را به یک گزارش پر از عدد مشکوک تبدیل می‌کنند. هر پنج چک زیر با فیلترهای آمادهٔ MSP و P6 انجام می‌شود؛ بدون هیچ ابزار اضافه‌ای.</p>
+
+    <h2>۱. سرها و ته‌های باز (Open Ends)</h2>
+    <p>هر فعالیتی باید دست‌کم یک پیش‌نیاز و یک پس‌نیاز داشته باشد؛ استثنا فقط شروع پروژه (بی‌پیش‌نیاز) و پایان پروژه (بی‌پس‌نیاز) است. فعالیت بی‌منطق در محاسبهٔ مسیر بحرانی شرکت نمی‌کند و شناوری‌اش باد می‌کند — یعنی گزارش پیشرفت‌تان از همین‌جا شروع به دروغ گفتن می‌کند. استاندارد <span data-tip="پروتکل ۱۴ماده‌ای آژانس مدیریت قراردادهای دفاعی آمریکا برای ارزیابی سلامت برنامه‌های CPM">DCMA</span> می‌گوید منطقِ گم‌شده باید زیر ۵٪ فعالیت‌ها باشد.</p>
+    <div class="tabs" data-single>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="a" aria-selected="true">در MS Project</button>
+        <button class="tab" data-tab="b" aria-selected="false">در Primavera P6</button>
+      </div>
+      <h3>در MS Project</h3>
+<p>ستون‌های <strong>Predecessors</strong> و <strong>Successors</strong> را به جدول اضافه کنید و با <strong>AutoFilter</strong> ردیف‌های خالی را ببینید. فقط اولین و آخرین فعالیت کل پروژه مجازند خالی باشند؛ بقیه را با منطق واقعی (معمولاً FS) وصل کنید.</p>
+
+      <h3>در Primavera P6</h3>
+<p>از مسیر <strong>Tools ← Schedule</strong> برنامه را زمان‌بندی کنید و <strong>View Log</strong> را باز کنید؛ شمار فعالیت‌های بدون پیش‌نیاز و بدون پس‌نیاز همان‌جا گزارش می‌شود. برای لیست کردن‌شان یک فیلتر سفارشی روی ستون‌های Predecessors و Successors (بخش Details) بسازید.</p>
+
+    </div>
+
+    <h2>۲. شکار لگ منفی (Lead)</h2>
+    <p>لگ منفی یعنی «دو روز زودتر شروع کن» — روی کاغذ جذاب است، در عمل یعنی وابستگی را شل کرده‌اید و تاریخ‌ها به‌جای منطق، با حدس جلو می‌روند. قانون DCMA روشن است: <strong>صفر درصد</strong> رابطهٔ دارای Lead. لگ مثبتِ مستند بحث دیگری است؛ Lead تقریباً همیشه باید صفر شود.</p>
+    <p>در MSP ستون <strong>Predecessors</strong> را فیلتر کنید با شرط contains روی کاراکتر <strong>-</strong> (رابطه‌هایی مثل <span class="mono">12FS-2 days</span> همان Leadها هستند) و آن‌ها را به FS ساده یا Lag مثبتِ مستند تبدیل کنید. در P6 ستون‌های Predecessors و Successors را به جدول فعالیت‌ها اضافه کنید و همین جست‌وجو را روی علامت منفی انجام دهید. اگر Lead واقعاً لازم است، علتش را در Notes همان رابطه بنویسید تا در به‌روزرسانی بعدی کسی پاکش نکند.</p>
+    <div class="callout">
+      <span class="callout-ic">→</span>
+      <div><strong>ترفند مرتبط:</strong> مدیریت درست لگ‌های مثبت را در <a href="https://mehdiaskari.ir/blog/msp-power-tricks/">هفت ترفند MS Project</a> (بخش Lead/Lag قابل‌ردیابی) توضیح داده‌ام.</div>
+    </div>
+
+    <h2>۳. حسابرسی قیدهای سخت</h2>
+    <p>قیدهای Must Finish On و Finish No Later Than منطق شبکه را قفل می‌کنند و مسیر بحرانی مصنوعی می‌سازند؛ هر چه تعدادشان بیشتر، برنامه‌تان کمتر «زمان‌بندی» و بیشتر «تقویم دیواری» است. قاعدهٔ عملی من: قید سخت فقط برای تاریخ اجباری قراردادی که واقعاً در دست ما نیست؛ بقیهٔ موعدها با <strong>Deadline</strong>.</p>
+    <p>در MSP فیلتر جدید بسازید: فیلد <strong>Constraint Type</strong> مخالف <strong>As Soon As Possible</strong> — هر چه در لیست آمد، کاندیدای حذف یا تبدیل به Deadline است (مسیر دقیق منو را در <a href="https://mehdiaskari.ir/blog/msp-power-tricks/">یادداشت MSP</a> آورده‌ام). در P6 فیلتر بزنید روی فعالیت‌هایی که <strong>Primary Constraint</strong> آن‌ها خالی نیست و تک‌تک‌شان را با مجری مربوطه بازبینی کنید.</p>
+
+    <h2>۴. شناوری بالا و مدت‌های طولانی</h2>
+    <p>دو عدد DCMA را حفظ باشید: فعالیت با <strong>شناوری کل بیش از ۴۴ روز کاری</strong> (حدود دو ماه) و فعالیت با <strong>مدت بیش از ۴۴ روز</strong>، هر کدام باید زیر ۵٪ برنامه باشند. شناوری نجومی معمولاً یعنی منطق جا افتاده (برگردید به چک شمارهٔ ۱) و مدت طولانی یعنی فعالیت باید شکسته شود — فعالیتی که شش ماه طول می‌کشد، درصد پیشرفتش همیشه حدس است و <a href="https://mehdiaskari.ir/lab/evm/">ارزش کسب‌شده</a> را خراب می‌کند.</p>
+    <p>در MSP بر اساس ستون <strong>Total Slack</strong> مرتب کنید و سقف لیست را بشکافید؛ در P6 فیلتر <strong>Total Float بزرگ‌تر از 352h</strong> (معادل ۴۴ روز هشت‌ساعته) همان کار را می‌کند. برای شکستن فعالیت‌های بلند از <a href="https://mehdiaskari.ir/blog/p6-global-change/">Global Change در P6</a> می‌توانید به‌صورت گروهی کمک بگیرید.</p>
+
+    <h2>۵. تاریخ واقعی در آینده، کار ناقص در گذشته</h2>
+    <p>دو خطای کلاسیک به‌روزرسانی: ثبت Actual برای تاریخی که هنوز نیامده، و رها کردن کار ناتمام قبل از تاریخ گزارش (Status Date / Data Date). دومی یعنی برنامه‌تان عقب‌ماندگی را قایم کرده و درصدهای بعدی همه خوش‌بینانه از آب درمی‌آیند.</p>
+    <p>در MSP ابتدا <strong>Status Date</strong> را از تب Project ست کنید، بعد فیلتر <strong>Slipping Tasks</strong> را بگیرید و ستون Finish را با Status Date مقایسه کنید. در P6 خط <strong>Data Date</strong> را روی گانت بگذارید: هر میلهٔ فعالی که سمت چپ خط مانده و هنوز تمام نشده، باید یا درصد بگیرد یا دوباره زمان‌بندی شود. این چک را هر دوره، <em>قبل</em> از گرفتن درصدها انجام دهید نه بعدش.</p>
+
+    <h2>جمع‌بندی — چک‌لیست پنج‌دقیقه‌ای</h2>
+    <p>اگر فقط همین پنج فیلتر را قبل از هر به‌روزرسانی بگیرید — سرهای باز، لگ منفی، قید سخت، شناوری/مدت مشکوک، و کارِ مانده در گذشته — برنامه‌تان در عمل استاندارد DCMA را پاس می‌کند و عددهای پیشرفت برای <a href="https://mehdiaskari.ir/blog/weight-factor-excel-msp/">محاسبهٔ پیشرفت وزنی</a> قابل دفاع می‌مانند. قدم بعدی: همین چک‌ها را یک‌بار روی برنامهٔ جاری‌تان اجرا کنید و نتیجه را یادداشت کنید؛ اختلاف قبل و بعد، بهترین سند برای جلسهٔ بعدی با کارفرماست.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">آستانه‌های DCMA دقیقاً چه اعدادی هستند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>مهم‌ترین‌ها: منطق گم‌شده زیر ۵٪، Lead صفر درصد، شناوری بالای ۴۴ روز زیر ۵٪، مدت بالای ۴۴ روز زیر ۵٪، و صفر تاریخ نامعتبر. بقیهٔ موارد ۱۴گانه دربارهٔ رابطه‌ها، منابع و هزینه است.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">این چک‌ها چقدر وقت می‌گیرند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>بار اول حدود نیم ساعت (چون ایرادها را هم اصلاح می‌کنید) و از دورهٔ دوم به بعد حدود پنج دقیقه. پیشنهاد می‌کنم همین پنج فیلتر را ذخیره کنید و اجرایش را به چک‌لیست ثابت قبل از به‌روزرسانی اضافه کنید.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">ابزار خودکار برای این کار هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>بله، ابزارهای Schedule Analyzer این ۱۴ چک را خودکار می‌گیرند، ولی برای برنامه‌های MSP و P6 همین فیلترهای دستی کافی و شفاف‌ترند؛ چون هر مورد را همان لحظه می‌بینید و اصلاح می‌کنید.</div>
+      </div>
+    </div>
+]]></content:encoded>
+    <category>کنترل پروژه</category>
+    <category>MS Project</category>
+    <category>Primavera P6</category>
+  </item>
+  <item>
     <title>لود بالانسینگ و فیلترهای پیشرفته در MikroTik</title>
     <link>https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/</link>
     <guid isPermaLink="true">https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/</guid>

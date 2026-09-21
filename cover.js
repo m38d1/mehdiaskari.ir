@@ -1,126 +1,143 @@
-// ---- procedural SVG cover v3 (deep dataviz, no images): hash slug -> motif ----
+// ---- procedural SVG cover v5 (mesh + hero word, no images): tags -> hue family ----
 function __hash(s){let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619);}return h>>>0;}
 function __rng(seed){let t=seed>>>0;return function(){t+=0x6D2B79F5;let r=Math.imul(t^t>>>15,1|t);r^=r+Math.imul(r^r>>>7,61|r);return((r^r>>>14)>>>0)/4294967296;};}
-const __VARIANT = { 'from-code-to-gantt': 0, 'pmi-ai-project-patterns': 1, 'network-lessons-industrial-site': 2,
-  'p6-power-bi-dashboard': 3, 'weight-factor-excel-msp': 0 };
-function coverSVG(slug, variant){
-  variant = (variant !== undefined) ? variant : (__VARIANT[slug] !== undefined ? __VARIANT[slug] : __hash(slug) % 4);
-  const R = __rng(__hash(slug));
-  const C = ['var(--teal)','var(--teal-2)','var(--amber)'];
-  const T = 'var(--text)';
-  const gid = 'g' + (__hash(slug)%16777215).toString(16).padStart(6,'0');
-  const pick = () => C[Math.floor(R()*3)];
+// slug -> {tags, title} mirror of posts.json (offline, no fetch);
+// [data-tags="a,b"] / [data-title="..."] attributes on the element override this map.
+const __SLUG_META = {
+  'schedule-health-checks': {tags: ['کنترل پروژه','MS Project','Primavera P6'], title: 'پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید'},
+  'mikrotik-load-balancing-filters': {tags: ['MikroTik','شبکه','لود بالانسینگ'], title: 'لود بالانسینگ و فیلترهای پیشرفته در MikroTik'},
+  'msp-power-tricks': {tags: ['MS Project','برنامه‌ریزی','کنترل پروژه'], title: 'هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد'},
+  'p6-global-change': {tags: ['Primavera P6','کنترل پروژه','اتوماسیون'], title: 'Global Change در Primavera P6؛ دستیار خاموشِ برنامه‌ریز'},
+  'power-query-site-progress': {tags: ['Power Query','اکسل','کنترل پروژه','داده'], title: 'Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی'},
+  'gale-openwrt-custom-firmware': {tags: ['OpenWrt','Google Wifi','PassWall','mwan3','شبکه'], title: 'فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت'},
+  'weight-factor-excel-msp': {tags: ['Excel','MS Project','کنترل پروژه','پیشرفت وزنی'], title: 'محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP'},
+  'p6-power-bi-dashboard': {tags: ['Power BI','Primavera P6','کنترل پروژه','داشبورد'], title: 'اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه'},
+  'pmi-ai-project-patterns': {tags: ['مدیریت پروژه','هوش مصنوعی','PMI'], title: 'چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است'},
+  'from-code-to-gantt': {tags: ['مسیر شغلی','توسعه وب'], title: 'از کد تا گانت‌چارت: داستان یک تغییر مسیر'},
+  'network-lessons-industrial-site': {tags: ['شبکه','زیرساخت'], title: 'پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم'}
+};
+const __HUE_FAMILY = [
+  {re: /primavera|p6\b|ms project|\bmsp\b|برنامه‌ریزی|کنترل پروژه|مسیر|توسعه وب|مدیریت پروژه/i, c: 0}, // teal
+  {re: /mikrotik|network|شبکه|openwrt|mwan3|passwall|balanc|توازن|زیرساخت|infrastruct|rout|wifi|وای‌فای/i, c: 1}, // blue
+  {re: /power bi|dashboard|داشبورد|excel|اکسل|power query|داده|evm|weight|وزن|report|گزارش|هوش مصنوعی|\bai\b|pmi/i, c: 2} // amber
+];
+function hueFor(slug, tags){
+  tags = tags || (__SLUG_META[slug] && __SLUG_META[slug].tags) || [];
+  for(let i=0;i<tags.length;i++){
+    for(let j=0;j<__HUE_FAMILY.length;j++){
+      if(__HUE_FAMILY[j].re.test(tags[i])) return __HUE_FAMILY[j].c;
+    }
+  }
+  return __hash(slug) % 3;
+}
+function titleFor(slug, title){
+  if(title) return title;
+  var tags = (__SLUG_META[slug] && __SLUG_META[slug].tags) || [];
+  return tags[0] || slug;
+}
+// kept for back-compat (v4 callers); v5 renders one mesh design, hue varies.
+function motifFor(slug, tags){ return hueFor(slug, tags); }
+function escXml(s){ return String(s == null ? '' : s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// NOTE: var() does NOT resolve inside SVG presentation attributes (fill="var(--x)"
+// paints black in Chrome), so resolve theme colors to real values here.
+var __themeCache = null;
+function hexRgb(h){
+  h = h.replace('#','');
+  if(h.length === 3) h = h[0]+h[0]+h[1]+h[1]+h[2]+h[2];
+  return [parseInt(h.slice(0,2),16), parseInt(h.slice(2,4),16), parseInt(h.slice(4,6),16)];
+}
+function mixHex(a, b, t){
+  var A = hexRgb(a), B = hexRgb(b);
+  var m = A.map(function(v, i){ return Math.round(v + (B[i]-v)*t); });
+  return '#'+m.map(function(v){ return v.toString(16).padStart(2,'0'); }).join('');
+}
+function themeColors(){
+  if(__themeCache) return __themeCache;
+  var teal = '#2FE0C4', teal2 = '#5B8CFF', amber = '#F6B255', text = '#F3F5F7', dark = true;
+  try{
+    var el = document.documentElement;
+    var cs = getComputedStyle(el);
+    teal = cs.getPropertyValue('--teal').trim() || teal;
+    teal2 = cs.getPropertyValue('--teal-2').trim() || teal2;
+    amber = cs.getPropertyValue('--amber').trim() || amber;
+    text = cs.getPropertyValue('--text').trim() || text;
+    dark = el.getAttribute('data-theme') !== 'light';
+  }catch(e){}
+  // solid tinted backdrop per family (set later once base is known)
+  __themeCache = {teal: teal, teal2: teal2, amber: amber, text: text, dark: dark};
+  return __themeCache;
+}
+function coverBg(base, dark){
+  return dark ? mixHex(base, '#10131A', 0.80) : mixHex(base, '#FFFFFF', 0.80);
+}
+function coverSVG(slug, variant, tags, title){
+  const R = __rng(__hash(slug + '|v5'));
+  const TC = themeColors();
+  const C = [TC.teal, TC.teal2, TC.amber];
+  const T = TC.text;
   const jit = (a, b) => a + R()*(b-a);
+  const fam = hueFor(slug, tags);
+  const base = C[fam], soft1 = C[(fam+1)%3], soft2 = C[(fam+2)%3];
+  const word = escXml(titleFor(slug, title));
   let d = '';
-  // layered glow (no radial gradients — svglib can't render stop-opacity)
-  const glow = function(cx, cy, r, col, count, om){
-    for(let i=count;i>0;i--){
-      const ri = r * (0.35 + 0.65*(i/count));
-      d += '<circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+ri.toFixed(1)+'" fill="'+col+'" opacity="'+(om*(0.4+0.6*(i/count))).toFixed(3)+'"/>';
+  // soft mesh blobs: layered circles read as one blurred wash (no filters — max compat)
+  const blob = function(cx, cy, r, col, om){
+    for(let i=4;i>0;i--){
+      const ri = r * (0.4 + 0.6*(i/4));
+      d += '<circle cx="'+cx.toFixed(1)+'" cy="'+cy.toFixed(1)+'" r="'+ri.toFixed(1)+'" fill="'+col+'" opacity="'+(om*(0.35+0.65*(i/4))).toFixed(3)+'"/>';
     }
   };
-  // background
-  d += '<rect width="272" height="132" fill="var(--cover-bg,transparent)"/>';
-  // chart-paper grid (visible but subtle)
-  for(let gy=8; gy<128; gy+=16){
-    d += '<line x1="6" y1="'+gy+'" x2="266" y2="'+gy+'" stroke="'+T+'" stroke-width="0.5" opacity="0.07"/>';
+  // background: solid tinted wash in the family hue (fully covers the grey card bg)
+  d += '<rect width="272" height="132" fill="'+coverBg(base, TC.dark)+'"/>';
+  // dot texture
+  for(let gy=10; gy<128; gy+=16){
+    for(let gx=12; gx<268; gx+=16){
+      d += '<circle cx="'+gx+'" cy="'+gy+'" r="0.9" fill="'+T+'" opacity="0.055"/>';
+    }
   }
-  for(let gx=14; gx<266; gx+=18){
-    d += '<line x1="'+gx+'" y1="6" x2="'+gx+'" y2="126" stroke="'+T+'" stroke-width="0.5" opacity="0.07"/>';
-  }
-  // ambient glow
-  glow(136 + jit(-14,14), 60 + jit(-12,12), 70, C[1], 4, 0.12);
-
-  if(variant === 0){ // Gantt hero: many bars + progress + baseline axis + data-date
-    const rows = [16,32,48,64,80,96,112];
-    rows.forEach(function(y, i){
-      const x0 = 18 + jit(-4, 4);
-      const w = 150 + jit(20, 70);
-      const p = jit(0.2, 0.95), pw = w*p;
-      const critical = i % 3 === 2;
-      const rem = Math.max(0, 250 - (x0+w));
-      d += '<rect x="'+x0.toFixed(1)+'" y="'+y+'" width="'+(w + Math.min(rem,10)).toFixed(1)+'" height="11" rx="5.5" fill="'+T+'" opacity="0.10"/>';
-      d += '<rect x="'+x0.toFixed(1)+'" y="'+y+'" width="'+pw.toFixed(1)+'" height="11" rx="5.5" fill="'+(critical?'var(--amber)':(i%2===0?'url(#'+gid+'a)':'url(#'+gid+'b)'))+'" opacity="'+(critical?0.9:0.8).toFixed(2)+'"/>';
+  // mesh: one dominant wash + two companion accents, seeded positions
+  blob(196 + jit(-24,24), 62 + jit(-22,22), 64, base, 0.30);
+  blob(96 + jit(-20,20), 40 + jit(-16,16), 42, soft1, 0.20);
+  blob(150 + jit(-30,30), 104 + jit(-12,12), 36, soft2, 0.16);
+  // crisp core dot on the dominant wash
+  d += '<circle cx="'+(196 + jit(-10,10)).toFixed(1)+'" cy="'+(62 + jit(-10,10)).toFixed(1)+'" r="3" fill="'+base+'" opacity="0.9"/>';
+  // topic motif (subtle, behind the word): 0 = gantt · 1 = constellation · 2 = bars
+  if(fam === 0){
+    [96, 106, 116].forEach(function(y, i){
+      const x0 = 30 + jit(0, 40), w = 120 + jit(0, 90);
+      d += '<rect x="'+x0.toFixed(1)+'" y="'+y+'" width="'+w.toFixed(1)+'" height="5" rx="2.5" fill="'+T+'" opacity="0.12"/>';
+      d += '<rect x="'+x0.toFixed(1)+'" y="'+y+'" width="'+(w*jit(0.3,0.9)).toFixed(1)+'" height="5" rx="2.5" fill="'+(i===1?soft2:base)+'" opacity="0.45"/>';
     });
-    // baseline axis
-    d += '<line x1="14" y1="126" x2="258" y2="126" stroke="'+T+'" stroke-width="1" opacity="0.25"/>';
-    for(let tx=24; tx<=250; tx+=28){
-      d += '<line x1="'+tx+'" y1="125" x2="'+tx+'" y2="129" stroke="'+T+'" stroke-width="0.8" opacity="0.2"/>';
-    }
-    // data date vertical line
-    const dx = 170 + jit(-20, 30);
-    d += '<line x1="'+dx.toFixed(1)+'" y1="10" x2="'+dx.toFixed(1)+'" y2="124" stroke="'+C[0]+'" stroke-width="1.6" opacity="0.85" stroke-dasharray="3 4"/>';
-    glow(dx, 12, 12, C[0], 2, 0.18);
-    d += '<circle cx="'+dx.toFixed(1)+'" cy="12" r="2.8" fill="'+C[0]+'"/>';
-  } else if(variant === 1){ // Network graph: dense node grid + edges + hot node
+  } else if(fam === 1){
     const pts = [];
-    const cols = [38, 102, 166, 230], rows2 = [24, 56, 88, 116];
-    for(let i=0;i<cols.length;i++) for(let j=0;j<rows2.length;j++){
-      pts.push([cols[i] + jit(-10,10), rows2[j] + jit(-8,8)]);
-    }
+    for(let i=0;i<7;i++){ pts.push([30 + R()*212, 88 + R()*34]); }
     for(let i=0;i<pts.length;i++){
       for(let j=i+1;j<pts.length;j++){
         const dx=pts[i][0]-pts[j][0], dy=pts[i][1]-pts[j][1];
-        const dist = Math.sqrt(dx*dx+dy*dy);
-        if(dist < 56 && dist > 10){
-          const critical = (i%5===0 && j%5===1);
-          const col = critical ? C[0] : pick();
-          d += '<line x1="'+pts[i][0].toFixed(1)+'" y1="'+pts[i][1].toFixed(1)+'" x2="'+pts[j][0].toFixed(1)+'" y2="'+pts[j][1].toFixed(1)+'" stroke="'+col+'" stroke-width="'+(critical?1.6:0.8).toFixed(1)+'" opacity="'+(critical?0.7:0.28).toFixed(2)+'"/>';
+        if(Math.sqrt(dx*dx+dy*dy) < 80){
+          d += '<line x1="'+pts[i][0].toFixed(1)+'" y1="'+pts[i][1].toFixed(1)+'" x2="'+pts[j][0].toFixed(1)+'" y2="'+pts[j][1].toFixed(1)+'" stroke="'+base+'" stroke-width="0.9" opacity="0.35"/>';
         }
       }
+      d += '<circle cx="'+pts[i][0].toFixed(1)+'" cy="'+pts[i][1].toFixed(1)+'" r="2.4" fill="'+soft1+'" opacity="0.7"/>';
     }
-    pts.forEach(function(p, i){
-      const isHot = (i === 9);
-      const col = isHot ? C[2] : pick();
-      const r = isHot ? 9 : (4.5 + jit(0, 2));
-      glow(p[0], p[1], r*2.2, col, 2, 0.16);
-      d += '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="'+r.toFixed(1)+'" fill="'+col+'" opacity="'+(isHot?0.95:0.72+jit(0,0.2)).toFixed(2)+'"/>';
-      d += '<circle cx="'+p[0].toFixed(1)+'" cy="'+p[1].toFixed(1)+'" r="1.4" fill="#101318" opacity="0.5"/>';
-    });
-  } else if(variant === 2){ // Ring topology: hub + three rings of devices
-    const hx = 136 + jit(-8,8), hy = 64 + jit(-8,8);
-    glow(hx, hy, 30, C[1], 3, 0.14);
-    const ring = function(cx, cy, rad, n, col, op, rr){
-      for(let i=0;i<n;i++){
-        const a = (i/n)*Math.PI*2 - Math.PI/2 + R()*0.1;
-        const x = cx + Math.cos(a)*rad, y = cy + Math.sin(a)*rad;
-        d += '<line x1="'+cx.toFixed(1)+'" y1="'+cy.toFixed(1)+'" x2="'+x.toFixed(1)+'" y2="'+y.toFixed(1)+'" stroke="'+col+'" stroke-width="1" opacity="0.4"/>';
-        d += '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="'+rr.toFixed(1)+'" fill="'+col+'" opacity="'+op.toFixed(2)+'"/>';
-      }
-    };
-    ring(hx, hy, 22, 5, C[0], 0.85, 3.2);
-    ring(hx, hy, 38, 7, C[1], 0.8, 2.6);
-    ring(hx, hy, 52, 9, C[0], 0.7, 2.2);
-    d += '<circle cx="'+hx.toFixed(1)+'" cy="'+hy.toFixed(1)+'" r="15" fill="url(#'+gid+'a)" opacity="0.95"/>';
-    d += '<circle cx="'+hx.toFixed(1)+'" cy="'+hy.toFixed(1)+'" r="5" fill="#101318" opacity="0.4"/>';
-    d += '<path d="M '+(hx-52).toFixed(1)+' '+(hy-6).toFixed(1)+' A 52 52 0 0 1 '+(hx-52).toFixed(1)+' '+(hy+6).toFixed(1)+'" fill="none" stroke="'+C[2]+'" stroke-width="1.4" opacity="0.65" stroke-dasharray="2 5"/>';
-  } else { // Dashboard hero: KPI cards + dense bar chart + dual sparkline
-    const cards = [[14, 14, 76, 30, 'a'], [96, 14, 76, 30, 'b'], [178, 14, 76, 30, 'a']];
-    cards.forEach(function(c){
-      d += '<rect x="'+c[0]+'" y="'+c[1]+'" width="'+c[2]+'" height="'+c[3]+'" rx="7" fill="'+T+'" opacity="0.08"/>';
-      d += '<line x1="'+(c[0]+9)+'" y1="'+(c[1]+10)+'" x2="'+(c[0]+c[2]-9)+'" y2="'+(c[1]+10)+'" stroke="'+C[0]+'" stroke-width="2.5" opacity="0.9"/>';
-      d += '<line x1="'+(c[0]+9)+'" y1="'+(c[1]+19)+'" x2="'+(c[0]+c[2]-24)+'" y2="'+(c[1]+19)+'" stroke="'+T+'" stroke-width="2.5" opacity="0.28"/>';
-    });
-    const by = 96;
-    for(let i=0;i<9;i++){
-      const bx = 18 + i*22, bh = 14 + i*8.5 + jit(-3,3);
-      d += '<rect x="'+bx+'" y="'+(by-bh)+'" width="14" height="'+bh.toFixed(1)+'" rx="3" fill="'+(i>=7?C[2]:C[0])+'" opacity="'+(i>=7?0.95:0.45+i*0.05).toFixed(2)+'"/>';
+  } else {
+    for(let i=0;i<8;i++){
+      const bx = 34 + i*24, bh = 10 + i*3.4 + jit(-2,2);
+      d += '<rect x="'+bx+'" y="'+(124-bh).toFixed(1)+'" width="12" height="'+bh.toFixed(1)+'" rx="3" fill="'+(i>=6?soft2:base)+'" opacity="0.4"/>';
     }
-    d += '<line x1="14" y1="'+by+'" x2="240" y2="'+by+'" stroke="'+T+'" stroke-width="0.8" opacity="0.25"/>';
-    let d1 = 'M 176 124'; let d2 = 'M 176 124';
-    for(let x=182; x<=258; x+=10){
-      const t = (x-176)/82;
-      const y1 = 124 - 40*Math.pow(t,1.5), y2 = 124 - 30*Math.pow(t,0.9);
-      d1 += ' L'+x+' '+y1.toFixed(1); d2 += ' L'+x+' '+y2.toFixed(1);
-    }
-    d += '<path d="'+d1+'" fill="none" stroke="'+C[0]+'" stroke-width="1.8" opacity="0.9"/>';
-    d += '<path d="'+d2+'" fill="none" stroke="'+C[1]+'" stroke-width="1.4" opacity="0.7" stroke-dasharray="4 3"/>';
   }
-
-  d += '<defs>' +
-       '<linearGradient id="'+gid+'a" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--teal)"/><stop offset="1" stop-color="var(--teal-2)"/></linearGradient>' +
-       '<linearGradient id="'+gid+'b" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="var(--teal-2)"/><stop offset="1" stop-color="var(--teal)"/></linearGradient>' +
-       '</defs>';
+  // hero word: most important word (first tag), fitted size, readable ink
+  const ink = TC.dark ? '#FFFFFF' : '#10151C';
+  const fs = word.length <= 5 ? 40 : word.length <= 8 ? 32 : word.length <= 12 ? 26 : 21;
+  d += '<text x="137" y="80" text-anchor="middle" font-size="'+fs+'" font-weight="800"'
+    + ' font-family="Vazirmatn, Tahoma, sans-serif" fill="#000000" opacity="0.25">'
+    + word + '</text>';
+  d += '<text x="136" y="78" text-anchor="middle" font-size="'+fs+'" font-weight="800"'
+    + ' font-family="Vazirmatn, Tahoma, sans-serif" fill="'+ink+'" opacity="0.95">'
+    + word + '</text>';
+  // small baseline accent under the word
+  d += '<rect x="118" y="92" width="36" height="3" rx="1.5" fill="'+base+'" opacity="0.9"/>';
+  d += '<circle cx="160" cy="93.5" r="1.6" fill="'+soft2+'" opacity="0.9"/>';
 
   return '<svg class="cover-art" viewBox="0 0 272 132" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false">' + d + '</svg>';
 }
@@ -135,13 +152,14 @@ function __fillCovers(root){
   for(var i=0;i<els.length;i++){
     var el = els[i];
     if(el.__coverDone) continue; el.__coverDone = 1;
-    el.innerHTML = __coverSVG(el.getAttribute('data-cover'));
+    var dt = el.getAttribute('data-tags');
+    var tt = el.getAttribute('data-title');
+    el.innerHTML = __coverSVG(el.getAttribute('data-cover'), undefined, dt ? dt.split(',') : undefined, tt || undefined);
   }
 }
 
 document.addEventListener('DOMContentLoaded', function(){
   __fillCovers(document);
-  // Watch for covers added after load (dynamic posts grids, etc.)
   if(window.MutationObserver && document.body){
     var mo = new MutationObserver(function(muts){
       for(var i=0;i<muts.length;i++){
@@ -155,5 +173,15 @@ document.addEventListener('DOMContentLoaded', function(){
       }
     });
     mo.observe(document.body, { childList: true, subtree: true });
+  }
+  // Re-paint covers on theme switch so light/dark hues stay correct.
+  if(window.MutationObserver){
+    var to = new MutationObserver(function(){
+      __themeCache = null;
+      var els = document.querySelectorAll('[data-cover]');
+      for(var i=0;i<els.length;i++){ els[i].__coverDone = 0; }
+      __fillCovers(document);
+    });
+    to.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
   }
 });

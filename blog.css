@@ -32,7 +32,7 @@ html[data-theme="light"]{
   --border-soft: rgba(16,21,28,0.06);
   --text: #10151C;
   --text-muted: #4B5563;
-  --text-dim: #8892A0;
+  --text-dim: #5F6B7A;
   --teal: #0EA894;
   --teal-2: #3B6FE0;
   --amber: #C97A1E;
@@ -289,6 +289,15 @@ main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
 .post-foot{
   display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
   margin-top:26px;
+}
+/* related posts (injected by components.js initRelated) */
+.related-sec{margin-top:34px; padding-top:22px; border-top:1px solid var(--border-soft);}
+.related-sec h2{font-size:1.1rem; font-weight:800; margin-bottom:14px;}
+.related-sec .blog-more{margin-top:18px; text-align:center;}
+.related-sec .blog-more a{
+  display:inline-flex; align-items:center; gap:8px; font-size:.84rem; font-weight:600;
+  color:var(--text-muted); border:1px solid var(--border); background:var(--glass-2);
+  padding:10px 20px; border-radius:100px;
 }
 .btn{
   position:relative; display:inline-flex; align-items:center; gap:9px;

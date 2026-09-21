@@ -146,7 +146,7 @@
     --border-soft: rgba(16,21,28,0.06);
     --text: #10151C;
     --text-muted: #4B5563;
-    --text-dim: #8892A0;
+    --text-dim: #5F6B7A;
     --teal: #0EA894;
     --teal-2: #3B6FE0;
     --amber: #C97A1E;
@@ -206,6 +206,21 @@
     background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber));
     width:0%; transform-origin:right; transition:width .1s linear;
   }
+  /* vibefarsi banner: one-line announcement above header, dismiss remembered */
+  .banner{
+    max-width:980px; margin:12px auto 0; padding:9px 14px;
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    font-size:.8rem; color:var(--text-muted);
+    background:var(--glass-2); border:1px solid var(--border-soft); border-radius:100px;
+    backdrop-filter:blur(16px);
+  }
+  .banner a{color:var(--teal); font-weight:700;}
+  .banner button{
+    border:1px solid var(--border-soft); background:transparent; color:var(--text-dim);
+    width:24px; height:24px; border-radius:50%; cursor:pointer; line-height:1;
+  }
+  .banner button:hover{color:var(--text); border-color:var(--teal);}
+  .banner.hide{display:none;}
 
   .grain{
     position:fixed; inset:0; z-index:2; pointer-events:none; opacity:.035; mix-blend-mode:overlay;
@@ -280,6 +295,7 @@
     display:none; flex-direction:column; gap:4px;
     max-width:980px; margin:8px auto 0; padding:10px;
     background:var(--nav-bg); backdrop-filter:blur(26px) saturate(180%);
+    -webkit-backdrop-filter:blur(26px) saturate(180%);
     border:1px solid var(--border-soft); border-radius:20px;
     max-height:0; overflow:hidden; opacity:0;
     transition:max-height .3s ease, opacity .25s ease, padding .3s ease;
@@ -289,9 +305,29 @@
     transition:background .2s ease, color .2s ease;
   }
   .mobile-menu a:hover, .mobile-menu a.active{background:var(--glass-2); color:var(--text);}
+  .menu-backdrop{display:none;}
   @media (max-width:700px){
-    .mobile-menu{display:flex;}
-    .mobile-menu.open{max-height:320px; opacity:1; padding:10px;}
+    .mobile-menu{
+      display:flex; position:fixed; top:0; bottom:0; right:0; z-index:70;
+      width:min(320px, 85vw); max-width:none; margin:0; padding:20px 14px;
+      border-radius:20px 0 0 20px; border-inline-start:1px solid var(--border);
+      border-top:none; border-right:none; border-bottom:none;
+      max-height:none; overflow-y:auto; opacity:1;
+      transform:translateX(105%); transition:transform .32s cubic-bezier(.2,.8,.2,1);
+      box-shadow:-24px 0 60px -30px rgba(0,0,0,.6);
+    }
+    .mobile-menu.open{transform:none; max-height:none; opacity:1; padding:20px 14px;}
+    .mobile-menu a{min-height:44px; display:flex; align-items:center;}
+    .menu-backdrop{
+      display:block; position:fixed; inset:0; z-index:60;
+      background:rgba(4,6,10,.55); backdrop-filter:blur(3px);
+      -webkit-backdrop-filter:blur(3px);
+      opacity:0; pointer-events:none; transition:opacity .25s ease;
+    }
+    .menu-backdrop.open{opacity:1; pointer-events:auto;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .mobile-menu, .menu-backdrop{transition:none;}
   }
 
   /* theme segmented control */
@@ -332,7 +368,17 @@
   html[lang="en"] .section-head .rule{ background:linear-gradient(to right, var(--border), transparent); }
 
   /* ---------- HERO ---------- */
-  .hero{max-width:960px; margin:0 auto; padding:clamp(60px, 7vw, 88px) 24px 44px; text-align:center;}
+  .hero{max-width:960px; margin:0 auto; padding:clamp(60px, 7vw, 88px) 24px 44px; text-align:center; position:relative;}
+  /* vibefarsi backgrounds/grid: faint grid fading out behind hero */
+  .hero::before{
+    content:""; position:absolute; inset:0; z-index:-1; pointer-events:none;
+    background-image:linear-gradient(var(--border-soft) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border-soft) 1px, transparent 1px);
+    background-size:36px 36px;
+    -webkit-mask-image:radial-gradient(ellipse 70% 80% at 50% 20%, #000 30%, transparent 75%);
+    mask-image:radial-gradient(ellipse 70% 80% at 50% 20%, #000 30%, transparent 75%);
+    opacity:.7;
+  }
 
   .section-head .tag{
     font-family:'IBM Plex Mono', monospace; font-size:0.74rem; color:var(--teal);
@@ -404,7 +450,14 @@
     font-size:clamp(2.8rem, 8.5vw, 5.4rem);
     font-weight:900; letter-spacing:-1.8px; line-height:1.06;
     margin-bottom:20px;
+    animation:heroBlurIn .8s cubic-bezier(.2,.7,.2,1) both;
   }
+  /* vibefarsi blur-text: soft entrance, disabled with reduced-motion */
+  @keyframes heroBlurIn{
+    from{ opacity:0; transform:translateY(14px); filter:blur(8px); }
+    to{ opacity:1; transform:none; filter:blur(0); }
+  }
+  @media (prefers-reduced-motion: reduce){ h1{animation:none;} }
   h1 .grad{
     background:linear-gradient(100deg, var(--teal) 10%, var(--teal-2) 50%, var(--amber) 80%, var(--teal) 100%);
     background-size:200% auto;
@@ -413,6 +466,12 @@
   }
   @keyframes shimmer{ 0%,100%{ background-position:0% center; } 50%{ background-position:100% center; } }
 
+  /* vibefarsi word-rotate: hero specialty cycles every 3s with blur */
+  .hero-rotator{margin:2px 0 16px; font-size:1.02rem; font-weight:800; color:var(--teal); min-height:1.8em;}
+  .wr-word{display:inline-block;}
+  .wr-word.swap{animation:wrIn .45s cubic-bezier(.2,.8,.2,1);}
+  @keyframes wrIn{ from{ opacity:0; transform:translateY(8px); filter:blur(6px); } to{ opacity:1; transform:none; filter:blur(0); } }
+  @media (prefers-reduced-motion: reduce){ .wr-word.swap{animation:none;} }
   .role{
     font-size:clamp(1.05rem, 2.2vw, 1.32rem);
     color:var(--text-muted); font-weight:500;
@@ -436,30 +495,6 @@
   .hero-actions{
     max-width:960px; margin:28px auto 0; padding:0 24px;
     display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
-  }
-  /* live Tehran clock — quiet mono pill next to the CTA */
-  .hero-clock{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'Vazirmatn', sans-serif; font-size:0.8rem; font-weight:500;
-    color:var(--text-muted);
-    border:1px solid var(--border); border-radius:100px; padding:10px 16px;
-    background:var(--glass);
-    backdrop-filter:blur(14px) saturate(160%);
-    -webkit-backdrop-filter:blur(14px) saturate(160%);
-  }
-  .hero-clock .hc-dot{
-    width:7px; height:7px; border-radius:50%; flex-shrink:0;
-    background:var(--teal); box-shadow:0 0 8px var(--teal);
-    animation:hcPulse 2.4s ease-in-out infinite;
-  }
-  @keyframes hcPulse{ 0%,100%{opacity:1;} 50%{opacity:.45;} }
-  .hero-clock .hc-time{
-    font-family:'IBM Plex Mono', monospace; font-size:0.82rem;
-    direction:ltr; unicode-bidi:isolate; letter-spacing:.02em;
-    color:var(--text); font-variant-numeric:tabular-nums;
-  }
-  @media(prefers-reduced-motion: reduce){
-    .hero-clock .hc-dot{ animation:none; opacity:1; }
   }
   .btn-download{
     position:relative; display:inline-flex; align-items:center; gap:10px;
@@ -499,6 +534,19 @@
   .btn-download:hover{transform:translateY(-2px) scale(1.015);}
   .btn-download:active{transform:translateY(0) scale(0.98);}
   .btn-download:focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
+  /* vibefarsi shine-button: light band sweeps across */
+  .btn-download::after{
+    content:""; position:absolute; top:0; bottom:0; width:60px; pointer-events:none;
+    background:linear-gradient(105deg, transparent, rgba(255,255,255,.45), transparent);
+    transform:translateX(220px) skewX(-18deg);
+    animation:btnShine 4.5s ease-in-out infinite;
+  }
+  @keyframes btnShine{
+    0%, 60%{ transform:translateX(220px) skewX(-18deg); opacity:0; }
+    70%{ opacity:1; }
+    100%{ transform:translateX(-220px) skewX(-18deg); opacity:0; }
+  }
+  @media (prefers-reduced-motion: reduce){ .btn-download::after{animation:none; display:none;} }
 
   .schedule-card{
     max-width:580px; margin:0 auto;
@@ -609,6 +657,13 @@
   .gantt-label .role-title{font-weight:700; font-size:0.98rem; margin-bottom:4px;}
   .gantt-label .org{color:var(--text-muted); font-size:0.85rem;}
   .gantt-label .proj{color:var(--text-dim); font-size:0.78rem; margin-top:5px;}
+  /* mobile-friendly timeline: larger rail + breathing room */
+  @media (max-width:700px){
+    .gantt-item{gap:14px; padding-bottom:22px;}
+    .rail{width:20px; padding-top:8px;}
+    .rail .dot{width:13px; height:13px;}
+    .gantt-card{padding:18px 18px; border-radius:18px;}
+  }
 
   /* ---------- EDUCATION TIMELINE ---------- */
   .edu-list{display:flex; flex-direction:column;}
@@ -622,6 +677,16 @@
   html[lang="fa"] .edu-year{font-family:'Vazirmatn', sans-serif;}
   .edu-title{font-weight:700; font-size:0.94rem; margin-bottom:3px;}
   .edu-desc{color:var(--text-dim); font-size:0.83rem;}
+  /* vibefarsi accordion: collapse long cert list */
+  .edu-list:not(.expanded) .edu-item:nth-child(n+6){display:none;}
+  .edu-more-wrap{margin-top:14px; text-align:center;}
+  .edu-more{
+    font:inherit; font-size:.82rem; font-weight:600; cursor:pointer;
+    color:var(--text-muted); background:var(--glass-2);
+    border:1px solid var(--border); border-radius:100px; padding:9px 20px;
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .edu-more:hover{border-color:var(--teal); color:var(--teal);}
 
   /* ---------- SKILLS ---------- */
   .tools-grid{display:grid; grid-template-columns:1.3fr 1fr; grid-auto-rows:1fr; gap:14px;}
@@ -645,6 +710,14 @@
   }
   .tool-card:hover{border-color:var(--teal-2); transform:translateY(-3px); box-shadow:0 18px 44px -22px rgba(91,140,255,0.35);}
   .tool-card.featured{padding:32px 28px;}
+  /* vibefarsi border-beam: animated gradient line on the featured card */
+  .tool-card.featured::before{
+    background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber), var(--teal));
+    background-size:200% 100%; opacity:.9;
+    animation:beamSlide 5s linear infinite;
+  }
+  @keyframes beamSlide{ to{ background-position:200% 0; } }
+  @media (prefers-reduced-motion: reduce){ .tool-card.featured::before{animation:none;} }
   .tool-card.featured .tool-icon{width:46px; height:46px; font-size:0.88rem; margin-bottom:22px;}
   .tool-card.featured h3{font-size:1.15rem; margin-bottom:12px;}
   .tool-card.featured p{font-size:0.88rem; max-width:34ch;}
@@ -688,16 +761,19 @@
 
   /* ---------- SKILL MARQUEE ---------- */
   .skill-marquee{display:flex; flex-direction:column; gap:12px; padding:16px 0 6px;}
+  /* vibefarsi marquee: outer ltr for transform math, inner rtl content, seamless -50% to 0 loop */
   .mq{
-    display:flex; overflow:hidden; gap:12px;
-    -webkit-mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
-    mask-image:linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+    width:100%; overflow:hidden;
+    -webkit-mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+    mask-image:linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
   }
-  .mq-track{display:flex; gap:12px; flex-shrink:0; min-width:100%; animation:mq 32s linear infinite;}
-  .mq-rev .mq-track{animation-direction:reverse;}
-  .mq:hover .mq-track, .mq:focus-within .mq-track{animation-play-state:paused;}
+  .mq-inner{display:flex; width:max-content; gap:12px; animation:marquee 32s linear infinite;}
+  .mq-rev .mq-inner{animation-direction:reverse;}
+  .mq:hover .mq-inner, .mq:focus-within .mq-inner{animation-play-state:paused;}
+  .mq-track{display:flex; gap:12px; flex-shrink:0; align-items:center;}
   .mq .skill-tag{white-space:nowrap;}
-  @keyframes mq{ to{ transform:translateX(calc(-100% - 12px)); } }
+  @keyframes marquee{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
+  @media (prefers-reduced-motion: reduce){ .mq-inner{animation:none;} }
 
   /* ---------- SCROLL-DRAWN EXPERIENCE RAIL ---------- */
   .gantt{position:relative;}
@@ -737,6 +813,31 @@
   /* ---------- BLOG TEASER ---------- */
   .blog-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
   @media (max-width:900px){ .blog-grid{grid-template-columns:1fr;} }
+  /* vibefarsi search-input: live filter for latest posts */
+  .blog-search{
+    width:100%; font:inherit; font-size:.92rem; color:var(--text);
+    background:var(--glass-2); border:1px solid var(--border-soft); border-radius:12px;
+    padding:12px 16px; margin-bottom:14px;
+  }
+  .blog-search:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+  /* vibefarsi skeleton + empty-state: shimmer while posts.json loads */
+  .blog-skel{
+    border-radius:20px; padding:22px; min-height:260px;
+    background:var(--glass); border:1px solid var(--border-soft);
+    position:relative; overflow:hidden;
+  }
+  .blog-skel::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 30%, var(--glass-2) 50%, transparent 70%);
+    animation:skel 1.4s linear infinite;
+  }
+  @keyframes skel{ from{ transform:translateX(100%); } to{ transform:translateX(-100%); } }
+  .blog-empty{
+    grid-column:1/-1; text-align:center; padding:32px 20px;
+    color:var(--text-muted); border:1px dashed var(--border);
+    border-radius:20px; background:var(--glass);
+  }
+  @media (prefers-reduced-motion: reduce){ .blog-skel::after{animation:none;} }
   .blog-card{
     position:relative; display:flex; flex-direction:column; gap:10px; overflow:hidden;
     background:var(--glass); border:1px solid var(--border);
@@ -894,6 +995,33 @@
   .social-link svg{width:18px; height:18px; fill:currentColor; display:block;}
 
   footer{text-align:center; padding:36px 24px 52px; color:var(--text-dim); font-size:0.76rem;}
+  /* vibefarsi toast + copy-mini for contact links */
+  .copy-mini{
+    font:inherit; font-size:.7rem; font-weight:600; cursor:pointer;
+    color:var(--text-dim); background:transparent;
+    border:1px solid var(--border-soft); border-radius:8px; padding:4px 10px;
+    transition:color .2s ease, border-color .2s ease;
+  }
+  .copy-mini:hover{color:var(--teal); border-color:var(--teal);}
+  .toast{
+    position:fixed; bottom:24px; inset-inline:0; z-index:120;
+    display:flex; justify-content:center; pointer-events:none;
+    opacity:0; transform:translateY(8px); transition:opacity .25s ease, transform .25s ease;
+  }
+  .toast.show{opacity:1; transform:none;}
+  .toast span{
+    background:var(--glass-2); border:1px solid var(--teal); color:var(--text);
+    backdrop-filter:blur(20px); border-radius:12px; padding:10px 18px; font-size:.82rem;
+  }
+  /* vibefarsi success-check: animated tick inside toast */
+  .toast-in{display:inline-flex; align-items:center; gap:8px;}
+  .toast-in .check{
+    width:16px; height:16px; flex-shrink:0; fill:none;
+    stroke:var(--teal); stroke-width:2.6; stroke-linecap:round; stroke-linejoin:round;
+    stroke-dasharray:30; stroke-dashoffset:30; animation:checkDraw .4s ease forwards;
+  }
+  @keyframes checkDraw{ to{ stroke-dashoffset:0; } }
+  @media (prefers-reduced-motion: reduce){ .toast-in .check{animation:none; stroke-dashoffset:0;} }
 
   /* ---------- EASTER EGG (type "sudo") ---------- */
   /* ---------- COMMAND PALETTE (Cmd/Ctrl+K) ---------- */
@@ -1094,6 +1222,11 @@
 <symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
 </defs></svg>
 <div class="scroll-progress" id="scroll-progress"></div>
+<div class="banner" id="banner">
+  <span data-en="Open to new projects — let's talk.">آماده همکاری در پروژه‌های جدید — صحبت کنیم.</span>
+  <a href="#contact" data-en="Contact">تماس</a>
+  <button id="banner-close" aria-label="بستن">×</button>
+</div>
 <div class="grain"></div>
 <div class="spotlight" id="spotlight"></div>
 
@@ -1135,12 +1268,14 @@
     <a href="/blog/all/" data-en="Blog">وبلاگ</a>
     <a href="#contact" data-en="Contact">تماس</a>
   </nav>
+  <div class="menu-backdrop" id="menu-backdrop"></div>
 </header>
 
 <main>
 <div class="hero">
   <div class="eyebrow"><span class="eyebrow-dot"></span> <span class="eyebrow-text" id="eyebrow-text"><span>در حال برنامه‌ریزی و کنترل پروژه</span></span></div>
   <h1 data-en='Mehdi <span class="grad">Askari</span>'>مهدی <span class="grad">عسکری</span></h1>
+  <div class="hero-rotator" aria-live="polite"><span class="wr-prefix" data-en="Specialty: ">تخصص: </span><span class="wr-word" id="word-rotate">برنامه‌ریزی و کنترل پروژه</span></div>
   <p class="role" data-en="Industrial project planner, project planning &amp; control specialist, web developer &amp; programmer, network &amp; routing specialist, flowchart lover, and IT engineer.">برنامه‌ریز پروژه‌های صنعتی، متخصص برنامه‌ریزی و کنترل پروژه، توسعه‌دهنده و برنامه‌نویس، متخصص شبکه و روتینگ، عاشق فلوچارت و مهندس فناوری اطلاعات.</p>
   <div class="role-pills">
     <span class="role-pill">Project Planning &amp; Control</span>
@@ -1184,10 +1319,6 @@
     <span class="ic-wrap"><svg viewBox="0 0 16 16"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/></svg></span>
     <span data-en="Download Resume (PDF)">دانلود رزومه (PDF)</span>
   </button>
-  <span class="hero-clock" title="ساعت رسمی تهران">
-    <span class="hc-dot"></span><span data-en="Tehran">تهران</span>
-    <span class="hc-time" id="hero-clock">--:--:--</span>
-  </span>
 </div>
 
 <div class="section-divider"><span></span><span></span><span></span></div>
@@ -1371,6 +1502,7 @@
       </div>
     </div>
   </div>
+  <div class="edu-more-wrap"><button class="edu-more" id="edu-more" aria-expanded="false" data-en="Show all credentials">نمایش همه‌ی مدارک</button></div>
 </section>
 
 
@@ -1394,13 +1526,17 @@
       <p data-en="Topology design, router and switch configuration, VLAN and subnet implementation, setting up and optimizing LAN/WAN networks.">طراحی توپولوژی، پیکربندی روتر و سوئیچ، پیاده‌سازی VLAN و زیرشبکه‌ها، راه‌اندازی و بهینه‌سازی شبکه‌های LAN/WAN.</p>
     </div>
   <div class="bento-wide skill-marquee">
-    <div class="mq">
-      <div class="mq-track"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
-      <div class="mq-track" aria-hidden="true"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
+    <div class="mq" dir="ltr">
+      <div class="mq-inner">
+      <div class="mq-track" dir="rtl"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
+      <div class="mq-track" dir="rtl" aria-hidden="true"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
+      </div>
     </div>
-    <div class="mq mq-rev">
-      <div class="mq-track"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
-      <div class="mq-track" aria-hidden="true"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
+    <div class="mq mq-rev" dir="ltr">
+      <div class="mq-inner">
+      <div class="mq-track" dir="rtl"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
+      <div class="mq-track" dir="rtl" aria-hidden="true"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
+      </div>
     </div>
   </div>
 
@@ -1422,6 +1558,7 @@
 <div class="section-divider"><span></span><span></span><span></span></div>
 <section id="blog" class="reveal">
   <div class="section-head"><span class="tag">05</span><h2 data-en="Blog">وبلاگ</h2><div class="rule"></div></div>
+  <input class="blog-search" id="blog-search" type="search" placeholder="جست‌وجو در ۳ نوشته آخر…" aria-label="جست‌وجو در نوشته‌ها">
   <div class="blog-grid" id="blog-grid"><noscript><a href="/blog/all/" style="color:var(--teal)">مشاهده‌ی وبلاگ</a></noscript></div>
   <div class="blog-more"><a href="/blog/all/" data-en="All posts">همه‌ی نوشته‌ها</a><a href="/lab/" data-en="Interactive tools" style="margin-inline-start:10px">ابزارهای تعاملی</a></div>
 </section>
@@ -1457,7 +1594,8 @@
 </section>
 
 </main>
-<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+<footer><span data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</span> — <span id="year-fa">۱۴۰۵</span></footer>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <button class="scroll-top" id="scroll-top" aria-label="بازگشت به بالا">↑</button>
 
@@ -1484,7 +1622,6 @@
 
 <script>
   window.__siteHasPalette = true;
-  (function(){ const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear(); })();
 
   const revealEls = document.querySelectorAll('.reveal');
   const scrollDriven = window.CSS && CSS.supports && CSS.supports('animation-timeline: view()');
@@ -1509,17 +1646,25 @@
   }, {rootMargin:'-45% 0px -50% 0px'});
   sections.forEach(s => navIo.observe(s));
 
-  // mobile menu
+  // mobile menu — side sheet from the right + backdrop (vibefarsi sheet pattern)
   const menuToggle = document.getElementById('menu-toggle');
   const mobileMenu = document.getElementById('mobile-menu');
-  menuToggle.addEventListener('click', ()=>{
-    const open = !mobileMenu.classList.contains('open');
+  const menuBackdrop = document.getElementById('menu-backdrop');
+  function setMenu(open){
     mobileMenu.classList.toggle('open', open);
+    if(menuBackdrop) menuBackdrop.classList.toggle('open', open);
     menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+  menuToggle.addEventListener('click', ()=>{
+    setMenu(!mobileMenu.classList.contains('open'));
+  });
+  if(menuBackdrop) menuBackdrop.addEventListener('click', ()=> setMenu(false));
+  document.addEventListener('keydown', (e)=>{
+    if(e.key === 'Escape' && mobileMenu.classList.contains('open')) setMenu(false);
   });
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', ()=>{
-    mobileMenu.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
+    setMenu(false);
   }));
 
   // language: fa (default) / en
@@ -1528,13 +1673,44 @@
   i18nEls.forEach(el => { el.dataset.fa = el.innerHTML; });
   let lang = 'fa';
 
+  function paintEduMore(){
+    const btn = document.getElementById('edu-more');
+    const list = document.querySelector('.edu-list');
+    if(!btn || !list) return;
+    const open = list.classList.contains('expanded');
+    const fa = open ? 'بستن' : 'نمایش همه‌ی مدارک';
+    const en = open ? 'Show less' : 'Show all credentials';
+    btn.textContent = lang === 'en' ? en : fa;
+    btn.dataset.fa = fa; btn.dataset.en = en;
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+
   function setLang(l){
     lang = l;
     document.documentElement.lang = l;
     document.documentElement.dir = l === 'en' ? 'ltr' : 'rtl';
-    i18nEls.forEach(el => { el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.fa; });
+    i18nEls.forEach(el => { if(el.id !== 'edu-more') el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.fa; });
+    paintEduMore();
     langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === l));
-    const y = document.getElementById('year'); if(y) y.textContent = new Date().getFullYear();
+    const yf = document.getElementById('year-fa');
+    if(yf){
+      try{ yf.textContent = new Intl.DateTimeFormat(l === 'en' ? 'en' : 'fa-IR', {year:'numeric'}).format(new Date()); }
+      catch(e){ yf.textContent = new Date().getFullYear(); }
+    }
+    const bs = document.getElementById('blog-search');
+    if(bs){
+      bs.placeholder = l === 'en' ? 'Search latest 3 posts…' : 'جست‌وجو در ۳ نوشته آخر…';
+      bs.setAttribute('aria-label', l === 'en' ? 'Search posts' : 'جست‌وجو در نوشته‌ها');
+    }
+    document.querySelectorAll('.copy-mini').forEach(b => {
+      const raw = b.dataset.raw || '';
+      b.textContent = l === 'en' ? 'Copy' : 'کپی';
+      b.setAttribute('aria-label', (l === 'en' ? 'Copy ' : 'کپی ') + raw);
+    });
+    const bc = document.getElementById('banner-close');
+    if(bc) bc.setAttribute('aria-label', l === 'en' ? 'Dismiss' : 'بستن');
+    if(window.__blogRepaint) window.__blogRepaint();
+    if(window.__rotatorRepaint) window.__rotatorRepaint();
     if(window.__termRerender) window.__termRerender();
   }
   langButtons.forEach(b => b.addEventListener('click', ()=> setLang(b.dataset.lang)));
@@ -1964,7 +2140,7 @@
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const coarse = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
     if(reduceMotion || coarse) return;
-    document.querySelectorAll('.info-card, .tool-card, .gantt-card, .schedule-card, .contact-panel, .about-text').forEach(card => {
+    document.querySelectorAll('.info-card, .tool-card, .gantt-card, .schedule-card, .contact-panel, .about-text, .blog-card').forEach(card => {
       if(card.dataset.spot) return;
       card.dataset.spot = '1';
       card.classList.add('spot-enabled');
@@ -2009,12 +2185,26 @@
     update();
   })();
 
-  // latest blog posts — auto-loaded from /posts.json
+  // latest blog posts — auto-loaded from /posts.json (with skeleton + empty-state + live search, fa/en)
   (function(){
     const grid = document.getElementById('blog-grid');
+    const search = document.getElementById('blog-search');
     if(!grid) return;
-    fetch('posts.json').then(r => r.ok ? r.json() : Promise.reject()).then(d => {
-      (d.posts || []).slice(0, 3).forEach(p => {
+    const isEn = () => (typeof lang !== 'undefined' ? lang : document.documentElement.lang) === 'en';
+    let all = [];
+    let lastQ = '';
+    function emptyHTML(q){
+      const en = isEn();
+      const msg = q ? (en ? 'Nothing found.' : 'چیزی پیدا نشد.') : (en ? 'No posts yet.' : 'هنوز نوشته‌ای نیست.');
+      const link = en ? 'View blog' : 'مشاهده‌ی وبلاگ';
+      return '<div class="blog-empty">' + msg + ' <a href="/blog/all/" style="color:var(--teal)">' + link + '</a></div>';
+    }
+    function paint(list, q){
+      grid.innerHTML = '';
+      if(!list.length){ grid.innerHTML = emptyHTML(q); return; }
+      const en = isEn();
+      const more = en ? 'Read post' : 'خواندن نوشته';
+      list.forEach(p => {
         grid.insertAdjacentHTML('beforeend',
           '<a class="blog-card" href="blog/' + p.slug + '/">' +
             '<div class="cover" data-cover="' + p.slug + '"></div>' +
@@ -2022,12 +2212,31 @@
             p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
             '<h3>' + p.title + '</h3>' +
             '<p>' + p.excerpt + '</p>' +
-            '<span class="more">خواندن نوشته' +
+            '<span class="more">' + more +
             ' <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>' +
           '</a>');
       });
       if(window.__fillCovers) window.__fillCovers(grid);
-    }).catch(() => { const sec = grid.closest('section'); if(sec) sec.style.display = 'none'; });
+    }
+    function currentFiltered(){
+      const q = (lastQ || '').trim();
+      if(!q) return all;
+      return all.filter(p => (p.title + ' ' + p.excerpt + ' ' + (p.tags || []).join(' ')).includes(q));
+    }
+    grid.innerHTML = '<div class="blog-skel" aria-hidden="true"></div>'.repeat(3);
+    fetch('posts.json').then(r => r.ok ? r.json() : Promise.reject()).then(d => {
+      all = (d.posts || []).slice(0, 3);
+      paint(currentFiltered(), lastQ);
+    }).catch(() => {
+      const en = isEn();
+      grid.innerHTML = '<div class="blog-empty">' + (en ? 'Failed to load posts.' : 'بارگذاری نوشته‌ها ناموفق بود.') + ' <a href="/blog/all/" style="color:var(--teal)">' + (en ? 'View blog' : 'مشاهده‌ی وبلاگ') + '</a></div>';
+    });
+    window.__blogRepaint = () => paint(currentFiltered(), lastQ);
+    if(search) search.addEventListener('input', () => {
+      lastQ = search.value.trim();
+      if(!lastQ){ paint(all, ''); return; }
+      paint(all.filter(p => (p.title + ' ' + p.excerpt + ' ' + (p.tags || []).join(' ')).includes(lastQ)), lastQ);
+    });
   })();
 
   // gentle background parallax
@@ -2096,26 +2305,81 @@
     }, {passive:true});
   })();
 
-  // live Tehran clock — ticks once per second, pauses when the tab is hidden
+  // contact copy buttons + toast (fa/en)
   (function(){
-    const el = document.getElementById('hero-clock');
-    if(!el) return;
-    let fmt = null;
-    try{
-      fmt = new Intl.DateTimeFormat('en-GB', {timeZone:'Asia/Tehran', hour:'2-digit', minute:'2-digit', second:'2-digit', hourCycle:'h23'});
-    }catch(e){}
-    function paint(){
-      if(fmt){ el.textContent = fmt.format(new Date()); return; }
-      // fallback: manual UTC+3:30 (pre-Intl engines only)
-      const t = new Date(Date.now() + (new Date().getTimezoneOffset() * 60000) + 12600000);
-      const p = n => (n < 10 ? '0' : '') + n;
-      el.textContent = p(t.getHours()) + ':' + p(t.getMinutes()) + ':' + p(t.getSeconds());
+    const toast = document.getElementById('toast');
+    let t = null;
+    const isEn = () => (typeof lang !== 'undefined' ? lang : document.documentElement.lang) === 'en';
+    function show(msg){
+      if(!toast) return;
+      toast.innerHTML = '<span class="toast-in"><svg class="check" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5"/></svg>' + msg + '</span>';
+      toast.classList.add('show');
+      clearTimeout(t);
+      t = setTimeout(() => toast.classList.remove('show'), 2200);
     }
-    let timer = null;
-    function start(){ if(!timer){ paint(); timer = setInterval(paint, 1000); } }
-    function stop(){ if(timer){ clearInterval(timer); timer = null; } }
-    start();
-    document.addEventListener('visibilitychange', () => document.hidden ? stop() : start());
+    document.querySelectorAll('.contact-link[href^="tel:"], .contact-link[href^="mailto:"]').forEach(a => {
+      const raw = (a.getAttribute('href') || '').replace(/^(tel:|mailto:)/, '');
+      const b = document.createElement('button');
+      b.type = 'button'; b.className = 'copy-mini'; b.dataset.raw = raw;
+      b.textContent = isEn() ? 'Copy' : 'کپی';
+      b.setAttribute('aria-label', (isEn() ? 'Copy ' : 'کپی ') + raw);
+      b.addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        const done = () => show(isEn() ? 'Copied' : 'کپی شد');
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(raw).then(done, done);
+        } else {
+          const ta = document.createElement('textarea');
+          ta.value = raw; document.body.appendChild(ta); ta.select();
+          try{ document.execCommand('copy'); }catch(err){}
+          ta.remove(); done();
+        }
+      });
+      a.appendChild(b);
+    });
+  })();
+
+  // vibefarsi word-rotate: cycle hero specialties every 3s (fa/en aware)
+  (function(){
+    var el = document.getElementById('word-rotate');
+    if(!el) return;
+    var FA = ['برنامه‌ریزی و کنترل پروژه', 'توسعه‌ی وب', 'شبکه و زیرساخت'];
+    var EN = ['Planning & Control', 'Web Development', 'Network & Infrastructure'];
+    var i = 0;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function cur(){ return ((typeof lang !== 'undefined' ? lang : document.documentElement.lang) === 'en' ? EN : FA)[i % FA.length]; }
+    window.__rotatorRepaint = function(){ el.classList.remove('swap'); el.textContent = cur(); };
+    if(reduce){ el.textContent = cur(); return; }
+    setInterval(function(){
+      i = (i + 1) % FA.length;
+      el.classList.remove('swap');
+      void el.offsetWidth;
+      el.textContent = cur();
+      el.classList.add('swap');
+    }, 3000);
+  })();
+
+  // education accordion: expand long cert list (lang-aware via paintEduMore)
+  (function(){
+    const btn = document.getElementById('edu-more');
+    const list = document.querySelector('.edu-list');
+    if(!btn || !list) return;
+    btn.addEventListener('click', () => {
+      list.classList.toggle('expanded');
+      if(typeof paintEduMore === 'function') paintEduMore();
+    });
+  })();
+
+  // banner dismiss (remembered, no visible hardcoded text)
+  (function(){
+    const b = document.getElementById('banner');
+    const c = document.getElementById('banner-close');
+    if(!b || !c) return;
+    try{ if(localStorage.getItem('banner-off') === '1') b.classList.add('hide'); }catch(e){}
+    c.addEventListener('click', () => {
+      b.classList.add('hide');
+      try{ localStorage.setItem('banner-off', '1'); }catch(e){}
+    });
   })();
 
   setLang('fa');
