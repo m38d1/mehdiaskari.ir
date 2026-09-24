@@ -381,3 +381,16 @@ footer a:hover{color:var(--teal);}
   padding:12px 16px; border-radius:10px; margin:18px 0; color:var(--text);
 }
 .prose .callout strong{ color:var(--amber); }
+
+/* ---------- print: clean article on paper ---------- */
+@media print{
+  header, .mobile-menu, .cmdk-overlay, .scroll-top, .cursor-glow, .grain,
+  .copy-btn, .toast, .related-sec .blog-more, .post-foot .rss-link{ display:none !important; }
+  body{ background:#fff; color:#111; }
+  .prose, .post-head, .post-foot{ max-width:100%; }
+  .acc-body{ max-height:none !important; overflow:visible !important; }
+  .prose pre, .prose .callout, .prose table.data{ break-inside:avoid; }
+  .prose h2{ break-after:avoid; }
+  .prose a{ color:#111; }
+  .prose a[href^="/"]::after{ content:" (" attr(href) ")"; font-size:.78em; color:#444; }
+}

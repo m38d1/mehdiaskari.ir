@@ -1,6 +1,7 @@
 __pycache__/
 *.pyc
 .DS_Store
+tools/.fontcache/
 
 # backups (zip + git bundle) — never publish via GitHub Pages
 backup/

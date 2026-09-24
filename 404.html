@@ -391,6 +391,12 @@
     <a class="btn primary" href="/">بازگشت به خانه</a>
     <a class="btn" href="mailto:me@mehdiaskari.ir">گزارش مسیر خراب</a>
   </div>
+  <p class="guess fu d5" id="guess" hidden></p>
+  <div class="quick fu d5">
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a><span>·</span>
+    <a href="/lab/" data-en="Lab">آزمایشگاه</a><span>·</span>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </div>
 </div>
 </main>
 
@@ -459,6 +465,22 @@
         }, 250);
       }
     }, 28);
+
+    // smart guess: point blog-ish and lab-ish paths at the right hub
+    (function(){
+      const g = document.getElementById('guess');
+      if(!g) return;
+      const p = (location.pathname || '').toLowerCase();
+      const target = p.includes('/blog') ? '/blog/all/'
+        : p.includes('/lab') ? '/lab/' : null;
+      if(!target) return;
+      function paint(){
+        g.hidden = false;
+        g.innerHTML = (lang === 'en' ? 'Did you mean <a href="' + target + '">this page</a>?' : 'شاید منظورتان <a href="' + target + '">این صفحه</a> بود؟');
+      }
+      paint();
+      langButtons.forEach(b => b.addEventListener('click', () => setTimeout(paint, 0)));
+    })();
 
     // subtle 3D tilt (desktop, motion-safe) — mirrors the homepage magnetic button
     const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;

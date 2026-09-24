@@ -50,6 +50,14 @@ jobs:
       - name: RSS feed is current and carries full text
         run: python tools/make-rss.py --check
 
+      - name: Sitemap matches posts.json + pages
+        run: python tools/make-sitemap.py --check
+
+      - name: Resume PDFs are current
+        run: |
+          python -m pip install --quiet fpdf2 arabic-reshaper python-bidi fonttools brotli
+          python tools/make-resume.py --check
+
       - name: Service-worker cache bumped for changed assets
         run: python tools/check-sw-version.py
 
