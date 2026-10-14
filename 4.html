@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آرایشگاه مردانه رویال کات | تجربه استایل لوکس و مدرن</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vazirmatn Persian Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            300: '#F3E5AB',
+                            400: '#E5C158',
+                            500: '#D4AF37',
+                            600: '#AA8C2C',
+                            700: '#806921',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Theme Variables for Seamless Light & Dark Mode */
+        :root {
+            --bg-main: #fdfbf7;
+            --bg-sec: #f4efe6;
+            --bg-card: #ffffff;
+            --bg-elevated: #f9f6f0;
+            --text-main: #18181b;
+            --text-muted: #52525b;
+            --border-col: #e5dec9;
+            --gold-accent: #b5891c;
+        }
+        html.dark {
+            --bg-main: #09090b;
+            --bg-sec: #121215;
+            --bg-card: #18181c;
+            --bg-elevated: #202026;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --border-col: #27272a;
+            --gold-accent: #D4AF37;
+        }
+
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            transition: background-color 0.35s ease, color 0.35s ease;
+        }
+        .theme-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-col);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .theme-bg-sec {
+            background-color: var(--bg-sec);
+            transition: background-color 0.3s ease;
+        }
+        .theme-bg-elevated {
+            background-color: var(--bg-elevated);
+            border: 1px solid var(--border-col);
+        }
+        .theme-border {
+            border-color: var(--border-col);
+        }
+        .theme-text-muted {
+            color: var(--text-muted);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #D4AF37 0%, #F3E5AB 50%, #AA8C2C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        html:not(.dark) .gold-gradient-text {
+            background: linear-gradient(135deg, #8c6608 0%, #c59b27 50%, #6e4f02 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #E5C158 0%, #D4AF37 50%, #AA8C2C 100%);
+        }
+
+        /* Before/After Slider Custom Styling */
+        .compare-slider-line {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.85);
+        }
+        @keyframes scanline {
+            0% { top: 0%; opacity: 0.9; }
+            50% { top: 96%; opacity: 1; }
+            100% { top: 0%; opacity: 0.9; }
+        }
+        .ai-scan-bar {
+            animation: scanline 2.2s ease-in-out infinite;
+        }
+
+        /* Wizard Stepper States */
+        .wizard-step-active {
+            border-color: #D4AF37 !important;
+            background: rgba(212, 175, 55, 0.14) !important;
+        }
+        .wizard-step-done {
+            border-color: #10b981 !important;
+            background: rgba(16, 185, 129, 0.12) !important;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: var(--bg-sec); }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+    </style>
+</head>
+<body class="antialiased selection:bg-gold-500 selection:text-black overflow-x-hidden">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md bg-opacity-90 theme-card border-t-0 border-x-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#home" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-2xl gold-gradient-bg flex items-center justify-center shadow-lg shadow-gold-500/20 text-zinc-950">
+                        <i class="fa-solid fa-scissors text-xl transform -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-tight gold-gradient-text block">رویال کات</span>
+                        <span class="text-xs theme-text-muted block">استودیو مدرن پیرایش آقایان</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-7 text-sm font-bold">
+                    <a href="#home" class="hover:text-gold-500 transition-colors">صفحه اصلی</a>
+                    <a href="#ai-tryon" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-gold-500/15 border border-gold-500/40 text-gold-500 hover:bg-gold-500 hover:text-zinc-950 transition-all">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                        <span>پرو هوشمند مدل مو</span>
+                    </a>
+                    <a href="#services" class="hover:text-gold-500 transition-colors">خدمات و تعرفه‌ها</a>
+                    <a href="#booking" class="hover:text-gold-500 transition-colors">رزرو آنلاین نوبت</a>
+                    <a href="#contact" class="hover:text-gold-500 transition-colors">تماس و آدرس</a>
+                </nav>
+
+                <!-- Theme Toggle + Appointments + Quick CTA -->
+                <div class="hidden md:flex items-center gap-3">
+                    <!-- Theme Switcher Button -->
+                    <button onclick="toggleTheme()" class="px-3.5 py-2.5 rounded-xl theme-bg-elevated hover:border-gold-500 text-xs font-bold flex items-center gap-2 transition-all" title="تغییر تم روشن / تاریک">
+                        <i class="fa-solid fa-sun text-amber-400 hidden dark:inline-block text-sm"></i>
+                        <i class="fa-solid fa-moon text-slate-700 inline-block dark:hidden text-sm"></i>
+                        <span id="themeSwitchLabel">تم روشن</span>
+                    </button>
+
+                    <!-- My Appointments Button -->
+                    <button onclick="toggleMyAppointmentsModal()" class="relative px-4 py-2.5 rounded-xl theme-bg-elevated hover:border-gold-500 text-xs font-bold transition-all flex items-center gap-2">
+                        <i class="fa-regular fa-calendar-check text-gold-500 text-sm"></i>
+                        <span>نوبت‌های من</span>
+                        <span id="navBookingCount" class="w-5 h-5 rounded-full gold-gradient-bg text-zinc-950 text-xs font-black flex items-center justify-center">۰</span>
+                    </button>
+
+                    <!-- Quick Booking CTA -->
+                    <a href="#booking" class="px-5 py-2.5 rounded-xl gold-gradient-bg text-zinc-950 font-black text-xs sm:text-sm shadow-lg shadow-gold-500/20 hover:opacity-95 transition-all">
+                        رزرو سریع نوبت
+                    </a>
+                </div>
+
+                <!-- Mobile Action Buttons -->
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="toggleTheme()" class="p-2.5 rounded-xl theme-bg-elevated text-gold-500" aria-label="تغییر تم">
+                        <i class="fa-solid fa-sun text-amber-400 hidden dark:inline-block text-base"></i>
+                        <i class="fa-solid fa-moon text-slate-700 inline-block dark:hidden text-base"></i>
+                    </button>
+                    <button onclick="toggleMyAppointmentsModal()" class="relative p-2.5 rounded-xl theme-bg-elevated text-gold-500">
+                        <i class="fa-regular fa-calendar-check text-base"></i>
+                        <span id="mobileBookingCount" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full gold-gradient-bg text-zinc-950 text-xs font-black flex items-center justify-center">۰</span>
+                    </button>
+                    <button id="mobileMenuBtn" class="p-2.5 rounded-xl theme-bg-elevated hover:text-gold-500">
+                        <i class="fa-solid fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden theme-card border-b px-4 pt-3 pb-6 space-y-2.5">
+            <a href="#home" class="block px-4 py-2.5 rounded-xl theme-bg-elevated font-bold text-sm">صفحه اصلی</a>
+            <a href="#ai-tryon" class="block px-4 py-2.5 rounded-xl bg-gold-500/15 border border-gold-500/40 text-gold-500 font-bold text-sm flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>آینه هوشمند و پرو مدل مو</span>
+            </a>
+            <a href="#services" class="block px-4 py-2.5 rounded-xl theme-bg-elevated font-bold text-sm">خدمات و تعرفه‌ها</a>
+            <a href="#booking" class="block px-4 py-2.5 rounded-xl theme-bg-elevated font-bold text-sm">رزرو آنلاین نوبت</a>
+            <a href="#contact" class="block px-4 py-2.5 rounded-xl theme-bg-elevated font-bold text-sm">اطلاعات تماس و آدرس</a>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section -->
+    <section id="home" class="relative pt-28 pb-16 lg:pt-36 lg:pb-24 overflow-hidden">
+        <div class="absolute top-1/4 right-10 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Hero Text -->
+                <div class="lg:col-span-7 space-y-6 text-right">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/15 border border-gold-500/30 text-gold-500 text-xs sm:text-sm font-bold">
+                        <i class="fa-solid fa-crown"></i>
+                        <span>مرکز تخصصی هیرکات، اسکین‌فید و استایلینگ مدرن آقایان</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight">
+                        استایل خاص شما، <br />
+                        <span class="gold-gradient-text">امضای هنری رویال کات</span>
+                    </h1>
+                    
+                    <p class="theme-text-muted text-base sm:text-lg leading-relaxed max-w-2xl">
+                        قبل از نشستن روی صندلی، در <strong>آینه هوشمند رویال کات</strong> جدیدترین مدل‌های موی روز دنیا را به صورت زنده روی چهره خود تست کنید و در کمتر از ۶۰ ثانیه نوبت VIP خود را رزرو نمایید.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="#booking" class="px-8 py-4 rounded-2xl gold-gradient-bg text-zinc-950 font-black text-sm sm:text-base shadow-xl shadow-gold-500/20 hover:opacity-95 transition-all flex items-center gap-3">
+                            <span>رزرو آنلاین نوبت در ۴ گام</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        <a href="#ai-tryon" class="px-6 py-4 rounded-2xl theme-card hover:border-gold-500 font-bold text-sm sm:text-base transition-all flex items-center gap-2.5 shadow-sm">
+                            <i class="fa-solid fa-wand-magic-sparkles text-gold-500"></i>
+                            <span>تست مجازی مدل مو روی چهره شما</span>
+                        </a>
+                    </div>
+
+                    <!-- Stats Bar -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t theme-border max-w-xl">
+                        <div>
+                            <span class="block text-2xl sm:text-3xl font-black text-gold-500">+۱۰ سال</span>
+                            <span class="text-xs sm:text-sm theme-text-muted">تجربه تخصصی</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl sm:text-3xl font-black text-gold-500">+۸,۵۰۰</span>
+                            <span class="text-xs sm:text-sm theme-text-muted">مراجعه‌کننده راضی</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl sm:text-3xl font-black text-gold-500">۱۰۰٪</span>
+                            <span class="text-xs sm:text-sm theme-text-muted">ابزار استریل با UV</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Card -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative rounded-3xl overflow-hidden border-2 border-gold-500/40 shadow-2xl group">
+                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=900&q=80" 
+                             onerror="this.src='https://placehold.co/600x700/18181B/D4AF37?text=Royal+Cut+VIP'"
+                             alt="آرایشگاه مردانه رویال کات" 
+                             class="w-full h-[450px] object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent"></div>
+                        
+                        <div class="absolute bottom-5 right-5 left-5 p-4 rounded-2xl bg-zinc-950/90 backdrop-blur-md border border-gold-500/40 flex items-center justify-between text-white">
+                            <div class="flex items-center gap-3">
+                                <div class="w-11 h-11 rounded-xl gold-gradient-bg flex items-center justify-center text-zinc-950 text-lg font-bold shrink-0">
+                                    <i class="fa-solid fa-gem"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-sm">پکیج ویژه داماد و VIP</h3>
+                                    <p class="text-[11px] text-zinc-300">گریم تخصصی، فیشیال ۵ مرحله‌ای و پذیرایی اختصاصی</p>
+                                </div>
+                            </div>
+                            <button onclick="quickSelectServiceForBooking(8)" class="px-3.5 py-2 rounded-xl gold-gradient-bg text-zinc-950 text-xs font-black hover:opacity-90 transition-opacity shrink-0">
+                                رزرو پکیج
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. AI Virtual Hair & Beard Try-On Studio (Zero-Error Instant + Optional AI Mode) -->
+    <section id="ai-tryon" class="py-20 theme-bg-sec border-y theme-border relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/15 border border-gold-500/40 text-gold-500 text-xs font-bold">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>مجهز به موتور شبیه‌ساز فوری و هوش مصنوعی (بدون خطای سرور)</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-black">آینه هوشمند و پرو مجازی مدل مو و ریش</h2>
+                <p class="theme-text-muted text-sm sm:text-base leading-relaxed">
+                    چهره دلخواه یا عکس خودتان را انتخاب کنید، روی استایل‌های ترند سال کلیک کنید تا بلافاصله نمای طبیعی قبل و بعد را مقایسه نمایید.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Right Column: Controls -->
+                <div class="lg:col-span-7 theme-card rounded-3xl p-5 sm:p-7 space-y-6 shadow-xl">
+                    
+                    <!-- Step 1: Choose Photo Source -->
+                    <div class="space-y-3.5">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h3 class="text-base font-black flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full gold-gradient-bg text-zinc-950 text-xs font-black flex items-center justify-center">۱</span>
+                                <span>انتخاب تصویر چهره یا آپلود عکس شخصی</span>
+                            </h3>
+                            <span class="text-xs theme-text-muted">پشتیبانی از عکس گالری، دوربین و چهره‌های نمونه</span>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label for="userPhotoUpload" class="cursor-pointer py-3 px-4 rounded-2xl theme-bg-elevated hover:border-gold-500 transition-all flex items-center justify-center gap-2.5 text-xs sm:text-sm font-bold text-gold-500">
+                                <i class="fa-solid fa-cloud-arrow-up text-base"></i>
+                                <span>آپلود عکس از گوشی / سیستم</span>
+                                <input type="file" id="userPhotoUpload" accept="image/*" class="hidden" onchange="handleUserPhotoUpload(event)">
+                            </label>
+
+                            <button type="button" onclick="openCameraModal()" class="py-3 px-4 rounded-2xl theme-bg-elevated hover:border-gold-500 transition-all flex items-center justify-center gap-2.5 text-xs sm:text-sm font-bold">
+                                <i class="fa-solid fa-camera text-base text-gold-500"></i>
+                                <span>ثبت سلفی با دوربین</span>
+                            </button>
+                        </div>
+
+                        <!-- Preset Realistic Male Faces -->
+                        <div class="pt-1">
+                            <span class="block text-xs font-bold theme-text-muted mb-2">یا انتخاب از مدل‌های چهره آماده:</span>
+                            <div id="presetFacesContainer" class="grid grid-cols-4 gap-2.5"></div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Select Trendy Men's Hairstyle -->
+                    <div class="space-y-3.5 pt-5 border-t theme-border">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base font-black flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full gold-gradient-bg text-zinc-950 text-xs font-black flex items-center justify-center">۲</span>
+                                <span>انتخاب استایل مو و فید مردانه (مدهای روز)</span>
+                            </h3>
+                            <span id="selectedStyleBadge" class="text-xs font-black text-gold-500 bg-gold-500/15 px-3 py-1 rounded-lg border border-gold-500/30">پمپادور مدرن و فید</span>
+                        </div>
+
+                        <div id="hairstyleCardsGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3"></div>
+                    </div>
+
+                    <!-- Step 3: Select Hair Tone & Fine-Tune -->
+                    <div class="space-y-3.5 pt-5 border-t theme-border">
+                        <h3 class="text-base font-black flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full gold-gradient-bg text-zinc-950 text-xs font-black flex items-center justify-center">۳</span>
+                            <span>انتخاب رنگ و تناژ استایل مو</span>
+                        </h3>
+                        <div id="hairColorSelector" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5"></div>
+
+                        <!-- Fine-tune Position Sliders (Visible when custom photo is uploaded) -->
+                        <div id="customPhotoSliders" class="hidden pt-3 border-t theme-border grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>تنظیم ارتفاع مو روی سر:</span>
+                                    <span id="offsetYLabel" class="text-gold-500">استاندارد</span>
+                                </div>
+                                <input type="range" min="-45" max="45" value="0" oninput="adjustCustomHairTransform('y', this.value)" class="w-full accent-yellow-500 cursor-pointer">
+                            </div>
+                            <div>
+                                <div class="flex justify-between font-bold mb-1">
+                                    <span>تنظیم عرض و اندازه مو:</span>
+                                    <span id="scaleLabel" class="text-gold-500">۱۰۰٪</span>
+                                </div>
+                                <input type="range" min="80" max="125" value="100" oninput="adjustCustomHairTransform('scale', this.value)" class="w-full accent-yellow-500 cursor-pointer">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instant Render & AI Boost Button -->
+                    <div class="pt-2">
+                        <button type="button" id="generateTryOnBtn" onclick="triggerSmartHairSimulation()" class="w-full py-4 rounded-2xl gold-gradient-bg text-zinc-950 font-black text-sm sm:text-base shadow-xl shadow-gold-500/20 hover:opacity-95 transition-all flex items-center justify-center gap-2.5">
+                            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                            <span>اعمال و پردازش طبیعی مدل مو روی تصویر</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Left Column: Interactive Live Mirror Canvas & Before/After Slider -->
+                <div class="lg:col-span-5 theme-card rounded-3xl p-5 sm:p-6 sticky top-24 shadow-2xl space-y-4 border-gold-500/40">
+                    <div class="flex items-center justify-between border-b theme-border pb-3">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                            <h3 class="font-black text-sm sm:text-base">آینه هوشمند رویال کات</h3>
+                        </div>
+                        <span id="mirrorStatusBadge" class="px-2.5 py-1 rounded-lg theme-bg-elevated text-gold-500 text-xs font-bold">
+                            اسلایدر مقایسه فعال است
+                        </span>
+                    </div>
+
+                    <!-- Interactive Before / After Viewport -->
+                    <div id="tryOnViewport" class="relative w-full h-[410px] sm:h-[430px] rounded-2xl overflow-hidden bg-zinc-950 border theme-border select-none">
+                        <!-- AFTER Layer (Rendered on High-Res Canvas) -->
+                        <canvas id="afterCanvasEl" width="640" height="760" class="w-full h-full object-cover object-top block"></canvas>
+
+                        <!-- BEFORE Layer (Clipped Overlay for Smooth Comparison) -->
+                        <div id="beforeClipWrapper" class="absolute inset-0 overflow-hidden" style="clip-path: inset(0 0 0 48%);">
+                            <img id="beforeImageEl" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=85" crossorigin="anonymous" alt="چهره قبل" class="w-full h-full object-cover object-top filter saturate-90">
+                            <span class="absolute top-3 right-3 px-3 py-1 rounded-lg bg-zinc-950/85 backdrop-blur-md text-zinc-100 border border-zinc-700 text-[11px] font-bold">
+                                چهره اولیه (قبل)
+                            </span>
+                        </div>
+
+                        <!-- After Badge -->
+                        <span class="absolute top-3 left-3 px-3 py-1 rounded-lg gold-gradient-bg text-zinc-950 text-[11px] font-black shadow-lg z-10">
+                            استایل جدید (بعد)
+                        </span>
+
+                        <!-- Divider Handle -->
+                        <div id="sliderLineEl" class="absolute top-0 bottom-0 w-0.5 bg-gold-400 compare-slider-line pointer-events-none z-10" style="left: 48%;">
+                            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full gold-gradient-bg text-zinc-950 shadow-xl flex items-center justify-center border-2 border-white">
+                                <i class="fa-solid fa-arrows-left-right text-xs"></i>
+                            </div>
+                        </div>
+
+                        <!-- Invisible Drag Input -->
+                        <input type="range" id="compareRangeInput" min="5" max="95" value="48" oninput="handleCompareSlider(this.value)" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20" aria-label="اسلایدر مقایسه قبل و بعد">
+
+                        <!-- Scanning Animation Overlay -->
+                        <div id="aiLoadingOverlay" class="hidden absolute inset-0 z-30 bg-zinc-950/85 backdrop-blur-md flex-col items-center justify-center p-6 text-center text-white">
+                            <div class="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent ai-scan-bar"></div>
+                            <div class="w-14 h-14 rounded-2xl bg-gold-500/20 border border-gold-500/40 flex items-center justify-center text-gold-400 text-2xl mb-3 animate-bounce">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <h4 class="font-black text-sm mb-1">در حال شبیه‌سازی و تطبیق مدل مو روی چهره...</h4>
+                            <p class="text-zinc-400 text-xs max-w-xs">تنظیم نورپردازی، خط فید و تناژ رنگ انتخابی</p>
+                        </div>
+                    </div>
+
+                    <!-- Recommendation Box -->
+                    <div class="p-3.5 rounded-2xl theme-bg-elevated flex items-center justify-between text-xs">
+                        <div>
+                            <span class="theme-text-muted block text-[11px]">استایل فعلی در آینه:</span>
+                            <h4 id="mirrorCurrentStyleTitle" class="font-black text-gold-500 text-sm">پمپادور مدرن و فید</h4>
+                        </div>
+                        <div class="text-left">
+                            <span class="theme-text-muted block text-[11px]">خدمت مرتبط در سالن:</span>
+                            <span id="mirrorSuggestedService" class="font-bold">اسکین فید و تیپر فید مدرن</span>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" onclick="bookSelectedHairstyleNow()" class="py-3.5 px-4 rounded-xl gold-gradient-bg text-zinc-950 font-black text-xs flex items-center justify-center gap-2 shadow-lg shadow-gold-500/15 hover:opacity-95 transition-all">
+                            <i class="fa-regular fa-calendar-check text-sm"></i>
+                            <span>رزرو نوبت با همین مدل</span>
+                        </button>
+                        <button type="button" onclick="downloadTryOnResult()" class="py-3.5 px-4 rounded-xl theme-bg-elevated hover:border-gold-500 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="fa-solid fa-download text-gold-500 text-sm"></i>
+                            <span>دانلود عکس استایل</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Services & Pricing Section -->
+    <section id="services" class="py-20 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <span class="text-gold-500 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5">
+                        <i class="fa-solid fa-sparkles"></i>
+                        تعرفه شفاف خدمات سالن
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-black mt-1">لیست خدمات و قیمت‌ها</h2>
+                </div>
+
+                <!-- Category Filter Tabs -->
+                <div class="flex flex-wrap gap-2" id="serviceFilters">
+                    <button onclick="filterServices('all')" data-filter="all" class="service-filter-btn px-4 py-2.5 rounded-xl font-black text-xs transition-all gold-gradient-bg text-zinc-950 shadow-md">
+                        همه خدمات
+                    </button>
+                    <button onclick="filterServices('hair')" data-filter="hair" class="service-filter-btn px-4 py-2.5 rounded-xl font-bold text-xs transition-all theme-card hover:border-gold-500">
+                        اصلاح و فید مو
+                    </button>
+                    <button onclick="filterServices('beard')" data-filter="beard" class="service-filter-btn px-4 py-2.5 rounded-xl font-bold text-xs transition-all theme-card hover:border-gold-500">
+                        ریش و صورت
+                    </button>
+                    <button onclick="filterServices('skin')" data-filter="skin" class="service-filter-btn px-4 py-2.5 rounded-xl font-bold text-xs transition-all theme-card hover:border-gold-500">
+                        پاکسازی و اسپا
+                    </button>
+                    <button onclick="filterServices('vip')" data-filter="vip" class="service-filter-btn px-4 py-2.5 rounded-xl font-bold text-xs transition-all theme-card hover:border-gold-500">
+                        پکیج‌های VIP و داماد
+                    </button>
+                </div>
+            </div>
+
+            <!-- Services Grid -->
+            <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5"></div>
+        </div>
+    </section>
+
+    <!-- 4. Modern 4-Step Online Appointment Booking Wizard -->
+    <section id="booking" class="py-20 theme-bg-sec border-t theme-border relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-10 space-y-2">
+                <span class="text-gold-500 font-bold text-xs uppercase">سیستم نوبت‌دهی هوشمند و بدون معطلی</span>
+                <h2 class="text-3xl sm:text-4xl font-black">رزرو آنلاین نوبت در ۴ گام</h2>
+                <p class="theme-text-muted text-sm">امکان انتخاب هم‌زمان چند خدمت، تعیین ساعت دقیق و دریافت آنی کارت دیجیتال نوبت</p>
+            </div>
+
+            <!-- 4-Step Progress Bar -->
+            <div class="max-w-3xl mx-auto mb-10 grid grid-cols-4 gap-2 sm:gap-4">
+                <button type="button" onclick="goToWizardStep(1)" id="wizardTab1" class="wizard-step-active p-3 rounded-2xl theme-card flex items-center gap-2.5 text-right transition-all">
+                    <span class="w-7 h-7 rounded-full gold-gradient-bg text-zinc-950 font-black text-xs flex items-center justify-center shrink-0">۱</span>
+                    <div class="overflow-hidden">
+                        <span class="text-[10px] theme-text-muted block">گام اول</span>
+                        <span class="text-xs font-black truncate block">انتخاب خدمات</span>
+                    </div>
+                </button>
+                <button type="button" onclick="goToWizardStep(2)" id="wizardTab2" class="p-3 rounded-2xl theme-card flex items-center gap-2.5 text-right transition-all">
+                    <span class="w-7 h-7 rounded-full theme-bg-elevated font-black text-xs flex items-center justify-center shrink-0">۲</span>
+                    <div class="overflow-hidden">
+                        <span class="text-[10px] theme-text-muted block">گام دوم</span>
+                        <span class="text-xs font-black truncate block">تاریخ و ساعت</span>
+                    </div>
+                </button>
+                <button type="button" onclick="goToWizardStep(3)" id="wizardTab3" class="p-3 rounded-2xl theme-card flex items-center gap-2.5 text-right transition-all">
+                    <span class="w-7 h-7 rounded-full theme-bg-elevated font-black text-xs flex items-center justify-center shrink-0">۳</span>
+                    <div class="overflow-hidden">
+                        <span class="text-[10px] theme-text-muted block">گام سوم</span>
+                        <span class="text-xs font-black truncate block">مشخصات و پذیرایی</span>
+                    </div>
+                </button>
+                <button type="button" id="wizardTab4" class="p-3 rounded-2xl theme-card flex items-center gap-2.5 text-right transition-all cursor-default">
+                    <span class="w-7 h-7 rounded-full theme-bg-elevated font-black text-xs flex items-center justify-center shrink-0">۴</span>
+                    <div class="overflow-hidden">
+                        <span class="text-[10px] theme-text-muted block">گام پایانی</span>
+                        <span class="text-xs font-black truncate block">بلیط دیجیتال</span>
+                    </div>
+                </button>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Wizard Steps Container -->
+                <div class="lg:col-span-8 theme-card p-6 sm:p-8 rounded-3xl shadow-xl min-h-[430px] flex flex-col justify-between">
+                    
+                    <!-- STEP 1: Multi-Service Selection -->
+                    <div id="wizardStep1" class="space-y-5">
+                        <div class="flex flex-wrap items-center justify-between gap-2 border-b theme-border pb-3">
+                            <h3 class="text-base sm:text-lg font-black">۱. خدمات مورد نظر خود را انتخاب کنید (امکان انتخاب چند خدمت)</h3>
+                            <span id="wizardSelectedCount" class="text-xs font-black text-gold-500 bg-gold-500/15 px-3 py-1 rounded-lg">۱ خدمت انتخاب شده</span>
+                        </div>
+
+                        <div id="wizardServicesGrid" class="grid grid-cols-1 sm:grid-cols-2 gap-3 max-h-[340px] overflow-y-auto pr-1"></div>
+
+                        <div class="pt-4 border-t theme-border flex justify-end">
+                            <button type="button" onclick="goToWizardStep(2)" class="px-7 py-3.5 rounded-2xl gold-gradient-bg text-zinc-950 font-black text-sm flex items-center gap-2 shadow-lg shadow-gold-500/20 hover:opacity-95 transition-all">
+                                <span>مرحله بعد: انتخاب روز و ساعت</span>
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Date & Categorized Time Slots -->
+                    <div id="wizardStep2" class="hidden space-y-6">
+                        <div>
+                            <h3 class="text-base sm:text-lg font-black mb-3">۲. انتخاب روز مراجعه (۷ روز آینده)</h3>
+                            <div id="datePickerContainer" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5"></div>
+                        </div>
+
+                        <div>
+                            <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+                                <h4 class="text-sm font-black">انتخاب ساعت حضور در سالن:</h4>
+                                <div class="flex gap-1.5">
+                                    <button type="button" onclick="filterTimePeriod('all')" data-period="all" class="period-filter-btn px-3 py-1 rounded-lg text-xs font-black gold-gradient-bg text-zinc-950">همه ساعات</button>
+                                    <button type="button" onclick="filterTimePeriod('morning')" data-period="morning" class="period-filter-btn px-3 py-1 rounded-lg text-xs font-bold theme-bg-elevated">نوبت صبح و ظهر</button>
+                                    <button type="button" onclick="filterTimePeriod('evening')" data-period="evening" class="period-filter-btn px-3 py-1 rounded-lg text-xs font-bold theme-bg-elevated">نوبت عصر و شب</button>
+                                </div>
+                            </div>
+                            <div id="timeSlotsContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-2.5"></div>
+                        </div>
+
+                        <div class="pt-4 border-t theme-border flex items-center justify-between">
+                            <button type="button" onclick="goToWizardStep(1)" class="px-5 py-3 rounded-xl theme-bg-elevated font-bold text-xs sm:text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                <span>بازگشت به خدمات</span>
+                            </button>
+                            <button type="button" onclick="goToWizardStep(3)" class="px-7 py-3.5 rounded-2xl gold-gradient-bg text-zinc-950 font-black text-sm flex items-center gap-2 shadow-lg">
+                                <span>مرحله بعد: مشخصات و پذیرایی</span>
+                                <i class="fa-solid fa-arrow-left"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Customer Info, Welcome Drink & Promo Code -->
+                    <div id="wizardStep3" class="hidden space-y-5">
+                        <h3 class="text-base sm:text-lg font-black border-b theme-border pb-3">۳. تکمیل مشخصات و پذیرایی رایگان VIP</h3>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="customerName" class="block text-xs font-bold mb-1.5">نام و نام خانوادگی <span class="text-rose-500">*</span></label>
+                                <input type="text" id="customerName" placeholder="مثلاً: امیرحسین راد" class="w-full px-4 py-3 rounded-xl theme-bg-elevated focus:border-gold-500 outline-none text-sm">
+                            </div>
+                            <div>
+                                <label for="customerPhone" class="block text-xs font-bold mb-1.5">شماره موبایل (جهت پیامک نوبت) <span class="text-rose-500">*</span></label>
+                                <input type="tel" id="customerPhone" dir="ltr" placeholder="09123456789" class="w-full px-4 py-3 rounded-xl theme-bg-elevated focus:border-gold-500 outline-none text-sm text-right">
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label for="customerDrink" class="block text-xs font-bold mb-1.5">
+                                    <i class="fa-solid fa-mug-hot text-gold-500 ml-1"></i>نوشیدنی پذیرایی رایگان شما در سالن:
+                                </label>
+                                <select id="customerDrink" class="w-full px-4 py-3 rounded-xl theme-bg-elevated focus:border-gold-500 outline-none text-sm">
+                                    <option value="قهوه اسپرسو دبل">قهوه اسپرسو دبل (رایگان)</option>
+                                    <option value="چای و دمنوش زعفرانی">چای و دمنوش زعفرانی (رایگان)</option>
+                                    <option value="آیس لته سرد">آیس لته سرد (رایگان)</option>
+                                    <option value="عدم نیاز به پذیرایی">نیاز به پذیرایی ندارم</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="promoInput" class="block text-xs font-bold mb-1.5">
+                                    <i class="fa-solid fa-ticket text-gold-500 ml-1"></i>کد تخفیف (کد هدیه آزمایشی: <span class="text-gold-500 font-black">ROYAL20</span>)
+                                </label>
+                                <div class="flex gap-2">
+                                    <input type="text" id="promoInput" placeholder="ROYAL20" class="w-full px-3.5 py-3 rounded-xl theme-bg-elevated focus:border-gold-500 outline-none text-sm uppercase">
+                                    <button type="button" onclick="applyDiscountCode()" class="px-4 rounded-xl bg-gold-500/20 text-gold-500 hover:bg-gold-500 hover:text-zinc-950 font-black text-xs transition-all shrink-0">
+                                        اعمال کد
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="customerNotes" class="block text-xs font-bold mb-1.5">استایل انتخاب‌شده در پرو هوشمند یا توضیحات دلخواه:</label>
+                            <textarea id="customerNotes" rows="2" placeholder="اگر در بخش پرو مجازی مدلی انتخاب کرده‌اید یا نکته خاصی دارید..." class="w-full px-4 py-2.5 rounded-xl theme-bg-elevated focus:border-gold-500 outline-none text-sm"></textarea>
+                        </div>
+
+                        <div id="bookingFormAlert" class="hidden p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/40 text-rose-400 text-xs font-bold"></div>
+
+                        <div class="pt-4 border-t theme-border flex items-center justify-between">
+                            <button type="button" onclick="goToWizardStep(2)" class="px-5 py-3 rounded-xl theme-bg-elevated font-bold text-xs sm:text-sm flex items-center gap-2">
+                                <i class="fa-solid fa-arrow-right"></i>
+                                <span>بازگشت به زمان‌بندی</span>
+                            </button>
+                            <button type="button" onclick="submitFinalBooking()" class="px-8 py-3.5 rounded-2xl gold-gradient-bg text-zinc-950 font-black text-sm shadow-xl shadow-gold-500/20 flex items-center gap-2 hover:opacity-95 transition-all">
+                                <i class="fa-solid fa-circle-check text-base"></i>
+                                <span>تایید نهایی و صدور کارت نوبت</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 4: Digital Ticket Confirmation -->
+                    <div id="wizardStep4" class="hidden text-center py-4 space-y-5">
+                        <div class="w-16 h-16 rounded-full gold-gradient-bg text-zinc-950 flex items-center justify-center text-3xl mx-auto shadow-lg shadow-gold-500/30">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-black">نوبت شما با موفقیت ثبت و نهایی شد!</h3>
+                            <p class="theme-text-muted text-xs sm:text-sm mt-1">کارت دیجیتال نوبت شما صادر گردید. لطفاً ۱۰ دقیقه قبل از زمان مقرر در سالن حضور داشته باشید.</p>
+                        </div>
+
+                        <div id="digitalTicketCard" class="max-w-md mx-auto p-5 rounded-2xl theme-bg-elevated border-2 border-dashed border-gold-500/60 text-right space-y-2.5 text-xs sm:text-sm"></div>
+
+                        <div class="flex flex-wrap justify-center gap-3 pt-2">
+                            <button type="button" onclick="resetBookingWizard()" class="px-6 py-3 rounded-xl theme-bg-elevated hover:border-gold-500 font-bold text-xs transition-all">
+                                ثبت یک نوبت جدید دیگر
+                            </button>
+                            <button type="button" onclick="toggleMyAppointmentsModal()" class="px-6 py-3 rounded-xl gold-gradient-bg text-zinc-950 font-black text-xs shadow-md">
+                                مشاهده لیست «نوبت‌های من»
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Live Booking Summary Sidebar -->
+                <div class="lg:col-span-4 theme-card p-6 rounded-3xl sticky top-24 space-y-5 shadow-xl">
+                    <div class="flex items-center justify-between border-b theme-border pb-4">
+                        <h3 class="text-base font-black flex items-center gap-2">
+                            <i class="fa-solid fa-receipt text-gold-500"></i>
+                            <span>فاکتور زنده نوبت شما</span>
+                        </h3>
+                        <span id="summaryDurationBadge" class="px-2.5 py-1 rounded-lg bg-gold-500/15 text-gold-500 text-xs font-black">۴۵ دقیقه</span>
+                    </div>
+
+                    <div>
+                        <span class="text-xs theme-text-muted block mb-2">خدمات انتخاب‌شده:</span>
+                        <div id="summaryServicesList" class="space-y-2 text-xs font-bold"></div>
+                    </div>
+
+                    <div class="p-3.5 rounded-2xl theme-bg-elevated space-y-2.5 text-xs">
+                        <div class="flex justify-between items-center">
+                            <span class="theme-text-muted">تاریخ مراجعه:</span>
+                            <span id="summaryDate" class="font-black">-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="theme-text-muted">ساعت حضور:</span>
+                            <span id="summaryTime" class="font-black text-gold-500">ساعت ۱۰:۰۰</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-dashed theme-border pt-4 space-y-2">
+                        <div id="summaryDiscountRow" class="hidden justify-between items-center text-xs text-emerald-500 font-bold">
+                            <span>تخفیف کد هدیه (۲۰٪):</span>
+                            <span id="summaryDiscountValue">۰ تومان</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-sm">مبلغ قابل پرداخت:</span>
+                            <div class="text-left">
+                                <span id="summaryPrice" class="text-2xl font-black text-gold-500">۳۵۰,۰۰۰</span>
+                                <span class="text-xs theme-text-muted mr-1">تومان</span>
+                            </div>
+                        </div>
+                        <p class="text-[11px] theme-text-muted">پرداخت هزینه در سالن و پس از اتمام خدمات انجام می‌شود.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. Contact Info & Working Hours -->
+    <section id="contact" class="py-20 border-t theme-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Address & Phone -->
+                <div class="theme-card p-7 rounded-3xl space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/15 text-gold-500 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black">نشانی و اطلاعات تماس</h3>
+                            <p class="text-xs theme-text-muted">دسترسی آسان و پارکینگ اختصاصی</p>
+                        </div>
+                    </div>
+                    <p class="text-xs sm:text-sm leading-relaxed">
+                        تهران، بلوار اندرزگو، نبش خیابان سلیمی شمالی، برج لوکس رویال، طبقه ۲، واحد ۲۰۴
+                    </p>
+                    <div class="pt-2 space-y-1 text-sm font-black" dir="ltr">
+                        <div><i class="fa-solid fa-phone text-gold-500 mr-2"></i>021 - 22 66 88 99</div>
+                        <div><i class="fa-solid fa-mobile-screen text-gold-500 mr-2"></i>0912 - 345 67 89</div>
+                    </div>
+                    <button onclick="copyAddressToClipboard()" id="copyAddressBtn" class="w-full py-2.5 rounded-xl theme-bg-elevated hover:border-gold-500 text-xs font-bold transition-all">
+                        <i class="fa-regular fa-copy ml-1 text-gold-500"></i>کپی آدرس برای مسیریاب
+                    </button>
+                </div>
+
+                <!-- Working Hours -->
+                <div class="theme-card p-7 rounded-3xl space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/15 text-gold-500 flex items-center justify-center text-xl">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black">ساعات کاری سالن</h3>
+                            <p class="text-xs theme-text-muted">پذیرش منظم با رزرو آنلاین</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-3 text-xs sm:text-sm">
+                        <li class="flex justify-between pb-2.5 border-b theme-border">
+                            <span>شنبه تا چهارشنبه</span>
+                            <span class="font-black text-gold-500">۱۰:۰۰ الی ۲۱:۰۰</span>
+                        </li>
+                        <li class="flex justify-between pb-2.5 border-b theme-border">
+                            <span>پنج‌شنبه‌ها (VIP)</span>
+                            <span class="font-black text-gold-500">۰۹:۰۰ الی ۲۲:۰۰</span>
+                        </li>
+                        <li class="flex justify-between">
+                            <span>جمعه‌ها و تعطیلات</span>
+                            <span class="font-bold">۱۱:۰۰ الی ۱۸:۰۰</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Lounge Amenities -->
+                <div class="theme-card p-7 rounded-3xl space-y-5">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/15 text-gold-500 flex items-center justify-center text-xl">
+                            <i class="fa-solid fa-mug-hot"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-black">امکانات رفاهی VIP</h3>
+                            <p class="text-xs theme-text-muted">محیطی آرام و لوکس ویژه آقایان</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3 text-xs font-bold">
+                        <div class="p-3.5 rounded-2xl theme-bg-elevated flex items-center gap-2">
+                            <i class="fa-solid fa-mug-saucer text-gold-500"></i>
+                            <span>کافی‌بار رایگان</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl theme-bg-elevated flex items-center gap-2">
+                            <i class="fa-solid fa-wifi text-gold-500"></i>
+                            <span>اینترنت پرسرعت</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl theme-bg-elevated flex items-center gap-2">
+                            <i class="fa-solid fa-square-parking text-gold-500"></i>
+                            <span>پارکینگ اختصاصی</span>
+                        </div>
+                        <div class="p-3.5 rounded-2xl theme-bg-elevated flex items-center gap-2">
+                            <i class="fa-solid fa-shield-halved text-gold-500"></i>
+                            <span>پک بهداشتی رایگان</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 border-t theme-border text-center text-xs theme-text-muted">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-scissors text-gold-500"></i>
+                <strong class="text-gold-500">آرایشگاه مردانه رویال کات</strong>
+                <span>— تمامی حقوق محفوظ است.</span>
+            </div>
+            <div class="flex gap-5 font-bold">
+                <a href="#home" class="hover:text-gold-500">صفحه اصلی</a>
+                <a href="#ai-tryon" class="hover:text-gold-500">پرو هوشمند مو</a>
+                <a href="#services" class="hover:text-gold-500">تعرفه‌ها</a>
+                <a href="#booking" class="hover:text-gold-500">رزرو نوبت</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Webcam Selfie Modal -->
+    <div id="cameraModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4">
+        <div class="theme-card rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b theme-border pb-3">
+                <h3 class="font-black text-base flex items-center gap-2">
+                    <i class="fa-solid fa-camera text-gold-500"></i>
+                    <span>عکسبرداری مستقیم چهره</span>
+                </h3>
+                <button type="button" onclick="closeCameraModal()" class="w-8 h-8 rounded-lg theme-bg-elevated flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div class="relative rounded-2xl overflow-hidden bg-black aspect-[3/4] border theme-border">
+                <video id="webcamVideo" autoplay playsinline class="w-full h-full object-cover transform -scale-x-100"></video>
+                <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                    <div class="w-44 h-60 rounded-full border-2 border-dashed border-gold-400/70"></div>
+                </div>
+            </div>
+            <div class="flex gap-3">
+                <button type="button" onclick="captureWebcamPhoto()" class="flex-1 py-3 rounded-xl gold-gradient-bg text-zinc-950 font-black text-sm">
+                    ثبت عکس و تست مدل مو
+                </button>
+                <button type="button" onclick="closeCameraModal()" class="px-5 py-3 rounded-xl theme-bg-elevated font-bold text-xs">
+                    انصراف
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Appointments Modal -->
+    <div id="myAppointmentsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="theme-card rounded-3xl max-w-lg w-full p-6 shadow-2xl max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b theme-border mb-4">
+                <div class="flex items-center gap-2">
+                    <i class="fa-regular fa-calendar-check text-gold-500 text-xl"></i>
+                    <h3 class="text-lg font-black">نوبت‌های رزرو شده من</h3>
+                </div>
+                <button onclick="toggleMyAppointmentsModal()" class="w-8 h-8 rounded-lg theme-bg-elevated flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+            <div id="appointmentsListContainer" class="overflow-y-auto space-y-3 flex-1 pr-1"></div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toastNotification" class="fixed bottom-5 left-5 z-50 px-5 py-3.5 rounded-2xl gold-gradient-bg text-zinc-950 font-black text-xs shadow-2xl transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none"></div>
+
+    <script>
+        // =========================================================================
+        // 1. SERVICES DATASET (Without Stylist Dependencies)
+        // =========================================================================
+        const servicesData = [
+            { id: 1, title: 'اصلاح تخصصی و استایلینگ مو', category: 'hair', categoryLabel: 'اصلاح و فید', price: 350000, duration: 45, popular: true, description: 'کوتاهی مو متناسب با آناتومی سر و صورت همراه با شستشو و براشینگ حرفه‌ای.' },
+            { id: 2, title: 'انواع فید حرفه‌ای (Skin / Taper Fade)', category: 'hair', categoryLabel: 'اصلاح و فید', price: 420000, duration: 50, popular: true, description: 'سایه‌زنی فوق دقیق با صفرترین ماشین‌های روز دنیا و استایلینگ مدرن.' },
+            { id: 3, title: 'اصلاح کلاسیک فقط با قیچی (Scissor Cut)', category: 'hair', categoryLabel: 'اصلاح و فید', price: 450000, duration: 60, popular: false, description: 'مناسب موهای بلند و متوسط برای حفظ حالت طبیعی و خواب استاندارد مو.' },
+            { id: 4, title: 'آنکادر تخصصی ریش + حوله داغ', category: 'beard', categoryLabel: 'ریش و صورت', price: 240000, duration: 30, popular: true, description: 'خط‌گیری دقیق، فید ریش، کمپرس حوله گرم معطر و روغن آرگان.' },
+            { id: 5, title: 'پکیج کامل اصلاح مو + استایل ریش', category: 'hair', categoryLabel: 'پکیج محبوب', price: 540000, duration: 70, popular: true, description: 'پکیج اقتصادی شامل فید یا اصلاح تخصصی مو به همراه آنکادر کامل ریش.' },
+            { id: 6, title: 'فیشیال و پاکسازی چندمرحله‌ای پوست', category: 'skin', categoryLabel: 'پاکسازی و اسپا', price: 680000, duration: 60, popular: true, description: 'پاکسازی ۵ مرحله‌ای، تخلیه منافذ، بخور اوزون و آبرسانی عمیق پوست.' },
+            { id: 7, title: 'کراتین و پروتئین‌تراپی موی آقایان', category: 'vip', categoryLabel: 'خدمات VIP', price: 1450000, duration: 90, popular: false, description: 'احیا و صافی موهای فر و آسیب‌دیده با مواد اورجینال و ماندگاری بالا.' },
+            { id: 8, title: 'پکیج تشریفاتی داماد (Royal Groom)', category: 'vip', categoryLabel: 'تشریفات داماد', price: 3600000, duration: 160, popular: true, description: 'هیرکات تخصصی، فیشیال VIP، گریم سینمایی طبیعی و پذیرایی اختصاصی.' }
+        ];
+
+        const timeSlots = [
+            { time: '۱۰:۰۰', period: 'morning', busy: false },
+            { time: '۱۱:۰۰', period: 'morning', busy: false },
+            { time: '۱۲:۰۰', period: 'morning', busy: true },
+            { time: '۱۳:۰۰', period: 'morning', busy: false },
+            { time: '۱۴:۰۰', period: 'morning', busy: false },
+            { time: '۱۶:۰۰', period: 'evening', busy: false },
+            { time: '۱۷:۰۰', period: 'evening', busy: false },
+            { time: '۱۸:۰۰', period: 'evening', busy: true },
+            { time: '۱۹:۰۰', period: 'evening', busy: false },
+            { time: '۲۰:۰۰', period: 'evening', busy: false },
+            { time: '۲۱:۰۰', period: 'evening', busy: false }
+        ];
+
+        // Booking State
+        let selectedServiceIds = [1];
+        let selectedDate = '';
+        let selectedTime = '۱۷:۰۰';
+        let activeTimePeriod = 'all';
+        let discountPercent = 0;
+        let savedAppointments = [];
+
+        function formatPersianPrice(num) {
+            return num.toLocaleString('fa-IR');
+        }
+
+        function toPersianDigits(str) {
+            const d = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(str).replace(/[0-9]/g, w => d[+w]);
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toastNotification');
+            toast.textContent = msg;
+            toast.classList.remove('translate-y-24', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-24', 'opacity-0');
+            }, 3200);
+        }
+
+        // =========================================================================
+        // 2. DUAL THEME (DARK / LIGHT MODE)
+        // =========================================================================
+        function toggleTheme() {
+            const html = document.documentElement;
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            const label = document.getElementById('themeSwitchLabel');
+            if (label) label.textContent = isDark ? 'تم روشن' : 'تم تاریک';
+            try { localStorage.setItem('royalcut_theme', isDark ? 'dark' : 'light'); } catch (e) {}
+            showToast(isDark ? 'تم تاریک (مشکی و طلایی) فعال شد' : 'تم روشن (کرم و برنز) فعال شد');
+        }
+
+        function initTheme() {
+            try {
+                const saved = localStorage.getItem('royalcut_theme');
+                if (saved === 'light') {
+                    document.documentElement.classList.remove('dark');
+                    const label = document.getElementById('themeSwitchLabel');
+                    if (label) label.textContent = 'تم تاریک';
+                }
+            } catch (e) {}
+        }
+
+        // =========================================================================
+        // 3. ZERO-ERROR AI HAIR & BEARD VIRTUAL TRY-ON STUDIO
+        // =========================================================================
+        const presetMaleFaces = [
+            { id: 'face1', name: 'چهره ۱ (کلاسیک)', url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=85' },
+            { id: 'face2', name: 'چهره ۲ (زاویه‌دار)', url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&q=85' },
+            { id: 'face3', name: 'چهره ۳ (رسمی)', url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=700&q=85' },
+            { id: 'face4', name: 'چهره ۴ (جوان)', url: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=700&q=85' }
+        ];
+
+        const trendyHairstyles = [
+            {
+                id: 'pompadour',
+                title: 'پمپادور مدرن و فید',
+                tag: 'ترند سال',
+                relatedServiceId: 2,
+                relatedServiceName: 'انواع فید حرفه‌ای',
+                afterUrl: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=800&q=85',
+                desc: 'حجم بالا در جلوی مو با فید سایه‌ای تمیز در کناره‌ها',
+                shapeType: 'pompadour'
+            },
+            {
+                id: 'frenchcrop',
+                title: 'کراپ فرانسوی تکسچردار',
+                tag: 'بسیار پرطرفدار',
+                relatedServiceId: 2,
+                relatedServiceName: 'انواع فید حرفه‌ای',
+                afterUrl: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=800&q=85',
+                desc: 'چتری کوتاه تکسچردار در جلو با دراپ فید مدرن',
+                shapeType: 'crop'
+            },
+            {
+                id: 'slickback',
+                title: 'اسلیک بک کلاسیک',
+                tag: 'استایل جنتلمن',
+                relatedServiceId: 3,
+                relatedServiceName: 'اصلاح کلاسیک با قیچی',
+                afterUrl: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=800&q=85',
+                desc: 'موهای شانه شده به عقب مناسب استایل رسمی و داماد',
+                shapeType: 'slick'
+            },
+            {
+                id: 'buzzfade',
+                title: 'باز کات و اسکین فید',
+                tag: 'ورزشی و جذاب',
+                relatedServiceId: 5,
+                relatedServiceName: 'پکیج اصلاح مو + ریش',
+                afterUrl: 'https://images.unsplash.com/photo-1517832607067-4db24a2ae47c?auto=format&fit=crop&w=800&q=85',
+                desc: 'کوتاه، مردانه و بسیار دقیق با خط رویش تیز و فید ریش',
+                shapeType: 'buzz'
+            },
+            {
+                id: 'quiffbeard',
+                title: 'کوییف حجم‌دار + ریش کامل',
+                tag: 'پکیج مو و ریش',
+                relatedServiceId: 5,
+                relatedServiceName: 'پکیج اصلاح مو + ریش',
+                afterUrl: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=800&q=85',
+                desc: 'ترکیب موی حالت‌دار پرحجم و آنکادر حرفه‌ای ریش',
+                shapeType: 'quiff'
+            },
+            {
+                id: 'curlytaper',
+                title: 'فر موج‌دار و تیپر فید',
+                tag: 'مدل نچرال و فر',
+                relatedServiceId: 1,
+                relatedServiceName: 'اصلاح تخصصی و استایلینگ',
+                afterUrl: 'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&w=800&q=85',
+                desc: 'حفظ فر طبیعی بالای سر همراه با تیپر فید تمیز دور گوش',
+                shapeType: 'curly'
+            }
+        ];
+
+        const hairColors = [
+            { id: 'black', label: 'مشکی طبیعی', hex: '#161618', filter: 'none' },
+            { id: 'darkbrown', label: 'قهوه‌ای اسپرسو', hex: '#3E2723', filter: 'sepia(0.38) contrast(1.06)' },
+            { id: 'saltpepper', label: 'جوگندمی نقره‌ای', hex: '#9E9E9E', filter: 'grayscale(0.85) contrast(1.15)' },
+            { id: 'platinum', label: 'بلوند پلاتینیوم', hex: '#E5E7EB', filter: 'brightness(1.18) saturate(0.72)' }
+        ];
+
+        let activeFaceId = 'face1';
+        let selectedHairstyle = trendyHairstyles[0];
+        let selectedHairColor = hairColors[0];
+        let customUploadedImageObj = null;
+        let customHairOffsetY = 0;
+        let customHairScale = 100;
+        let webcamStream = null;
+
+        function renderPresetFaces() {
+            const container = document.getElementById('presetFacesContainer');
+            container.innerHTML = presetMaleFaces.map(face => {
+                const active = face.id === activeFaceId;
+                return `
+                    <button type="button" onclick="selectPresetFace('${face.id}')" 
+                            class="group rounded-2xl overflow-hidden border-2 transition-all ${active ? 'border-gold-500 ring-2 ring-gold-500/30' : 'theme-border opacity-80 hover:opacity-100'}">
+                        <img src="${face.url}" alt="${face.name}" class="w-full h-16 sm:h-20 object-cover object-top">
+                        <span class="block text-[10px] font-bold py-1 theme-bg-elevated text-center truncate px-1">
+                            ${face.name}
+                        </span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function renderHairstyleCards() {
+            const container = document.getElementById('hairstyleCardsGrid');
+            container.innerHTML = trendyHairstyles.map(style => {
+                const active = style.id === selectedHairstyle.id;
+                return `
+                    <div onclick="selectHairstyleCard('${style.id}')" 
+                         class="cursor-pointer rounded-2xl p-2.5 border transition-all flex flex-col justify-between ${active ? 'bg-gold-500/15 border-gold-500 shadow-md' : 'theme-bg-elevated hover:border-gold-500/50'}">
+                        <div>
+                            <div class="relative h-24 rounded-xl overflow-hidden mb-2 bg-zinc-900">
+                                <img src="${style.afterUrl}" alt="${style.title}" class="w-full h-full object-cover object-center">
+                                <span class="absolute top-1.5 right-1.5 px-2 py-0.5 rounded-md bg-zinc-950/85 text-gold-400 text-[9px] font-bold">
+                                    ${style.tag}
+                                </span>
+                            </div>
+                            <h4 class="text-xs font-black ${active ? 'text-gold-500' : ''} mb-0.5">${style.title}</h4>
+                            <p class="text-[10px] theme-text-muted leading-snug">${style.desc}</p>
+                        </div>
+                        <div class="mt-2 pt-1.5 border-t theme-border flex items-center justify-between text-[10px] font-bold">
+                            <span class="theme-text-muted">تست زنده</span>
+                            <i class="fa-solid ${active ? 'fa-circle-check text-gold-500 text-xs' : 'fa-circle opacity-30'}"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function renderHairColors() {
+            const container = document.getElementById('hairColorSelector');
+            container.innerHTML = hairColors.map(color => {
+                const active = color.id === selectedHairColor.id;
+                return `
+                    <button type="button" onclick="selectHairColor('${color.id}')" 
+                            class="p-2.5 rounded-xl border text-xs font-bold flex items-center gap-2 transition-all ${active ? 'bg-gold-500/15 border-gold-500 text-gold-500' : 'theme-bg-elevated'}">
+                        <span class="w-4 h-4 rounded-full border border-white/40 shrink-0" style="background-color: ${color.hex};"></span>
+                        <span class="truncate">${color.label}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectPresetFace(faceId) {
+            activeFaceId = faceId;
+            customUploadedImageObj = null;
+            document.getElementById('customPhotoSliders').classList.add('hidden');
+            renderPresetFaces();
+            const faceObj = presetMaleFaces.find(f => f.id === faceId) || presetMaleFaces[0];
+            document.getElementById('beforeImageEl').src = faceObj.url;
+            renderMirrorCanvas();
+        }
+
+        function selectHairstyleCard(styleId) {
+            const found = trendyHairstyles.find(s => s.id === styleId);
+            if (!found) return;
+            selectedHairstyle = found;
+            document.getElementById('selectedStyleBadge').textContent = found.title;
+            document.getElementById('mirrorCurrentStyleTitle').textContent = `${found.title} (${selectedHairColor.label})`;
+            document.getElementById('mirrorSuggestedService').textContent = found.relatedServiceName;
+            renderHairstyleCards();
+            renderMirrorCanvas();
+        }
+
+        function selectHairColor(colorId) {
+            const found = hairColors.find(c => c.id === colorId);
+            if (!found) return;
+            selectedHairColor = found;
+            document.getElementById('mirrorCurrentStyleTitle').textContent = `${selectedHairstyle.title} (${selectedHairColor.label})`;
+            renderHairColors();
+            renderMirrorCanvas();
+        }
+
+        function adjustCustomHairTransform(axis, val) {
+            if (axis === 'y') {
+                customHairOffsetY = Number(val);
+                document.getElementById('offsetYLabel').textContent = val > 0 ? `+${toPersianDigits(val)}` : toPersianDigits(val);
+            } else {
+                customHairScale = Number(val);
+                document.getElementById('scaleLabel').textContent = `${toPersianDigits(val)}٪`;
+            }
+            renderMirrorCanvas();
+        }
+
+        // Core Canvas Renderer - Works 100% Locally with Zero Server Errors
+        function renderMirrorCanvas() {
+            const canvas = document.getElementById('afterCanvasEl');
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+
+            if (customUploadedImageObj) {
+                ctx.clearRect(0, 0, w, h);
+                ctx.drawImage(customUploadedImageObj, 0, 0, w, h);
+                drawRealisticCustomHairOverlay(ctx, w, h);
+            } else {
+                const img = new Image();
+                img.crossOrigin = 'anonymous';
+                img.onload = () => {
+                    ctx.clearRect(0, 0, w, h);
+                    ctx.save();
+                    ctx.filter = selectedHairColor.filter;
+                    ctx.drawImage(img, 0, 0, w, h);
+                    ctx.restore();
+                };
+                img.src = selectedHairstyle.afterUrl;
+            }
+        }
+
+        // Draws a realistic multi-layered hair & fade silhouette on user's custom uploaded selfie
+        function drawRealisticCustomHairOverlay(ctx, w, h) {
+            const s = customHairScale / 100;
+            const toneMap = {
+                black: '#141417',
+                darkbrown: '#382214',
+                saltpepper: '#7c8087',
+                platinum: '#d4c49e'
+            };
+            const hairFill = toneMap[selectedHairColor.id] || '#141417';
+
+            ctx.save();
+            ctx.translate(w / 2, h * 0.25 + customHairOffsetY);
+            ctx.scale(s, s);
+
+            ctx.fillStyle = hairFill;
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.55)';
+            ctx.shadowBlur = 22;
+
+            ctx.beginPath();
+            const st = selectedHairstyle.shapeType;
+            if (st === 'pompadour' || st === 'quiff') {
+                ctx.moveTo(-148, 55);
+                ctx.bezierCurveTo(-165, -90, -70, -155, 20, -145);
+                ctx.bezierCurveTo(115, -135, 160, -75, 148, 55);
+                ctx.bezierCurveTo(105, -35, -105, -35, -148, 55);
+            } else if (st === 'crop') {
+                ctx.moveTo(-145, 38);
+                ctx.bezierCurveTo(-150, -90, 150, -90, 145, 38);
+                ctx.lineTo(115, -8);
+                ctx.lineTo(-115, -8);
+            } else if (st === 'buzz') {
+                ctx.moveTo(-140, 42);
+                ctx.bezierCurveTo(-135, -70, 135, -70, 140, 42);
+                ctx.bezierCurveTo(95, -28, -95, -28, -140, 42);
+            } else {
+                ctx.moveTo(-152, 60);
+                ctx.bezierCurveTo(-160, -110, 160, -110, 152, 60);
+                ctx.bezierCurveTo(100, -35, -100, -35, -152, 60);
+            }
+            ctx.closePath();
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function triggerSmartHairSimulation() {
+            const overlay = document.getElementById('aiLoadingOverlay');
+            overlay.classList.remove('hidden');
+            overlay.classList.add('flex');
+            document.getElementById('mirrorStatusBadge').textContent = 'در حال پردازش هوشمند...';
+
+            setTimeout(() => {
+                renderMirrorCanvas();
+                overlay.classList.add('hidden');
+                overlay.classList.remove('flex');
+                document.getElementById('mirrorStatusBadge').textContent = 'پرو هوشمند تکمیل شد ✓';
+                handleCompareSlider(32);
+                document.getElementById('compareRangeInput').value = 32;
+                showToast(`مدل «${selectedHairstyle.title}» با موفقیت روی تصویر اعمال شد`);
+            }, 650);
+        }
+
+        function handleUserPhotoUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const img = new Image();
+                img.onload = () => {
+                    activeFaceId = 'custom';
+                    customUploadedImageObj = img;
+                    renderPresetFaces();
+                    document.getElementById('beforeImageEl').src = e.target.result;
+                    document.getElementById('customPhotoSliders').classList.remove('hidden');
+                    triggerSmartHairSimulation();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function openCameraModal() {
+            const modal = document.getElementById('cameraModal');
+            const video = document.getElementById('webcamVideo');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            try {
+                webcamStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+                video.srcObject = webcamStream;
+            } catch (err) {
+                closeCameraModal();
+                showToast('دسترسی به دوربین مجاز نبود؛ لطفاً از دکمه آپلود عکس استفاده کنید.');
+            }
+        }
+
+        function closeCameraModal() {
+            const modal = document.getElementById('cameraModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            if (webcamStream) {
+                webcamStream.getTracks().forEach(t => t.stop());
+                webcamStream = null;
+            }
+        }
+
+        function captureWebcamPhoto() {
+            const video = document.getElementById('webcamVideo');
+            if (!video.videoWidth) return;
+            const tempCanvas = document.createElement('canvas');
+            tempCanvas.width = video.videoWidth;
+            tempCanvas.height = video.videoHeight;
+            const ctx = tempCanvas.getContext('2d');
+            ctx.translate(tempCanvas.width, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(video, 0, 0);
+            const dataUrl = tempCanvas.toDataURL('image/jpeg', 0.92);
+
+            const img = new Image();
+            img.onload = () => {
+                activeFaceId = 'webcam';
+                customUploadedImageObj = img;
+                renderPresetFaces();
+                document.getElementById('beforeImageEl').src = dataUrl;
+                document.getElementById('customPhotoSliders').classList.remove('hidden');
+                closeCameraModal();
+                triggerSmartHairSimulation();
+            };
+            img.src = dataUrl;
+        }
+
+        function handleCompareSlider(val) {
+            document.getElementById('beforeClipWrapper').style.clipPath = `inset(0 0 0 ${val}%)`;
+            document.getElementById('sliderLineEl').style.left = `${val}%`;
+        }
+
+        function bookSelectedHairstyleNow() {
+            if (selectedHairstyle && selectedHairstyle.relatedServiceId) {
+                if (!selectedServiceIds.includes(selectedHairstyle.relatedServiceId)) {
+                    selectedServiceIds = [selectedHairstyle.relatedServiceId];
+                }
+            }
+            document.getElementById('customerNotes').value = `استایل انتخابی در آینه هوشمند: ${selectedHairstyle.title} | تناژ رنگ: ${selectedHairColor.label}`;
+            renderServices('all');
+            renderWizardServices();
+            updateBookingSummary();
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+            showToast(`مدل «${selectedHairstyle.title}» به فرم رزرو نوبت اضافه شد`);
+        }
+
+        function downloadTryOnResult() {
+            const canvas = document.getElementById('afterCanvasEl');
+            const link = document.createElement('a');
+            link.href = canvas.toDataURL('image/png');
+            link.download = `RoyalCut-${selectedHairstyle.id}.png`;
+            link.click();
+            showToast('تصویر استایل شما دانلود شد');
+        }
+
+        // =========================================================================
+        // 4. SERVICES SECTION & 4-STEP BOOKING WIZARD
+        // =========================================================================
+        function renderServices(filter = 'all') {
+            const grid = document.getElementById('servicesGrid');
+            const filtered = filter === 'all' ? servicesData : servicesData.filter(s => s.category === filter);
+
+            grid.innerHTML = filtered.map(service => {
+                const isSelected = selectedServiceIds.includes(service.id);
+                return `
+                    <div class="theme-card rounded-3xl p-5 flex flex-col justify-between group relative overflow-hidden ${isSelected ? 'border-gold-500 ring-1 ring-gold-500/40' : 'hover:border-gold-500/60'}">
+                        <div>
+                            <div class="flex items-center justify-between gap-2 mb-3">
+                                <span class="text-[11px] font-bold px-2.5 py-1 rounded-lg theme-bg-elevated text-gold-500">
+                                    ${service.categoryLabel}
+                                </span>
+                                <span class="text-xs theme-text-muted flex items-center gap-1">
+                                    <i class="fa-regular fa-clock text-gold-500"></i>
+                                    ${toPersianDigits(service.duration)} دقیقه
+                                </span>
+                            </div>
+                            <h3 class="text-base font-black group-hover:text-gold-500 transition-colors mb-2">
+                                ${service.title}
+                            </h3>
+                            <p class="text-xs theme-text-muted leading-relaxed mb-5">
+                                ${service.description}
+                            </p>
+                        </div>
+
+                        <div class="pt-4 border-t theme-border flex items-center justify-between">
+                            <div>
+                                <span class="text-[11px] theme-text-muted block">تعرفه خدمت:</span>
+                                <span class="text-lg font-black text-gold-500">${formatPersianPrice(service.price)}</span>
+                                <span class="text-[11px] theme-text-muted">تومان</span>
+                            </div>
+                            <button onclick="quickSelectServiceForBooking(${service.id})" class="px-3.5 py-2 rounded-xl font-black text-xs transition-all ${isSelected ? 'gold-gradient-bg text-zinc-950' : 'theme-bg-elevated hover:border-gold-500'}">
+                                ${isSelected ? 'انتخاب شده ✓' : 'افزودن به رزرو'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function filterServices(category) {
+            renderServices(category);
+            document.querySelectorAll('.service-filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.className = 'service-filter-btn px-4 py-2.5 rounded-xl font-black text-xs transition-all gold-gradient-bg text-zinc-950 shadow-md';
+                } else {
+                    btn.className = 'service-filter-btn px-4 py-2.5 rounded-xl font-bold text-xs transition-all theme-card hover:border-gold-500';
+                }
+            });
+        }
+
+        function quickSelectServiceForBooking(serviceId) {
+            if (!selectedServiceIds.includes(serviceId)) {
+                selectedServiceIds.push(serviceId);
+            }
+            renderServices('all');
+            renderWizardServices();
+            updateBookingSummary();
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+            showToast('خدمت انتخابی به فاکتور رزرو شما اضافه شد');
+        }
+
+        function renderWizardServices() {
+            const container = document.getElementById('wizardServicesGrid');
+            container.innerHTML = servicesData.map(service => {
+                const active = selectedServiceIds.includes(service.id);
+                return `
+                    <div onclick="toggleWizardService(${service.id})" class="cursor-pointer p-4 rounded-2xl border transition-all flex items-center justify-between gap-3 ${active ? 'bg-gold-500/15 border-gold-500' : 'theme-bg-elevated hover:border-gold-500/40'}">
+                        <div class="flex items-center gap-3">
+                            <div class="w-6 h-6 rounded-lg flex items-center justify-center text-xs font-black ${active ? 'gold-gradient-bg text-zinc-950' : 'theme-card'}">
+                                ${active ? '<i class="fa-solid fa-check"></i>' : ''}
+                            </div>
+                            <div>
+                                <h4 class="text-xs sm:text-sm font-black">${service.title}</h4>
+                                <span class="text-[11px] theme-text-muted">${toPersianDigits(service.duration)} دقیقه</span>
+                            </div>
+                        </div>
+                        <span class="text-xs font-black text-gold-500 shrink-0">${formatPersianPrice(service.price)} ت</span>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('wizardSelectedCount').textContent = `${toPersianDigits(selectedServiceIds.length)} خدمت انتخاب شده`;
+        }
+
+        function toggleWizardService(id) {
+            if (selectedServiceIds.includes(id)) {
+                if (selectedServiceIds.length === 1) {
+                    showToast('حداقل یک خدمت باید برای نوبت انتخاب شود');
+                    return;
+                }
+                selectedServiceIds = selectedServiceIds.filter(item => item !== id);
+            } else {
+                selectedServiceIds.push(id);
+            }
+            renderWizardServices();
+            renderServices('all');
+            updateBookingSummary();
+        }
+
+        function generateNext7Days() {
+            const container = document.getElementById('datePickerContainer');
+            const daysList = [];
+            const today = new Date();
+
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+                const weekday = i === 0 ? 'امروز' : d.toLocaleDateString('fa-IR', { weekday: 'short' });
+                const dayNum = d.toLocaleDateString('fa-IR', { day: 'numeric' });
+                const monthName = d.toLocaleDateString('fa-IR', { month: 'short' });
+                const fullReadable = `${i === 0 ? 'امروز ' : ''}${d.toLocaleDateString('fa-IR', { weekday: 'long', day: 'numeric', month: 'long' })}`;
+                daysList.push({ weekday, dayNum, monthName, fullReadable });
+            }
+
+            if (!selectedDate) selectedDate = daysList[0].fullReadable;
+
+            container.innerHTML = daysList.map(day => {
+                const active = day.fullReadable === selectedDate;
+                return `
+                    <button type="button" onclick="selectBookingDate('${day.fullReadable}')" 
+                            class="p-3 rounded-2xl border text-center transition-all ${active ? 'gold-gradient-bg text-zinc-950 border-gold-400 font-black shadow-lg' : 'theme-bg-elevated hover:border-gold-500/40'}">
+                        <span class="block text-xs opacity-85">${day.weekday}</span>
+                        <span class="block text-lg font-black my-0.5">${day.dayNum}</span>
+                        <span class="block text-[11px] opacity-85">${day.monthName}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectBookingDate(dateStr) {
+            selectedDate = dateStr;
+            generateNext7Days();
+            updateBookingSummary();
+        }
+
+        function filterTimePeriod(period) {
+            activeTimePeriod = period;
+            document.querySelectorAll('.period-filter-btn').forEach(btn => {
+                if (btn.getAttribute('data-period') === period) {
+                    btn.className = 'period-filter-btn px-3 py-1 rounded-lg text-xs font-black gold-gradient-bg text-zinc-950';
+                } else {
+                    btn.className = 'period-filter-btn px-3 py-1 rounded-lg text-xs font-bold theme-bg-elevated';
+                }
+            });
+            renderTimeSlots();
+        }
+
+        function renderTimeSlots() {
+            const container = document.getElementById('timeSlotsContainer');
+            const list = activeTimePeriod === 'all' ? timeSlots : timeSlots.filter(t => t.period === activeTimePeriod);
+
+            container.innerHTML = list.map(slot => {
+                if (slot.busy) {
+                    return `<button type="button" disabled class="py-3 px-3 rounded-xl theme-bg-elevated opacity-40 text-xs font-bold line-through cursor-not-allowed">${slot.time} (پر)</button>`;
+                }
+                const active = slot.time === selectedTime;
+                return `
+                    <button type="button" onclick="selectBookingTime('${slot.time}')" 
+                            class="py-3 px-3 rounded-xl border text-xs transition-all ${active ? 'gold-gradient-bg text-zinc-950 border-gold-400 font-black shadow-md' : 'theme-bg-elevated hover:border-gold-500/40 font-bold'}">
+                        <i class="fa-regular fa-clock ml-1"></i>${slot.time}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectBookingTime(timeStr) {
+            selectedTime = timeStr;
+            renderTimeSlots();
+            updateBookingSummary();
+        }
+
+        function goToWizardStep(step) {
+            [1, 2, 3, 4].forEach(idx => {
+                document.getElementById(`wizardStep${idx}`).classList.add('hidden');
+                const tab = document.getElementById(`wizardTab${idx}`);
+                tab.classList.remove('wizard-step-active', 'wizard-step-done');
+                if (idx < step) tab.classList.add('wizard-step-done');
+                if (idx === step) tab.classList.add('wizard-step-active');
+            });
+            document.getElementById(`wizardStep${step}`).classList.remove('hidden');
+        }
+
+        function applyDiscountCode() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            if (code === 'ROYAL20') {
+                discountPercent = 20;
+                updateBookingSummary();
+                showToast('کد تخفیف ۲۰ درصدی رویال کات با موفقیت اعمال شد!');
+            } else {
+                showToast('کد وارد شده معتبر نیست (از کد ROYAL20 استفاده کنید)');
+            }
+        }
+
+        function updateBookingSummary() {
+            const chosenServices = servicesData.filter(s => selectedServiceIds.includes(s.id));
+            const totalDuration = chosenServices.reduce((sum, s) => sum + s.duration, 0);
+            const rawPrice = chosenServices.reduce((sum, s) => sum + s.price, 0);
+            const discountAmount = Math.round((rawPrice * discountPercent) / 100);
+            const finalPrice = rawPrice - discountAmount;
+
+            document.getElementById('summaryDurationBadge').textContent = `${toPersianDigits(totalDuration)} دقیقه`;
+            document.getElementById('summaryServicesList').innerHTML = chosenServices.map(s => `
+                <div class="flex justify-between items-center py-1 border-b theme-border last:border-0">
+                    <span>${s.title}</span>
+                    <span class="text-gold-500">${formatPersianPrice(s.price)} ت</span>
+                </div>
+            `).join('');
+
+            document.getElementById('summaryDate').textContent = selectedDate;
+            document.getElementById('summaryTime').textContent = `ساعت ${selectedTime}`;
+
+            const discRow = document.getElementById('summaryDiscountRow');
+            if (discountPercent > 0) {
+                discRow.classList.remove('hidden');
+                discRow.classList.add('flex');
+                document.getElementById('summaryDiscountValue').textContent = `${formatPersianPrice(discountAmount)} تومان`;
+            } else {
+                discRow.classList.add('hidden');
+            }
+
+            document.getElementById('summaryPrice').textContent = formatPersianPrice(finalPrice);
+        }
+
+        function submitFinalBooking() {
+            const alertBox = document.getElementById('bookingFormAlert');
+            alertBox.classList.add('hidden');
+
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const drink = document.getElementById('customerDrink').value;
+            const notes = document.getElementById('customerNotes').value.trim();
+
+            if (!name || !phone) {
+                alertBox.textContent = 'لطفاً نام و شماره موبایل خود را وارد نمایید.';
+                alertBox.classList.remove('hidden');
+                return;
+            }
+
+            const chosenServices = servicesData.filter(s => selectedServiceIds.includes(s.id));
+            const rawPrice = chosenServices.reduce((sum, s) => sum + s.price, 0);
+            const finalPrice = rawPrice - Math.round((rawPrice * discountPercent) / 100);
+            const trackingCode = 'RC-' + toPersianDigits(Math.floor(10000 + Math.random() * 90000));
+
+            const newBooking = {
+                id: Date.now(),
+                trackingCode,
+                customerName: name,
+                customerPhone: phone,
+                services: chosenServices.map(s => s.title),
+                drink,
+                price: finalPrice,
+                date: selectedDate,
+                time: selectedTime,
+                notes
+            };
+
+            savedAppointments.unshift(newBooking);
+            saveAppointmentsToStorage();
+            updateAppointmentsBadge();
+
+            document.getElementById('digitalTicketCard').innerHTML = `
+                <div class="flex justify-between items-center pb-2 border-b theme-border">
+                    <span class="theme-text-muted">کد پیگیری نوبت:</span>
+                    <span class="font-black text-gold-500 text-base">${trackingCode}</span>
+                </div>
+                <div><strong>مراجعه‌کننده:</strong> ${name} (${phone})</div>
+                <div><strong>زمان حضور:</strong> ${selectedDate} — ساعت ${selectedTime}</div>
+                <div><strong>خدمات:</strong> ${newBooking.services.join(' + ')}</div>
+                <div><strong>پذیرایی رایگان:</strong> ${drink}</div>
+                ${notes ? `<div><strong>یادداشت استایل:</strong> ${notes}</div>` : ''}
+                <div class="pt-2 border-t theme-border flex justify-between items-center font-black">
+                    <span>مبلغ قابل پرداخت:</span>
+                    <span class="text-gold-500">${formatPersianPrice(finalPrice)} تومان</span>
+                </div>
+            `;
+
+            goToWizardStep(4);
+            showToast('نوبت شما با موفقیت ثبت و صادر شد!');
+        }
+
+        function resetBookingWizard() {
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            goToWizardStep(1);
+        }
+
+        // Appointments Modal & LocalStorage
+        function toggleMyAppointmentsModal() {
+            const modal = document.getElementById('myAppointmentsModal');
+            if (modal.classList.contains('hidden')) {
+                renderMyAppointmentsList();
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        function renderMyAppointmentsList() {
+            const container = document.getElementById('appointmentsListContainer');
+            if (savedAppointments.length === 0) {
+                container.innerHTML = `<div class="text-center py-10 theme-text-muted text-sm">شما هنوز نوبتی ثبت نکرده‌اید.</div>`;
+                return;
+            }
+            container.innerHTML = savedAppointments.map(app => `
+                <div class="p-4 rounded-2xl theme-bg-elevated space-y-2 text-xs">
+                    <div class="flex justify-between items-center border-b theme-border pb-2">
+                        <span class="font-black text-gold-500">کد پیگیری: ${app.trackingCode}</span>
+                        <button onclick="cancelAppointment(${app.id})" class="text-rose-500 font-bold hover:underline">لغو نوبت</button>
+                    </div>
+                    <div class="font-black text-sm">${app.services.join('، ')}</div>
+                    <div class="theme-text-muted">${app.date} — ساعت ${app.time} | پذیرایی: ${app.drink}</div>
+                    <div class="flex justify-between pt-1 font-bold">
+                        <span>مبلغ کل:</span>
+                        <span class="text-gold-500">${formatPersianPrice(app.price)} تومان</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function cancelAppointment(id) {
+            savedAppointments = savedAppointments.filter(item => item.id !== id);
+            saveAppointmentsToStorage();
+            updateAppointmentsBadge();
+            renderMyAppointmentsList();
+            showToast('نوبت مورد نظر لغو گردید');
+        }
+
+        function updateAppointmentsBadge() {
+            const count = toPersianDigits(savedAppointments.length);
+            document.getElementById('navBookingCount').textContent = count;
+            document.getElementById('mobileBookingCount').textContent = count;
+        }
+
+        function saveAppointmentsToStorage() {
+            try { localStorage.setItem('royalcut_v4_bookings', JSON.stringify(savedAppointments)); } catch (e) {}
+        }
+
+        function loadAppointmentsFromStorage() {
+            try {
+                const raw = localStorage.getItem('royalcut_v4_bookings');
+                if (raw) savedAppointments = JSON.parse(raw);
+            } catch (e) { savedAppointments = []; }
+            updateAppointmentsBadge();
+        }
+
+        function copyAddressToClipboard() {
+            const address = 'تهران، بلوار اندرزگو، نبش خیابان سلیمی شمالی، برج لوکس رویال، طبقه ۲، واحد ۲۰۴';
+            const temp = document.createElement('textarea');
+            temp.value = address;
+            document.body.appendChild(temp);
+            temp.select();
+            document.execCommand('copy');
+            document.body.removeChild(temp);
+            showToast('آدرس سالن کپی شد!');
+        }
+
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            renderPresetFaces();
+            renderHairstyleCards();
+            renderHairColors();
+            selectPresetFace('face1');
+            renderServices('all');
+            renderWizardServices();
+            generateNext7Days();
+            renderTimeSlots();
+            updateBookingSummary();
+            loadAppointmentsFromStorage();
+        });
+    </script>
+</body>
+</html>
+```
+
+اکنون می‌توانید مستقیماً در کادر پیش‌نمایش کنار صفحه (دکمه **Preview**) وب‌سایت را مشاهده و آزمایش کنید:
+- **بدون هیچ‌گونه خطای سرور در پرو مو:** با کلیک روی هر کدام از ۶ مدل مو یا رنگ‌های مو، تصویر بلافاصله در آینه هوشمند رندر می‌شود و می‌توانید اسلایدر قبل و بعد را جابه‌جا کنید یا عکس خودتان را آپلود نمایید.
+- **دو تم تاریک و روشن:** از دکمه بالای صفحه می‌توانید بین تم مشکی-طلایی و تم روشن کرم-برنز جابه‌جا شوید.
+- **رزرو ۴ مرحله‌ای مدرن (بدون استایلیست):** امکان انتخاب چند خدمت، انتخاب ساعت‌های دسته‌بندی شده، انتخاب نوشیدنی پذیرایی رایگان و کد تخفیف `ROYAL20` فراهم شده است.
