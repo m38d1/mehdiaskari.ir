@@ -1,0 +1,1999 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>آرایشگاه مردانه رویال کات | تجربه استایل لوکس و کلاسیک</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Vazirmatn Persian Font -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css" rel="stylesheet" type="text/css" />
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        gold: {
+                            300: '#F3E5AB',
+                            400: '#E5C158',
+                            500: '#D4AF37',
+                            600: '#AA8C2C',
+                            700: '#806921',
+                        },
+                        dark: {
+                            800: '#18181B',
+                            900: '#121214',
+                            950: '#09090B',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background-color: #09090B;
+            color: #F4F4F5;
+        }
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #F3E5AB 0%, #D4AF37 50%, #AA8C2C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .gold-gradient-bg {
+            background: linear-gradient(135deg, #E5C158 0%, #D4AF37 50%, #AA8C2C 100%);
+        }
+        .barber-pattern {
+            background-image: radial-gradient(#D4AF37 0.75px, transparent 0.75px), radial-gradient(#D4AF37 0.75px, #09090B 0.75px);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+        }
+        /* Before/After Slider Custom Styling */
+        .compare-slider-line {
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.8);
+        }
+        @keyframes scanline {
+            0% { top: 0%; opacity: 0.9; }
+            50% { top: 96%; opacity: 1; }
+            100% { top: 0%; opacity: 0.9; }
+        }
+        .ai-scan-bar {
+            animation: scanline 2.4s ease-in-out infinite;
+        }
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #121214;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D4AF37;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #AA8C2C;
+        }
+    </style>
+</head>
+<body class="bg-dark-950 text-zinc-100 antialiased selection:bg-gold-500 selection:text-dark-950 overflow-x-hidden">
+
+    <!-- Header / Navbar -->
+    <header class="fixed top-0 left-0 right-0 z-50 bg-dark-950/90 backdrop-blur-md border-b border-gold-500/20 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="#" class="flex items-center gap-3 group">
+                    <div class="w-12 h-12 rounded-xl bg-dark-800 border border-gold-500/40 flex items-center justify-center shadow-lg shadow-gold-500/10 group-hover:border-gold-400 transition-colors">
+                        <i class="fa-solid fa-scissors text-2xl text-gold-500 transform -rotate-45 group-hover:rotate-0 transition-transform duration-300"></i>
+                    </div>
+                    <div>
+                        <span class="text-2xl font-black tracking-tight gold-gradient-text block">رویال کات</span>
+                        <span class="text-xs text-zinc-400 block">پیرایش تخصصی و مدرن آقایان</span>
+                    </div>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center gap-7 text-sm font-medium">
+                    <a href="#home" class="text-gold-400 hover:text-gold-300 transition-colors">صفحه اصلی</a>
+                    <a href="#ai-tryon" class="text-zinc-100 hover:text-gold-400 transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gold-500/15 border border-gold-500/40">
+                        <i class="fa-solid fa-wand-magic-sparkles text-gold-400"></i>
+                        <span class="font-bold">پرو هوشمند مدل مو</span>
+                    </a>
+                    <a href="#services" class="text-zinc-300 hover:text-gold-400 transition-colors">خدمات و تعرفه‌ها</a>
+                    <a href="#stylists" class="text-zinc-300 hover:text-gold-400 transition-colors">استایلیست‌ها</a>
+                    <a href="#booking" class="text-zinc-300 hover:text-gold-400 transition-colors">رزرو نوبت</a>
+                    <a href="#contact" class="text-zinc-300 hover:text-gold-400 transition-colors">اطلاعات تماس</a>
+                </nav>
+
+                <!-- CTA & Appointments Counter -->
+                <div class="hidden md:flex items-center gap-3">
+                    <button onclick="toggleMyAppointmentsModal()" class="relative px-4 py-2.5 rounded-xl bg-dark-800 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 text-sm font-medium transition-all flex items-center gap-2">
+                        <i class="fa-regular fa-calendar-check text-gold-500"></i>
+                        <span>نوبت‌های من</span>
+                        <span id="navBookingCount" class="w-5 h-5 rounded-full bg-gold-500 text-dark-950 text-xs font-bold flex items-center justify-center">0</span>
+                    </button>
+                    <a href="#booking" class="px-5 py-2.5 rounded-xl gold-gradient-bg text-dark-950 font-bold text-sm shadow-lg shadow-gold-500/20 hover:opacity-95 transition-all transform hover:-translate-y-0.5">
+                        رزرو آنلاین نوبت
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="flex items-center gap-2 md:hidden">
+                    <button onclick="toggleMyAppointmentsModal()" class="relative p-2.5 rounded-xl bg-dark-800 border border-zinc-700 text-gold-500">
+                        <i class="fa-regular fa-calendar-check text-lg"></i>
+                        <span id="mobileBookingCount" class="absolute -top-1.5 -left-1.5 w-5 h-5 rounded-full bg-gold-500 text-dark-950 text-xs font-bold flex items-center justify-center">0</span>
+                    </button>
+                    <button id="mobileMenuBtn" class="p-2.5 rounded-xl bg-dark-800 border border-zinc-700 text-zinc-200 hover:text-gold-400">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark-900 border-b border-gold-500/20 px-4 pt-3 pb-6 space-y-3">
+            <a href="#home" class="block px-4 py-2.5 rounded-lg bg-dark-800 text-gold-400 font-medium">صفحه اصلی</a>
+            <a href="#ai-tryon" class="block px-4 py-2.5 rounded-lg bg-gold-500/15 border border-gold-500/30 text-gold-300 font-bold flex items-center gap-2">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                <span>پرو هوشمند مدل مو (AI)</span>
+            </a>
+            <a href="#services" class="block px-4 py-2.5 rounded-lg hover:bg-dark-800 text-zinc-300 transition-colors">خدمات و تعرفه‌ها</a>
+            <a href="#stylists" class="block px-4 py-2.5 rounded-lg hover:bg-dark-800 text-zinc-300 transition-colors">استایلیست‌ها</a>
+            <a href="#booking" class="block px-4 py-2.5 rounded-lg hover:bg-dark-800 text-zinc-300 transition-colors">رزرو نوبت</a>
+            <a href="#contact" class="block px-4 py-2.5 rounded-lg hover:bg-dark-800 text-zinc-300 transition-colors">اطلاعات تماس</a>
+            <a href="#booking" class="block text-center w-full py-3 rounded-xl gold-gradient-bg text-dark-950 font-bold shadow-md mt-2">
+                رزرو سریع نوبت
+            </a>
+        </div>
+    </header>
+
+    <!-- 1. Hero Section & Introduction -->
+    <section id="home" class="relative pt-28 pb-20 lg:pt-36 lg:pb-28 overflow-hidden">
+        <!-- Background Decorative Glow -->
+        <div class="absolute top-1/4 right-10 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 left-10 w-80 h-80 bg-gold-600/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <!-- Text Content -->
+                <div class="lg:col-span-7 space-y-6 text-right">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/10 border border-gold-500/30 text-gold-400 text-xs sm:text-sm font-medium">
+                        <i class="fa-solid fa-crown text-gold-500"></i>
+                        <span>مرکز تخصصی پیرایش، فید و استایلینگ موی آقایان</span>
+                    </div>
+                    
+                    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black leading-tight text-white">
+                        استایل خاص شما، <br />
+                        <span class="gold-gradient-text">امضای هنری ماست</span>
+                    </h1>
+                    
+                    <p class="text-zinc-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+                        در سالن VIP <strong class="text-zinc-200">رویال کات</strong>، تلفیقی از هنر پیرایش کلاسیک و تکنیک‌های مدرن روز دنیا را در محیطی آرام، لوکس و کاملاً بهداشتی تجربه کنید. ما به جزئیات چهره و استایل شما اهمیت می‌دهیم.
+                    </p>
+
+                    <div class="flex flex-wrap items-center gap-4 pt-2">
+                        <a href="#booking" class="px-8 py-4 rounded-xl gold-gradient-bg text-dark-950 font-extrabold text-base shadow-xl shadow-gold-500/20 hover:opacity-95 transition-all flex items-center gap-3">
+                            <span>رزرو آنلاین نوبت</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </a>
+                        <a href="#ai-tryon" class="px-6 py-4 rounded-xl bg-dark-900 hover:bg-dark-800 text-gold-400 border border-gold-500/50 font-bold text-base transition-all flex items-center gap-2.5 shadow-lg shadow-gold-500/10">
+                            <i class="fa-solid fa-wand-magic-sparkles text-gold-400"></i>
+                            <span>تست مجازی مدل مو روی چهره شما</span>
+                        </a>
+                    </div>
+
+                    <!-- Stats Bar -->
+                    <div class="grid grid-cols-3 gap-4 pt-8 border-t border-zinc-800/80 max-w-xl">
+                        <div>
+                            <span class="block text-2xl sm:text-3xl font-black text-gold-400">+۱۰ سال</span>
+                            <span class="text-xs sm:text-sm text-zinc-400">سابقه درخشان</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl sm:text-3xl font-black text-gold-400">+۸,۵۰۰</span>
+                            <span class="text-xs sm:text-sm text-zinc-400">مشتری راضی</span>
+                        </div>
+                        <div>
+                            <span class="block text-2xl sm:text-3xl font-black text-gold-400">۱۰۰٪</span>
+                            <span class="text-xs sm:text-sm text-zinc-400">تضمین بهداشت و کیفیت</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Hero Visual Card -->
+                <div class="lg:col-span-5 relative">
+                    <div class="relative rounded-3xl overflow-hidden border-2 border-gold-500/30 shadow-2xl shadow-black bg-dark-900 group">
+                        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?auto=format&fit=crop&w=900&q=80" 
+                             onerror="this.src='https://placehold.co/600x700/18181B/D4AF37?text=Royal+Cut+Barbershop'"
+                             alt="آرایشگاه مردانه رویال کات" 
+                             class="w-full h-[460px] object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-90">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-950 via-dark-950/40 to-transparent"></div>
+                        
+                        <!-- Floating Badge -->
+                        <div class="absolute bottom-6 right-6 left-6 p-5 rounded-2xl bg-dark-900/90 backdrop-blur-md border border-gold-500/30 flex items-center justify-between">
+                            <div class="flex items-center gap-3.5">
+                                <div class="w-12 h-12 rounded-xl gold-gradient-bg flex items-center justify-center text-dark-950 text-xl font-bold">
+                                    <i class="fa-solid fa-award"></i>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold text-white text-sm sm:text-base">پکیج ویژه VIP داماد</h3>
+                                    <p class="text-xs text-zinc-400">مشاوره استایل، گریم سینمایی و فیشیال تخصصی</p>
+                                </div>
+                            </div>
+                            <a href="#booking" onclick="selectPackageForBooking(11)" class="px-3.5 py-2 rounded-lg bg-gold-500/20 text-gold-400 hover:bg-gold-500 hover:text-dark-950 text-xs font-bold transition-colors whitespace-nowrap">
+                                انتخاب پکیج
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION: AI Virtual Hair & Beard Try-On Studio -->
+    <section id="ai-tryon" class="py-20 bg-dark-950 border-t border-gold-500/20 relative overflow-hidden">
+        <!-- Decorative Glow -->
+        <div class="absolute -top-20 left-1/3 w-96 h-96 bg-gold-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Section Header -->
+            <div class="text-center max-w-3xl mx-auto mb-12 space-y-3">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-gold-500/15 border border-gold-500/40 text-gold-400 text-xs font-bold">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    <span>مجهز به هوش مصنوعی پردازش چهره (AI Barber Mirror)</span>
+                </div>
+                <h2 class="text-3xl sm:text-4xl font-black text-white">آینه هوشمند و پرو مجازی مدل مو و ریش</h2>
+                <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+                    قبل از نشستن روی صندلی آرایشگر، عکس خود را آپلود کنید یا از چهره‌های نمونه استفاده نمایید و جدیدترین مدل‌های مو و فید مردانه سال را به صورت کاملاً طبیعی و واقعی روی سر خود ببینید!
+                </p>
+            </div>
+
+            <!-- Main Try-On Studio Grid -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                
+                <!-- Right Column: Controls (Photo Source + Hairstyles + Color + Generate) -->
+                <div class="lg:col-span-7 bg-dark-900 rounded-3xl border border-zinc-800 p-5 sm:p-7 space-y-7 shadow-2xl">
+                    
+                    <!-- Step 1: Choose Face Photo Source -->
+                    <div class="space-y-4">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <h3 class="text-base sm:text-lg font-extrabold text-white flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full gold-gradient-bg text-dark-950 text-xs font-black flex items-center justify-center">۱</span>
+                                <span>انتخاب تصویر چهره شما</span>
+                            </h3>
+                            <span class="text-xs text-zinc-400">عکس تمام‌رخ با نور مناسب بهترین نتیجه را می‌دهد</span>
+                        </div>
+
+                        <!-- Upload / Camera / Preset Action Buttons -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label for="userPhotoUpload" class="cursor-pointer py-3.5 px-4 rounded-2xl bg-dark-950 hover:bg-dark-800 border border-gold-500/40 hover:border-gold-400 transition-all flex items-center justify-center gap-3 text-sm font-bold text-gold-400 shadow-md">
+                                <i class="fa-solid fa-cloud-arrow-up text-lg"></i>
+                                <span>آپلود عکس از گالری / گوشی</span>
+                                <input type="file" id="userPhotoUpload" accept="image/*" class="hidden" onchange="handleUserPhotoUpload(event)">
+                            </label>
+
+                            <button type="button" onclick="openCameraModal()" class="py-3.5 px-4 rounded-2xl bg-dark-950 hover:bg-dark-800 border border-zinc-700 hover:border-gold-500/40 transition-all flex items-center justify-center gap-3 text-sm font-bold text-zinc-200">
+                                <i class="fa-solid fa-camera text-lg text-gold-500"></i>
+                                <span>عکسبرداری زنده با دوربین</span>
+                            </button>
+                        </div>
+
+                        <!-- Built-in Realistic Male Models -->
+                        <div class="pt-1">
+                            <span class="block text-xs font-semibold text-zinc-400 mb-2.5">یا تست سریع روی چهره‌های پیش‌فرض مردانه:</span>
+                            <div id="presetFacesContainer" class="grid grid-cols-4 gap-3">
+                                <!-- Rendered via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Select Trendy Men's Hairstyle -->
+                    <div class="space-y-3 pt-5 border-t border-zinc-800">
+                        <div class="flex items-center justify-between">
+                            <h3 class="text-base sm:text-lg font-extrabold text-white flex items-center gap-2">
+                                <span class="w-6 h-6 rounded-full gold-gradient-bg text-dark-950 text-xs font-black flex items-center justify-center">۲</span>
+                                <span>انتخاب استایل مو و ریش روز دنیا</span>
+                            </h3>
+                            <span id="selectedStyleBadge" class="text-xs font-bold text-gold-400 bg-gold-500/10 px-3 py-1 rounded-lg border border-gold-500/30">پمپادور مدرن</span>
+                        </div>
+
+                        <!-- Hairstyles Grid -->
+                        <div id="hairstyleCardsGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[370px] overflow-y-auto pr-1">
+                            <!-- Rendered via JS -->
+                        </div>
+
+                        <!-- Custom Style Prompt Box (Shown or optional) -->
+                        <div class="pt-2">
+                            <label for="customStylePrompt" class="block text-xs font-bold text-zinc-300 mb-1.5">
+                                <i class="fa-solid fa-pen-nib text-gold-500 ml-1"></i>توضیحات تکمیلی یا استایل سفارشی دلخواه (اختیاری):
+                            </label>
+                            <input type="text" id="customStylePrompt" placeholder="مثلاً: فید خیلی کوتاه دور سر، خط ابرو، ریش آنکادر شده کوتاه..." class="w-full bg-dark-950 border border-zinc-700 focus:border-gold-500 rounded-xl px-3.5 py-2.5 text-xs text-white placeholder-zinc-500 outline-none transition-colors">
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Select Hair Color / Tint -->
+                    <div class="space-y-3 pt-5 border-t border-zinc-800">
+                        <h3 class="text-base sm:text-lg font-extrabold text-white flex items-center gap-2">
+                            <span class="w-6 h-6 rounded-full gold-gradient-bg text-dark-950 text-xs font-black flex items-center justify-center">۳</span>
+                            <span>انتخاب رنگ و تناژ مو</span>
+                        </h3>
+
+                        <div id="hairColorSelector" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                            <!-- Rendered via JS -->
+                        </div>
+                    </div>
+
+                    <!-- Generate Action Button -->
+                    <div class="pt-2">
+                        <button type="button" id="generateTryOnBtn" onclick="runAiHairTryOn()" class="w-full py-4 rounded-2xl gold-gradient-bg text-dark-950 font-black text-base shadow-xl shadow-gold-500/25 hover:opacity-95 transition-all flex items-center justify-center gap-3">
+                            <i class="fa-solid fa-wand-magic-sparkles text-lg"></i>
+                            <span>اجرای پرو هوشمند و طبیعی روی چهره</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Left Column: Interactive Mirror Preview Canvas & Before/After Slider -->
+                <div class="lg:col-span-5 bg-dark-900 rounded-3xl border border-gold-500/40 p-5 sm:p-6 sticky top-24 shadow-2xl space-y-5">
+                    <div class="flex items-center justify-between border-b border-zinc-800 pb-3.5">
+                        <div class="flex items-center gap-2">
+                            <span class="w-3 h-3 rounded-full bg-gold-500 animate-pulse"></span>
+                            <h3 class="font-black text-white text-base">آینه هوشمند رویال کات</h3>
+                        </div>
+                        <span id="mirrorStatusBadge" class="px-2.5 py-1 rounded-lg bg-dark-800 border border-zinc-700 text-zinc-300 text-xs font-bold">
+                            آماده پردازش
+                        </span>
+                    </div>
+
+                    <!-- Interactive Image Frame (Before & After Comparison) -->
+                    <div id="tryOnViewport" class="relative w-full h-[430px] sm:h-[460px] rounded-2xl overflow-hidden bg-dark-950 border border-zinc-800 select-none">
+                        
+                        <!-- Base Image (Result / After Image when ready, or Original initially) -->
+                        <img id="afterImageEl" src="" alt="نمای استایل جدید" class="w-full h-full object-cover object-top">
+
+                        <!-- Clipped Overlay Image (Original / Before Image for Slider Comparison) -->
+                        <div id="beforeClipWrapper" class="hidden absolute inset-0 overflow-hidden" style="clip-path: inset(0 0 0 50%);">
+                            <img id="beforeImageEl" src="" alt="تصویر اصلی قبل از تغییر" class="w-full h-full object-cover object-top">
+                            <span class="absolute top-3 right-3 px-3 py-1 rounded-lg bg-dark-950/85 backdrop-blur-md text-zinc-200 border border-zinc-700 text-[11px] font-bold">
+                                چهره اصلی (قبل)
+                            </span>
+                        </div>
+
+                        <!-- After Label Badge -->
+                        <span id="afterBadgeLabel" class="hidden absolute top-3 left-3 px-3 py-1 rounded-lg bg-gold-500 text-dark-950 text-[11px] font-black shadow-lg">
+                            استایل جدید (بعد)
+                        </span>
+
+                        <!-- Interactive Vertical Divider Handle -->
+                        <div id="sliderLineEl" class="hidden absolute top-0 bottom-0 w-0.5 bg-gold-400 compare-slider-line pointer-events-none" style="left: 50%;">
+                            <div class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full gold-gradient-bg text-dark-950 shadow-xl flex items-center justify-center border-2 border-white">
+                                <i class="fa-solid fa-arrows-left-right text-xs"></i>
+                            </div>
+                        </div>
+
+                        <!-- Invisible Range Input for Smooth Touch/Mouse Dragging -->
+                        <input type="range" id="compareRangeInput" min="0" max="100" value="50" oninput="handleCompareSlider(this.value)" class="hidden absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-20">
+
+                        <!-- AI Scanning & Loading Overlay -->
+                        <div id="aiLoadingOverlay" class="hidden absolute inset-0 z-30 bg-dark-950/85 backdrop-blur-md flex-col items-center justify-center p-6 text-center">
+                            <div class="absolute left-0 right-0 h-1 bg-gradient-to-r from-transparent via-gold-400 to-transparent ai-scan-bar"></div>
+                            <div class="w-16 h-16 rounded-2xl bg-gold-500/15 border border-gold-500/40 flex items-center justify-center text-gold-400 text-2xl mb-4 animate-bounce">
+                                <i class="fa-solid fa-scissors"></i>
+                            </div>
+                            <h4 class="text-white font-black text-base mb-1" id="aiLoadingTitle">هوش مصنوعی در حال طراحی مدل مو...</h4>
+                            <p class="text-zinc-400 text-xs max-w-xs leading-relaxed" id="aiLoadingSubtitle">
+                                در حال آنالیز زاویه صورت، خط رویش مو و اعمال طبیعی استایل انتخابی بدون تغییر چهره شما
+                            </p>
+                        </div>
+
+                        <!-- Info Overlay at Bottom of Mirror -->
+                        <div class="absolute bottom-3 right-3 left-3 p-3.5 rounded-xl bg-dark-950/90 backdrop-blur-md border border-zinc-800/90 flex items-center justify-between z-10">
+                            <div>
+                                <span class="text-[11px] text-zinc-400 block">مدل انتخاب شده:</span>
+                                <h4 id="mirrorCurrentStyleTitle" class="text-sm font-black text-gold-400">پمپادور مدرن و خط ریش</h4>
+                            </div>
+                            <div class="text-left">
+                                <span class="text-[11px] text-zinc-400 block">خدمت مرتبط در سالن:</span>
+                                <span id="mirrorSuggestedService" class="text-xs font-bold text-white">انواع فید حرفه‌ای</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Error / Status Notification Box -->
+                    <div id="tryOnMessageAlert" class="hidden p-3.5 rounded-xl bg-amber-950/60 border border-amber-500/40 text-amber-200 text-xs leading-relaxed"></div>
+
+                    <!-- Mirror Action Buttons (Book this style / Download / Reset) -->
+                    <div class="grid grid-cols-2 gap-3">
+                        <button type="button" onclick="bookSelectedHairstyleNow()" class="col-span-2 sm:col-span-1 py-3 px-4 rounded-xl gold-gradient-bg text-dark-950 font-extrabold text-xs flex items-center justify-center gap-2 shadow-lg shadow-gold-500/15 hover:opacity-95 transition-all">
+                            <i class="fa-regular fa-calendar-check text-sm"></i>
+                            <span>رزرو نوبت برای همین مدل</span>
+                        </button>
+                        <button type="button" onclick="downloadTryOnResult()" class="col-span-2 sm:col-span-1 py-3 px-4 rounded-xl bg-dark-800 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-bold text-xs flex items-center justify-center gap-2 transition-all">
+                            <i class="fa-solid fa-download text-gold-500 text-sm"></i>
+                            <span>دانلود تصویر استایل</span>
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Webcam Modal for Taking Selfie -->
+    <div id="cameraModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/85 backdrop-blur-sm p-4">
+        <div class="bg-dark-900 border border-gold-500/40 rounded-3xl max-w-md w-full p-6 shadow-2xl space-y-4">
+            <div class="flex items-center justify-between border-b border-zinc-800 pb-3">
+                <h3 class="font-black text-white text-base flex items-center gap-2">
+                    <i class="fa-solid fa-camera text-gold-500"></i>
+                    <span>عکسبرداری مستقیم چهره</span>
+                </h3>
+                <button type="button" onclick="closeCameraModal()" class="w-8 h-8 rounded-lg bg-dark-800 text-zinc-400 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="relative rounded-2xl overflow-hidden bg-black aspect-[3/4] border border-zinc-800">
+                <video id="webcamVideo" autoplay playsinline class="w-full h-full object-cover transform -scale-x-100"></video>
+                <!-- Face Guide Oval -->
+                <div class="absolute inset-0 pointer-events-none flex items-center justify-center">
+                    <div class="w-48 h-64 rounded-full border-2 border-dashed border-gold-400/60"></div>
+                </div>
+            </div>
+
+            <p class="text-xs text-zinc-400 text-center">صورت خود را در کادر بیضی قرار دهید و دکمه ثبت عکس را بزنید.</p>
+
+            <div class="flex gap-3">
+                <button type="button" onclick="captureWebcamPhoto()" class="flex-1 py-3 rounded-xl gold-gradient-bg text-dark-950 font-black text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-camera-retro"></i>
+                    <span>ثبت عکس</span>
+                </button>
+                <button type="button" onclick="closeCameraModal()" class="px-5 py-3 rounded-xl bg-dark-800 text-zinc-300 border border-zinc-700 font-bold text-xs">
+                    انصراف
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Services & Pricing Section -->
+    <section id="services" class="py-20 bg-dark-900 border-y border-zinc-800/80 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Header -->
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <span class="text-gold-500 font-bold text-sm tracking-wider uppercase flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-sparkles"></i>
+                    تعرفه خدمات سالن
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white">لیست خدمات و قیمت‌ها</h2>
+                <p class="text-zinc-400 text-sm sm:text-base">
+                    تمامی خدمات با استفاده از بهترین برندهای روز دنیا و پک‌های بهداشتی یکبار مصرف ارائه می‌گردد. با کلیک روی هر خدمت، مستقیم وارد فرم رزرو شوید.
+                </p>
+            </div>
+
+            <!-- Category Filter Buttons -->
+            <div class="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10" id="serviceFilters">
+                <button onclick="filterServices('all')" data-filter="all" class="service-filter-btn active px-5 py-2.5 rounded-xl font-bold text-sm transition-all gold-gradient-bg text-dark-950 shadow-lg shadow-gold-500/20">
+                    همه خدمات
+                </button>
+                <button onclick="filterServices('hair')" data-filter="hair" class="service-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-dark-800 text-zinc-300 hover:border-gold-500/40 border border-zinc-700">
+                    <i class="fa-solid fa-scissors ml-1.5 text-gold-500"></i>اصلاح و فید مو
+                </button>
+                <button onclick="filterServices('beard')" data-filter="beard" class="service-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-dark-800 text-zinc-300 hover:border-gold-500/40 border border-zinc-700">
+                    <i class="fa-solid fa-user-tie ml-1.5 text-gold-500"></i>ریش و آنکادر
+                </button>
+                <button onclick="filterServices('skin')" data-filter="skin" class="service-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-dark-800 text-zinc-300 hover:border-gold-500/40 border border-zinc-700">
+                    <i class="fa-solid fa-spa ml-1.5 text-gold-500"></i>پاکسازی پوست و اسپا
+                </button>
+                <button onclick="filterServices('vip')" data-filter="vip" class="service-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-dark-800 text-zinc-300 hover:border-gold-500/40 border border-zinc-700">
+                    <i class="fa-solid fa-crown ml-1.5 text-gold-500"></i>گریم داماد و VIP
+                </button>
+            </div>
+
+            <!-- Services Grid (Populated via JS) -->
+            <div id="servicesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Rendered dynamically -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Stylists Introduction Section -->
+    <section id="stylists" class="py-20 bg-dark-950">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-14 space-y-3">
+                <span class="text-gold-500 font-bold text-sm tracking-wider uppercase">تیم حرفه‌ای ما</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white">معرفی استایلیست‌ها و آرایشگران</h2>
+                <p class="text-zinc-400 text-sm sm:text-base">
+                    اساتید مجرب رویال کات آماده خلق بهترین استایل متناسب با فرم چهره و سلیقه شما هستند.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Stylist 1 -->
+                <div class="bg-dark-900 rounded-2xl border border-zinc-800 hover:border-gold-500/50 overflow-hidden transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-64 overflow-hidden bg-dark-800">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" 
+                                 onerror="this.src='https://placehold.co/400x400/18181B/D4AF37?text=Arash+Rad'"
+                                 alt="آرش راد" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0">
+                            <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-dark-950/80 backdrop-blur-md border border-gold-500/40 text-gold-400 text-xs font-bold">
+                                ۱۲ سال سابقه
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="text-lg font-bold text-white">استاد آرش راد</h3>
+                                <div class="flex items-center text-gold-400 text-xs font-bold gap-1">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>۴.۹</span>
+                                </div>
+                            </div>
+                            <p class="text-gold-500 text-xs font-medium mb-3">مستر باربر و متخصص گریم داماد</p>
+                            <p class="text-zinc-400 text-xs leading-relaxed">
+                                دارای مدرک بین‌المللی طراحی چهره و مربی دوره‌های تخصصی هیرکات کلاسیک و مدرن.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <button onclick="selectBarberForBooking('استاد آرش راد')" class="w-full py-2.5 rounded-xl bg-dark-800 hover:bg-gold-500 hover:text-dark-950 text-zinc-200 border border-zinc-700 hover:border-gold-500 font-bold text-xs transition-all">
+                            رزرو نوبت با آرش راد
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stylist 2 -->
+                <div class="bg-dark-900 rounded-2xl border border-zinc-800 hover:border-gold-500/50 overflow-hidden transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-64 overflow-hidden bg-dark-800">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=600&q=80" 
+                                 onerror="this.src='https://placehold.co/400x400/18181B/D4AF37?text=Sina+Mollaei'"
+                                 alt="سینا ملایی" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0">
+                            <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-dark-950/80 backdrop-blur-md border border-gold-500/40 text-gold-400 text-xs font-bold">
+                                ۸ سال سابقه
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="text-lg font-bold text-white">سینا ملایی</h3>
+                                <div class="flex items-center text-gold-400 text-xs font-bold gap-1">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>۴.۸</span>
+                                </div>
+                            </div>
+                            <p class="text-gold-500 text-xs font-medium mb-3">متخصص انواع فید (Skin Fade) و موهای فر</p>
+                            <p class="text-zinc-400 text-xs leading-relaxed">
+                                استاد تکنیک‌های سایه‌زنی دقیق، تیپر فید، کرلی مو و طراحی خطوط مدرن.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <button onclick="selectBarberForBooking('سینا ملایی')" class="w-full py-2.5 rounded-xl bg-dark-800 hover:bg-gold-500 hover:text-dark-950 text-zinc-200 border border-zinc-700 hover:border-gold-500 font-bold text-xs transition-all">
+                            رزرو نوبت با سینا ملایی
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stylist 3 -->
+                <div class="bg-dark-900 rounded-2xl border border-zinc-800 hover:border-gold-500/50 overflow-hidden transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-64 overflow-hidden bg-dark-800">
+                            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=600&q=80" 
+                                 onerror="this.src='https://placehold.co/400x400/18181B/D4AF37?text=Kamyar+Nouri'"
+                                 alt="کامیار نوری" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0">
+                            <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-dark-950/80 backdrop-blur-md border border-gold-500/40 text-gold-400 text-xs font-bold">
+                                ۷ سال سابقه
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="text-lg font-bold text-white">کامیار نوری</h3>
+                                <div class="flex items-center text-gold-400 text-xs font-bold gap-1">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>۴.۹</span>
+                                </div>
+                            </div>
+                            <p class="text-gold-500 text-xs font-medium mb-3">متخصص استایل ریش و قیچی‌کاری کلاسیک</p>
+                            <p class="text-zinc-400 text-xs leading-relaxed">
+                                تبحر ویژه در آنکادر ریش با تیغ سنتی و حوله داغ و کوتاهی مو فقط با قیچی.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <button onclick="selectBarberForBooking('کامیار نوری')" class="w-full py-2.5 rounded-xl bg-dark-800 hover:bg-gold-500 hover:text-dark-950 text-zinc-200 border border-zinc-700 hover:border-gold-500 font-bold text-xs transition-all">
+                            رزرو نوبت با کامیار نوری
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Stylist 4 -->
+                <div class="bg-dark-900 rounded-2xl border border-zinc-800 hover:border-gold-500/50 overflow-hidden transition-all duration-300 group flex flex-col justify-between">
+                    <div>
+                        <div class="relative h-64 overflow-hidden bg-dark-800">
+                            <img src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=600&q=80" 
+                                 onerror="this.src='https://placehold.co/400x400/18181B/D4AF37?text=Parsa+sepehri'"
+                                 alt="پارسا سپهری" class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500 grayscale group-hover:grayscale-0">
+                            <div class="absolute top-3 right-3 px-3 py-1 rounded-full bg-dark-950/80 backdrop-blur-md border border-gold-500/40 text-gold-400 text-xs font-bold">
+                                ۶ سال سابقه
+                            </div>
+                        </div>
+                        <div class="p-5">
+                            <div class="flex items-center justify-between mb-1">
+                                <h3 class="text-lg font-bold text-white">پارسا سپهری</h3>
+                                <div class="flex items-center text-gold-400 text-xs font-bold gap-1">
+                                    <i class="fa-solid fa-star"></i>
+                                    <span>۴.۷</span>
+                                </div>
+                            </div>
+                            <p class="text-gold-500 text-xs font-medium mb-3">متخصص اسکین‌کر، کراتین و احیای مو</p>
+                            <p class="text-zinc-400 text-xs leading-relaxed">
+                                کارشناس فیشیال تخصصی آقایان، پاکسازی چندمرحله‌ای با دستگاه و کراتین صافی مو.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="px-5 pb-5">
+                        <button onclick="selectBarberForBooking('پارسا سپهری')" class="w-full py-2.5 rounded-xl bg-dark-800 hover:bg-gold-500 hover:text-dark-950 text-zinc-200 border border-zinc-700 hover:border-gold-500 font-bold text-xs transition-all">
+                            رزرو نوبت با پارسا سپهری
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Online Appointment Booking Form -->
+    <section id="booking" class="py-20 bg-dark-900 border-t border-zinc-800 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-2xl mx-auto mb-12 space-y-3">
+                <span class="text-gold-500 font-bold text-sm tracking-wider uppercase">نوبت‌دهی هوشمند</span>
+                <h2 class="text-3xl sm:text-4xl font-black text-white">رزرو آنلاین نوبت</h2>
+                <p class="text-zinc-400 text-sm sm:text-base">
+                    بدون معطلی در سالن، خدمات، آرایشگر و ساعت دلخواه خود را انتخاب کنید و کد پیگیری دریافت نمایید.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                <!-- Booking Form -->
+                <div class="lg:col-span-8 bg-dark-950 p-6 sm:p-8 rounded-3xl border border-gold-500/30 shadow-2xl">
+                    <form id="bookingForm" onsubmit="handleBookingSubmit(event)" class="space-y-6">
+                        
+                        <!-- Step 1: Select Service & Barber -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                            <div>
+                                <label for="serviceSelect" class="block text-sm font-bold text-zinc-200 mb-2">
+                                    <i class="fa-solid fa-scissors text-gold-500 ml-1.5"></i>انتخاب نوع خدمت <span class="text-red-400">*</span>
+                                </label>
+                                <select id="serviceSelect" onchange="updateBookingSummary()" required class="w-full bg-dark-900 border border-zinc-700 focus:border-gold-500 rounded-xl px-4 py-3 text-sm text-white outline-none transition-colors">
+                                    <!-- Populated via JS -->
+                                </select>
+                            </div>
+
+                            <div>
+                                <label for="barberSelect" class="block text-sm font-bold text-zinc-200 mb-2">
+                                    <i class="fa-solid fa-user-check text-gold-500 ml-1.5"></i>انتخاب آرایشگر (استایلیست) <span class="text-red-400">*</span>
+                                </label>
+                                <select id="barberSelect" onchange="updateBookingSummary()" required class="w-full bg-dark-900 border border-zinc-700 focus:border-gold-500 rounded-xl px-4 py-3 text-sm text-white outline-none transition-colors">
+                                    <option value="استاد آرش راد">استاد آرش راد (مستر باربر و گریم)</option>
+                                    <option value="سینا ملایی">سینا ملایی (متخصص فید و مدرن)</option>
+                                    <option value="کامیار نوری">کامیار نوری (کلاسیک و استایل ریش)</option>
+                                    <option value="پارسا سپهری">پارسا سپهری (پاکسازی پوست و کراتین)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Step 2: Select Date -->
+                        <div>
+                            <label class="block text-sm font-bold text-zinc-200 mb-2">
+                                <i class="fa-regular fa-calendar-days text-gold-500 ml-1.5"></i>انتخاب روز مراجعه <span class="text-red-400">*</span>
+                            </label>
+                            <div id="datePickerContainer" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-7 gap-2.5">
+                                <!-- Next 7 Persian days populated via JS -->
+                            </div>
+                            <input type="hidden" id="selectedDateInput" required>
+                        </div>
+
+                        <!-- Step 3: Select Time Slot -->
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <label class="block text-sm font-bold text-zinc-200">
+                                    <i class="fa-regular fa-clock text-gold-500 ml-1.5"></i>انتخاب ساعت حضور <span class="text-red-400">*</span>
+                                </label>
+                                <div class="flex items-center gap-3 text-xs text-zinc-400">
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-dark-800 border border-zinc-600 inline-block"></span> آزاد</span>
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-gold-500 inline-block"></span> انتخاب شما</span>
+                                    <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-950 border border-red-800 inline-block"></span> تکمیل</span>
+                                </div>
+                            </div>
+                            <div id="timeSlotsContainer" class="grid grid-cols-3 sm:grid-cols-5 gap-2.5">
+                                <!-- Time slots populated via JS -->
+                            </div>
+                            <input type="hidden" id="selectedTimeInput" required>
+                        </div>
+
+                        <!-- Step 4: Customer Details -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 pt-2 border-t border-zinc-800">
+                            <div>
+                                <label for="customerName" class="block text-sm font-bold text-zinc-200 mb-2">
+                                    <i class="fa-regular fa-user text-gold-500 ml-1.5"></i>نام و نام خانوادگی <span class="text-red-400">*</span>
+                                </label>
+                                <input type="text" id="customerName" required placeholder="مثلاً: علی محمدی" class="w-full bg-dark-900 border border-zinc-700 focus:border-gold-500 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none transition-colors">
+                            </div>
+
+                            <div>
+                                <label for="customerPhone" class="block text-sm font-bold text-zinc-200 mb-2">
+                                    <i class="fa-solid fa-mobile-screen text-gold-500 ml-1.5"></i>شماره موبایل <span class="text-red-400">*</span>
+                                </label>
+                                <input type="tel" id="customerPhone" required pattern="09[0-9]{9}" placeholder="09123456789" dir="ltr" class="w-full bg-dark-900 border border-zinc-700 focus:border-gold-500 rounded-xl px-4 py-3 text-sm text-right text-white placeholder-zinc-500 outline-none transition-colors">
+                            </div>
+                        </div>
+
+                        <div>
+                            <label for="customerNotes" class="block text-sm font-bold text-zinc-200 mb-2">
+                                <i class="fa-regular fa-comment-dots text-gold-500 ml-1.5"></i>توضیحات دلخواه (اختیاری)
+                            </label>
+                            <textarea id="customerNotes" rows="2" placeholder="اگر نکته خاصی در مورد مدل مو یا حساسیت پوستی دارید بنویسید..." class="w-full bg-dark-900 border border-zinc-700 focus:border-gold-500 rounded-xl px-4 py-3 text-sm text-white placeholder-zinc-500 outline-none transition-colors"></textarea>
+                        </div>
+
+                        <!-- Form Feedback Alert -->
+                        <div id="formErrorAlert" class="hidden p-4 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs sm:text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-circle-exclamation text-red-400 text-base"></i>
+                            <span id="formErrorText">لطفاً تمامی فیلدهای الزامی را تکمیل نمایید.</span>
+                        </div>
+
+                        <button type="submit" class="w-full py-4 rounded-xl gold-gradient-bg text-dark-950 font-black text-base shadow-xl shadow-gold-500/20 hover:opacity-95 transition-all flex items-center justify-center gap-2">
+                            <i class="fa-solid fa-calendar-check text-lg"></i>
+                            <span>تایید و ثبت نهایی نوبت</span>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Live Booking Summary Card -->
+                <div class="lg:col-span-4 bg-dark-950 p-6 rounded-3xl border border-zinc-800 sticky top-28 space-y-6">
+                    <div class="flex items-center justify-between border-b border-zinc-800 pb-4">
+                        <h3 class="text-lg font-extrabold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-receipt text-gold-500"></i>
+                            <span>خلاصه فاکتور نوبت شما</span>
+                        </h3>
+                        <span class="px-2.5 py-1 rounded-md bg-gold-500/10 text-gold-400 text-xs font-bold">پرداخت در سالن</span>
+                    </div>
+
+                    <div class="space-y-4 text-sm">
+                        <div class="flex justify-between items-start gap-2">
+                            <span class="text-zinc-400">خدمت انتخابی:</span>
+                            <span id="summaryService" class="font-bold text-white text-left">-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-zinc-400">مدت زمان تقریبی:</span>
+                            <span id="summaryDuration" class="font-medium text-zinc-200">-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-zinc-400">آرایشگر:</span>
+                            <span id="summaryBarber" class="font-bold text-gold-400">-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-zinc-400">تاریخ مراجعه:</span>
+                            <span id="summaryDate" class="font-bold text-white">-</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-zinc-400">ساعت حضور:</span>
+                            <span id="summaryTime" class="font-bold text-white bg-dark-800 px-3 py-1 rounded-lg border border-zinc-700">انتخاب نشده</span>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-dashed border-zinc-700 pt-4">
+                        <div class="flex justify-between items-center">
+                            <span class="text-zinc-300 font-bold">مبلغ قابل پرداخت:</span>
+                            <div class="text-left">
+                                <span id="summaryPrice" class="text-2xl font-black text-gold-400">0</span>
+                                <span class="text-xs text-zinc-400 mr-1">تومان</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="p-4 rounded-2xl bg-dark-900 border border-zinc-800/80 text-xs text-zinc-400 space-y-2 leading-relaxed">
+                        <div class="flex items-center gap-2 text-zinc-200 font-bold">
+                            <i class="fa-solid fa-shield-heart text-gold-500"></i>
+                            <span>قوانین نوبت‌دهی سالن:</span>
+                        </div>
+                        <p>• لطفاً ۱۰ دقیقه قبل از ساعت مقرر در سالن حضور داشته باشید.</p>
+                        <p>• پک بهداشتی شامل حوله یکبار مصرف و تیغ استریل برای تمامی مشتریان رایگان است.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Contact Info & Working Hours -->
+    <section id="contact" class="py-20 bg-dark-950 border-t border-zinc-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Contact Info Box -->
+                <div class="bg-dark-900 p-7 rounded-3xl border border-zinc-800 space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 text-xl">
+                            <i class="fa-solid fa-location-dot"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-white">نشانی و اطلاعات تماس</h3>
+                            <p class="text-xs text-zinc-400">دسترسی آسان و جای پارک اختصاصی</p>
+                        </div>
+                    </div>
+
+                    <div class="space-y-4 text-sm">
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-map-pin text-gold-500 mt-1"></i>
+                            <div>
+                                <span class="text-zinc-400 block text-xs mb-0.5">آدرس سالن:</span>
+                                <p class="text-zinc-200 font-medium leading-relaxed">تهران، بلوار اندرزگو، نبش خیابان سلیمی شمالی، برج لوکس رویال، طبقه ۲، واحد ۲۰۴</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fa-solid fa-phone-volume text-gold-500 mt-1"></i>
+                            <div>
+                                <span class="text-zinc-400 block text-xs mb-0.5">تلفن‌های رزرو و مشاوره:</span>
+                                <p class="text-zinc-200 font-bold tracking-wider" dir="ltr">021 - 22 66 88 99</p>
+                                <p class="text-zinc-200 font-bold tracking-wider" dir="ltr">0912 - 345 67 89</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-3">
+                            <i class="fa-brands fa-instagram text-gold-500 mt-1 text-base"></i>
+                            <div>
+                                <span class="text-zinc-400 block text-xs mb-0.5">صفحه اینستاگرام (نمونه‌کارها):</span>
+                                <a href="#contact" class="text-gold-400 hover:underline font-medium" dir="ltr">@RoyalCut.Barbershop</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Working Hours Box -->
+                <div class="bg-dark-900 p-7 rounded-3xl border border-zinc-800 space-y-6">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-2xl bg-gold-500/10 border border-gold-500/30 flex items-center justify-center text-gold-400 text-xl">
+                            <i class="fa-regular fa-clock"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-black text-white">ساعات کاری سالن</h3>
+                            <p class="text-xs text-zinc-400">پذیرش با تعیین وقت قبلی</p>
+                        </div>
+                    </div>
+
+                    <ul class="space-y-3.5 text-sm">
+                        <li class="flex justify-between items-center pb-3 border-b border-zinc-800">
+                            <span class="text-zinc-300 font-medium">شنبه تا چهارشنبه</span>
+                            <span class="px-3 py-1 rounded-lg bg-dark-800 text-gold-400 font-bold text-xs">۱۰:۰۰ صبح الی ۲۱:۰۰ شب</span>
+                        </li>
+                        <li class="flex justify-between items-center pb-3 border-b border-zinc-800">
+                            <span class="text-zinc-300 font-medium">پنج‌شنبه‌ها (VIP)</span>
+                            <span class="px-3 py-1 rounded-lg bg-dark-800 text-gold-400 font-bold text-xs">۰۹:۰۰ صبح الی ۲۲:۰۰ شب</span>
+                        </li>
+                        <li class="flex justify-between items-center pb-3 border-b border-zinc-800">
+                            <span class="text-zinc-300 font-medium">جمعه‌ها و ایام تعطیل</span>
+                            <span class="px-3 py-1 rounded-lg bg-dark-800 text-zinc-300 font-bold text-xs">۱۱:۰۰ صبح الی ۱۸:۰۰ عصر</span>
+                        </li>
+                    </ul>
+
+                    <div class="p-3.5 rounded-2xl bg-emerald-950/40 border border-emerald-500/30 flex items-center justify-between">
+                        <div class="flex items-center gap-2.5">
+                            <span class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span class="text-xs font-bold text-emerald-300">وضعیت فعلی سالن: آماده پذیرش نوبت</span>
+                        </div>
+                        <a href="#booking" class="text-xs font-extrabold text-gold-400 hover:underline">رزرو کنید</a>
+                    </div>
+                </div>
+
+                <!-- Interactive Visual Map Placeholder & Amenities -->
+                <div class="bg-dark-900 p-7 rounded-3xl border border-zinc-800 flex flex-col justify-between space-y-6">
+                    <div>
+                        <h3 class="text-xl font-black text-white mb-2">امکانات رفاهی رویال کات</h3>
+                        <p class="text-xs text-zinc-400 mb-5">تجربه‌ای فراتر از یک اصلاح ساده در محیطی صمیمی</p>
+
+                        <div class="grid grid-cols-2 gap-3 text-xs">
+                            <div class="p-3.5 rounded-2xl bg-dark-950 border border-zinc-800 flex items-center gap-2.5">
+                                <i class="fa-solid fa-mug-hot text-gold-500 text-base"></i>
+                                <span class="text-zinc-200 font-medium">کافی‌بار و اسپرسو رایگان</span>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-dark-950 border border-zinc-800 flex items-center gap-2.5">
+                                <i class="fa-solid fa-wifi text-gold-500 text-base"></i>
+                                <span class="text-zinc-200 font-medium">اینترنت پرسرعت رایگان</span>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-dark-950 border border-zinc-800 flex items-center gap-2.5">
+                                <i class="fa-solid fa-square-parking text-gold-500 text-base"></i>
+                                <span class="text-zinc-200 font-medium">پارکینگ اختصاصی</span>
+                            </div>
+                            <div class="p-3.5 rounded-2xl bg-dark-950 border border-zinc-800 flex items-center gap-2.5">
+                                <i class="fa-brands fa-playstation text-gold-500 text-base"></i>
+                                <span class="text-zinc-200 font-medium">لانج انتظار و PS5</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stylized Map Graphic -->
+                    <div class="relative rounded-2xl overflow-hidden border border-zinc-700 h-36 bg-dark-950 flex items-center justify-center barber-pattern">
+                        <div class="absolute inset-0 bg-dark-950/80 backdrop-blur-[1px]"></div>
+                        <div class="relative z-10 text-center space-y-2 px-4">
+                            <div class="w-10 h-10 rounded-full gold-gradient-bg text-dark-950 flex items-center justify-center mx-auto shadow-lg">
+                                <i class="fa-solid fa-location-crosshairs text-lg"></i>
+                            </div>
+                            <p class="text-xs font-bold text-white">تهران، بلوار اندرزگو، برج رویال</p>
+                            <button onclick="copyAddressToClipboard()" id="copyAddressBtn" class="px-3 py-1 rounded-lg bg-dark-800 hover:bg-zinc-700 text-gold-400 border border-gold-500/30 text-[11px] font-medium transition-colors">
+                                <i class="fa-regular fa-copy ml-1"></i>کپی آدرس برای مسیریاب
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-950 border-t border-zinc-900 py-8 text-center text-xs text-zinc-500">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-2">
+                <i class="fa-solid fa-scissors text-gold-500"></i>
+                <span class="font-bold text-zinc-300">آرایشگاه مردانه رویال کات</span>
+                <span>— تمامی حقوق محفوظ است.</span>
+            </div>
+            <div class="flex gap-6">
+                <a href="#home" class="hover:text-gold-400 transition-colors">بالای صفحه</a>
+                <a href="#services" class="hover:text-gold-400 transition-colors">تعرفه‌ها</a>
+                <a href="#booking" class="hover:text-gold-400 transition-colors">رزرو نوبت</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-dark-900 border-2 border-gold-500/50 rounded-3xl max-w-md w-full p-6 sm:p-8 text-center shadow-2xl relative animate-fade-in">
+            <div class="w-16 h-16 rounded-full gold-gradient-bg text-dark-950 flex items-center justify-center text-3xl mx-auto mb-4 shadow-lg shadow-gold-500/30">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-2xl font-black text-white mb-1">نوبت شما با موفقیت ثبت شد!</h3>
+            <p class="text-xs text-zinc-400 mb-6">پیامک یادآوری برای شما ارسال خواهد شد</p>
+
+            <div class="bg-dark-950 rounded-2xl p-4 border border-zinc-800 text-right space-y-2.5 text-xs sm:text-sm mb-6">
+                <div class="flex justify-between items-center pb-2 border-b border-zinc-800">
+                    <span class="text-zinc-400">کد پیگیری نوبت:</span>
+                    <span id="modalTrackingCode" class="font-black text-gold-400 text-base tracking-wider">RC-4829</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-zinc-400">نام مشتری:</span>
+                    <span id="modalCustomerName" class="font-bold text-white">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-zinc-400">خدمت:</span>
+                    <span id="modalService" class="font-bold text-gold-300">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-zinc-400">استایلیست:</span>
+                    <span id="modalBarber" class="font-medium text-white">-</span>
+                </div>
+                <div class="flex justify-between">
+                    <span class="text-zinc-400">زمان مراجعه:</span>
+                    <span id="modalDateTime" class="font-bold text-emerald-400">-</span>
+                </div>
+                <div class="flex justify-between pt-2 border-t border-zinc-800">
+                    <span class="text-zinc-400">هزینه خدمت:</span>
+                    <span id="modalPrice" class="font-black text-white">-</span>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="closeConfirmationModal()" class="flex-1 py-3 rounded-xl gold-gradient-bg text-dark-950 font-bold text-sm hover:opacity-95 transition-opacity">
+                    متوجه شدم
+                </button>
+                <button onclick="closeConfirmationModal(); toggleMyAppointmentsModal();" class="px-4 py-3 rounded-xl bg-dark-800 hover:bg-zinc-800 text-zinc-200 border border-zinc-700 font-medium text-sm transition-colors">
+                    نوبت‌های من
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- My Appointments Drawer/Modal -->
+    <div id="myAppointmentsModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black/80 backdrop-blur-sm p-4">
+        <div class="bg-dark-900 border border-zinc-700 rounded-3xl max-w-lg w-full p-6 shadow-2xl relative max-h-[85vh] flex flex-col">
+            <div class="flex items-center justify-between pb-4 border-b border-zinc-800 mb-4">
+                <div class="flex items-center gap-2.5">
+                    <i class="fa-regular fa-calendar-check text-gold-500 text-xl"></i>
+                    <h3 class="text-lg font-black text-white">لیست نوبت‌های رزرو شده من</h3>
+                </div>
+                <button onclick="toggleMyAppointmentsModal()" class="w-8 h-8 rounded-lg bg-dark-800 text-zinc-400 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div id="appointmentsListContainer" class="overflow-y-auto space-y-3 flex-1 pr-1">
+                <!-- Populated dynamically -->
+            </div>
+
+            <div class="pt-4 border-t border-zinc-800 mt-4 text-left">
+                <button onclick="toggleMyAppointmentsModal()" class="px-6 py-2.5 rounded-xl bg-dark-800 hover:bg-zinc-800 text-zinc-200 text-xs font-bold border border-zinc-700">
+                    بستن پنجره
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Services & Pricing Dataset (in Tomans)
+        const servicesData = [
+            {
+                id: 1,
+                title: 'اصلاح تخصصی و استایل مو',
+                category: 'hair',
+                categoryLabel: 'اصلاح و فید',
+                price: 350000,
+                duration: '۴۵ دقیقه',
+                popular: true,
+                description: 'کوتاهی مو متناسب با آناتومی سر و صورت همراه با شستشو و براشینگ حرفه‌ای.'
+            },
+            {
+                id: 2,
+                title: 'انواع فید حرفه‌ای (Skin / Taper Fade)',
+                category: 'hair',
+                categoryLabel: 'اصلاح و فید',
+                price: 420000,
+                duration: '۵۰ دقیقه',
+                popular: true,
+                description: 'سایه‌زنی فوق دقیق با صفرترین ماشین‌های روز دنیا و استایلینگ مدرن.'
+            },
+            {
+                id: 3,
+                title: 'اصلاح کلاسیک فقط با قیچی (Scissor Cut)',
+                category: 'hair',
+                categoryLabel: 'اصلاح و فید',
+                price: 450000,
+                duration: '۶۰ دقیقه',
+                popular: false,
+                description: 'مناسب موهای بلند و متوسط برای حفظ حالت طبیعی و خواب استاندارد مو.'
+            },
+            {
+                id: 4,
+                title: 'اصلاح، فرم‌دهی و آنکادر ریش',
+                category: 'beard',
+                categoryLabel: 'ریش و صورت',
+                price: 200000,
+                duration: '۲۵ دقیقه',
+                popular: false,
+                description: 'خط‌گیری دقیق، فید ریش و متقارن‌سازی با تیغ استریل و افترشیو خنک‌کننده.'
+            },
+            {
+                id: 5,
+                title: 'شیو سنتی با حوله داغ (Hot Towel Shave)',
+                category: 'beard',
+                categoryLabel: 'ریش و صورت',
+                price: 260000,
+                duration: '۳۵ دقیقه',
+                popular: true,
+                description: 'کمپرس حوله گرم معطر، فوم غنی، اصلاح صورت و ماساژ ریلکسیشن صورت.'
+            },
+            {
+                id: 6,
+                title: 'پکیج کامل اصلاح مو + استایل ریش',
+                category: 'hair',
+                categoryLabel: 'پکیج محبوب',
+                price: 520000,
+                duration: '۷۰ دقیقه',
+                popular: true,
+                description: 'پکیج اقتصادی شامل فید یا اصلاح تخصصی مو به همراه آنکادر کامل ریش و شستشو.'
+            },
+            {
+                id: 7,
+                title: 'پاکسازی و فیشیال تخصصی پوست (VIP)',
+                category: 'skin',
+                categoryLabel: 'پوست و اسپا',
+                price: 680000,
+                duration: '۶۰ دقیقه',
+                popular: true,
+                description: 'پاکسازی ۵ مرحله‌ای، تخلیه جوش‌های سرسیاه، بخور اوزون، ماسک طلا و آبرسانی عمیق.'
+            },
+            {
+                id: 8,
+                title: 'بلک ماسک و لایه‌برداری صورت',
+                category: 'skin',
+                categoryLabel: 'پوست و اسپا',
+                price: 220000,
+                duration: '۲۵ دقیقه',
+                popular: false,
+                description: 'حذف موهای زائد ریز، پرزهای صورت و لایه‌های مرده پوست با ماسک زغال فعال.'
+            },
+            {
+                id: 9,
+                title: 'کراتین، پروتئین‌تراپی و صافی مو',
+                category: 'vip',
+                categoryLabel: 'خدمات VIP',
+                price: 1450000,
+                duration: '۹۰ دقیقه',
+                popular: false,
+                description: 'احیا و صافی موهای فر، وز و آسیب‌دیده با مواد اورجینال برزیلی با ماندگاری بالا.'
+            },
+            {
+                id: 10,
+                title: 'پکیج ویژه فرودگاه / قرار کاری (Express)',
+                category: 'vip',
+                categoryLabel: 'خدمات VIP',
+                price: 790000,
+                duration: '۷۵ دقیقه',
+                popular: false,
+                description: 'اصلاح مو و ریش، ماسک شاداب‌کننده فوری پوست، استایلینگ و پذیرایی ویژه.'
+            },
+            {
+                id: 11,
+                title: 'پکیج رویال گریم تخصصی داماد',
+                category: 'vip',
+                categoryLabel: 'تشریفات داماد',
+                price: 3800000,
+                duration: '۱۸۰ دقیقه',
+                popular: true,
+                description: 'مشاوره قبلی، هیرکات، فیشیال VIP، گریم سینمایی ضدآب با ماندگاری ۲۴ ساعته و اتاق اختصاصی.'
+            }
+        ];
+
+        // Available time slots
+        const timeSlots = [
+            { time: '۱۰:۰۰', busy: false },
+            { time: '۱۱:۰۰', busy: false },
+            { time: '۱۲:۰۰', busy: true },
+            { time: '۱۳:۰۰', busy: false },
+            { time: '۱۴:۰۰', busy: false },
+            { time: '۱۶:۰۰', busy: false },
+            { time: '۱۷:۰۰', busy: true },
+            { time: '۱۸:۰۰', busy: false },
+            { time: '۱۹:۰۰', busy: false },
+            { time: '۲۰:۰۰', busy: false }
+        ];
+
+        // State Variables
+        let currentCategory = 'all';
+        let selectedDate = '';
+        let selectedTime = '۱۰:۰۰';
+        let savedAppointments = [];
+
+        // Helper: Format number to Persian locale with commas
+        function formatPersianPrice(num) {
+            return num.toLocaleString('fa-IR');
+        }
+
+        // Helper: Convert digits to Persian
+        function toPersianDigits(str) {
+            const persianDigits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return String(str).replace(/[0-9]/g, (w) => persianDigits[+w]);
+        }
+
+        // Render Services Cards
+        function renderServices(filter = 'all') {
+            const grid = document.getElementById('servicesGrid');
+            const filtered = filter === 'all' 
+                ? servicesData 
+                : servicesData.filter(item => item.category === filter);
+
+            grid.innerHTML = filtered.map(service => `
+                <div class="bg-dark-950 rounded-2xl p-6 border ${service.popular ? 'border-gold-500/40' : 'border-zinc-800'} hover:border-gold-500 transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
+                    ${service.popular ? `
+                        <div class="absolute top-0 left-0 bg-gold-500 text-dark-950 text-[11px] font-black px-3 py-1 rounded-br-xl">
+                            پرتقاضا
+                        </div>
+                    ` : ''}
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-3">
+                            <span class="text-xs font-medium px-2.5 py-1 rounded-lg bg-dark-800 text-gold-400 border border-zinc-700/80">
+                                ${service.categoryLabel}
+                            </span>
+                            <span class="text-xs text-zinc-400 flex items-center gap-1">
+                                <i class="fa-regular fa-clock text-gold-500"></i>
+                                ${service.duration}
+                            </span>
+                        </div>
+                        <h3 class="text-lg font-extrabold text-white group-hover:text-gold-400 transition-colors mb-2">
+                            ${service.title}
+                        </h3>
+                        <p class="text-xs text-zinc-400 leading-relaxed mb-6">
+                            ${service.description}
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-zinc-800/80 flex items-center justify-between">
+                        <div>
+                            <span class="text-xs text-zinc-400 block">تعرفه خدمت:</span>
+                            <span class="text-xl font-black text-gold-400">${formatPersianPrice(service.price)}</span>
+                            <span class="text-xs text-zinc-400 mr-1">تومان</span>
+                        </div>
+                        <button onclick="selectPackageForBooking(${service.id})" class="px-4 py-2.5 rounded-xl bg-dark-800 group-hover:bg-gold-500 text-zinc-200 group-hover:text-dark-950 font-bold text-xs border border-zinc-700 group-hover:border-gold-500 transition-all flex items-center gap-1.5">
+                            <span>انتخاب و رزرو</span>
+                            <i class="fa-solid fa-chevron-left text-[10px]"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter button click handler
+        function filterServices(category) {
+            currentCategory = category;
+            renderServices(category);
+
+            const buttons = document.querySelectorAll('.service-filter-btn');
+            buttons.forEach(btn => {
+                if (btn.getAttribute('data-filter') === category) {
+                    btn.className = 'service-filter-btn active px-5 py-2.5 rounded-xl font-bold text-sm transition-all gold-gradient-bg text-dark-950 shadow-lg shadow-gold-500/20';
+                } else {
+                    btn.className = 'service-filter-btn px-5 py-2.5 rounded-xl font-medium text-sm transition-all bg-dark-800 text-zinc-300 hover:border-gold-500/40 border border-zinc-700';
+                }
+            });
+        }
+
+        // Populate Service Select Dropdown in Booking Form
+        function populateServiceDropdown() {
+            const select = document.getElementById('serviceSelect');
+            select.innerHTML = servicesData.map(s => `
+                <option value="${s.id}">${s.title} — (${formatPersianPrice(s.price)} تومان)</option>
+            `).join('');
+        }
+
+        // Generate Next 7 Days in Persian Calendar Format
+        function generateNext7Days() {
+            const container = document.getElementById('datePickerContainer');
+            const daysList = [];
+            const today = new Date();
+
+            for (let i = 0; i < 7; i++) {
+                const d = new Date(today);
+                d.setDate(today.getDate() + i);
+
+                const weekday = d.toLocaleDateString('fa-IR', { weekday: 'short' });
+                const dayNum = d.toLocaleDateString('fa-IR', { day: 'numeric' });
+                const monthName = d.toLocaleDateString('fa-IR', { month: 'short' });
+                const fullReadable = `${ i === 0 ? 'امروز ' : ''}${d.toLocaleDateString('fa-IR', { weekday: 'long', day: 'numeric', month: 'long' })}`;
+
+                daysList.push({
+                    id: i,
+                    weekday: i === 0 ? 'امروز' : weekday,
+                    dayNum,
+                    monthName,
+                    fullReadable
+                });
+            }
+
+            selectedDate = daysList[0].fullReadable;
+            document.getElementById('selectedDateInput').value = selectedDate;
+
+            container.innerHTML = daysList.map((day, idx) => `
+                <button type="button" onclick="selectBookingDate('${day.fullReadable}', this)" 
+                        class="date-slot-btn p-3 rounded-2xl border text-center transition-all ${idx === 0 ? 'bg-gold-500 text-dark-950 border-gold-400 font-black shadow-lg shadow-gold-500/20' : 'bg-dark-900 text-zinc-300 border-zinc-800 hover:border-gold-500/40'}">
+                    <span class="block text-xs opacity-80">${day.weekday}</span>
+                    <span class="block text-lg font-extrabold my-0.5">${day.dayNum}</span>
+                    <span class="block text-[11px] opacity-80">${day.monthName}</span>
+                </button>
+            `).join('');
+        }
+
+        // Select Date Handler
+        function selectBookingDate(dateStr, btnEl) {
+            selectedDate = dateStr;
+            document.getElementById('selectedDateInput').value = dateStr;
+
+            document.querySelectorAll('.date-slot-btn').forEach(btn => {
+                btn.className = 'date-slot-btn p-3 rounded-2xl border text-center transition-all bg-dark-900 text-zinc-300 border-zinc-800 hover:border-gold-500/40';
+            });
+            btnEl.className = 'date-slot-btn p-3 rounded-2xl border text-center transition-all bg-gold-500 text-dark-950 border-gold-400 font-black shadow-lg shadow-gold-500/20';
+
+            updateBookingSummary();
+        }
+
+        // Render Time Slots
+        function renderTimeSlots() {
+            const container = document.getElementById('timeSlotsContainer');
+            document.getElementById('selectedTimeInput').value = selectedTime;
+
+            container.innerHTML = timeSlots.map(slot => {
+                if (slot.busy) {
+                    return `
+                        <button type="button" disabled class="py-2.5 px-3 rounded-xl bg-red-950/30 border border-red-900/40 text-red-400/60 text-xs font-medium cursor-not-allowed line-through">
+                            ${slot.time}
+                        </button>
+                    `;
+                }
+                const isSelected = slot.time === selectedTime;
+                return `
+                    <button type="button" onclick="selectBookingTime('${slot.time}')" 
+                            class="py-2.5 px-3 rounded-xl border text-xs transition-all ${isSelected ? 'bg-gold-500 text-dark-950 border-gold-400 font-black shadow-md shadow-gold-500/20' : 'bg-dark-900 text-zinc-200 border-zinc-800 hover:border-gold-500/40 font-medium'}">
+                        ${slot.time}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Select Time Handler
+        function selectBookingTime(timeStr) {
+            selectedTime = timeStr;
+            document.getElementById('selectedTimeInput').value = timeStr;
+            renderTimeSlots();
+            updateBookingSummary();
+        }
+
+        // Update Live Booking Summary
+        function updateBookingSummary() {
+            const serviceId = parseInt(document.getElementById('serviceSelect').value);
+            const barber = document.getElementById('barberSelect').value;
+            const serviceObj = servicesData.find(s => s.id === serviceId) || servicesData[0];
+
+            document.getElementById('summaryService').textContent = serviceObj.title;
+            document.getElementById('summaryDuration').textContent = serviceObj.duration;
+            document.getElementById('summaryBarber').textContent = barber;
+            document.getElementById('summaryDate').textContent = selectedDate;
+            document.getElementById('summaryTime').textContent = `ساعت ${selectedTime}`;
+            document.getElementById('summaryPrice').textContent = formatPersianPrice(serviceObj.price);
+        }
+
+        // Shortcut: Select Service from Pricing Cards and Scroll to Booking
+        function selectPackageForBooking(serviceId) {
+            const select = document.getElementById('serviceSelect');
+            select.value = serviceId;
+            updateBookingSummary();
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Shortcut: Select Barber from Stylist Card and Scroll to Booking
+        function selectBarberForBooking(barberName) {
+            const barberSelect = document.getElementById('barberSelect');
+            barberSelect.value = barberName;
+            updateBookingSummary();
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Handle Booking Form Submission
+        function handleBookingSubmit(e) {
+            e.preventDefault();
+            const errorBox = document.getElementById('formErrorAlert');
+            const errorText = document.getElementById('formErrorText');
+            errorBox.classList.add('hidden');
+
+            const name = document.getElementById('customerName').value.trim();
+            const phone = document.getElementById('customerPhone').value.trim();
+            const serviceId = parseInt(document.getElementById('serviceSelect').value);
+            const barber = document.getElementById('barberSelect').value;
+            const notes = document.getElementById('customerNotes').value.trim();
+
+            if (!name || !phone || !selectedDate || !selectedTime) {
+                errorText.textContent = 'لطفاً نام، شماره همراه، تاریخ و ساعت مراجعه را به صورت کامل وارد کنید.';
+                errorBox.classList.remove('hidden');
+                return;
+            }
+
+            const serviceObj = servicesData.find(s => s.id === serviceId);
+            const randomCode = 'RC-' + toPersianDigits(Math.floor(1000 + Math.random() * 9000));
+
+            const newBooking = {
+                id: Date.now(),
+                trackingCode: randomCode,
+                customerName: name,
+                customerPhone: phone,
+                serviceTitle: serviceObj.title,
+                price: serviceObj.price,
+                barber: barber,
+                date: selectedDate,
+                time: selectedTime,
+                notes: notes
+            };
+
+            savedAppointments.unshift(newBooking);
+            saveAppointmentsToStorage();
+            updateAppointmentsBadge();
+
+            // Populate Confirmation Modal
+            document.getElementById('modalTrackingCode').textContent = newBooking.trackingCode;
+            document.getElementById('modalCustomerName').textContent = newBooking.customerName;
+            document.getElementById('modalService').textContent = newBooking.serviceTitle;
+            document.getElementById('modalBarber').textContent = newBooking.barber;
+            document.getElementById('modalDateTime').textContent = `${newBooking.date} - ساعت ${newBooking.time}`;
+            document.getElementById('modalPrice').textContent = `${formatPersianPrice(newBooking.price)} تومان`;
+
+            const modal = document.getElementById('confirmationModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            // Reset customer text inputs
+            document.getElementById('customerName').value = '';
+            document.getElementById('customerPhone').value = '';
+            document.getElementById('customerNotes').value = '';
+        }
+
+        function closeConfirmationModal() {
+            const modal = document.getElementById('confirmationModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        // Toggle My Appointments Modal
+        function toggleMyAppointmentsModal() {
+            const modal = document.getElementById('myAppointmentsModal');
+            if (modal.classList.contains('hidden')) {
+                renderMyAppointmentsList();
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            } else {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        }
+
+        // Render Saved Appointments inside Modal
+        function renderMyAppointmentsList() {
+            const container = document.getElementById('appointmentsListContainer');
+            if (savedAppointments.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-10 space-y-3">
+                        <div class="w-14 h-14 rounded-full bg-dark-800 text-zinc-500 flex items-center justify-center mx-auto text-2xl">
+                            <i class="fa-regular fa-calendar-xmark"></i>
+                        </div>
+                        <p class="text-zinc-400 text-sm font-medium">شما هنوز هیچ نوبتی ثبت نکرده‌اید.</p>
+                        <a href="#booking" onclick="toggleMyAppointmentsModal()" class="inline-block px-4 py-2 rounded-xl bg-gold-500 text-dark-950 font-bold text-xs">
+                            ثبت اولین نوبت
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = savedAppointments.map(app => `
+                <div class="p-4 rounded-2xl bg-dark-950 border border-zinc-800 space-y-2.5 text-xs">
+                    <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+                        <span class="px-2.5 py-1 rounded-md bg-gold-500/10 text-gold-400 font-bold">
+                            کد پیگیری: ${app.trackingCode}
+                        </span>
+                        <button onclick="cancelAppointment(${app.id})" class="text-red-400 hover:text-red-300 font-medium flex items-center gap-1">
+                            <i class="fa-regular fa-trash-can"></i>
+                            <span>لغو نوبت</span>
+                        </button>
+                    </div>
+                    <div class="font-bold text-white text-sm">${app.serviceTitle}</div>
+                    <div class="grid grid-cols-2 gap-2 text-zinc-400">
+                        <div>آرایشگر: <span class="text-zinc-200">${app.barber}</span></div>
+                        <div>مشتری: <span class="text-zinc-200">${app.customerName}</span></div>
+                        <div class="col-span-2 text-emerald-400 font-semibold">
+                            <i class="fa-regular fa-clock ml-1"></i>${app.date} — ساعت ${app.time}
+                        </div>
+                    </div>
+                    <div class="pt-2 border-t border-zinc-900 flex justify-between items-center">
+                        <span class="text-zinc-400">مبلغ خدمت:</span>
+                        <span class="font-black text-gold-400 text-sm">${formatPersianPrice(app.price)} تومان</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function cancelAppointment(id) {
+            savedAppointments = savedAppointments.filter(item => item.id !== id);
+            saveAppointmentsToStorage();
+            updateAppointmentsBadge();
+            renderMyAppointmentsList();
+        }
+
+        function updateAppointmentsBadge() {
+            const count = toPersianDigits(savedAppointments.length);
+            document.getElementById('navBookingCount').textContent = count;
+            document.getElementById('mobileBookingCount').textContent = count;
+        }
+
+        function saveAppointmentsToStorage() {
+            try {
+                localStorage.setItem('royalcut_appointments', JSON.stringify(savedAppointments));
+            } catch (e) {
+                // Ignore storage errors in restricted iframes
+            }
+        }
+
+        function loadAppointmentsFromStorage() {
+            try {
+                const data = localStorage.getItem('royalcut_appointments');
+                if (data) {
+                    savedAppointments = JSON.parse(data);
+                }
+            } catch (e) {
+                savedAppointments = [];
+            }
+            updateAppointmentsBadge();
+        }
+
+        // Copy Address Using execCommand fallback
+        function copyAddressToClipboard() {
+            const address = 'تهران، بلوار اندرزگو، نبش خیابان سلیمی شمالی، برج لوکس رویال، طبقه ۲، واحد ۲۰۴';
+            const tempInput = document.createElement('textarea');
+            tempInput.value = address;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+
+            const btn = document.getElementById('copyAddressBtn');
+            const originalHTML = btn.innerHTML;
+            btn.innerHTML = '<i class="fa-solid fa-check ml-1 text-emerald-400"></i>آدرس کپی شد!';
+            setTimeout(() => {
+                btn.innerHTML = originalHTML;
+            }, 2500);
+        }
+
+        // Mobile Menu Toggle
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobileMenu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobileMenu').classList.add('hidden');
+            });
+        });
+
+        // ============================================================================
+        // AI VIRTUAL HAIR & BEARD TRY-ON STUDIO LOGIC
+        // ============================================================================
+        const presetMaleFaces = [
+            {
+                id: 'face1',
+                name: 'چهره ۱ (کلاسیک)',
+                url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=700&q=85'
+            },
+            {
+                id: 'face2',
+                name: 'چهره ۲ (مدرن)',
+                url: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=700&q=85'
+            },
+            {
+                id: 'face3',
+                name: 'چهره ۳ (رسمی)',
+                url: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&w=700&q=85'
+            },
+            {
+                id: 'face4',
+                name: 'چهره ۴ (جوان)',
+                url: 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&w=700&q=85'
+            }
+        ];
+
+        const trendyHairstyles = [
+            {
+                id: 'pompadour',
+                title: 'پمپادور مدرن و فید',
+                engName: 'Modern Textured Pompadour with Clean Mid Skin Fade and sharp line-up',
+                tag: 'ترند ۲۰۲۶',
+                relatedServiceId: 2,
+                relatedServiceName: 'انواع فید حرفه‌ای',
+                thumb: 'https://images.unsplash.com/photo-1622286342621-4bd786c2447c?auto=format&fit=crop&w=400&q=80',
+                desc: 'حجم بالا در جلوی مو با فید سایه‌ای تمیز در کناره‌ها'
+            },
+            {
+                id: 'buzzfade',
+                title: 'باز کات و اسکین فید',
+                engName: 'Sharp Buzz Cut with High Skin Fade and neatly lined-up short stubble beard',
+                tag: 'ورزشی و جذاب',
+                relatedServiceId: 2,
+                relatedServiceName: 'انواع فید حرفه‌ای',
+                thumb: 'https://images.unsplash.com/photo-1517832607067-4db24a2ae47c?auto=format&fit=crop&w=400&q=80',
+                desc: 'کوتاه، مردانه و بسیار دقیق با خط رویش تیز'
+            },
+            {
+                id: 'frenchcrop',
+                title: 'کراپ فرانسوی تکسچردار',
+                engName: 'Textured Messy French Crop haircut with blunt fringe and Drop Fade on the sides',
+                tag: 'بسیار پرطرفدار',
+                relatedServiceId: 2,
+                relatedServiceName: 'انواع فید حرفه‌ای',
+                thumb: 'https://images.unsplash.com/photo-1599351431202-1e0f0137899a?auto=format&fit=crop&w=400&q=80',
+                desc: 'چتری کوتاه تکسچردار در جلو با دراپ فید مدرن'
+            },
+            {
+                id: 'slickback',
+                title: 'اسلیک بک کلاسیک (آندرکات)',
+                engName: 'Classic Gentlemen Slicked Back Undercut hairstyle with glossy natural finish',
+                tag: 'استایل رسمی',
+                relatedServiceId: 3,
+                relatedServiceName: 'اصلاح کلاسیک با قیچی',
+                thumb: 'https://images.unsplash.com/photo-1503951914875-452162b0f3f1?auto=format&fit=crop&w=400&q=80',
+                desc: 'موهای شانه شده به عقب مناسب استایل جنتلمن و داماد'
+            },
+            {
+                id: 'quiffbeard',
+                title: 'کوییف حجم‌دار + ریش کامل',
+                engName: 'Voluminous Textured Quiff haircut paired with a well-groomed sculpted full boxed beard',
+                tag: 'پکیج مو و ریش',
+                relatedServiceId: 6,
+                relatedServiceName: 'پکیج اصلاح مو + ریش',
+                thumb: 'https://images.unsplash.com/photo-1605497788044-5a32c7078486?auto=format&fit=crop&w=400&q=80',
+                desc: 'ترکیب موی حالت‌دار پرحجم و آنکادر حرفه‌ای ریش'
+            },
+            {
+                id: 'curlytaper',
+                title: 'فر موج‌دار و تیپر فید',
+                engName: 'Modern Curly Top / Wavy Taper Fade haircut with natural defined curls on top and clean temples',
+                tag: 'مدل نچرال و فر',
+                relatedServiceId: 1,
+                relatedServiceName: 'اصلاح تخصصی و استایل مو',
+                thumb: 'https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?auto=format&fit=crop&w=400&q=80',
+                desc: 'حفظ فر طبیعی بالای سر همراه با تیپر فید تمیز دور گوش'
+            }
+        ];
+
+        const hairColors = [
+            { id: 'black', label: 'مشکی طبیعی', eng: 'natural jet black hair color', hex: '#18181B' },
+            { id: 'darkbrown', label: 'قهوه‌ای تیره اسپرسو', eng: 'natural dark espresso brown hair color', hex: '#3E2723' },
+            { id: 'saltpepper', label: 'جوگندمی / نقره‌ای لوکس', eng: 'distinguished salt and pepper silver-grey hair color', hex: '#9E9E9E' },
+            { id: 'platinum', label: 'بلوند پلاتینیوم مدرن', eng: 'icy platinum blonde dyed men hair color', hex: '#E5E7EB' }
+        ];
+
+        let activeFaceId = 'face1';
+        let currentOriginalDataUrl = '';
+        let currentResultDataUrl = '';
+        let selectedHairstyle = trendyHairstyles[0];
+        let selectedHairColor = hairColors[0];
+        let webcamStream = null;
+
+        // Render Built-in Male Face Presets
+        function renderPresetFaces() {
+            const container = document.getElementById('presetFacesContainer');
+            container.innerHTML = presetMaleFaces.map(face => {
+                const isSelected = face.id === activeFaceId;
+                return `
+                    <button type="button" onclick="selectPresetFace('${face.id}')" 
+                            class="group relative rounded-2xl overflow-hidden border-2 transition-all ${isSelected ? 'border-gold-400 ring-2 ring-gold-500/40' : 'border-zinc-800 hover:border-zinc-600'}">
+                        <img src="${face.url}" alt="${face.name}" crossorigin="anonymous" class="w-full h-20 object-cover object-top group-hover:scale-105 transition-transform">
+                        <span class="block text-[10px] font-bold py-1 bg-dark-950/90 text-center ${isSelected ? 'text-gold-400' : 'text-zinc-300'}">
+                            ${face.name}
+                        </span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Render Hairstyle Selection Cards
+        function renderHairstyleCards() {
+            const container = document.getElementById('hairstyleCardsGrid');
+            container.innerHTML = trendyHairstyles.map(style => {
+                const isSelected = style.id === selectedHairstyle.id;
+                return `
+                    <div onclick="selectHairstyleCard('${style.id}')" 
+                         class="cursor-pointer rounded-2xl p-2.5 border transition-all flex flex-col justify-between ${isSelected ? 'bg-gold-500/15 border-gold-400 shadow-lg shadow-gold-500/10' : 'bg-dark-950 border-zinc-800 hover:border-zinc-600'}">
+                        <div>
+                            <div class="relative h-24 rounded-xl overflow-hidden mb-2 bg-dark-800">
+                                <img src="${style.thumb}" alt="${style.title}" class="w-full h-full object-cover object-center">
+                                <span class="absolute top-1.5 right-1.5 px-2 py-0.5 rounded-md bg-dark-950/85 text-gold-400 text-[9px] font-bold">
+                                    ${style.tag}
+                                </span>
+                            </div>
+                            <h4 class="text-xs font-extrabold ${isSelected ? 'text-gold-400' : 'text-white'} mb-1">${style.title}</h4>
+                            <p class="text-[10px] text-zinc-400 leading-snug">${style.desc}</p>
+                        </div>
+                        <div class="mt-2 pt-1.5 border-t border-zinc-800/80 flex items-center justify-between text-[10px]">
+                            <span class="text-zinc-400">انتخاب استایل</span>
+                            <i class="fa-solid ${isSelected ? 'fa-circle-check text-gold-400 text-xs' : 'fa-circle text-zinc-700'}"></i>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Render Hair Color Selector
+        function renderHairColors() {
+            const container = document.getElementById('hairColorSelector');
+            container.innerHTML = hairColors.map(color => {
+                const isSelected = color.id === selectedHairColor.id;
+                return `
+                    <button type="button" onclick="selectHairColor('${color.id}')" 
+                            class="p-2.5 rounded-xl border text-xs font-bold flex items-center gap-2 transition-all ${isSelected ? 'bg-gold-500/15 border-gold-400 text-gold-300' : 'bg-dark-950 border-zinc-800 text-zinc-300 hover:border-zinc-700'}">
+                        <span class="w-4 h-4 rounded-full border border-white/30 shrink-0" style="background-color: ${color.hex};"></span>
+                        <span class="truncate">${color.label}</span>
+                    </button>
+                `;
+            }).join('');
+        }
+
+        function selectHairstyleCard(styleId) {
+            const found = trendyHairstyles.find(s => s.id === styleId);
+            if (!found) return;
+            selectedHairstyle = found;
+            document.getElementById('selectedStyleBadge').textContent = found.title;
+            document.getElementById('mirrorCurrentStyleTitle').textContent = found.title;
+            document.getElementById('mirrorSuggestedService').textContent = found.relatedServiceName;
+            renderHairstyleCards();
+        }
+
+        function selectHairColor(colorId) {
+            const found = hairColors.find(c => c.id === colorId);
+            if (!found) return;
+            selectedHairColor = found;
+            renderHairColors();
+        }
+
+        // Convert External Image URL to Base64 Data URL for Gemini Image-to-Image API
+        async function imageUrlToDataUrl(url) {
+            const response = await fetch(url, { mode: 'cors' });
+            const blob = await response.blob();
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onloadend = () => resolve(reader.result);
+                reader.onerror = reject;
+                reader.readAsDataURL(blob);
+            });
+        }
+
+        // Select a Built-in Preset Male Face
+        async function selectPresetFace(faceId) {
+            activeFaceId = faceId;
+            renderPresetFaces();
+            const faceObj = presetMaleFaces.find(f => f.id === faceId);
+            if (!faceObj) return;
+
+            hideComparisonSlider();
+            document.getElementById('afterImageEl').src = faceObj.url;
+            document.getElementById('beforeImageEl').src = faceObj.url;
+            document.getElementById('mirrorStatusBadge').textContent = 'چهره آماده تست';
+
+            try {
+                currentOriginalDataUrl = await imageUrlToDataUrl(faceObj.url);
+                currentResultDataUrl = currentOriginalDataUrl;
+            } catch (err) {
+                currentOriginalDataUrl = '';
+            }
+        }
+
+        // Handle User File Upload
+        function handleUserPhotoUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                activeFaceId = 'custom';
+                renderPresetFaces();
+                currentOriginalDataUrl = e.target.result;
+                currentResultDataUrl = currentOriginalDataUrl;
+                hideComparisonSlider();
+                document.getElementById('afterImageEl').src = currentOriginalDataUrl;
+                document.getElementById('beforeImageEl').src = currentOriginalDataUrl;
+                document.getElementById('mirrorStatusBadge').textContent = 'عکس شما بارگذاری شد';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Webcam Modal Functions
+        async function openCameraModal() {
+            const modal = document.getElementById('cameraModal');
+            const video = document.getElementById('webcamVideo');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            try {
+                webcamStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: 'user', width: { ideal: 720 }, height: { ideal: 960 } },
+                    audio: false
+                });
+                video.srcObject = webcamStream;
+            } catch (err) {
+                closeCameraModal();
+                showTryOnAlert('دسترسی به وب‌کم امکان‌پذیر نیست. لطفاً از دکمه «آپلود عکس از گالری» استفاده نمایید.');
+            }
+        }
+
+        function closeCameraModal() {
+            const modal = document.getElementById('cameraModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            if (webcamStream) {
+                webcamStream.getTracks().forEach(t => t.stop());
+                webcamStream = null;
+            }
+        }
+
+        function captureWebcamPhoto() {
+            const video = document.getElementById('webcamVideo');
+            if (!video.videoWidth) return;
+
+            const canvas = document.createElement('canvas');
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+            const ctx = canvas.getContext('2d');
+            // Mirror flip horizontally to match selfie view
+            ctx.translate(canvas.width, 0);
+            ctx.scale(-1, 1);
+            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+            currentOriginalDataUrl = canvas.toDataURL('image/jpeg', 0.92);
+            currentResultDataUrl = currentOriginalDataUrl;
+            activeFaceId = 'webcam';
+            renderPresetFaces();
+            hideComparisonSlider();
+
+            document.getElementById('afterImageEl').src = currentOriginalDataUrl;
+            document.getElementById('beforeImageEl').src = currentOriginalDataUrl;
+            document.getElementById('mirrorStatusBadge').textContent = 'سلفی شما ثبت شد';
+            closeCameraModal();
+        }
+
+        // Interactive Before / After Slider Controls
+        function handleCompareSlider(val) {
+            const wrapper = document.getElementById('beforeClipWrapper');
+            const line = document.getElementById('sliderLineEl');
+            wrapper.style.clipPath = `inset(0 0 0 ${val}%)`;
+            line.style.left = `${val}%`;
+        }
+
+        function showComparisonSlider() {
+            document.getElementById('beforeClipWrapper').classList.remove('hidden');
+            document.getElementById('afterBadgeLabel').classList.remove('hidden');
+            document.getElementById('sliderLineEl').classList.remove('hidden');
+            const range = document.getElementById('compareRangeInput');
+            range.classList.remove('hidden');
+            range.value = 35;
+            handleCompareSlider(35);
+        }
+
+        function hideComparisonSlider() {
+            document.getElementById('beforeClipWrapper').classList.add('hidden');
+            document.getElementById('afterBadgeLabel').classList.add('hidden');
+            document.getElementById('sliderLineEl').classList.add('hidden');
+            document.getElementById('compareRangeInput').classList.add('hidden');
+        }
+
+        function showTryOnAlert(msg) {
+            const box = document.getElementById('tryOnMessageAlert');
+            box.textContent = msg;
+            box.classList.remove('hidden');
+        }
+
+        function hideTryOnAlert() {
+            document.getElementById('tryOnMessageAlert').classList.add('hidden');
+        }
+
+        // Exponential Backoff Helper for Gemini API
+        async function fetchWithRetry(url, options, maxRetries = 3) {
+            let delay = 1000;
+            for (let attempt = 0; attempt < maxRetries; attempt++) {
+                try {
+                    const response = await fetch(url, options);
+                    if (response.ok) return response;
+                    if (response.status !== 429 && response.status < 500) {
+                        return response;
+                    }
+                } catch (err) {
+                    if (attempt === maxRetries - 1) throw err;
+                }
+                await new Promise(r => setTimeout(r, delay));
+                delay *= 2;
+            }
+            throw new Error('Request failed after retries');
+        }
+
+        // Main Function: Run Realistic AI Hair & Beard Try-On via Gemini 3.1 Flash Image
+        async function runAiHairTryOn() {
+            hideTryOnAlert();
+            const btn = document.getElementById('generateTryOnBtn');
+            const loadingOverlay = document.getElementById('aiLoadingOverlay');
+            const customNote = document.getElementById('customStylePrompt').value.trim();
+
+            if (!currentOriginalDataUrl) {
+                const defaultFace = presetMaleFaces[0];
+                currentOriginalDataUrl = await imageUrlToDataUrl(defaultFace.url);
+            }
+
+            // Extract Base64 and MimeType
+            const match = currentOriginalDataUrl.match(/^data:(image\/[a-zA-Z+]+);base64,(.+)$/);
+            if (!match) {
+                showTryOnAlert('فرمت تصویر نامعتبر است. لطفاً یک تصویر دیگر انتخاب کنید.');
+                return;
+            }
+            const mimeType = match[1];
+            const base64ImageData = match[2];
+
+            // Show Scanning UI
+            btn.disabled = true;
+            btn.classList.add('opacity-60', 'cursor-not-allowed');
+            loadingOverlay.classList.remove('hidden');
+            loadingOverlay.classList.add('flex');
+            document.getElementById('mirrorStatusBadge').textContent = 'در حال پردازش با هوش مصنوعی...';
+
+            const promptText = `Act as an expert luxury men's master barber and photorealistic image editor. Edit this man's portrait to give him a realistic "${selectedHairstyle.engName}" with "${selectedHairColor.eng}". ${customNote ? `Additional user styling request: ${customNote}.` : ''} CRITICAL RULES: Keep the exact same person's facial identity, eyes, nose, skin texture, facial expression, head angle, clothing, and background 100% unchanged and photorealistic. Blend the new hairline, temple skin fade, hair texture, and facial hair seamlessly and naturally onto his head with realistic barbershop lighting.`;
+
+            const apiKey = "";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image:generateContent?key=${apiKey}`;
+
+            const payload = {
+                contents: [{
+                    role: "user",
+                    parts: [
+                        { text: promptText },
+                        {
+                            inlineData: {
+                                mimeType: mimeType,
+                                data: base64ImageData
+                            }
+                        }
+                    ]
+                }],
+                generationConfig: {
+                    responseModalities: ['TEXT', 'IMAGE']
+                }
+            };
+
+            try {
+                const response = await fetchWithRetry(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await response.json();
+                const imagePart = result?.candidates?.[0]?.content?.parts?.find(p => p.inlineData);
+
+                if (imagePart && imagePart.inlineData?.data) {
+                    const outMime = imagePart.inlineData.mimeType || 'image/png';
+                    currentResultDataUrl = `data:${outMime};base64,${imagePart.inlineData.data}`;
+
+                    document.getElementById('beforeImageEl').src = currentOriginalDataUrl;
+                    document.getElementById('afterImageEl').src = currentResultDataUrl;
+                    showComparisonSlider();
+                    document.getElementById('mirrorStatusBadge').textContent = 'پرو هوشمند تکمیل شد (اسلایدر را بکشید)';
+                } else {
+                    showTryOnAlert('پاسخ تصویری از سرور دریافت نشد. لطفاً دوباره امتحان کنید.');
+                    document.getElementById('mirrorStatusBadge').textContent = 'خطا در پردازش';
+                }
+            } catch (error) {
+                showTryOnAlert('ارتباط با سرور هوش مصنوعی برقرار نشد. لطفاً اتصال اینترنت خود را بررسی کرده و مجدداً تلاش کنید.');
+                document.getElementById('mirrorStatusBadge').textContent = 'آماده تلاش مجدد';
+            } finally {
+                btn.disabled = false;
+                btn.classList.remove('opacity-60', 'cursor-not-allowed');
+                loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.remove('flex');
+            }
+        }
+
+        // Book Appointment Directly with the Tested Hairstyle
+        function bookSelectedHairstyleNow() {
+            const serviceSelect = document.getElementById('serviceSelect');
+            if (selectedHairstyle && selectedHairstyle.relatedServiceId) {
+                serviceSelect.value = selectedHairstyle.relatedServiceId;
+            }
+            const notesInput = document.getElementById('customerNotes');
+            const customNote = document.getElementById('customStylePrompt').value.trim();
+            notesInput.value = `مدل انتخاب شده در آینه هوشمند: ${selectedHairstyle.title} | رنگ مو: ${selectedHairColor.label}${customNote ? ' | توضیحات: ' + customNote : ''}`;
+            updateBookingSummary();
+            document.getElementById('booking').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Download the Generated Hairstyle Image
+        function downloadTryOnResult() {
+            const targetUrl = currentResultDataUrl || document.getElementById('afterImageEl').src;
+            if (!targetUrl) return;
+            const link = document.createElement('a');
+            link.href = targetUrl;
+            link.download = `RoyalCut-${selectedHairstyle.id}.png`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Initialize App on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderServices('all');
+            populateServiceDropdown();
+            generateNext7Days();
+            renderTimeSlots();
+            updateBookingSummary();
+            loadAppointmentsFromStorage();
+
+            // Initialize AI Virtual Hair Try-On Studio
+            renderPresetFaces();
+            renderHairstyleCards();
+            renderHairColors();
+            selectPresetFace('face1');
+        });
+    </script>
+</body>
+</html>
