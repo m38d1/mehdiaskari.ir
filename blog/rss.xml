@@ -7,6 +7,248 @@
   <language>fa</language>
   <atom:link href="https://mehdiaskari.ir/blog/rss.xml" rel="self" type="application/rss+xml"/>
   <item>
+    <title>قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن</title>
+    <link>https://mehdiaskari.ir/blog/excel-custom-number-formats/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/excel-custom-number-formats/</guid>
+    <pubDate>Sat, 17 Oct 2026 00:00:00 +0330</pubDate>
+    <description>قالب عدد سفارشی اکسل یک راه کم‌دردسر برای ستون انحراف است: رنگ، فلش و صفرِ بی‌معنا را در خودِ سلول می‌گذارد. بخش‌های چهارگانه قالب، هشت رنگ نام‌دار، شرط‌های آستانه برای SPI/CPI و هشدارهای عملی را ببینید.</description>
+    <content:encoded><![CDATA[
+<p class="lead">تقریباً هر گزارش کنترل پروژه یک ستون «انحراف» دارد: واریانس زمان‌بندی، SPI و CPI، روزهای عقب‌افتادگی، اختلاف بودجه. بیشتر افراد آن را با Conditional Formatting رنگ می‌کنند؛ ولی این روش شکننده است — با هر کپی‌پیست تکثیر می‌شود، در PivotTable دردسر دارد و در هر جلسه باید از نو ساخته شود. یک راه کم‌دردسرتر هم هست: قالب عدد سفارشی اکسل که رنگ و فلش را همراه خودِ سلول حمل می‌کند.</p>
+
+    <h2>قالب عدد از چند «بخش» ساخته می‌شود</h2>
+    <p>هر قالب سفارشی حداکثر چهار بخش دارد که با <code>;</code> از هم جدا می‌شوند و به‌ترتیب روی اعداد <strong>مثبت</strong>، <strong>منفی</strong>، <strong>صفر</strong> و <strong>متن</strong> اعمال می‌شوند:</p>
+    <pre dir="ltr" data-lang="EXCEL">مثبت ; منفی ; صفر ; متن</pre>
+    <p>هر بخشی را ننویسید، اکسل قاعده‌ی پیش‌فرض خودش را می‌گذارد. دو نمونه‌ی کاربردی: <code>0.0;0.0</code> می‌گوید «همه‌ی اعداد با یک رقم اعشار» و <code>;;;</code> می‌گوید «هیچ‌چیز را نشان نده» — همان ترفند قدیمی مخفی‌کردن محتوا بدون حذف‌کردنش.</p>
+
+    <h2>رنگ و متن ثابت، داخل خودِ قالب</h2>
+    <p>اکسل هشت رنگ نام‌دار دارد که در کروشه می‌آیند: <code>[Black]</code>، <code>[Blue]</code>، <code>[Cyan]</code>، <code>[Green]</code>، <code>[Magenta]</code>، <code>[Red]</code>، <code>[White]</code> و <code>[Yellow]</code>. متن ثابت هم داخل گیومه می‌آید؛ مثل <code>"▲ "</code>. قالب را از مسیر <code>Ctrl+1</code> → تب <strong>Number</strong> → دسته‌ی <strong>Custom</strong> وارد کنید.</p>
+
+    <div class="callout">
+      <span class="callout-ic">→</span>
+      <div><strong>ترفند:</strong> این یک‌خطی را در کادر Type بچسبانید و یک ستون انحراف تمام‌عیار تحویل بگیرید:</div>
+    </div>
+    <pre dir="ltr" data-lang="EXCEL">[Green]▲ 0.0%;[Red]▼ 0.0%;"—"</pre>
+    <p>معنی‌اش این است: مقدار مثبت سبز با فلش بالا، مقدار منفی قرمز با فلش پایین، و صفر با یک خط تیره. نکته‌ی ظریف اینجاست — در بخش منفی عمداً <strong>علامت منفی ننوشته‌ام</strong>. اگر می‌نوشتم، خروجی «▼ -3.2%» می‌شد و هم علامت و هم فلش یک چیز را تکرار می‌کردند. اکسل وقتی در بخش منفی علامتی نبیند، خودش منفی اضافه نمی‌کند؛ پس جهت را فلش می‌رساند و رنگ فقط زیبایی است. این برای خواننده‌ای که کوررنگی دارد هم بی‌خطر است، چون اطلاعات در فلش است نه در رنگ.</p>
+
+    <h2>برای شاخص‌هایی مثل SPI و CPI: آستانه بگذارید</h2>
+    <p>شاخص‌ها آستانه دارند؛ برای SPI، عدد کوچک‌تر از ۱ یعنی عقب‌ماندگی. با «شرط» می‌توانید سه وضعیت را در یک قالب جمع کنید. شرط در کروشه و پیش از بخش می‌آید:</p>
+    <pre dir="ltr" data-lang="EXCEL">[Green][&gt;=1]"▲ "0.00;[Yellow][&gt;=0.9]"▬ "0.00;[Red]"▼ "0.00</pre>
+    <p>خواندنش ساده است: اگر مقدار بزرگ‌تر یا مساوی ۱ بود، سبز با فلش بالا؛ اگر بین ۰٫۹ و ۱ بود، زرد با خط؛ و در غیر این‌صورت قرمز با فلش پایین.</p>
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>قاعده:</strong> در یک قالب حداکثر <strong>دو شرط</strong> می‌شود گذاشت و آخرین بخش همیشه «پیش‌فرض» است؛ یعنی اگر هیچ شرطی برقرار نشود، همان بخش آخر اعمال می‌شود.</div>
+    </div>
+
+    <h2>نمونه‌های آماده برای گزارش هفتگی</h2>
+    <table class="data">
+      <thead>
+        <tr><th>کاربرد</th><th>قالب</th><th>خروجی نمونه</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>انحراف روز</td><td><code>[Red]▼ 0;[Green]▲ 0;"—"</code></td><td>▼ 4 &nbsp; ▲ 2 &nbsp; —</td></tr>
+        <tr><td>واریانس بودجه</td><td><code>[Green]+$#,##0;[Red]-$#,##0;"—"</code></td><td>+$1,200 &nbsp; -$800 &nbsp; —</td></tr>
+        <tr><td>درصد بدون صفر</td><td><code>0.0%;-0.0%;""</code></td><td>12.5% &nbsp; -3.1% &nbsp; (خالی)</td></tr>
+        <tr><td>مخفی‌کردن کل ستون</td><td><code>;;;</code></td><td>(هیچ)</td></tr>
+      </tbody>
+    </table>
+    <p>در ردیف دوم علامت <code>+</code> را دستی گذاشتم تا مثبت‌ها صریح باشند و در ردیف اول جهت را به فلش سپردم. هر متن ثابت — مثل <code>"▲ "</code> یا یک واحد اندازه‌گیری — باید داخل گیومه باشد.</p>
+
+    <div class="callout">
+      <span class="callout-ic">!</span>
+      <div><strong>هشدار مهم:</strong> قالب عدد فقط <strong>نمایش</strong> را عوض می‌کند، نه مقدار سلول را. اگر کاربری Copy و سپس Paste Special → Values بزند، عدد خام را می‌گیرد و فلش و رنگ ناپدید می‌شوند. پس هرگز برای «تغییر علامت» یا «جمع‌زدن» روی آن حساب نکنید؛ خروجی CSV هم این قالب‌ها را با خودش نمی‌برد.</div>
+    </div>
+
+    <h2>چرا این بهتر از Conditional Formatting است؟</h2>
+    <ul>
+      <li>با کپی‌کردن سلول به شیت یا فایل دیگر منتقل می‌شود؛ چون قالب عدد جزئی از خودِ سلول است.</li>
+      <li>در PivotTable یک‌بار روی کل فیلد اعمال می‌شود و بعد از Refresh هم می‌ماند.</li>
+      <li>رنگ در چاپ و PDF می‌آید، چون رنگ فونت است نه یک لایه‌ی شرطی روی آن.</li>
+      <li>پشت سرش هیچ «مدیر قواعد» شلوغ و قواعد تکثیرشده‌ای نیست.</li>
+      <li>ولی توان بیان‌ش محدود است: فقط همان هشت رنگ و فقط مقایسه با یک عدد ثابت. اگر باید رنگ یک سلول را نسبت به <strong>سلول دیگر</strong> تعیین کنید (مثلاً انحراف نسبت به Data Date)، Conditional Formatting با فرمول جای درستش است.</li>
+    </ul>
+
+    <h2>جمع‌بندی</h2>
+    <p>قالب سفارشی سه چیز را یک‌جا حل می‌کند: رنگ، جهت و صفرِ بی‌معنا. برای ستون انحراف و واریانس یک قالب مثل <code>[Green]▲ 0.0%;[Red]▼ 0.0%;"—"</code> کافی است و برای شاخص‌ها هم آستانه را با شرط اضافه می‌کنید. فقط یادتان باشد این قالب‌ها نمایشی‌اند و در داده‌ی خام و خروجی CSV اثری ندارند.</p>
+    <p>برای محاسبه‌ی خودِ درصد پیشرفت وزنی و ضریب وزن، یادداشت <a href="https://mehdiaskari.ir/blog/weight-factor-excel-msp/">ضریب وزن در اکسل و MSP</a> و ابزار <a href="https://mehdiaskari.ir/lab/weight-factor/">محاسبه‌ی آنلاین W.F</a> را ببینید؛ و برای خواندن شاخص‌های EVM، <a href="https://mehdiaskari.ir/lab/evm/">ماشین‌حساب EVM</a> در آزمایشگاه سایت آماده است.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">در بخش منفی علامت منها ننوشتم؛ پس چرا عدد منفی دیده می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>دیده نمی‌شود! اگر در بخش منفی هیچ علامتی نگذارید، اکسل عدد منفی را بدون منها نمایش می‌دهد و جهت را به فلش می‌سپارد. اگر منها را لازم دارید، خودتان آن را پیش از رقم بنویسید؛ اکسل دوباره اضافه‌اش نمی‌کند.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">آیا این رنگ‌ها در چاپ و PDF می‌آیند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>بله. رنگ قالب عدد، رنگ خودِ فونت سلول است و مثل هر رنگ دیگری در چاپ و PDF می‌آید؛ برخلاف بعضی لایه‌های شرطی که در نرم‌افزارهای دیگر گم می‌شوند.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">چطور این قالب‌ها را بین فایل‌های مختلف ببرم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>قالب‌های سفارشی داخل خودِ فایل ذخیره می‌شوند. کافی است یک سلول فرمت‌شده را کپی کنید و در فایل مقصد Paste کنید، یا فایل را به‌عنوان قالب پروژه (تمپلیت) نگه دارید. یک‌بار ساختن و ماندن در تمپلیت، بهتر از ساختن دوباره در هر گزارش است.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">تفاوت <code>0</code> و <code>#</code> در قالب چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div><code>0</code> یک رقم اجباری است و صفر پیشرو را نگه می‌دارد؛ <code>#</code> یک رقم اختیاری است و صفر بی‌دلیل نشان نمی‌دهد. مثلاً <code>0.0</code> عدد ۳ را «3.0» و <code>#.#</code> آن را «3.» می‌نویسد.</div>
+      </div>
+    </div>
+]]></content:encoded>
+    <category>Excel</category>
+    <category>کنترل پروژه</category>
+    <category>انحراف</category>
+    <category>گزارش</category>
+  </item>
+  <item>
+    <title>فِیلوور خودکار WAN در RouterOS؛ check-gateway و مسیر بازگشتی</title>
+    <link>https://mehdiaskari.ir/blog/mikrotik-wan-failover/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/mikrotik-wan-failover/</guid>
+    <pubDate>Sat, 17 Oct 2026 00:00:00 +0330</pubDate>
+    <description>وقتی اینترفیس WAN بالا است ولی اینترنت مرده، روتر باز هم خیالش راحت است. با check-gateway=ping و مسیرهای بازگشتی به یک آدرس عمومی، فِیلوور را به زنده‌بودن واقعی اینترنت گره بزنید.</description>
+    <content:encoded><![CDATA[
+<p class="lead">در دفتر سایت با دو اینترنت، «قطع شده» تقریباً هیچ‌وقت یعنی لینک قطع است؛ یعنی اینترفیس WAN همچنان بالاست ولی مسیر واقعی اینترنت مرده. روتر هم خیالش راحت است که همه‌چیز سرجایش است. علاجش این است که مسیر را وادار کنید «دسترسی واقعی» را تست کند — و اگر جدی می‌خواهید، با مسیرهای بازگشتی (recursive) فِیلوور را به یک آدرس عمومی گره بزنید، نه به گیت‌وی محلی.</p>
+
+    <h2>۱) روش ساده: دو مسیر پیش‌فرض و check-gateway</h2>
+    <p>هر روتر با دو WAN باید دو مسیر پیش‌فرض داشته باشد؛ فقط <code>distance</code> تعیین می‌کند کدام اول بیاید. ترفند اصلی این است که روی هر دو مسیر <code>check-gateway=ping</code> بگذارید تا مسیر به‌محض بی‌پاسخ‌ماندن گیت‌وی غیرفعال شود:</p>
+    <pre dir="ltr" data-lang="ROUTEROS">/ip route
+add dst-address=0.0.0.0/0 gateway=10.0.0.1 distance=1 check-gateway=ping comment="WAN1"
+add dst-address=0.0.0.0/0 gateway=10.0.1.1 distance=2 check-gateway=ping comment="WAN2"</pre>
+    <p>تا وقتی WAN1 زنده است، ترافیک از مسیر با distance=1 می‌رود؛ اگر پینگ گیت‌وی WAN1 بخورد زمین، RouterOS مسیر را غیرفعال می‌کند و همه‌چیز خودبه‌خود روی distance=2 می‌افتد. وقتی WAN1 برگشت، مسیر اول دوباره فعال می‌شود.</p>
+    <div class="callout">
+      <span class="callout-ic">!</span>
+      <div><strong>محدودیت:</strong> این روش گیت‌وی را پینگ می‌کند، نه اینترنت را. بعضی ISPها طوری تنظیم‌اند که گیت‌وی محلی حتی وقتی بالادست قطع است به ICMP پاسخ می‌دهد — آن‌وقت فِیلوور هرگز اتفاق نمی‌افتد و همه می‌پرسند «چرا اینترنت قطع است ولی روتر می‌گوید وصل؟»</div>
+    </div>
+    <p>ضمناً <code>check-gateway=arp</code> برای لینک‌های PPPoE و VPN کار نمی‌کند، چون گیت‌وی آن‌جا روی یک واسط نقطه‌به‌نقطه است و ARP معنا ندارد. برای PPPoE همان <code>ping</code> درست است.</p>
+
+    <h2>۲) روش حرفه‌ای: مسیرهای بازگشتی به یک آدرس عمومی</h2>
+    <p>برای اینکه فِیلوور واقعاً به «زنده‌بودن اینترنت» گره بخورد، گیت‌وی مسیر پیش‌فرض را خودِ گیت‌وی محلی نگذارید؛ یک آدرس عمومی پایدار بگذارید (مثلاً DNS عمومی) و به روتر بگویید آن آدرس را از هر ISP چطور می‌رسد:</p>
+    <pre dir="ltr" data-lang="ROUTEROS">/ip route
+# "server" routes: how to reach the public address via each ISP
+add dst-address=1.1.1.1/32 gateway=10.0.0.1 scope=10 target-scope=10 comment="server via WAN1"
+add dst-address=1.0.0.1/32 gateway=10.0.1.1 scope=10 target-scope=10 comment="server via WAN2"
+
+# default routes that use those public addresses as their gateway
+add dst-address=0.0.0.0/0 gateway=1.1.1.1 distance=1 scope=30 target-scope=11 check-gateway=ping
+add dst-address=0.0.0.0/0 gateway=1.0.0.1 distance=2 scope=30 target-scope=11 check-gateway=ping</pre>
+    <p>حالا <code>check-gateway</code> یک آدرس <strong>بیرونی</strong> را پینگ می‌کند، نه گیت‌وی محلی. اگر ISP1 با اینکه گیت‌وی‌اش جواب می‌دهد به 1.1.1.1 نرسد، مسیر پیش‌فرض اول غیرفعال می‌شود و ترافیک از WAN2 می‌رود.</p>
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>چرا scope و target-scope؟</strong> این دو پارامتر جلوی حلقه‌ی حل بازگشتی را می‌گیرند. قاعده: <code>target-scope</code> مسیر پیش‌فرض (۱۱) باید از <code>scope</code> مسیر سرور (۱۰) بزرگ‌تر باشد تا روتر اجازه داشته باشد مسیر پیش‌فرض را از طریق آن حل کند. در RouterOS v7 این قواعد سخت‌گیرانه‌تر از v6 اعمال می‌شوند.</div>
+    </div>
+
+    <h2>۳) قبل از رفتن روی سایت، تست کنید</h2>
+    <p>فقط پیاده‌سازی نکنید و بروید؛ همان‌جا با چند دستور رفتار واقعی را ببینید:</p>
+    <pre dir="ltr" data-lang="ROUTEROS">/ip route print where dst-address=0.0.0.0/0
+# status باید A S باشد؛ اگر c هم دیدید یعنی check فعال است
+/ip route check 1.1.1.1
+/ping 1.1.1.1 count=4</pre>
+    <p>برای تست واقعی، کابل WAN1 را بکشید (یا در PPPoE اینترفیس را دستی disable کنید) و ببینید مسیر دوم چقدر سریع فعال می‌شود. اگر فِیلوور کند است، بازه‌ی check و تعداد تلاش‌ها را با <code>/ip settings</code> تنظیم کنید.</p>
+
+    <h2>۴) گزینه‌ی جایگزین: Netwatch</h2>
+    <p>اگر بخواهید فِیلوور را با منطق دلخواه ترکیب کنید — چند مقصد، ارسال هشدار، تغییر routing-mark — <code>Netwatch</code> به کار می‌آید:</p>
+    <pre dir="ltr" data-lang="ROUTEROS">/tool netwatch
+add host=1.1.1.1 interval=10s down-script="/ip route disable [find comment=\"WAN1\"]" up-script="/ip route enable [find comment=\"WAN1\"]"</pre>
+    <p>ولی برای صرفاً «فِیلوور خودکار»، همان <code>check-gateway=ping</code> روی مسیر بازگشتی ساده‌تر و سبک‌تر است و اسکریپت نمی‌خواهد. Netwatch را جایی بگذارید که واقعاً منطق اضافه لازم دارید.</p>
+
+    <h2>جمع‌بندی</h2>
+    <p>سه قدم: اول دو مسیر پیش‌فرض با <code>distance</code> مختلف بسازید؛ دوم روی هر دو <code>check-gateway=ping</code> بگذارید؛ سوم اگر گیت‌وی‌ها «دروغ می‌گویند»، مسیر پیش‌فرض را به یک آدرس عمومی بازگشتی ببندید و <code>scope</code>/<code>target-scope</code> را رعایت کنید. همین ترکیب، فِیلووری می‌سازد که در عمل کار می‌کند.</p>
+    <p>اگر هدف‌تان توزیع بار بین چند ISP است نه صرفاً فِیلوور، یادداشت <a href="https://mehdiaskari.ir/blog/mikrotik-load-balancing-filters/">لود بالانسینگ و فیلترهای پیشرفته در MikroTik</a> را ببینید؛ و برای نگاه راهبردی‌تر به پایداری، <a href="https://mehdiaskari.ir/blog/network-lessons-industrial-site/">پنج درس شبکه‌ای در سایت صنعتی</a>.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">تفاوت <code>check-gateway=ping</code> و <code>check-gateway=arp</code> چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div><code>arp</code> فقط روی اینترفیس‌های اترنتی که ARP دارند معنا دارد و برای PPPoE و VPN کار نمی‌کند. برای گیت‌وی‌های نقطه‌به‌نقطه از <code>ping</code> استفاده کنید؛ همین دلیل می‌شود که در سایت‌هایی با PPPoE، فِیلوور با arp هرگز فعال نمی‌شود.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">چرا با وجود قطعی اینترنت، مسیر اصلی همچنان فعال است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>چون اینترفیس و گیت‌وی محلی بالاست و به پینگ پاسخ می‌دهد؛ مشکل در بالادست است. علاجش همین مسیر بازگشتی است: به‌جای گیت‌وی، یک آدرس عمومی را پینگ کنید تا فِیلوور به دسترسی واقعی گره بخورد.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">آیا همین چیدمان برای لود بالانس هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>برای فِیلوور بله. برای توزیع هم‌زمان باید <code>distance</code> مسیرها را برابر کنید و با Mangle/PCC ترافیک را بین ISPها تقسیم کنید — جزئیاتش در یادداشت لود بالانسینگ همین سایت آمده است.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">چرا در مثال‌ها <code>scope=30</code> و <code>target-scope=11</code> آمده است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>چون قاعده‌ی حل بازگشتی همینه: <code>target-scope</code> مسیر پیش‌فرض باید از <code>scope</code> مسیر سرور بزرگ‌تر باشد. اعداد باید سازگار بمانند نه اینکه حفظ شوند؛ مهم رابطه‌ی «بزرگ‌تر بودن» است. RouterOS v7 همین قاعده را سخت‌گیرانه چک می‌کند.</div>
+      </div>
+    </div>
+]]></content:encoded>
+    <category>MikroTik</category>
+    <category>RouterOS</category>
+    <category>شبکه</category>
+    <category>Failover</category>
+  </item>
+  <item>
+    <title>git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم</title>
+    <link>https://mehdiaskari.ir/blog/git-worktree-parallel/</link>
+    <guid isPermaLink="true">https://mehdiaskari.ir/blog/git-worktree-parallel/</guid>
+    <pubDate>Sat, 17 Oct 2026 00:00:00 +0330</pubDate>
+    <description>کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرده؟ git worktree چند پوشه‌ی کاری به همان مخزن می‌دهد: یک برنچ اینجا، یک برنچ آنجا، بدون stash و بدون کلون دوم.</description>
+    <content:encoded><![CDATA[
+<p class="lead">وسط یک قابلیت نیمه‌کاره‌اید که یک باگ فوری روی شاخه‌ی اصلی سر می‌رسد. سه راه بلدید: <code>git stash</code>، کامیت نیمه‌کاره، یا کلون دوباره. راه چهارمی هم هست که کمتر شناخته شده: <code>git worktree</code> — پوشه‌های کاری اضافی که همه به یک مخزن واحد وصل‌اند.</p>
+
+    <h2>مشکل: چه‌کار نکنیم</h2>
+    <p><code>git stash</code> روی کارهای بزرگ حالت ذهنی‌ات را هم به هم می‌ریزد و خطر conflict بعدی دارد. کامیت نیمه‌کاره تاریخچه را شلوغ می‌کند. کلون دوباره هم درست است ولی همه‌ی آبجکت‌ها و ریموت‌ها را از نو می‌سازد و به دو مخزن مستقل می‌رسد که به‌زودی از هم واگرا می‌شوند.</p>
+
+    <h2>ساخت یک worktree</h2>
+    <p>ساده‌ترین حالت: یک پوشه‌ی خواهر بسازید که روی یک برنچ موجود باز شود:</p>
+    <pre dir="ltr" data-lang="BASH">git worktree add ../site-hotfix hotfix-branch</pre>
+    <p>یا برنچ را همان‌جا بسازید و هم‌زمان باز کنید:</p>
+    <pre dir="ltr" data-lang="BASH">git worktree add -b hotfix-msp ../site-hotfix</pre>
+    <p>از این لحظه دو پوشه دارید که هر دو همان مخزن و همان تاریخچه را می‌بینند، اما HEAD و index و فایل‌های کاری هرکدام جداگانه است. هیچ‌چیزی دانلود نمی‌شود، چون آبجکت‌ها مشترک‌اند.</p>
+
+    <h2>مدیریت و پاک‌سازی</h2>
+    <pre dir="ltr" data-lang="BASH">git worktree list                 # every working folder
+git worktree remove ../site-hotfix
+git worktree prune                # drop records of worktrees you deleted</pre>
+    <p>اگر پوشه را دستی در فایل‌منیجر حذف کنید، مخزن تا وقتی <code>git worktree prune</code> نزنید از آن خبر ندارد. و اگر لازم شد پوشه را جابه‌جا کنید، <code>git worktree move</code> هست تا پیوند خراب نشود.</p>
+
+    <h2>برای بازبینی یک نسخه‌ی خاص</h2>
+    <p>حالت <code>--detach</code> اجازه می‌دهد یک کامیت یا تگ مشخص را بیرون از هر برنچ باز کنید؛ عالی برای «قبل و بعد» دیدن یک تغییر:</p>
+    <pre dir="ltr" data-lang="BASH">git worktree add --detach ../site-v2 v2.1
+git worktree add --detach ../site-before HEAD~5</pre>
+
+    <h2>قواعدی که باید بدانید</h2>
+    <ul>
+      <li>یک برنچ را نمی‌شود هم‌زمان در دو worktree باز کرد؛ گیت خطای «already checked out» می‌دهد. برای همین منظور از <code>--detach</code> استفاده کنید.</li>
+      <li>در worktreeهای پیوندی، فایل <code>.git</code> یک فایل متنی است (نه پوشه) که به <code>.git/worktrees/</code> در مخزن اصلی اشاره می‌کند. ابزارهایی که فرض می‌کنند <code>.git</code> همیشه پوشه است می‌توانند گمراه شوند.</li>
+      <li>آبجکت‌ها و برنچ‌ها مشترک‌اند، پس یک کامیت در هر پوشه بلافاصله در پوشه‌ی دیگر هم دیده می‌شود؛ برخلاف کلون دوم که باید fetch و push کند.</li>
+    </ul>
+
+    <h2>سه کاربرد واقعی</h2>
+    <ul>
+      <li><strong>رفع فوری باگ:</strong> یک worktree روی <code>main</code> برای hotfix، و پوشه‌ی اصلی دست‌نخورده روی قابلیت نیمه‌کاره.</li>
+      <li><strong>مقایسه‌ی دو نسخه:</strong> دو نسخه از یک گزارش یا خروجی را کنار هم باز کنید و تفاوت را با چشم ببینید — بدون کامیت‌های اضافه.</li>
+      <li><strong>اسکریپت‌های خودکار:</strong> یک ابزار می‌تواند روی یک کامیت ثابت در پوشه‌ای موقت کار کند و پوشه‌ی اصلی شما شلوغ نشود.</li>
+    </ul>
+
+    <h2>جمع‌بندی</h2>
+    <p><code>git worktree</code> همان چیزی است که «کلون دوم» را بی‌دردسر می‌کند، ولی بدون هزینه‌ی همگام‌سازی: یک مخزن، چند پوشه، چند برنچ هم‌زمان. سه دستور کافی است: <code>add</code>، <code>list</code> و <code>remove</code>. دفعه‌ی بعد که کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرد، سراغ stash نروید.</p>
+    <p>اگر برایتان جالب بود که چطور همین عادت‌های توسعه‌ی نرم‌افزار به دنیای برنامه‌ریزی راه پیدا می‌کنند، <a href="https://mehdiaskari.ir/blog/from-code-to-gantt/">از کد تا گانت‌چارت</a> را بخوانید.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">تفاوت worktree با یک کلون دوباره چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>کلون یک مخزن جدا با آسمان (remote) و فضای دیسک جداگانه است؛ برای دیدن تغییرات باید fetch و push کنید. worktree همان مخزن را کامل به اشتراک می‌گذارد، پس آبجکت‌ها و برنچ‌ها فوری در همه‌ی پوشه‌ها دیده می‌شوند.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">می‌توانم هم‌زمان دو نسخه از یک برنچ داشته باشم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>نه، یک برنچ فقط در یک worktree باز می‌شود. ولی می‌توانید با <code>--detach</code> روی یک کامیت یا تگ مشخص، عملاً دو نسخه‌ی جداگانه از همان کد را کنار هم داشته باشید.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">اگر پوشه‌ی worktree را اشتباهی پاک کنم چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>مخزن اصلی سالم می‌ماند؛ فقط یک رکورد یتیم در <code>.git/worktrees/</code> باقی می‌ماند. با <code>git worktree prune</code> پاکش کنید. برای حذف مرتب هم <code>git worktree remove</code> درست است.</div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">روی ویندوز هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div>بله؛ فقط مسیر پوشه‌ی جدید را بدون فاصله بگیرید و کنار مخزن اصلی نگه دارید تا ابزارها راحت‌تر پیدایش کنند. با Git for Windows و WSL هر دو کار می‌کند.</div>
+      </div>
+    </div>
+]]></content:encoded>
+    <category>Git</category>
+    <category>توسعه وب</category>
+    <category>ابزار</category>
+  </item>
+  <item>
     <title>پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید</title>
     <link>https://mehdiaskari.ir/blog/schedule-health-checks/</link>
     <guid isPermaLink="true">https://mehdiaskari.ir/blog/schedule-health-checks/</guid>

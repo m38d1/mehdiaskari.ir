@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+  <link rel="stylesheet" href="/components.css">
+<title>git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم | مهدی عسکری</title>
+<meta name="description" content="با git worktree چند پوشه‌ی کاری به یک مخزن واحد وصل کن: رفع فوری باگ روی main بدون دست‌زدن به کار نیمه‌کاره، بازبینی یک کامیت خاص با --detach و مدیریت پوشه‌ها با add/list/remove/prune.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم">
+<meta property="og:description" content="git worktree: چند پوشه‌ی کاری، یک مخزن، چند برنچ همزمان — بدون stash و بدون کلون دوم.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/git-worktree-parallel/">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="https://mehdiaskari.ir/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم">
+<meta name="twitter:description" content="کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرده؟ git worktree چند پوشه‌ی کاری به همان مخزن می‌دهد: یک برنچ اینجا، یک برنچ آنجا، بدون stash و بدون کلون دوم.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/og-image.png">
+<meta property="article:published_time" content="2026-10-17">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/git-worktree-parallel/">
+<script src="/cover.js" defer></script>
+  <script src="/components.js" defer></script>
+<script type="application/ld+json" data-entity="article">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BlogPosting",
+   "@id": "https://mehdiaskari.ir/blog/git-worktree-parallel/#article",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mehdiaskari.ir/blog/git-worktree-parallel/"
+   },
+   "headline": "git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم",
+   "description": "کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرده؟ git worktree چند پوشه‌ی کاری به همان مخزن می‌دهد: یک برنچ اینجا، یک برنچ آنجا، بدون stash و بدون کلون دوم.",
+   "inLanguage": "fa-IR",
+   "isAccessibleForFree": true,
+   "url": "https://mehdiaskari.ir/blog/git-worktree-parallel/",
+   "image": [
+    "https://mehdiaskari.ir/og-image.png"
+   ],
+   "author": {
+    "@type": "Person",
+    "name": "Mehdi Askari",
+    "alternateName": "مهدی عسکری",
+    "url": "https://mehdiaskari.ir/"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "Mehdi Askari",
+    "url": "https://mehdiaskari.ir/",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://mehdiaskari.ir/icon.svg"
+    }
+   },
+   "datePublished": "2026-10-17",
+   "dateModified": "2026-10-17",
+   "keywords": "Git, توسعه وب, ابزار",
+   "wordCount": 728
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "خانه",
+     "item": "https://mehdiaskari.ir/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "وبلاگ",
+     "item": "https://mehdiaskari.ir/blog/all/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم",
+     "item": "https://mehdiaskari.ir/blog/git-worktree-parallel/"
+    }
+   ]
+  }
+ ]
+}</script>
+</head>
+<body>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
+        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/lab/" data-en="Lab">آزمایشگاه</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="post-head fu">
+    <div class="post-meta"><span class="pdate">۲۵ مهر ۱۴۰۵</span><span class="badge teal">Git</span><span class="badge teal">توسعه وب</span><span class="badge teal">ابزار</span></div>
+    <h1>git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم</h1>
+<div class="cover post-hero" data-cover="git-worktree-parallel"></div>
+  </div>
+  <article class="prose fu d1">
+    <p class="lead">وسط یک قابلیت نیمه‌کاره‌اید که یک باگ فوری روی شاخه‌ی اصلی سر می‌رسد. سه راه بلدید: <code>git stash</code>، کامیت نیمه‌کاره، یا کلون دوباره. راه چهارمی هم هست که کمتر شناخته شده: <code>git worktree</code> — پوشه‌های کاری اضافی که همه به یک مخزن واحد وصل‌اند.</p>
+
+    <h2>مشکل: چه‌کار نکنیم</h2>
+    <p><code>git stash</code> روی کارهای بزرگ حالت ذهنی‌ات را هم به هم می‌ریزد و خطر conflict بعدی دارد. کامیت نیمه‌کاره تاریخچه را شلوغ می‌کند. کلون دوباره هم درست است ولی همه‌ی آبجکت‌ها و ریموت‌ها را از نو می‌سازد و به دو مخزن مستقل می‌رسد که به‌زودی از هم واگرا می‌شوند.</p>
+
+    <h2>ساخت یک worktree</h2>
+    <p>ساده‌ترین حالت: یک پوشه‌ی خواهر بسازید که روی یک برنچ موجود باز شود:</p>
+    <pre dir="ltr" data-lang="BASH">git worktree add ../site-hotfix hotfix-branch</pre>
+    <p>یا برنچ را همان‌جا بسازید و هم‌زمان باز کنید:</p>
+    <pre dir="ltr" data-lang="BASH">git worktree add -b hotfix-msp ../site-hotfix</pre>
+    <p>از این لحظه دو پوشه دارید که هر دو همان مخزن و همان تاریخچه را می‌بینند، اما HEAD و index و فایل‌های کاری هرکدام جداگانه است. هیچ‌چیزی دانلود نمی‌شود، چون آبجکت‌ها مشترک‌اند.</p>
+
+    <h2>مدیریت و پاک‌سازی</h2>
+    <pre dir="ltr" data-lang="BASH">git worktree list                 # every working folder
+git worktree remove ../site-hotfix
+git worktree prune                # drop records of worktrees you deleted</pre>
+    <p>اگر پوشه را دستی در فایل‌منیجر حذف کنید، مخزن تا وقتی <code>git worktree prune</code> نزنید از آن خبر ندارد. و اگر لازم شد پوشه را جابه‌جا کنید، <code>git worktree move</code> هست تا پیوند خراب نشود.</p>
+
+    <h2>برای بازبینی یک نسخه‌ی خاص</h2>
+    <p>حالت <code>--detach</code> اجازه می‌دهد یک کامیت یا تگ مشخص را بیرون از هر برنچ باز کنید؛ عالی برای «قبل و بعد» دیدن یک تغییر:</p>
+    <pre dir="ltr" data-lang="BASH">git worktree add --detach ../site-v2 v2.1
+git worktree add --detach ../site-before HEAD~5</pre>
+
+    <h2>قواعدی که باید بدانید</h2>
+    <ul>
+      <li>یک برنچ را نمی‌شود هم‌زمان در دو worktree باز کرد؛ گیت خطای «already checked out» می‌دهد. برای همین منظور از <code>--detach</code> استفاده کنید.</li>
+      <li>در worktreeهای پیوندی، فایل <code>.git</code> یک فایل متنی است (نه پوشه) که به <code>.git/worktrees/</code> در مخزن اصلی اشاره می‌کند. ابزارهایی که فرض می‌کنند <code>.git</code> همیشه پوشه است می‌توانند گمراه شوند.</li>
+      <li>آبجکت‌ها و برنچ‌ها مشترک‌اند، پس یک کامیت در هر پوشه بلافاصله در پوشه‌ی دیگر هم دیده می‌شود؛ برخلاف کلون دوم که باید fetch و push کند.</li>
+    </ul>
+
+    <h2>سه کاربرد واقعی</h2>
+    <ul>
+      <li><strong>رفع فوری باگ:</strong> یک worktree روی <code>main</code> برای hotfix، و پوشه‌ی اصلی دست‌نخورده روی قابلیت نیمه‌کاره.</li>
+      <li><strong>مقایسه‌ی دو نسخه:</strong> دو نسخه از یک گزارش یا خروجی را کنار هم باز کنید و تفاوت را با چشم ببینید — بدون کامیت‌های اضافه.</li>
+      <li><strong>اسکریپت‌های خودکار:</strong> یک ابزار می‌تواند روی یک کامیت ثابت در پوشه‌ای موقت کار کند و پوشه‌ی اصلی شما شلوغ نشود.</li>
+    </ul>
+
+    <h2>جمع‌بندی</h2>
+    <p><code>git worktree</code> همان چیزی است که «کلون دوم» را بی‌دردسر می‌کند، ولی بدون هزینه‌ی همگام‌سازی: یک مخزن، چند پوشه، چند برنچ هم‌زمان. سه دستور کافی است: <code>add</code>، <code>list</code> و <code>remove</code>. دفعه‌ی بعد که کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرد، سراغ stash نروید.</p>
+    <p>اگر برایتان جالب بود که چطور همین عادت‌های توسعه‌ی نرم‌افزار به دنیای برنامه‌ریزی راه پیدا می‌کنند، <a href="/blog/from-code-to-gantt/">از کد تا گانت‌چارت</a> را بخوانید.</p>
+
+    <h2>سوالات متداول</h2>
+    <div class="accordion" data-single>
+      <div class="acc-item">
+        <button class="acc-head">تفاوت worktree با یک کلون دوباره چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>کلون یک مخزن جدا با آسمان (remote) و فضای دیسک جداگانه است؛ برای دیدن تغییرات باید fetch و push کنید. worktree همان مخزن را کامل به اشتراک می‌گذارد، پس آبجکت‌ها و برنچ‌ها فوری در همه‌ی پوشه‌ها دیده می‌شوند.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">می‌توانم هم‌زمان دو نسخه از یک برنچ داشته باشم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>نه، یک برنچ فقط در یک worktree باز می‌شود. ولی می‌توانید با <code>--detach</code> روی یک کامیت یا تگ مشخص، عملاً دو نسخه‌ی جداگانه از همان کد را کنار هم داشته باشید.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">اگر پوشه‌ی worktree را اشتباهی پاک کنم چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>مخزن اصلی سالم می‌ماند؛ فقط یک رکورد یتیم در <code>.git/worktrees/</code> باقی می‌ماند. با <code>git worktree prune</code> پاکش کنید. برای حذف مرتب هم <code>git worktree remove</code> درست است.</div></div>
+      </div>
+      <div class="acc-item">
+        <button class="acc-head">روی ویندوز هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <div class="acc-body"><div>بله؛ فقط مسیر پوشه‌ی جدید را بدون فاصله بگیرید و کنار مخزن اصلی نگه دارید تا ابزارها راحت‌تر پیدایش کنند. با Git for Windows و WSL هر دو کار می‌کند.</div></div>
+      </div>
+    </div>
+  </article>
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
+    <a class="rss-link" href="/blog/rss.xml">
+      <svg viewBox="0 0 16 16"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
+      RSS
+    </a>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+  const menuToggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  menuToggle.addEventListener('click', () => {
+    const open = !mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', open);
+    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    menuToggle.setAttribute('aria-expanded', 'false');
+  }));
+</script>
+</body>
+</html>
