@@ -4,6 +4,9 @@ function __rng(seed){let t=seed>>>0;return function(){t+=0x6D2B79F5;let r=Math.i
 // slug -> {tags, title} mirror of posts.json (offline, no fetch);
 // [data-tags="a,b"] / [data-title="..."] attributes on the element override this map.
 const __SLUG_META = {
+  'excel-custom-number-formats': {tags: ['Excel','کنترل پروژه','انحراف','گزارش'], title: 'قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن'},
+  'mikrotik-wan-failover': {tags: ['MikroTik','RouterOS','شبکه','Failover'], title: 'فِیلوور خودکار WAN در RouterOS؛ check-gateway و مسیر بازگشتی'},
+  'git-worktree-parallel': {tags: ['Git','توسعه وب','ابزار'], title: 'git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم'},
   'schedule-health-checks': {tags: ['کنترل پروژه','MS Project','Primavera P6'], title: 'پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید'},
   'mikrotik-load-balancing-filters': {tags: ['MikroTik','شبکه','لود بالانسینگ'], title: 'لود بالانسینگ و فیلترهای پیشرفته در MikroTik'},
   'msp-power-tricks': {tags: ['MS Project','برنامه‌ریزی','کنترل پروژه'], title: 'هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد'},

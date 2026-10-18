@@ -1,6 +1,50 @@
 {
-  "updated": "2026-09-06",
+  "updated": "2026-10-17",
   "posts": [
+    {
+      "slug": "excel-custom-number-formats",
+      "title": "قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن",
+      "date": "2026-10-17",
+      "dateFa": "۲۵ مهر ۱۴۰۵",
+      "tags": [
+        "Excel",
+        "کنترل پروژه",
+        "انحراف",
+        "گزارش"
+      ],
+      "excerpt": "قالب عدد سفارشی اکسل یک راه کم‌دردسر برای ستون انحراف است: رنگ، فلش و صفرِ بی‌معنا را در خودِ سلول می‌گذارد. بخش‌های چهارگانه قالب، هشت رنگ نام‌دار، شرط‌های آستانه برای SPI/CPI و هشدارهای عملی را ببینید.",
+      "titleEn": "Excel custom number formats: a variance column that colours itself",
+      "excerptEn": "Excel custom number formats put colour, arrows and a tidy zero into the cell itself — no conditional formatting needed. The four sections, the eight named colours, threshold conditions for SPI/CPI, and the practical caveats."
+    },
+    {
+      "slug": "mikrotik-wan-failover",
+      "title": "فِیلوور خودکار WAN در RouterOS؛ check-gateway و مسیر بازگشتی",
+      "date": "2026-10-17",
+      "dateFa": "۲۵ مهر ۱۴۰۵",
+      "tags": [
+        "MikroTik",
+        "RouterOS",
+        "شبکه",
+        "Failover"
+      ],
+      "excerpt": "وقتی اینترفیس WAN بالا است ولی اینترنت مرده، روتر باز هم خیالش راحت است. با check-gateway=ping و مسیرهای بازگشتی به یک آدرس عمومی، فِیلوور را به زنده‌بودن واقعی اینترنت گره بزنید.",
+      "titleEn": "Automatic WAN failover in RouterOS with check-gateway and recursive routes",
+      "excerptEn": "When the WAN interface stays up but the internet is dead, the router still thinks it is online. Bind failover to real reachability with check-gateway=ping and recursive routes to a public address."
+    },
+    {
+      "slug": "git-worktree-parallel",
+      "title": "git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم",
+      "date": "2026-10-17",
+      "dateFa": "۲۵ مهر ۱۴۰۵",
+      "tags": [
+        "Git",
+        "توسعه وب",
+        "ابزار"
+      ],
+      "excerpt": "کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرده؟ git worktree چند پوشه‌ی کاری به همان مخزن می‌دهد: یک برنچ اینجا، یک برنچ آنجا، بدون stash و بدون کلون دوم.",
+      "titleEn": "git worktree: two branches, two folders, no stashing",
+      "excerptEn": "Caught mid-feature by an urgent fix? git worktree gives you extra working folders on the same repository — one branch here, one there, with no stashing and no second clone."
+    },
     {
       "slug": "schedule-health-checks",
       "title": "پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید",
