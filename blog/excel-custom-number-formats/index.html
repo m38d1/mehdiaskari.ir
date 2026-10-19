@@ -63,7 +63,7 @@
     }
    },
    "datePublished": "2026-10-17",
-   "dateModified": "2026-10-19",
+   "dateModified": "2026-10-20",
    "keywords": "Excel, کنترل پروژه, انحراف, گزارش",
    "wordCount": 1017
   },
@@ -286,17 +286,6 @@
     applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
   }));
   renderTheme();
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  menuToggle.addEventListener('click', () => {
-    const open = !mobileMenu.classList.contains('open');
-    mobileMenu.classList.toggle('open', open);
-    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-  }));
 </script>
 </body>
 </html>

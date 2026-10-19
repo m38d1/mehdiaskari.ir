@@ -483,11 +483,127 @@
     list.addEventListener('click', function(e){ var it=e.target.closest('.cmdk-item'); if(it) execute(parseInt(it.dataset.i,10)); });
   }
 
+  // ---------- Mobile menu: iOS-style bottom sheet ----------
+  function initMenu(root){
+    var menu = root.querySelector ? root.querySelector('#mobile-menu') : null;
+    var toggle = document.getElementById('menu-toggle');
+    if (!menu || !toggle || menu.__menuReady) return;
+    menu.__menuReady = 1;
+
+    // The grabber and the backdrop are injected so every page gets them
+    // without repeating markup; the home page already ships a backdrop.
+    if (!menu.querySelector('.sheet-grab')) {
+      var grab = document.createElement('span');
+      grab.className = 'sheet-grab';
+      grab.setAttribute('aria-hidden', 'true');
+      menu.insertBefore(grab, menu.firstChild);
+    }
+    var backdrop = document.getElementById('menu-backdrop');
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.className = 'menu-backdrop';
+      backdrop.id = 'menu-backdrop';
+      backdrop.setAttribute('aria-hidden', 'true');
+      document.body.appendChild(backdrop);
+    }
+
+    menu.setAttribute('aria-label', 'منوی سایت');
+    menu.setAttribute('data-en-aria', 'Site menu');
+    if (!toggle.getAttribute('aria-controls')) toggle.setAttribute('aria-controls', 'mobile-menu');
+
+    var lastFocus = null;
+    function isOpen(){ return menu.classList.contains('open'); }
+    function items(){
+      return Array.prototype.slice.call(menu.querySelectorAll('a[href], button:not([disabled])'));
+    }
+
+    function open(){
+      if (isOpen()) return;
+      lastFocus = document.activeElement;
+      menu.classList.add('open');
+      backdrop.classList.add('open');
+      toggle.setAttribute('aria-expanded', 'true');
+      document.body.style.overflow = 'hidden';   // no scrolling behind the sheet
+      document.body.classList.add('menu-open');  // hides the floating scroll-top
+      var first = items()[0];
+      if (first) setTimeout(function(){
+        try { first.focus({preventScroll:true}); } catch (e) {}
+      }, 60);
+    }
+    function close(){
+      if (!isOpen()) return;
+      menu.classList.remove('open', 'dragging');
+      menu.style.transform = '';
+      backdrop.classList.remove('open');
+      toggle.setAttribute('aria-expanded', 'false');
+      document.body.style.overflow = '';
+      document.body.classList.remove('menu-open');
+      // WCAG 2.4.3: hand focus back to the trigger. A pointer-activated sheet
+      // leaves lastFocus as <body>, so fall back to the button itself.
+      var back = (lastFocus && lastFocus !== document.body) ? lastFocus : toggle;
+      if (back && typeof back.focus === 'function') {
+        try { back.focus({preventScroll:true}); } catch (e) {}
+      }
+      lastFocus = null;
+    }
+
+    toggle.addEventListener('click', function(){ isOpen() ? close() : open(); });
+    backdrop.addEventListener('click', close);
+    menu.addEventListener('click', function(e){
+      var a = e.target && e.target.closest ? e.target.closest('a') : null;
+      if (a) close();
+    });
+    document.addEventListener('keydown', function(e){
+      if (!isOpen()) return;
+      if (e.key === 'Escape') { e.preventDefault(); close(); return; }
+      if (e.key !== 'Tab') return;
+      var list = items();
+      if (!list.length) return;
+      var first = list[0], last = list[list.length - 1];
+      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+    });
+
+    // Swipe the grabber down to dismiss, like an iOS sheet.
+    var grab2 = menu.querySelector('.sheet-grab');
+    var startY = null, dy = 0;
+    function onDown(e){
+      if (e.button != null && e.button !== 0) return;
+      startY = e.touches ? e.touches[0].clientY : e.clientY;
+      dy = 0;
+      menu.classList.add('dragging');
+      if (e.pointerId != null && grab2.setPointerCapture) {
+        try { grab2.setPointerCapture(e.pointerId); } catch (err) {}
+      }
+    }
+    function onMove(e){
+      if (startY == null) return;
+      var y = e.touches ? e.touches[0].clientY : e.clientY;
+      dy = Math.max(0, y - startY);
+      menu.style.transform = 'translateY(' + dy + 'px)';
+      if (e.cancelable) e.preventDefault();
+    }
+    function onUp(){
+      if (startY == null) return;
+      startY = null;
+      menu.classList.remove('dragging');
+      if (dy > 90) close();            // a real pull, not a wobble
+      else menu.style.transform = '';
+      dy = 0;
+    }
+    if (grab2) {
+      grab2.addEventListener('pointerdown', onDown);
+      grab2.addEventListener('pointermove', onMove);
+      grab2.addEventListener('pointerup', onUp);
+      grab2.addEventListener('pointercancel', onUp);
+    }
+  }
+
   function initAll(root){
     initTabs(root); initAccordion(root); initDialog(root); initCode(root);
     initReadingBar(); initTOC(); initReadingTime(); initRelated(); initCounters(root);
     initBlogSearch(root); initTilt(root); initCursorGlow();
-    initLang(); initCmdk();
+    initLang(); initCmdk(); initMenu(root);
   }
 
   if (document.readyState === 'loading') {
