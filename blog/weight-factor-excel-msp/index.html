@@ -437,17 +437,6 @@ W.F↑_i = W.F_proj(i) / W.F_proj(parent)</pre>
     applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
   }));
   renderTheme();
-  const menuToggle = document.getElementById('menu-toggle');
-  const mobileMenu = document.getElementById('mobile-menu');
-  menuToggle.addEventListener('click', () => {
-    const open = !mobileMenu.classList.contains('open');
-    mobileMenu.classList.toggle('open', open);
-    menuToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mobileMenu.classList.remove('open');
-    menuToggle.setAttribute('aria-expanded', 'false');
-  }));
 </script>
 </body>
 </html>
