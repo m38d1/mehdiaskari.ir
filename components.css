@@ -23,6 +23,10 @@
   border-color:color-mix(in srgb, var(--amber) 42%, transparent);
   background:color-mix(in srgb, var(--amber) 12%, transparent);
 }
+/* Light theme: the bright badge inks only reach ~2.4-3:1 on the light card.
+   Darker inks of the same hue clear 4.5:1 without changing the layout. */
+html[data-theme="light"] .badge.teal{ color:#0A6A5F; }
+html[data-theme="light"] .badge.amber{ color:#96560F; }
 
 /* ---------- Tabs ---------- */
 .tabs{

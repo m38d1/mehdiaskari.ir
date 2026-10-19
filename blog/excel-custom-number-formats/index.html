@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
+<script src="/theme-boot.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
@@ -126,16 +127,16 @@
           <li><a href="/#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
-      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+      <div class="lang-toggle" role="group"  aria-label="زبان / Language" data-en-aria="Language">
           <button class="lang-opt" data-lang="fa">فا</button>
           <button class="lang-opt" data-lang="en">EN</button>
         </div>
-        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
-        <div class="theme-toggle" role="group" aria-label="حالت نمایش">
-        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
-        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان (Ctrl K)" data-en-aria="Command palette (⌘ K)" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group"  aria-label="حالت نمایش" data-en-aria="Appearance">
+        <button class="theme-opt" data-mode="light"  aria-label="روشن" data-en-aria="Light"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark"  aria-label="تاریک" data-en-aria="Dark"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
       </div>
-      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+      <button class="menu-toggle" id="menu-toggle"  aria-label="منو" data-en-aria="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -248,7 +249,7 @@
 <footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
 
 <div class="cmdk-overlay" id="cmdk-overlay">
-  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="پالت فرمان" data-en-aria="Command palette">
     <div class="cmdk-input-row">
       <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
       <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
@@ -262,12 +263,13 @@
   const root = document.documentElement;
   const optButtons = document.querySelectorAll('.theme-opt');
   const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
-  let theme = (mq && mq.matches) ? 'light' : 'dark';
+  let theme = window.__theme || ((mq && mq.matches) ? 'light' : 'dark');
   function renderTheme(){
     root.setAttribute('data-theme', theme);
     optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
   }
   function applyTheme(next, x, y){
+    try{ localStorage.setItem('theme', next); }catch(e){}
     const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
     const vt = document.startViewTransition(() => { theme = next; renderTheme(); });

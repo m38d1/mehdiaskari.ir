@@ -13,6 +13,7 @@ const PRECACHE = [
   './cover.js',
   './components.css',
   './components.js',
+  './theme-boot.js',
   './lab/lab.css',
   './lab/evm-engine.js',
   './lab/evm/',

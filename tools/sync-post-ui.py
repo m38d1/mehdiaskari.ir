@@ -60,17 +60,19 @@ MENU_LAB = ('    <a href="/lab/" data-en="Lab">آزمایشگاه</a>\n'
 
 THEME_ANCHOR = 'class="theme-toggle" role="group"'
 LANG_BLOCK = (
-    'class="lang-toggle" role="group" aria-label="زبان / Language">\n'
+    'class="lang-toggle" role="group" aria-label="زبان / Language" data-en-aria="Language">\n'
     '        <button class="lang-opt" data-lang="fa">فا</button>\n'
     '        <button class="lang-opt" data-lang="en">EN</button>\n'
     '      </div>\n'
-    '      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان" '
+    # WCAG 2.5.3: the accessible name has to contain the visible label (Ctrl K).
+    '      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان (Ctrl K)" '
+    'data-en-aria="Command palette (⌘ K)" '
     "data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>\n"
     '      <div ' + THEME_ANCHOR
 )
 
 CMDK_OVERLAY = """<div class="cmdk-overlay" id="cmdk-overlay">
-  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="Command palette">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="پالت فرمان" data-en-aria="Command palette">
     <div class="cmdk-input-row">
       <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
       <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
