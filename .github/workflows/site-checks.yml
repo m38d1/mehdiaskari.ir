@@ -53,10 +53,10 @@ jobs:
       - name: Sitemap matches posts.json + pages
         run: python tools/make-sitemap.py --check
 
+      # --check only reads tools/resume.lock.json, so no PDF libraries are
+      # needed and the step cannot fail on a pip/network hiccup.
       - name: Resume PDFs are current
-        run: |
-          python -m pip install --quiet fpdf2 arabic-reshaper python-bidi fonttools brotli
-          python tools/make-resume.py --check
+        run: python tools/make-resume.py --check
 
       - name: Service-worker cache bumped for changed assets
         run: python tools/check-sw-version.py
