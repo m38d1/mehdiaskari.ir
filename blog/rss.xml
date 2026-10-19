@@ -1182,7 +1182,7 @@ Weighted Progress % =
   </div>
 </div>
 
-<button class="dialog-close" aria-label="بستن"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<button class="dialog-close" aria-label="بستن" data-en-aria="Close"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
     <h3>فرمول‌های یک‌جا</h3>
     <div class="prose-compact">
       <p>ضریب وزن (تخت):</p>

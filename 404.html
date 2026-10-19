@@ -2,6 +2,7 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
+<script src="/theme-boot.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta name="robots" content="noindex">
@@ -25,7 +26,7 @@
     --border-soft: rgba(255,255,255,0.09);
     --text: #F3F5F7;
     --text-muted: #98A2B0;
-    --text-dim: #5C6672;
+    --text-dim: #7E8896;
     --teal-dim: rgba(47,224,196,0.14);
     --card-shadow: inset 0 1px 1px rgba(255,255,255,0.16), inset 0 -1px 1px rgba(0,0,0,0.3), 0 24px 70px -30px rgba(0,0,0,0.6);
   }
@@ -343,16 +344,16 @@
           <li><a href="/#contact" data-en="Contact">تماس</a></li>
         </ul>
       </nav>
-      <div class="lang-toggle" role="group" aria-label="زبان / Language">
+      <div class="lang-toggle" role="group"  aria-label="زبان / Language" data-en-aria="Language">
         <button class="lang-opt active" data-lang="fa">فا</button>
         <button class="lang-opt" data-lang="en">EN</button>
       </div>
-      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان در صفحه اصلی" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
-      <div class="theme-toggle" role="group" aria-label="حالت نمایش">
-        <button class="theme-opt" data-mode="light" aria-label="روشن"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
-        <button class="theme-opt" data-mode="dark" aria-label="تاریک"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان در صفحه اصلی (Ctrl K)" data-en-aria="Command palette on the home page (⌘ K)" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+      <div class="theme-toggle" role="group"  aria-label="حالت نمایش" data-en-aria="Appearance">
+        <button class="theme-opt" data-mode="light"  aria-label="روشن" data-en-aria="Light"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark"  aria-label="تاریک" data-en-aria="Dark"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
       </div>
-      <button class="menu-toggle" id="menu-toggle" aria-label="منو" aria-expanded="false">
+      <button class="menu-toggle" id="menu-toggle"  aria-label="منو" data-en-aria="Menu" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
     </div>
@@ -415,6 +416,11 @@
       document.documentElement.lang = l;
       document.documentElement.dir = l === 'en' ? 'ltr' : 'rtl';
       i18nEls.forEach(el => { el.innerHTML = l === 'en' ? el.dataset.en : el.dataset.fa; });
+      // accessible names follow the language too: <el data-en-aria="English label">
+      document.querySelectorAll('[data-en-aria]').forEach(el => {
+        if(!el.dataset.faAria) el.dataset.faAria = el.getAttribute('aria-label') || '';
+        el.setAttribute('aria-label', l === 'en' ? el.dataset.enAria : el.dataset.faAria);
+      });
       langButtons.forEach(b => b.classList.toggle('active', b.dataset.lang === l));
     }
     langButtons.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
@@ -423,13 +429,15 @@
     const root = document.documentElement;
     const optButtons = document.querySelectorAll('.theme-opt');
     const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
-    let theme = (mq && mq.matches) ? 'light' : 'dark';
+    let theme = window.__theme || ((mq && mq.matches) ? 'light' : 'dark');
 
     function render(){
       root.setAttribute('data-theme', theme);
       optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
     }
-    optButtons.forEach(b => b.addEventListener('click', () => { theme = b.dataset.mode; render(); }));
+    optButtons.forEach(b => b.addEventListener('click', () => { theme = b.dataset.mode;
+      try{ localStorage.setItem('theme', theme); }catch(e){}
+      render(); }));
     render();
 
     // mobile menu

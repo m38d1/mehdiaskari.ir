@@ -16,6 +16,7 @@ import json
 import re
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -72,6 +73,7 @@ def build() -> str:
                   f"    <changefreq>{freq}</changefreq>",
                   f"    <priority>{prio}</priority>",
                   "  </url>"]
+    lines.append("</urlset>")
     return "\n".join(lines) + "\n"
 
 
@@ -82,7 +84,14 @@ def main():
         if have != want:
             print("sitemap.xml is stale — run: python3 tools/make-sitemap.py")
             return 1
-        print("sitemap.xml matches posts.json + pages")
+        # Comparing text alone missed a missing </urlset> for months: crawlers
+        # reject the whole file as invalid XML, so verify it parses too.
+        try:
+            ET.fromstring(have)
+        except ET.ParseError as exc:
+            print(f"sitemap.xml is not well-formed XML: {exc}")
+            return 1
+        print("sitemap.xml matches posts.json + pages and is well-formed")
         return 0
     if have != want:
         SITEMAP.write_text(want, encoding="utf-8")

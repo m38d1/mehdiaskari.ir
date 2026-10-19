@@ -16,7 +16,7 @@ html[data-theme="dark"]{
   --border-soft: rgba(255,255,255,0.09);
   --text: #F3F5F7;
   --text-muted: #98A2B0;
-  --text-dim: #5C6672;
+  --text-dim: #7E8896;
   --teal-dim: rgba(47,224,196,0.14);
   --card-shadow: inset 0 1px 1px rgba(255,255,255,0.16), inset 0 -1px 1px rgba(0,0,0,0.3), 0 24px 70px -30px rgba(0,0,0,0.6);
 }
@@ -191,7 +191,7 @@ html[lang="fa"] .pdate{font-family:'Vazirmatn', sans-serif; font-weight:600;}
 /* ---------- BLOG SHELL ---------- */
 main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
 .section-head{display:flex; align-items:center; gap:16px; margin-bottom:34px;}
-.section-head h2{font-size:1.5rem; font-weight:800;}
+.section-head h1, .section-head h2{font-size:1.5rem; font-weight:800;}
 .section-head .tag{
   font-family:'IBM Plex Mono', monospace; font-size:0.7rem; color:var(--teal);
   border:1px solid var(--border); background:var(--glass-2);
@@ -286,6 +286,10 @@ main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
   background:#ff5f57; box-shadow:13px 0 0 #febc2e, 26px 0 0 #28c840;
 }
 .prose a{color:var(--teal); border-bottom:1px dashed var(--teal);}
+/* Light theme: --teal (#0EA894) only reaches ~2.7:1 on the light background,
+   so links and inline code get a darker, still-teal ink that passes 4.5:1. */
+html[data-theme="light"] .prose a{color:#0A6A5F; border-bottom-color:#0A6A5F;}
+html[data-theme="light"] .prose code{color:#0A5C53;}
 .post-foot{
   display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
   margin-top:26px;

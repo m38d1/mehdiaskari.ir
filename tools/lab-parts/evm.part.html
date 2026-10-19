@@ -17,14 +17,14 @@
           <span class="panel-hint" data-en="One row per reporting period">هر سطر یک دورهٔ گزارش</span>
         </div>
 
-        <div class="preset-row" role="group" aria-label="نمونه‌ها">
+        <div class="preset-row" role="group" aria-label="نمونه‌ها" data-en-aria="Examples">
           <button class="chip active" data-preset="textbook" data-en="PMBOK textbook case">مثال PMBOK</button>
           <button class="chip" data-preset="slowstart" data-en="Construction project, negative variance">پروژهٔ ساختمانی</button>
           <button class="chip" data-preset="periodic" data-en="Periodic input">ورودی دوره‌ای</button>
         </div>
 
         <label class="field-label" for="evm-input" data-en="Columns: period · PV · EV · AC (· BAC optional)">ستون‌ها: دوره · PV · EV · AC (· BAC اختیاری)</label>
-        <textarea id="evm-input" class="wf-input" dir="ltr" spellcheck="false" autocomplete="off" aria-label="داده‌های ارزش افزوده"></textarea>
+        <textarea id="evm-input" class="wf-input" dir="ltr" spellcheck="false" autocomplete="off" aria-label="داده‌های ارزش افزوده" data-en-aria="Value-added data"></textarea>
 
         <div class="restored" id="evm-restored" hidden>
           <span data-en="Your last table was restored from this browser — nothing was uploaded.">آخرین جدول واردکرده از همین مرورگر بازیابی شد؛ هیچ‌چیز بارگذاری نشده است.</span>
@@ -33,7 +33,7 @@
 
         <div class="controls-row">
           <span class="controls-label" data-en="Input shape">قالب ورودی</span>
-          <div class="seg" role="group" aria-label="قالب ورودی">
+          <div class="seg" role="group" aria-label="قالب ورودی" data-en-aria="Input template">
             <button class="seg-opt is-on" data-series="cumulative" data-en="Cumulative">تجمعی</button>
             <button class="seg-opt" data-series="periodic" data-en="Per period">دوره‌ای</button>
           </div>
@@ -41,7 +41,7 @@
 
         <div class="controls-row">
           <span class="controls-label" data-en="EAC method">روش EAC</span>
-          <div class="seg" role="group" aria-label="روش EAC">
+          <div class="seg" role="group" aria-label="روش EAC" data-en-aria="EAC method">
             <button class="seg-opt is-on" data-eac="typical" data-en="Typical — BAC / CPI">تیپیکال</button>
             <button class="seg-opt" data-eac="atypical" data-en="Atypical — AC + (BAC − EV)">آتایپیکال</button>
             <button class="seg-opt" data-eac="composite" data-en="Composite — AC + (BAC−EV)/(CPI×SPI)">ترکیبی</button>

@@ -62,15 +62,23 @@
   function initDialog(root) {
     root.querySelectorAll('.dialog-backdrop').forEach(function (bd) {
       if (bd.__dlgReady) return; bd.__dlgReady = 1;
-      function close() { bd.classList.remove('is-open'); }
+      function close() {
+        bd.classList.remove('is-open');
+        // WCAG 2.4.3: hand focus back to the control that opened the dialog.
+        if (bd.__opener && typeof bd.__opener.focus === 'function') {
+          try { bd.__opener.focus({preventScroll:true}); } catch (e) {}
+        }
+      }
       bd.addEventListener('click', function (e) { if (e.target === bd) close(); });
       var c = bd.querySelector('.dialog-close'); if (c) c.addEventListener('click', close);
+      bd.__close = close;
     });
     root.querySelectorAll('[data-dialog]').forEach(function (btn) {
       if (btn.__dlgBtn) return; btn.__dlgBtn = 1;
       btn.addEventListener('click', function () {
         var bd = document.getElementById(btn.getAttribute('data-dialog'));
         if (!bd) return;
+        bd.__opener = btn;
         bd.classList.add('is-open');
         var c = bd.querySelector('.dialog-close'); if (c) c.focus();
       });
@@ -80,7 +88,7 @@
       document.addEventListener('keydown', function (e) {
         if (e.key === 'Escape') {
           var o = document.querySelector('.dialog-backdrop.is-open');
-          if (o) o.classList.remove('is-open');
+          if (o && o.__close) o.__close();
         }
       });
     }
@@ -374,6 +382,11 @@
       document.documentElement.lang = l;
       document.documentElement.dir = (l === 'en') ? 'ltr' : 'rtl';
       i18nEls.forEach(function(el){ el.innerHTML = (l === 'en') ? el.dataset.en : el.dataset.fa; });
+      // accessible names follow the language too: <el data-en-aria="English label">
+      document.querySelectorAll('[data-en-aria]').forEach(function(el){
+        if(!el.dataset.faAria) el.dataset.faAria = el.getAttribute('aria-label') || '';
+        el.setAttribute('aria-label', (l === 'en') ? el.dataset.enAria : el.dataset.faAria);
+      });
       langButtons.forEach(function(b){ b.classList.toggle('active', b.dataset.lang === l); });
     }
     langButtons.forEach(function(b){ b.addEventListener('click', function(){ setLang(b.dataset.lang); }); });
@@ -390,7 +403,7 @@
     var hintBtn = document.getElementById('cmdk-hint');
     if(!overlay || !input || !list || !hintBtn) return;
     window.__cmdkBound = 1;
-    var activeIndex = 0, filtered = [];
+    var activeIndex = 0, filtered = [], lastFocus = null;
     function getLang(){ return window.__getLang ? window.__getLang() : 'fa'; }
     function L(fa, en){ return getLang() === 'en' ? en : fa; }
     function isDark(){ return document.documentElement.getAttribute('data-theme') === 'dark'; }
@@ -445,8 +458,16 @@
       cmd.run(el);
       if(!/copy|کپی/i.test(cmd.group)) close();
     }
-    function open(){ overlay.classList.add('open'); input.value=''; renderList(''); setTimeout(function(){ try{ input.focus(); }catch(e){} }, 50); }
-    function close(){ overlay.classList.remove('open'); }
+    function open(){ lastFocus = document.activeElement; overlay.classList.add('open'); input.value=''; renderList(''); setTimeout(function(){ try{ input.focus(); }catch(e){} }, 50); }
+    function close(){
+      overlay.classList.remove('open');
+      // WCAG 2.4.3: put focus back where it was when the dialog opened.
+      // preventScroll keeps a "jump to section" command from being undone.
+      if(lastFocus && typeof lastFocus.focus === 'function'){
+        try{ lastFocus.focus({preventScroll:true}); }catch(e){}
+      }
+      lastFocus = null;
+    }
     window.addEventListener('keydown', function(e){
       if((e.ctrlKey||e.metaKey) && (e.key==='k'||e.key==='K')){ e.preventDefault(); overlay.classList.contains('open')?close():open(); }
       else if(e.key==='Escape' && overlay.classList.contains('open')){ close(); }
