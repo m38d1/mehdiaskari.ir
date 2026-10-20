@@ -30,6 +30,7 @@ STATIC = [
     ("/lab/", "weekly", "0.8", "lab/index.html"),
     ("/lab/evm/", "weekly", "0.8", "lab/evm/index.html"),
     ("/lab/weight-factor/", "monthly", "0.8", "lab/weight-factor/index.html"),
+    ("/project-controls/", "monthly", "0.8", "project-controls/index.html"),
 ]
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")

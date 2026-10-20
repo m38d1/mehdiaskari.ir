@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script src="/theme-boot.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+  <link rel="stylesheet" href="/components.css">
+  <link rel="stylesheet" href="/lab/lab.css">
+<title data-en="Project Controls Hub | Mehdi Askari">مرکز کنترل پروژه — مسیر یادگیری، نوشته‌ها و ابزارها | مهدی عسکری</title>
+<meta name="description" content="مسیر گام‌به‌گام کنترل پروژه: از پنج چک سلامت برنامه تا پیشرفت وزنی، خط تولید داده و داشبورد Power BI — هشت نوشته و دو ابزار تعاملی، رایگان و در مرورگر.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="مرکز کنترل پروژه — مسیر یادگیری، نوشته‌ها و ابزارها">
+<meta property="og:image" content="https://mehdiaskari.ir/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="og:description" content="مسیر گام‌به‌گام کنترل پروژه: از پنج چک سلامت برنامه تا پیشرفت وزنی، خط تولید داده و داشبورد Power BI.">
+<meta property="og:url" content="https://mehdiaskari.ir/project-controls/">
+
+<link rel="canonical" href="https://mehdiaskari.ir/project-controls/">
+  <script src="/components.js" defer></script>
+
+  <script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "@id": "https://mehdiaskari.ir/project-controls/",
+ "url": "https://mehdiaskari.ir/project-controls/",
+ "name": "مرکز کنترل پروژه",
+ "alternateName": "Project Controls Hub",
+ "description": "مسیر گام‌به‌گام کنترل پروژه با نوشته‌ها و ابزارهای تعاملی: سلامت برنامه، پیشرفت وزنی، خط تولید داده و داشبورد EVM.",
+ "inLanguage": "fa-IR",
+ "isAccessibleForFree": true,
+ "isPartOf": { "@type": "WebSite", "name": "Mehdi Askari", "url": "https://mehdiaskari.ir/" },
+ "mainEntity": {
+  "@type": "ItemList",
+  "itemListOrder": "https://schema.org/ItemListOrderAscending",
+  "numberOfItems": 8,
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید", "url": "https://mehdiaskari.ir/blog/schedule-health-checks/" },
+    { "@type": "ListItem", "position": 2, "name": "هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد", "url": "https://mehdiaskari.ir/blog/msp-power-tricks/" },
+    { "@type": "ListItem", "position": 3, "name": "محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP", "url": "https://mehdiaskari.ir/blog/weight-factor-excel-msp/" },
+    { "@type": "ListItem", "position": 4, "name": "Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی", "url": "https://mehdiaskari.ir/blog/power-query-site-progress/" },
+    { "@type": "ListItem", "position": 5, "name": "قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن", "url": "https://mehdiaskari.ir/blog/excel-custom-number-formats/" },
+    { "@type": "ListItem", "position": 6, "name": "Global Change در Primavera P6؛ دستیار خاموشِ برنامه‌ریز", "url": "https://mehdiaskari.ir/blog/p6-global-change/" },
+    { "@type": "ListItem", "position": 7, "name": "اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه", "url": "https://mehdiaskari.ir/blog/p6-power-bi-dashboard/" },
+    { "@type": "ListItem", "position": 8, "name": "چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است", "url": "https://mehdiaskari.ir/blog/pmi-ai-project-patterns/" }
+  ]
+ }
+  }</script>
+  <style>
+  .pc-steps{ display:grid; gap:14px; margin-bottom:36px; }
+  .pc-step{ position:relative; background:var(--glass); border:1px solid var(--border); border-radius:16px; padding:20px 22px; box-shadow:var(--card-shadow); }
+  .pc-step-top{ display:flex; align-items:center; gap:10px; margin-bottom:8px; }
+  .pc-num{ font-family:'IBM Plex Mono', monospace; font-size:.74rem; color:var(--teal); background:color-mix(in srgb, var(--teal) 12%, transparent); border-radius:8px; padding:3px 9px; }
+  .pc-step h2{ font-size:1.06rem; font-weight:700; }
+  .pc-step p{ font-size:.88rem; color:var(--text-muted); line-height:1.9; }
+  .pc-links{ display:flex; flex-wrap:wrap; gap:8px; margin-top:12px; }
+  .pc-links a{ display:inline-flex; align-items:center; gap:6px; font-size:.78rem; color:var(--text-muted); border:1px solid var(--border-soft, var(--border)); border-radius:999px; padding:6px 13px; transition:color .2s ease, border-color .2s ease; }
+  .pc-links a:hover{ color:var(--teal); border-color:var(--teal); }
+  .pc-links a .ic{ width:14px; height:14px; }
+  .pc-table-wrap{ overflow-x:auto; border:1px solid var(--border); border-radius:16px; background:var(--glass); box-shadow:var(--card-shadow); }
+  table.pc-table{ width:100%; border-collapse:collapse; font-size:.84rem; min-width:560px; }
+  .pc-table th, .pc-table td{ padding:11px 14px; text-align:start; border-bottom:1px solid var(--border); line-height:1.8; }
+  .pc-table thead th{ background:color-mix(in srgb, var(--teal) 10%, transparent); color:var(--text); font-weight:700; }
+  .pc-table td{ color:var(--text-muted); }
+  .pc-table tbody tr:last-child td{ background:color-mix(in srgb, var(--amber) 9%, transparent); color:var(--text); }
+  .pc-table tbody tr:last-child td{ border-bottom:none; }
+  </style>
+</head>
+<body>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav>
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+            <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>
+          <li><a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group"  aria-label="زبان / Language" data-en-aria="Language">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان (Ctrl K)" data-en-aria="Command palette (⌘ K)" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group"  aria-label="حالت نمایش" data-en-aria="Appearance">
+        <button class="theme-opt" data-mode="light"  aria-label="روشن" data-en-aria="Light"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark"  aria-label="تاریک" data-en-aria="Dark"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle"  aria-label="منو" data-en-aria="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/lab/" data-en="Lab">آزمایشگاه</a>
+    <a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main>
+  <div class="tool-head fu">
+    <div class="post-meta">
+      <span class="badge teal" data-en="Learning path">مسیر یادگیری</span>
+      <span class="badge" data-en="8 articles + 2 tools">۸ نوشته + ۲ ابزار</span>
+      <span class="badge" data-en="Free, in your browser">رایگان، در مرورگر</span>
+    </div>
+    <h1 data-en="Project Controls Hub">مرکز کنترل پروژه</h1>
+    <p class="lead" data-en="A five-step path from a schedule nobody trusts to a dashboard everybody reads. Each step links the article that explains the method and the tool that runs it — no account, no upload.">مسیر پنج‌گامی از برنامه‌ای که کسی به آن اعتماد ندارد تا داشبوردی که همه می‌خوانند. هر گام به نوشته‌ای که روش را توضیح می‌دهد و ابزاری که آن را اجرا می‌کند وصل است؛ بدون حساب کاربری، بدون آپلود.</p>
+  </div>
+
+  <div class="lab-main">
+    <div class="pc-steps">
+      <div class="pc-step">
+        <div class="pc-step-top"><span class="pc-num mono">۰۱</span><h2 data-en="Get the schedule itself healthy">سلامت برنامه را تضمین کن</h2></div>
+        <p data-en="Before reporting anything, the schedule itself must be trustworthy: open ends, negative lag, hard constraints and suspicious float. These two posts give you the checklist and the rescue tricks.">قبل از هر گزارشی، خودِ برنامه باید قابل‌اتکا باشد: سرهای باز، لگ منفی، قیدهای سخت و شناوری‌های مشکوک. این دو نوشته چک‌لیست و ترفندهای نجات را پوشش می‌دهند.</p>
+        <div class="pc-links">
+          <a href="/blog/schedule-health-checks/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Five schedule health checks to run before every update">پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید</span></a>
+          <a href="/blog/msp-power-tricks/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Seven MS Project tricks that will save your schedule">هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد</span></a>
+        </div>
+      </div>
+      <div class="pc-step">
+        <div class="pc-step-top"><span class="pc-num mono">۰۲</span><h2 data-en="Measure the real progress">پیشرفت واقعی را اندازه بگیر</h2></div>
+        <p data-en="Plain percent-complete is misleading; weighted progress with the Weight Factor gives the true number. The article walks through Excel and MSP, the tool runs the maths in your browser.">درصد پیشرفت ساده گول‌زننده است؛ پیشرفت وزنی با ضریب وزن (W.F) رقم درست را می‌دهد. مقاله روش را در اکسل و MSP توضیح می‌دهد و ابزار محاسبات را در مرورگر اجرا می‌کند.</p>
+        <div class="pc-links">
+          <a href="/blog/weight-factor-excel-msp/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Calculating Weight Factor (W.F) and weighted progress from cost, weight and value — in Excel and MSP">محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</span></a>
+          <a href="/lab/weight-factor/"><svg class="ic" aria-hidden="true"><use href="#i-tools"/></svg><span data-en="Weight Factor calculator">ماشین‌حساب W.F</span></a>
+        </div>
+      </div>
+      <div class="pc-step">
+        <div class="pc-step-top"><span class="pc-num mono">۰۳</span><h2 data-en="Build the data pipeline">خط تولید داده بساز</h2></div>
+        <p data-en="From twenty contractor spreadsheets to one tidy table: Power Query reads the folders, and custom number formats turn the variance column into a self-colouring report.">گزارش‌های کارگاهی از بیست فایل اکسل تا یک جدول تمیز: Power Query پوشه‌ها را می‌خواند و قالب عدد سفارشی، ستون انحراف را رنگی و خوانا می‌کند.</p>
+        <div class="pc-links">
+          <a href="/blog/power-query-site-progress/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Power Query: a data pipeline for site progress reports">Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی</span></a>
+          <a href="/blog/excel-custom-number-formats/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Excel custom number formats: a variance column that colours itself">قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن</span></a>
+        </div>
+      </div>
+      <div class="pc-step">
+        <div class="pc-step-top"><span class="pc-num mono">۰۴</span><h2 data-en="Automate, then dashboard">اتوماسیون و داشبورد</h2></div>
+        <p data-en="Global Change automates the repetitive edits in P6; the P6-to-Power-BI pipeline and the EVM dashboard give you a live SPI/CPI picture.">Global Change در P6 کارهای تکراری را خودکار می‌کند؛ اتصال P6 به Power BI و داشبورد EVM هم تصویر زندهٔ SPI/CPI می‌دهند.</p>
+        <div class="pc-links">
+          <a href="/blog/p6-global-change/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Global Change in Primavera P6: the planner&#x27;s silent assistant">Global Change در Primavera P6؛ دستیار خاموشِ برنامه‌ریز</span></a>
+          <a href="/blog/p6-power-bi-dashboard/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Connecting Primavera P6 to Power BI — A Practical Guide to Project Controls Dashboards">اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه</span></a>
+          <a href="/lab/evm/"><svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg><span data-en="EVM dashboard">داشبورد EVM</span></a>
+        </div>
+      </div>
+      <div class="pc-step">
+        <div class="pc-step-top"><span class="pc-num mono">۰۵</span><h2 data-en="The road ahead">افق پیشِ رو</h2></div>
+        <p data-en="AI projects are challenging classic methodology; CPMAI and the seven patterns are the next read on this path.">پروژه‌های هوش مصنوعی روش‌شناسی کلاسیک را به چالش کشیده‌اند؛ CPMAI و الگوهای هفت‌گانه، خواندن بعدی این مسیرند.</p>
+        <div class="pc-links">
+          <a href="/blog/pmi-ai-project-patterns/"><svg class="ic" aria-hidden="true"><use href="#i-book"/></svg><span data-en="Why project management is taking AI seriously">چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head fu" style="margin-top:40px">
+      <span class="tag mono">TOOLS</span>
+      <h2 data-en="The two engines">دو موتور این مسیر</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="lab-grid">
+      <a class="lab-card" href="/lab/weight-factor/">
+        <div class="lab-card-top">
+          <svg class="ic" aria-hidden="true"><use href="#i-tools"/></svg>
+          <span class="badge teal" data-en="Live">آماده</span>
+        </div>
+        <h2 data-en="Weight Factor &amp; weighted progress">ماشین‌حساب ضریب وزن (W.F) و پیشرفت وزنی</h2>
+        <p data-en="Paste your WBS from Excel: parent-relative weight, share of the whole project, weighted progress, five validity checks.">ساختار WBS را از اکسل بچسبانید: وزن نسبت‌به‌والد، وزن هر گره نسبت به کل پروژه، پیشرفت وزنی و پنج بررسی اعتبارسنجی خودکار.</p>
+        <div class="lab-card-foot">
+          <span data-en="Method: step 02 of this path">روش: گام ۰۲ همین مسیر</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+        </div>
+      </a>
+
+      <a class="lab-card" href="/lab/evm/">
+        <div class="lab-card-top">
+          <svg class="ic" aria-hidden="true"><use href="#i-chart"/></svg>
+          <span class="badge teal" data-en="Live">آماده</span>
+        </div>
+        <h2 data-en="EVM dashboard">داشبورد EVM</h2>
+        <p data-en="Paste PV / EV / AC and get CPI, SPI, three EAC methods, ETC, VAC, both TCPIs and a printable S-curve.">سری PV / EV / AC را بچسبانید: CPI، SPI، سه روش EAC، ETC، VAC، هر دو TCPI و یک منحنی S قابل چاپ.</p>
+        <div class="lab-card-foot">
+          <span data-en="Unit-tested S-curve">منحنی S، تست‌شده</span>
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow-up"/></svg>
+        </div>
+      </a>
+    </div>
+
+    <div class="section-head fu" style="margin-top:40px">
+      <span class="tag mono">COMPARE</span>
+      <h2 data-en="Which tool for which job">هر ابزار برای چه کاری</h2>
+      <div class="rule"></div>
+    </div>
+    <div class="pc-table-wrap">
+      <table class="pc-table">
+        <thead>
+          <tr><th scope="col" data-en="Aspect">معیار</th><th scope="col">Primavera P6</th><th scope="col">MS Project</th><th scope="col">Power BI</th></tr>
+        </thead>
+        <tbody>
+        <tr><th scope="row"><span data-en="Core use">کاربرد اصلی</span></th><td><span data-en="large multi-project CPM scheduling">برنامه‌ریزی و زمان‌بندی سطوح بزرگ، CPM چندپروژه‌ای</span></td><td><span data-en="operational scheduling and owner reporting">برنامه‌ریزی عملیاتی و گزارش کارفرما</span></td><td><span data-en="aggregated dashboards and analytics">داشبورد و تحلیل دادهٔ تجمیعی</span></td></tr>
+        <tr><th scope="row"><span data-en="EVM data">دادهٔ EVM</span></th><td><span data-en="full PV/EV/AC but raw reporting">کامل (PV/EV/AC) ولی گزارش‌گیری خام</span></td><td><span data-en="good for small projects">خوب برای پروژه‌های کوچک</span></td><td><span data-en="computed in the EVM tool, shown in Power BI">محاسبه در ابزار EVM و نمایش در Power BI</span></td></tr>
+        <tr><th scope="row"><span data-en="Learning curve">یادگیری</span></th><td><span data-en="steep, enterprise-grade">شیب تند، سازمانی</span></td><td><span data-en="gentle">ملایم</span></td><td><span data-en="needs a data model">نیاز به مدل داده</span></td></tr>
+        <tr><th scope="row"><span data-en="Output">خروجی</span></th><td><span data-en="engineering reports, XER/PMXML">گزارش‌های مهندسی و XER/PMXML</span></td><td><span data-en="office-ready reports">گزارش‌های اداری و مرئی</span></td><td><span data-en="shareable files and datasets">فایل‌های قابل‌اشتراک و دیتاست</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p class="legend" style="margin-top:26px;text-align:center">
+      <span data-en="All 7 project-controls articles in one filter, or subscribe by RSS.">همهٔ ۷ نوشتهٔ کنترل پروژه با یک فیلتر، یا عضویت با RSS.</span>
+      · <a href="/blog/all/?tag=%DA%A9%D9%86%D8%AA%D8%B1%D9%84%20%D9%BE%D8%B1%D9%88%DA%98%D9%87" data-en="Filter the blog">فیلتر وبلاگ</a>
+      · <a href="/blog/rss.xml" data-en="RSS">RSS</a>
+    </p>
+  </div>
+</main>
+
+
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="پالت فرمان" data-en-aria="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = window.__theme || ((mq && mq.matches) ? 'light' : 'dark');
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    try{ localStorage.setItem('theme', next); }catch(e){}
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+</script>
+</body>
+</html>

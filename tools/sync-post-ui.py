@@ -41,12 +41,13 @@ MENU_SKILLS = '    <a href="/#skills" data-en="Skills">'
 MENU_EDU = ('    <a href="/#education" data-en="Education">تحصیلات</a>\n'
             '    <a href="/#skills" data-en="Skills">')
 
-# "Lab" sits between Skills and Blog on every page. The nav needle is
-# '<li><a href="/lab/"' and the mobile one is '    <a href="/lab/"' — the four
-# spaces never match inside the nav line (it has '<li>' there), so the two
-# insertions cannot short-circuit each other.
+# "Lab" and "Project Controls" sit between Skills and Blog on every page. The
+# nav needle is '<li><a href="/lab/"' and the mobile one is '    <a href="/lab/"'
+# — the four spaces never match inside the nav line (it has '<li>' there), so
+# the insertions cannot short-circuit each other.
 NAV_BLOG = '          <li><a href="/blog/all/" data-en="Blog">'
 NAV_LAB = ('          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>\n'
+           '          <li><a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a></li>\n'
            '          <li><a href="/blog/all/" data-en="Blog">')
 # The site had no chart glyph at all, which is odd for a dashboard person.
 SPRITE_ANCHOR = '<symbol id="i-tools" viewBox="0 0 24 24">'
@@ -56,6 +57,7 @@ SPRITE_ICON = ('<symbol id="i-chart" viewBox="0 0 24 24">'
 
 MENU_BLOG = '    <a href="/blog/all/" data-en="Blog">'
 MENU_LAB = ('    <a href="/lab/" data-en="Lab">آزمایشگاه</a>\n'
+            '    <a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a>\n'
             '    <a href="/blog/all/" data-en="Blog">')
 
 THEME_ANCHOR = 'class="theme-toggle" role="group"'
@@ -90,6 +92,8 @@ CHECKS = {
     'Education (menu)': '    <a href="/#education"',
     'Lab (nav)': '<li><a href="/lab/"',
     'Lab (menu)': '    <a href="/lab/"',
+    'Project Controls (nav)': '<li><a href="/project-controls/"',
+    'Project Controls (menu)': '    <a href="/project-controls/"',
     'chart icon': '<symbol id="i-chart"',
     'lang toggle': 'class="lang-toggle"',
     'cmdk hint': 'class="cmdk-hint"',
