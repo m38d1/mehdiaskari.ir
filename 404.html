@@ -136,7 +136,7 @@
     transform:scaleX(0); transition:transform .25s ease;
   }
   nav a:hover::after, nav a:focus-visible::after{transform:scaleX(1);}
-  @media (max-width:700px){ nav ul{display:none;} }
+  @media (max-width:820px){ nav ul{display:none;} }
 
   .menu-toggle{
     display:none; width:32px; height:32px; border:none; background:transparent; cursor:pointer;
@@ -146,11 +146,11 @@
   .menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   .menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
   .menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  @media (max-width:700px){ .menu-toggle{display:flex;} }
+  @media (max-width:820px){ .menu-toggle{display:flex;} }
 
   /* Hidden on desktop even if components.css has not arrived yet — the sheet
-     itself (and the un-hide below 700px) lives in components.css. */
-  @media (min-width:701px){ .mobile-menu{ display:none; } }
+     itself (and the un-hide below 820px) lives in components.css. */
+  @media (min-width:821px){ .mobile-menu{ display:none; } }
 
   .theme-toggle{
     display:flex; align-items:center; gap:2px;
@@ -327,6 +327,7 @@
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
           <li><a href="/#education" data-en="Education">تحصیلات</a></li>
           <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a></li>
           <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
           <li><a href="/#contact" data-en="Contact">تماس</a></li>
         </ul>
@@ -350,6 +351,7 @@
     <a href="/#experience" data-en="Experience">تجربه</a>
     <a href="/#education" data-en="Education">تحصیلات</a>
     <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a>
     <a href="/blog/all/" data-en="Blog">وبلاگ</a>
     <a href="/#contact" data-en="Contact">تماس</a>
   </nav>
@@ -381,6 +383,7 @@
   </div>
   <p class="guess fu d5" id="guess" hidden></p>
   <div class="quick fu d5">
+    <a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a>
     <a href="/blog/all/" data-en="Blog">وبلاگ</a><span>·</span>
     <a href="/lab/" data-en="Lab">آزمایشگاه</a><span>·</span>
     <a href="/#contact" data-en="Contact">تماس</a>

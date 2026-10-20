@@ -309,7 +309,9 @@ mark.hl{ background:var(--teal-dim); color:var(--text); border-radius:3px; paddi
    separators) so they hit the 44px touch target comfortably. */
 .mobile-menu, .menu-backdrop{ display:none; }
 
-@media (max-width:700px){
+/* the sheet has to cover the whole range where blog.css hides the desktop
+   nav (see its 820px breakpoint) or the toggle would open nothing */
+@media (max-width:820px){
   .mobile-menu{
     display:flex; flex-direction:column;
     position:fixed; inset-inline:0; bottom:0; z-index:70;

@@ -305,47 +305,98 @@
     if(!grid || grid.__searchReady) return; grid.__searchReady = 1;
     var box = document.getElementById('blog-search');
     var chips = document.getElementById('tag-filter');
-    if(!box) return;
+    if(!box && !chips) return;
     var empty = document.getElementById('blog-empty');
     function cards(){ return Array.prototype.slice.call(grid.querySelectorAll('.post-card')); }
+    function cardText(el){
+      // i18n swaps data-en into innerHTML, which also replaces the <span>s —
+      // read the static tags from the source attribute so the filter still
+      // sees them in English mode.
+      var raw = el.getAttribute('data-search');
+      if(raw === null){
+        raw = (el.textContent || '');
+        var src = el.querySelector('.post-meta');
+        if(src) raw += ' ' + (src.getAttribute('data-fa') || '');
+        el.setAttribute('data-search', raw);
+      }
+      return raw;
+    }
     function buildChips(){
-      if(chips.__built || !chips) return;
-      var set = {};
-      cards().forEach(function(c){ c.querySelectorAll('.tag, .badge').forEach(function(t){ set[(t.textContent||'').trim()]=1; }); });
-      var tags = Object.keys(set); if(!tags.length) return;
+      if(!chips || chips.__built) return;
+      // Only tags that appear on 2+ cards get a chip — a chip row of 31 one-off
+      // tags is a wall of noise, not a filter.
+      var count = {};
+      cards().forEach(function(c){
+        var seen = {};
+        c.querySelectorAll('.tag, .badge').forEach(function(t){
+          var k = (t.textContent||'').trim();
+          if(k && !seen[k]){ seen[k] = 1; count[k] = (count[k]||0) + 1; }
+        });
+      });
+      var tags = Object.keys(count).filter(function(t){ return count[t] >= 2; })
+        .sort(function(a,b){ return count[b]-count[a] || (a<b?-1:1); });
+      if(!tags.length) return;
       tags.forEach(function(t){
         var b=document.createElement('button'); b.className='chip'; b.setAttribute('data-tag',t); b.textContent=t; chips.appendChild(b);
       });
       var all=document.createElement('button'); all.className='chip active'; all.setAttribute('data-tag',''); all.textContent='همه';
       chips.insertBefore(all, chips.firstChild);
+      // Shareable deep-link: /blog/all/?tag=شبکه pre-activates that chip.
+      var want = '';
+      try{ want = new URLSearchParams(location.search).get('tag') || ''; }catch(e){}
+      if(want){
+        var sel = '.chip[data-tag="' + (window.CSS && CSS.escape ? CSS.escape(want) : want) + '"]';
+        var hit = chips.querySelector(sel);
+        if(hit){
+          chips.querySelector('.chip.active').classList.remove('active');
+          hit.classList.add('active');
+          apply();   // the deep-link must actually filter, not just light up the chip
+        }
+      }
       chips.__built=1;
     }
+    function syncTagUrl(tag){
+      // Keep the address bar honest without spamming history.
+      try{
+        var u = new URL(location.href);
+        if(tag) u.searchParams.set('tag', tag); else u.searchParams.delete('tag');
+        history.replaceState({}, '', u);
+      }catch(e){}
+    }
     function apply(){
-      var q=(box.value||'').toLowerCase().trim();
+      var q=(box ? box.value||'' : '').toLowerCase().trim();
       var act = chips ? chips.querySelector('.chip.active') : null;
       var tag = act ? act.getAttribute('data-tag') : '';
       var any=false;
       cards().forEach(function(card){
-        var txt=(card.textContent||'').toLowerCase();
+        var txt=cardText(card).toLowerCase();
         var mq = !q || txt.indexOf(q)!==-1;
         var mt = !tag;
-        if(tag){ mt=false; card.querySelectorAll('.tag, .badge').forEach(function(t){ if((t.textContent||'').trim()===tag) mt=true; }); }
+        if(tag){
+          mt=false;
+          card.querySelectorAll('.tag, .badge').forEach(function(t){ if((t.textContent||'').trim()===tag) mt=true; });
+          if(!mt) mt = txt.indexOf(tag.toLowerCase())!==-1;   // survived an i18n swap
+        }
         var show = mq && mt;
         card.style.display = show ? '' : 'none';
         if(show) any=true;
       });
       if(empty) empty.style.display = any ? 'none' : 'block';
     }
-    box.addEventListener('input', apply);
+    box && box.addEventListener('input', apply);
     if(chips){
       chips.addEventListener('click', function(e){
         var c=e.target.closest('.chip'); if(!c) return;
         chips.querySelectorAll('.chip').forEach(function(x){ x.classList.remove('active'); });
-        c.classList.add('active'); apply();
+        c.classList.add('active');
+        syncTagUrl(c.getAttribute('data-tag') || '');
+        apply();
       });
     }
     if(window.MutationObserver){
-      new MutationObserver(function(){ buildChips(); }).observe(grid, {childList:true, subtree:true});
+      // The archive re-renders its cards from posts.json after load, so the
+      // filter (and the URL deep-link) has to be re-applied to the new nodes.
+      new MutationObserver(function(){ buildChips(); apply(); }).observe(grid, {childList:true});
     }
     buildChips(); apply();
   }

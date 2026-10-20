@@ -1534,7 +1534,7 @@
   <div class="section-head"><span class="tag">05</span><h2 data-en="Blog">وبلاگ</h2><div class="rule"></div></div>
   <input class="blog-search" id="blog-search" type="search" placeholder="جست‌وجو در ۳ نوشته آخر…" aria-label="جست‌وجو در نوشته‌ها">
   <div class="blog-grid" id="blog-grid"><noscript><a href="/blog/all/" style="color:var(--teal)">مشاهده‌ی وبلاگ</a></noscript></div>
-  <div class="blog-more"><a href="/blog/all/" data-en="All posts">همه‌ی نوشته‌ها</a><a href="/lab/" data-en="Interactive tools" style="margin-inline-start:10px">ابزارهای تعاملی</a></div>
+  <div class="blog-more"><a href="/blog/all/" data-en="All posts">همه‌ی نوشته‌ها</a><a href="/project-controls/" data-en="Project Controls" style="margin-inline-start:10px">کنترل پروژه</a><a href="/lab/" data-en="Interactive tools" style="margin-inline-start:10px">ابزارهای تعاملی</a></div>
 </section>
 
 <div class="section-divider"><span></span><span></span><span></span></div>
@@ -2025,6 +2025,7 @@
         { icon:'i-cap', group: lang==='en'?'Go to':'برو به', fa:'تحصیلات', en:'Education', run:()=>jump('#education') },
         { icon:'i-tools', group: lang==='en'?'Go to':'برو به', fa:'مهارت‌ها', en:'Skills', run:()=>jump('#skills') },
         { icon:'i-flask', group: lang==='en'?'Go to':'برو به', fa:'آزمایشگاه', en:'Lab', run:()=>{ location.href='/lab/'; } },
+        { icon:'i-book', group: lang==='en'?'Go to':'برو به', fa:'مرکز کنترل پروژه', en:'Project Controls', run:()=>{ location.href='/project-controls/'; } },
         { icon:'i-book', group: lang==='en'?'Go to':'برو به', fa:'وبلاگ', en:'Blog', run:()=>{ location.href='/blog/all/'; } },
         { icon:'i-mail', group: lang==='en'?'Go to':'برو به', fa:'تماس', en:'Contact', run:()=>jump('#contact') },
         { icon: theme==='dark' ? 'i-sun' : 'i-moon', group: lang==='en'?'Action':'عملیات', fa: theme==='dark' ? 'حالت روشن' : 'حالت تاریک', en: theme==='dark' ? 'Light mode' : 'Dark mode', run:()=>{ applyTheme(theme==='dark'?'light':'dark', innerWidth/2, innerHeight/2); } },
