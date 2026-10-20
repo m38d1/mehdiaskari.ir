@@ -714,7 +714,10 @@
     content:""; position:absolute; top:0; right:0; left:0; height:2px;
     background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber)); opacity:.7;
   }
-  .bento-wide{grid-column:1 / -1;}
+  /* min-width:0 — a grid item's auto minimum would otherwise be inflated by
+     the marquee's max-content track (3.9k px), pushing #skills wider than the
+     viewport on mobile. */
+  .bento-wide{grid-column:1 / -1; min-width:0;}
   .tools-grid .skill-tags{margin-top:0; align-content:center;}
   .tools-grid .term-card{margin-top:0;}
   .card-spot{
