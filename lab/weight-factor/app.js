@@ -278,6 +278,37 @@
     setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
   });
 
+  /* ---------- CSV import ----------
+     A spreadsheet export (Excel / P6 / MSP) replaces the textarea in place;
+     E.csvToTsv() deals with quotes, CRLF, a BOM and ; or , delimiters. */
+  var importBtn = document.getElementById('wf-import');
+  var csvIn = document.getElementById('wf-csv-in');
+  var ioNote = document.getElementById('wf-io-note');
+  function ioNoteSet(msg) { if (ioNote) ioNote.textContent = msg; }
+  if (importBtn && csvIn) {
+    importBtn.addEventListener('click', function () { csvIn.click(); });
+    csvIn.addEventListener('change', function () {
+      var file = csvIn.files && csvIn.files[0];
+      if (!file) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        var conv = E.csvToTsv(reader.result);
+        if (!conv.tsv) {
+          ioNoteSet(t('فایلی خوانده نشد؛ سرستون‌ها را بررسی کن.', 'Nothing readable in that file.'));
+          return;
+        }
+        input.value = conv.tsv;
+        document.querySelectorAll('[data-preset]').forEach(function (c) { c.classList.remove('active'); });
+        recompute();
+        ioNoteSet(t(conv.lines + ' خط از «' + file.name + '» خوانده شد',
+                    conv.lines + ' line(s) read from “' + file.name + '”'));
+      };
+      reader.onerror = function () { ioNoteSet(t('خواندن فایل ممکن نشد.', 'Could not read that file.')); };
+      reader.readAsText(file, 'utf-8');
+      csvIn.value = '';
+    });
+  }
+
   copyBtn.addEventListener('click', function () {
     if (!lastResult || !lastResult.nodes.length) return;
     var head = ['code', 'name', 'parent', 'level', 'W', 'V', 'C', 'WF_up', 'WF_project', 'cost_ratio', 'progress', 'weighted_share'];

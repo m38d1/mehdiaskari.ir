@@ -456,10 +456,64 @@
     }
   };
 
+  /* ---------- CSV import ----------
+     Excel / P6 / MSP exports arrive as CSV, but the textareas speak TSV. This
+     is a small RFC4180 reader (quoted commas, "" escapes, CRLF, BOM) plus a
+     tab writer, so a pasted spreadsheet and a downloaded .csv behave the same.
+     Delimiter is detected from the first line: tab, else the more frequent
+     of comma / semicolon. Returns { tsv, lines } for the UI status line. */
+  function csvToTsv(text) {
+    var s = String(text == null ? '' : text).replace(/^\uFEFF/, '').replace(/\r\n?/g, '\n');
+    if (!s.trim()) return { tsv: '', lines: 0 };
+
+    var first = s.split('\n')[0];
+    var delim = '\t';
+    if (first.indexOf('\t') === -1) {
+      var commas = (first.match(/,/g) || []).length;
+      var semis = (first.match(/;/g) || []).length;
+      delim = semis > commas ? ';' : ',';
+    }
+
+    var rows = [], row = [], field = '', inQuotes = false;
+    for (var i = 0; i < s.length; i++) {
+      var ch = s[i];
+      if (inQuotes) {
+        if (ch === '"') {
+          if (s[i + 1] === '"') { field += '"'; i++; }
+          else inQuotes = false;
+        } else {
+          field += ch;
+        }
+      } else if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === delim) {
+        row.push(field); field = '';
+      } else if (ch === '\n') {
+        row.push(field); rows.push(row); row = []; field = '';
+      } else {
+        field += ch;
+      }
+    }
+    if (field !== '' || row.length) { row.push(field); rows.push(row); }
+
+    rows = rows.filter(function (r) {
+      return r.some(function (x) { return String(x).trim() !== ''; });
+    });
+
+    var tsv = rows.map(function (r) {
+      return r.map(function (x) {
+        return String(x).replace(/\t+/g, ' ').replace(/\n+/g, ' ').trim();
+      }).join('\t');
+    }).join('\n');
+
+    return { tsv: tsv, lines: rows.length };
+  }
+
   return {
     parse: parse,
     compute: compute,
     toCSV: toCSV,
+    csvToTsv: csvToTsv,
     PRESETS: PRESETS,
     round: round
   };

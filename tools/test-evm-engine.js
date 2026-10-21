@@ -208,5 +208,22 @@ console.log('\n== the periodic preset tells a story ==');
   ok(allGreen(r), 'and it is still structurally valid data');
 }
 
+
+console.log('\n== CSV import ==');
+{
+  const csv = '\uFEFF"period","pv","ev","ac"\r\n"week 1","100,000","0","0"\r\n"week 2","200,000","90,000","110,000"\r\n';
+  const conv = E.csvToTsv(csv);
+  ok(conv.lines === 3, 'BOM + CRLF + quoted thousands: 3 lines', 'got ' + conv.lines);
+  ok(conv.tsv.indexOf('\t') !== -1, 'output is tab separated');
+  ok(conv.tsv.indexOf('100,000') !== -1, 'quoted thousands stay one field for toNumber()');
+  ok(conv.tsv.indexOf('"') === -1, 'quotes are stripped');
+  const parsed = E.parse(conv.tsv);
+  ok(parsed.rows.length === 2, 'the imported TSV parses into 2 rows', 'got ' + parsed.rows.length);
+  ok(parsed.rows[0].pv === 100000, 'toNumber() unformats the thousands separator', 'got ' + parsed.rows[0].pv);
+
+  const semi = E.csvToTsv('period;pv;ev;ac\n1;100;50;60');
+  ok(semi.tsv === 'period\tpv\tev\tac\n1\t100\t50\t60', 'semicolon delimiter is detected');
+}
+
 console.log('\n' + passes + ' passed, ' + failures + ' failed.');
 process.exit(failures ? 1 : 0);

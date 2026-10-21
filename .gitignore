@@ -5,3 +5,7 @@ tools/.fontcache/
 
 # backups (zip + git bundle) — never publish via GitHub Pages
 backup/
+
+# social-card renderer cache + generated card HTML (PNGs in og/ are committed)
+.og-build/
+tools/og-cards/

@@ -20,6 +20,13 @@
 <meta property="og:description" content="سری PV / EV / AC را بچسبانید و CV، SV، CPI، SPI، سه روش EAC، ETC، VAC و هر دو TCPI را بگیرید؛ به‌همراه منحنی S قابل چاپ. بدون سرور، همه‌چیز در مرورگر.">
 <meta property="og:url" content="https://mehdiaskari.ir/lab/evm/">
 
+<meta property="og:image" content="https://mehdiaskari.ir/og/lab-evm.png">
+<meta property="og:image:alt" content="داشبورد EVM — CPI، SPI، EAC و منحنی S">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="داشبورد EVM — CPI، SPI، EAC و منحنی S">
+<meta name="twitter:description" content="سری PV / EV / AC را بچسبانید و CV، SV، CPI، SPI، سه روش EAC، ETC، VAC و هر دو TCPI را بگیرید؛ به‌همراه منحنی S قابل چاپ. بدون سرور، همه‌چیز در مرورگر.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/og/lab-evm.png">
 <link rel="canonical" href="https://mehdiaskari.ir/lab/evm/">
   <script src="/components.js" defer></script>
   <script src="/lab/evm-engine.js" defer></script>
@@ -231,6 +238,9 @@
         <div class="actions">
           <button class="btn primary sm" id="evm-run" data-en="Recalculate">محاسبه</button>
           <button class="btn sm" id="evm-csv" data-en="Export CSV">خروجی CSV</button>
+          <button class="btn sm" id="evm-import" data-en="Import CSV">ورود CSV</button>
+          <input type="file" id="evm-csv-in" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" hidden>
+          <span class="io-note" id="evm-io-note" role="status" aria-live="polite"></span>
           <button class="btn sm" id="evm-print" data-en="Print">چاپ</button>
           <button class="btn sm ghost" id="evm-clear" data-en="Clear">پاک کردن</button>
         </div>
