@@ -20,6 +20,13 @@
 <meta property="og:description" content="مبلغ‌های ریالی و ساختار WBS را بدهید؛ درصد وزنی هر گره نسبت به والد خودش و نسبت به کل پروژه را بگیرید. ستون هزینه اختیاری است. بدون سرور، همه‌چیز در مرورگر.">
 <meta property="og:url" content="https://mehdiaskari.ir/lab/weight-factor/">
 
+<meta property="og:image" content="https://mehdiaskari.ir/og/lab-weight-factor.png">
+<meta property="og:image:alt" content="ماشین‌حساب ضریب وزن (W.F) — سهم از والد و سهم از کل">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ماشین‌حساب ضریب وزن (W.F) — سهم از والد و سهم از کل">
+<meta name="twitter:description" content="مبلغ‌های ریالی و ساختار WBS را بدهید؛ درصد وزنی هر گره نسبت به والد خودش و نسبت به کل پروژه را بگیرید. ستون هزینه اختیاری است. بدون سرور، همه‌چیز در مرورگر.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/og/lab-weight-factor.png">
 <link rel="canonical" href="https://mehdiaskari.ir/lab/weight-factor/">
   <script src="/components.js" defer></script>
   <script src="/lab/wf-engine.js" defer></script>
@@ -211,6 +218,9 @@
         <div class="actions">
           <button class="btn primary sm" id="wf-run" data-en="Recalculate">محاسبه</button>
           <button class="btn sm" id="wf-csv" data-en="Export CSV">خروجی CSV</button>
+          <button class="btn sm" id="wf-import" data-en="Import CSV">ورود CSV</button>
+          <input type="file" id="wf-csv-in" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" hidden>
+          <span class="io-note" id="wf-io-note" role="status" aria-live="polite"></span>
           <button class="btn sm ghost" id="wf-clear" data-en="Clear">پاک کردن</button>
         </div>
 

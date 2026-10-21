@@ -273,5 +273,22 @@ console.log('\n== export ==');
   ok(/0\.41/.test(csv), 'CSV carries the weighted progress');
 }
 
+
+console.log('\n== CSV import ==');
+{
+  const csv = '\uFEFF"code","name","parent","V","C"\r\n1,"Pump, compressor","",3000000,2000000\r\n2,"Tank ""A""","",1000000,500000\r\n';
+  const conv = Engine.csvToTsv(csv);
+  ok(conv.lines === 3, 'BOM + CRLF + quoted comma + doubled quote: 3 lines', 'got ' + conv.lines);
+  ok(conv.tsv.indexOf('\t') !== -1, 'output is tab separated');
+  ok(conv.tsv.indexOf('Pump, compressor') !== -1, 'quoted comma survives inside a field');
+  ok(conv.tsv.split('\n')[2].split('\t')[1] === 'Tank "A"', 'doubled quotes become one literal quote');
+  const parsed = Engine.parse(conv.tsv);
+  ok(parsed.rows.length === 2, 'the imported TSV parses into 2 rows', 'got ' + parsed.rows.length);
+
+  const semi = Engine.csvToTsv('code;name;V\n1;Fuel;100');
+  ok(semi.tsv === 'code\tname\tV\n1\tFuel\t100', 'semicolon delimiter is detected');
+  ok(Engine.csvToTsv('').tsv === '', 'empty input produces empty output');
+}
+
 console.log(`\n${passes} passed, ${failures} failed.\n`);
 process.exit(failures ? 1 : 0);

@@ -92,6 +92,14 @@ def main():
             if m and slug not in m.group(1):
                 errors.append(f"{slug}: {attr} points at '{m.group(1)}'")
 
+        # social cards: every post owns the PNG that tools/make-og.py renders
+        og = re.search(r'<meta property="og:image" content="([^"]+)"', html)
+        want = f'https://mehdiaskari.ir/og/{slug}.png'
+        if not og:
+            errors.append(f"{slug}: no og:image — run tools/make-og.py --only {slug}")
+        elif og.group(1) != want:
+            errors.append(f"{slug}: og:image is '{og.group(1)}', expected '{want}'")
+
         title = (post.get('title') or '').strip()
         if title and title not in html:
             warnings.append(f"{slug}: posts.json title not found verbatim in the page <h1>")
@@ -103,6 +111,15 @@ def main():
     dupes = {s for s in declared if declared.count(s) > 1}
     for slug in sorted(dupes):
         errors.append(f"{slug}: duplicated in posts.json")
+
+    # any page may point at a social card; the card must exist on disk
+    for page in ROOT.rglob('*.html'):
+        if 'tools' in page.parts or '_prototypes' in page.parts:
+            continue
+        for m in re.finditer(r'https://mehdiaskari\.ir/(og/[A-Za-z0-9._-]+\.png)',
+                             page.read_text(encoding='utf-8')):
+            if not (ROOT / m.group(1)).exists():
+                errors.append(f"{page.relative_to(ROOT)}: references missing {m.group(1)}")
 
     dates = [p.get('date') for p in posts if p.get('date')]
     if dates != sorted(dates, reverse=True):

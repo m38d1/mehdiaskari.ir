@@ -89,6 +89,7 @@ html[data-theme="light"] .seg-opt.is-on{ color: #fff; }
 
 .actions{ display: flex; gap: 9px; flex-wrap: wrap; margin-top: 16px; }
 .btn.sm{ padding: 8px 16px; font-size: .78rem; }
+.io-note{ align-self: center; font-size: .76rem; color: var(--text-dim); }
 .btn.ghost{ background: transparent; }
 
 .cols-help{
