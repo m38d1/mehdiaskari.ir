@@ -2,7 +2,8 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<script src="/theme-boot.js"></script>
+<script>/* theme boot — runs before the first paint so a saved or system preference never flashes the other theme */
+(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'}document.documentElement.setAttribute('data-theme',t);window.__theme=t})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
@@ -174,6 +175,7 @@
 }</script>
 </head>
 <body>
+<a class="skip-link" href="#main" data-en="Skip to content">پرش به محتوا</a>
 <div class="cursor-glow" aria-hidden="true"></div>
 <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
@@ -196,7 +198,7 @@
   <div class="nav-wrap">
     <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
     <div class="nav-right">
-      <nav>
+      <nav aria-label="منوی اصلی" data-en-aria="Main menu">
         <ul>
           <li><a href="/#about" data-en="About">درباره من</a></li>
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
@@ -234,7 +236,7 @@
   </nav>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
   <div class="section-head fu">
     <span class="tag mono">BLOG</span>
     <h1 data-en="Notes &amp; Articles">یادداشت‌ها و نوشته‌ها</h1>
@@ -248,85 +250,85 @@
   <div class="post-grid" id="post-grid">
     <a class="post-card" href="/blog/excel-custom-number-formats/">
       <div class="post-meta"><span class="pdate">۲۵ مهر ۱۴۰۵</span><span class="tag">Excel</span><span class="tag">کنترل پروژه</span><span class="tag">انحراف</span><span class="tag">گزارش</span></div>
-      <h3 data-en="Excel custom number formats: a variance column that colours itself">قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن</h3>
+      <h2 data-en="Excel custom number formats: a variance column that colours itself">قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن</h2>
       <p data-en="Excel custom number formats put colour, arrows and a tidy zero into the cell itself — no conditional formatting needed. The four sections, the eight named colours, threshold conditions for SPI/CPI, and the practical caveats.">قالب عدد سفارشی اکسل یک راه کم‌دردسر برای ستون انحراف است: رنگ، فلش و صفرِ بی‌معنا را در خودِ سلول می‌گذارد. بخش‌های چهارگانه قالب، هشت رنگ نام‌دار، شرط‌های آستانه برای SPI/CPI و هشدارهای عملی را ببینید.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/mikrotik-wan-failover/">
       <div class="post-meta"><span class="pdate">۲۵ مهر ۱۴۰۵</span><span class="tag">MikroTik</span><span class="tag">RouterOS</span><span class="tag">شبکه</span><span class="tag">Failover</span></div>
-      <h3 data-en="Automatic WAN failover in RouterOS with check-gateway and recursive routes">فِیلوور خودکار WAN در RouterOS؛ check-gateway و مسیر بازگشتی</h3>
+      <h2 data-en="Automatic WAN failover in RouterOS with check-gateway and recursive routes">فِیلوور خودکار WAN در RouterOS؛ check-gateway و مسیر بازگشتی</h2>
       <p data-en="When the WAN interface stays up but the internet is dead, the router still thinks it is online. Bind failover to real reachability with check-gateway=ping and recursive routes to a public address.">وقتی اینترفیس WAN بالا است ولی اینترنت مرده، روتر باز هم خیالش راحت است. با check-gateway=ping و مسیرهای بازگشتی به یک آدرس عمومی، فِیلوور را به زنده‌بودن واقعی اینترنت گره بزنید.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/git-worktree-parallel/">
       <div class="post-meta"><span class="pdate">۲۵ مهر ۱۴۰۵</span><span class="tag">Git</span><span class="tag">توسعه وب</span><span class="tag">ابزار</span></div>
-      <h3 data-en="git worktree: two branches, two folders, no stashing">git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم</h3>
+      <h2 data-en="git worktree: two branches, two folders, no stashing">git worktree؛ همزمان روی دو برنچ کار کن، بدون stash و بدون کلون دوم</h2>
       <p data-en="Caught mid-feature by an urgent fix? git worktree gives you extra working folders on the same repository — one branch here, one there, with no stashing and no second clone.">کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرده؟ git worktree چند پوشه‌ی کاری به همان مخزن می‌دهد: یک برنچ اینجا، یک برنچ آنجا، بدون stash و بدون کلون دوم.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/schedule-health-checks/">
       <div class="post-meta"><span class="pdate">۳۰ شهریور ۱۴۰۵</span><span class="tag">کنترل پروژه</span><span class="tag">MS Project</span><span class="tag">Primavera P6</span></div>
-      <h3 data-en="Five schedule health checks to run before every update">پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید</h3>
+      <h2 data-en="Five schedule health checks to run before every update">پنج چک سلامت برنامه که قبل از هر به‌روزرسانی باید بگیرید</h2>
       <p data-en="Open ends, negative lags, hard constraints, high float and invalid dates — five simple MSP/P6 filter checks that keep your schedule healthy before every update.">سرهای باز، لگ منفی، قیدهای سخت، شناوری بالا و تاریخ‌های نامعتبر — پنج چکی که با فیلترهای ساده MSP و P6 برنامه را قبل از هر به‌روزرسانی دوره‌ای سالم نگه می‌دارند.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/mikrotik-load-balancing-filters/">
       <div class="post-meta"><span class="pdate">۱۵ شهریور ۱۴۰۵</span><span class="tag">MikroTik</span><span class="tag">شبکه</span><span class="tag">لود بالانسینگ</span></div>
-      <h3 data-en="Load balancing and advanced filters in MikroTik">لود بالانسینگ و فیلترهای پیشرفته در MikroTik</h3>
+      <h2 data-en="Load balancing and advanced filters in MikroTik">لود بالانسینگ و فیلترهای پیشرفته در MikroTik</h2>
       <p data-en="Combining PCC, Nth, Mangle and firewall filters to distribute traffic across multiple ISPs and harden the network — with ready-made RouterOS configs and a pre-deployment checklist.">ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/msp-power-tricks/">
       <div class="post-meta"><span class="pdate">۱۵ شهریور ۱۴۰۵</span><span class="tag">MS Project</span><span class="tag">برنامه‌ریزی</span><span class="tag">کنترل پروژه</span></div>
-      <h3 data-en="Seven MS Project tricks that will save your schedule">هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد</h3>
+      <h2 data-en="Seven MS Project tricks that will save your schedule">هفت ترفند MS Project که برنامهٔ شما را نجات می‌دهد</h2>
       <p data-en="Deadline instead of constraints, task calendars, Inactivate Tasks for what-if, traceable lead/lag via custom fields, a second baseline, meeting filters and conditional Gantt bars.">Deadline به‌جای Constraint، تقویم سطح فعالیت، Inactivate Tasks برای سناریوسازی، Lead/Lag قابل‌ردیابی با فیلد سفارشی، Baseline دوم، فیلترهای جلسهٔ هفتگی و میله‌های گانت شرطی — هفت ترفند MSP از تجربهٔ پروژه‌های صنعتی.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/p6-global-change/">
       <div class="post-meta"><span class="pdate">۱۵ شهریور ۱۴۰۵</span><span class="tag">Primavera P6</span><span class="tag">کنترل پروژه</span><span class="tag">اتوماسیون</span></div>
-      <h3 data-en="Global Change in Primavera P6: the planner's silent assistant">Global Change در Primavera P6؛ دستیار خاموشِ برنامه‌ریز</h3>
+      <h2 data-en="Global Change in Primavera P6: the planner's silent assistant">Global Change در Primavera P6؛ دستیار خاموشِ برنامه‌ریز</h2>
       <p data-en="Five real-world P6 Global Change scenarios: bulk duration fixes, automatic calendar assignment, composite activity codes, lag documentation and aligning Remaining Duration with percent complete.">پنج سناریوی واقعی Global Change در P6: اصلاح گروهی مدت‌ها، تخصیص خودکار تقویم، ساخت Activity Code ترکیبی، مستندسازی لَگ‌ها و هم‌خوان‌سازی Remaining Duration با درصد پیشرفت — به‌همراه قواعد امنیتی و چک‌لیست اجرا.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/power-query-site-progress/">
       <div class="post-meta"><span class="pdate">۱۵ شهریور ۱۴۰۵</span><span class="tag">Power Query</span><span class="tag">اکسل</span><span class="tag">کنترل پروژه</span><span class="tag">داده</span></div>
-      <h3 data-en="Power Query: a data pipeline for site progress reports">Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی</h3>
+      <h2 data-en="Power Query: a data pipeline for site progress reports">Power Query؛ خط تولید دادهٔ پیشرفت کارگاهی</h2>
       <p data-en="From twenty contractor Excel files to one clean, reportable table with Power Query: folder ingestion, formula-driven cleanup, merging against a standard WBS and a star-schema layout.">از بیست فایل اکسل پیمانکار تا یک جدول تمیز و قابل‌گزارش با Power Query: پوشه‌خوانی خودکار، پاک‌سازی فرمول‌دار، Merge با WBS استاندارد و مدل ستاره‌ای برای داشبورد — با فرمول‌های M آماده و چک‌لیست کنترل کیفیت داده.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/gale-openwrt-custom-firmware/">
       <div class="post-meta"><span class="pdate">۱۳ شهریور ۱۴۰۵</span><span class="tag">OpenWrt</span><span class="tag">Google Wifi</span><span class="tag">PassWall</span><span class="tag">mwan3</span><span class="tag">شبکه</span></div>
-      <h3 data-en="Custom Google Wifi (Gale) firmware: PassWall, multi-WAN and direct Wi-Fi">فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت</h3>
+      <h2 data-en="Custom Google Wifi (Gale) firmware: PassWall, multi-WAN and direct Wi-Fi">فریمور سفارشی Google Wifi (Gale): پس‌وال، مالتی‌WAN و وای‌فای دایرکت</h2>
       <p data-en="Building a custom OpenWrt 25.12.5 firmware for the Google Wifi (Gale): fixing the direct-WiFi bypass bug in PassWall, real multi-WAN with mwan3, a Developer menu and an empty root password.">ساخت فریمور سفارشی OpenWrt ۲۵.۱۲.۵ روی Google Wifi (Gale): رفع باگ وای‌فای دایرکت در پس‌وال، مالتی‌WAN واقعی با mwan3، منوی Developer و رمز root خالی.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/weight-factor-excel-msp/">
       <div class="post-meta"><span class="pdate">۱۲ شهریور ۱۴۰۵</span><span class="tag">Excel</span><span class="tag">MS Project</span><span class="tag">کنترل پروژه</span><span class="tag">پیشرفت وزنی</span></div>
-      <h3 data-en="Calculating Weight Factor (W.F) and weighted progress from cost, weight and value — in Excel and MSP">محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</h3>
+      <h2 data-en="Calculating Weight Factor (W.F) and weighted progress from cost, weight and value — in Excel and MSP">محاسبه ضریب وزن (W.F) و پیشرفت وزنی فقط با هزینه، وزن و ارزش — در اکسل و MSP</h2>
       <p data-en="When you only have actual cost (C), weight (W) and budget/value (V): how to compute the Weight Factor (W.F) and overall weighted progress — step by step in Excel and Microsoft Project.">وقتی فقط هزینه واقعی (C)، وزن (W) و ارزش/بودجه (V) را داریم، چطور ضریب وزن (W.F) و درصد پیشرفت وزنی کل پروژه را حساب کنیم — آموزش گام‌به‌گام در اکسل و Microsoft Project.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/p6-power-bi-dashboard/">
       <div class="post-meta"><span class="pdate">۱۲ شهریور ۱۴۰۵</span><span class="tag">Power BI</span><span class="tag">Primavera P6</span></div>
-      <h3 data-en="Connecting Primavera P6 to Power BI — A Practical Guide">اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه</h3>
+      <h2 data-en="Connecting Primavera P6 to Power BI — A Practical Guide">اتصال Primavera P6 به Power BI — راهنمای عملی داشبورد کنترل پروژه</h2>
       <p data-en="Step-by-step: export from P6, import into Power BI, EVM metrics, and dashboard design.">راهنمای گام‌به‌گام استخراج داده از P6، وارد کردن به Power BI، شاخص‌های EVM و طراحی داشبورد کنترل پروژه.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/pmi-ai-project-patterns/">
       <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">مدیریت پروژه</span><span class="tag">هوش مصنوعی</span><span class="tag">PMI</span></div>
-      <h3 data-en="Why project management is taking AI seriously">چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است</h3>
+      <h2 data-en="Why project management is taking AI seriously">چرا مدیریت پروژه هوش مصنوعی را جدی گرفته است</h2>
       <p data-en="From CPMAI to the seven AI project patterns; why classic methodologies alone fall short for AI projects — and the path PMI has drawn.">از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/from-code-to-gantt/">
       <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">مسیر شغلی</span><span class="tag">توسعه وب</span></div>
-      <h3 data-en="From code to Gantt charts: the story of a detour">از کد تا گانت‌چارت: داستان یک تغییر مسیر</h3>
+      <h2 data-en="From code to Gantt charts: the story of a detour">از کد تا گانت‌چارت: داستان یک تغییر مسیر</h2>
       <p data-en="How a web developer ended up planning industrial megaprojects — and what debugging code and controlling schedule deviations have in common.">چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
     <a class="post-card" href="/blog/network-lessons-industrial-site/">
       <div class="post-meta"><span class="pdate">۱۱ شهریور ۱۴۰۵</span><span class="tag">شبکه</span><span class="tag">زیرساخت</span></div>
-      <h3 data-en="Five networking lessons from an industrial site">پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم</h3>
+      <h2 data-en="Five networking lessons from an industrial site">پنج درس شبکه‌ای که در سایت صنعتی یاد گرفتم</h2>
       <p data-en="Lessons from designing and maintaining networks where uptime equals project uptime.">درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه.</p>
       <span class="read"><span data-en="Read article">خواندن نوشته</span> <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>
     </a>
@@ -334,7 +336,7 @@
 
   <p style="margin-top:30px; text-align:center;">
     <a class="rss-link" href="/blog/rss.xml">
-      <svg viewBox="0 0 16 16"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3"/></svg>
       <span data-en="Subscribe via RSS">دنبال‌کردن با RSS</span>
     </a>
     <a class="rss-link" href="/lab/" style="margin-inline-start:20px"><span data-en="Interactive tools">ابزارهای تعاملی</span> →</a>
@@ -346,8 +348,8 @@
 <div class="cmdk-overlay" id="cmdk-overlay">
   <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="پالت فرمان" data-en-aria="Command palette">
     <div class="cmdk-input-row">
-      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
-      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
       <span class="cmdk-esc">Esc</span>
     </div>
     <div class="cmdk-list" id="cmdk-list"></div>
@@ -422,10 +424,10 @@
         '<div class="cover" data-cover="' + p.slug + '"></div>' +
         '<div class="post-meta"><span class="pdate">' + (lang === 'en' ? p.date : p.dateFa) + '</span>' +
         p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
-        '<h3>' + (lang === 'en' && p.titleEn ? p.titleEn : p.title) + '</h3>' +
+        '<h2>' + (lang === 'en' && p.titleEn ? p.titleEn : p.title) + '</h2>' +
         '<p>' + (lang === 'en' && p.excerptEn ? p.excerptEn : p.excerpt) + '</p>' +
         '<span class="read">' + (lang === 'en' ? 'Read article' : 'خواندن نوشته') +
-        ' <svg viewBox="0 0 16 16"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>';
+        ' <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M1 8a.5.5 0 0 1 .5-.5h11.793l-4.147-4.146a.5.5 0 0 1 .708-.708l5 5a.5.5 0 0 1 0 .708l-5 5a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/></svg></span>';
       grid.appendChild(card);
     });
     if(window.__fillCovers) window.__fillCovers(grid);

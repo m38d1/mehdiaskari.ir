@@ -115,10 +115,10 @@
       try { pre.innerHTML = highlightCode(raw); } catch(e){}
       var btn = document.createElement('button');
       btn.type='button'; btn.className='copy-btn'; btn.setAttribute('aria-label','کپی کد');
-      btn.innerHTML='<svg viewBox="0 0 16 16"><path d="M9 1H3a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/><path d="M13 4h-2v8a2 2 0 0 1-2 2H5v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" opacity=".5"/></svg> کپی';
+      btn.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 1H3a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/><path d="M13 4h-2v8a2 2 0 0 1-2 2H5v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" opacity=".5"/></svg> کپی';
       btn.addEventListener('click', function(){
         var text = raw;
-        var ok = function(){ btn.classList.add('copied'); btn.innerHTML='✓ کپی شد'; setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML='<svg viewBox="0 0 16 16"><path d="M9 1H3a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/><path d="M13 4h-2v8a2 2 0 0 1-2 2H5v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" opacity=".5"/></svg> کپی'; }, 1500); };
+        var ok = function(){ btn.classList.add('copied'); btn.innerHTML='✓ کپی شد'; setTimeout(function(){ btn.classList.remove('copied'); btn.innerHTML='<svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M9 1H3a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2z"/><path d="M13 4h-2v8a2 2 0 0 1-2 2H5v2a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z" opacity=".5"/></svg> کپی'; }, 1500); };
         if(navigator.clipboard && navigator.clipboard.writeText){ navigator.clipboard.writeText(text).then(ok, function(){ fallback(text); }); }
         else fallback(text);
         function fallback(t){ var ta=document.createElement('textarea'); ta.value=t; ta.style.position='fixed'; ta.style.opacity='0'; document.body.appendChild(ta); ta.focus(); ta.select(); try{ document.execCommand('copy'); }catch(e){} document.body.removeChild(ta); ok(); }
@@ -152,7 +152,7 @@
     if(!article || article.querySelector('.toc')) return;
     var heads = article.querySelectorAll('h2, h3');
     if(heads.length < 2) return;
-    var toc = document.createElement('nav'); toc.className='toc';
+    var toc = document.createElement('nav'); toc.className='toc'; toc.setAttribute('aria-label','فهرست مطالب'); toc.setAttribute('data-en-aria','Table of contents');
     var title = document.createElement('div'); title.className='toc-title'; title.textContent='فهرست مطالب';
     var ol = document.createElement('ol');
     heads.forEach(function(h, i){

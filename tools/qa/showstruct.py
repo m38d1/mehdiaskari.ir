@@ -1,0 +1,11 @@
+import json, sys
+d = json.load(sys.stdin)
+print(f"== {d.get('title')}")
+print(f"   first link      : {d.get('firstLink')}")
+print(f"   landmarks       : {d.get('landmarks')}")
+print(f"   h1/jumps        : {d.get('h1Count')} {d.get('headingJumps')}")
+print(f"   svg w/o hidden  : {d.get('svgNoHidden')} {d.get('svgWhere')}")
+print(f"   inputs unnamed  : {d.get('inputsNoName')}  buttons: {d.get('buttonsNoName')}")
+print(f"   th w/o scope    : {d.get('thNoScope')} of {d.get('tables')} tables  | aria-hidden focusable: {d.get('ariaHiddenFocusable')}")
+print(f"   small targets   : {d.get('smallTargets')}")
+print(f"   perf            : {json.dumps(d.get('perf'), ensure_ascii=False)}")

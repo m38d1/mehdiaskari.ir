@@ -26,7 +26,7 @@
 /* Light theme: the bright badge inks only reach ~2.4-3:1 on the light card.
    Darker inks of the same hue clear 4.5:1 without changing the layout. */
 html[data-theme="light"] .badge.teal{ color:#0A6A5F; }
-html[data-theme="light"] .badge.amber{ color:#96560F; }
+html[data-theme="light"] .badge.amber{ color:#8F5310; }
 
 /* ---------- Tabs ---------- */
 .tabs{
@@ -283,6 +283,21 @@ mark.hl{ background:var(--teal-dim); color:var(--text); border-radius:3px; paddi
 .cmdk-item.active .cmdk-ic{border-color:var(--teal); color:var(--teal);}
 @media (hover:none){ .cursor-glow{ display:none; } }
 @media (prefers-reduced-motion: reduce){ .cursor-glow{ display:none; } }
+
+/* ---------- Skip link (WCAG 2.4.1) ----------
+   The first tab stop on every page. It stays off-screen until focused, then
+   drops below the header with the page's own ink/background tokens so it is
+   readable in both themes. */
+.skip-link{
+  position:fixed; inset-block-start:-4rem; inset-inline-start:16px; z-index:400;
+  padding:10px 18px; border-radius:0 0 12px 12px;
+  background:var(--text); color:var(--bg);
+  font-size:.84rem; font-weight:700; text-decoration:none;
+  transition:inset-block-start .18s ease;
+}
+.skip-link:focus, .skip-link:focus-visible{ inset-block-start:0; outline:2px solid var(--teal); outline-offset:2px; }
+main:focus{ outline:none; }
+@media (prefers-reduced-motion: reduce){ .skip-link{ transition:none; } }
 
 /* ---------- Card 3D tilt — opted in by components.js on blog/post cards
    (pointer:fine + motion-safe only). The .tiltable variants outrank the
