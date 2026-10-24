@@ -198,6 +198,7 @@ tr.is-summary .dot{ background: var(--teal); }
   overflow: hidden;
 }
 .legend{ margin-top: 12px; font-size: .72rem; color: var(--text-dim); line-height: 1.9; }
+.legend a{ padding-block: 3px; }
 .empty-state{
   padding: 34px 16px; text-align: center; color: var(--text-dim); font-size: .82rem;
 }
@@ -246,7 +247,8 @@ tr.is-summary .dot{ background: var(--teal); }
 }
 .restored[hidden]{ display: none; }
 .restored button{
-  background: none; border: 0; padding: 0; cursor: pointer;
+  background: none; border: 0; cursor: pointer;
+  padding: 4px 6px; min-height: 24px;
   font: inherit; color: var(--teal); text-decoration: underline;
 }
 .print-note{ display: none; }
@@ -319,12 +321,12 @@ tr.is-summary .dot{ background: var(--teal); }
 .chart-wrap .bac{ stroke: var(--border); stroke-width: 1; stroke-dasharray: 2 3; }
 
 .evm-table td.dim{ color: var(--text-dim); }
-.evm-table td.neg{ color: #E07A6A; }
+.evm-table td.neg{ color: var(--red); }
 .evm-table td.pos{ color: var(--teal); }
 .evm-table tr.is-cpe td{ background: rgba(125,224,201,.07); }
 .mini b.good{ color: var(--teal); }
 .mini b.bad{ color: var(--amber); }
-.mini b.ugly{ color: #E07A6A; }
+.mini b.ugly{ color: var(--red); }
 
 @media print{
   .chart-panel{ display: block !important; }

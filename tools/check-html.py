@@ -97,6 +97,70 @@ def check_collisions():
     return problems
 
 
+def check_a11y(path: Path, text: str):
+    """Accessibility invariants added by the October 2026 audit pass.
+    Anything that shipped deliberately must pass these; regressions fail CI."""
+    errs = []
+    # Design mockups under _prototypes/ never ship; tag-balance is still checked.
+    if '_prototypes' in path.parts:
+        return errs
+    # Chrome invariants (skip link, main#main) apply to full pages only,
+    # not to <main>-level fragments in tools/lab-parts/.
+    uses_chrome = 'components.js' in text
+
+    # WCAG 2.4.1 — first focusable element must be the skip link.
+    if uses_chrome and 'class="skip-link"' not in text:
+        errs.append('missing skip link (first body child, class="skip-link")')
+
+    # The skip link's destination.
+    if uses_chrome and not re.search(r'<main[^>]*\bid="main"', text):
+        errs.append('missing <main id="main"> (skip link target)')
+
+    # Decorative icon sprites must not be announced. Every <svg> open tag either
+    # hides itself or declares an image role with a title.
+    for m in re.finditer(r'<svg\b[^>]*>', text):
+        tag = m.group(0)
+        if 'aria-hidden' not in tag and 'role="img"' not in tag:
+            line = text[:m.start()].count('\n') + 1
+            errs.append(f'line {line}: <svg> without aria-hidden or role="img"')
+
+    # Screen-reader table navigation needs header scopes.
+    for m in re.finditer(r'<th(?![\w-])[^>]*>', text):
+        if 'scope=' not in m.group(0):
+            line = text[:m.start()].count('\n') + 1
+            errs.append(f'line {line}: <th> without scope')
+
+    # Hidden file inputs have no visible label; they need an aria-label.
+    for m in re.finditer(r'<input\b[^>]*type="file"[^>]*>', text):
+        if 'aria-label' not in m.group(0):
+            line = text[:m.start()].count('\n') + 1
+            errs.append(f'line {line}: file <input> without aria-label')
+
+    # Every nav landmark needs an accessible name. The mobile sheet is labelled
+    # at runtime by components.js (initMobileMenu), so it is exempt.
+    for m in re.finditer(r'<nav\b[^>]*>', text):
+        tag = m.group(0)
+        if 'aria-label' in tag or 'aria-labelledby' in tag or 'id="mobile-menu"' in tag:
+            continue
+        line = text[:m.start()].count('\n') + 1
+        errs.append(f'line {line}: <nav> without aria-label')
+
+    # Render-blocking boot script: theme boot is inlined on purpose (removes a
+    # blocking request and the FOUC race). It must never come back.
+    if 'theme-boot' in text:
+        errs.append('references theme-boot.js — theme boot must stay inlined')
+
+    # Scripts in <head> must never block rendering.
+    head = text.split('</head>')[0]
+    for m in re.finditer(r'<script\b[^>]*\bsrc=[^>]*>', head):
+        tag = m.group(0)
+        if 'defer' not in tag and 'async' not in tag:
+            line = text[:m.start()].count('\n') + 1
+            errs.append(f'line {line}: render-blocking script in <head>: {tag[:70]}')
+
+    return errs
+
+
 def main():
     args = [a for a in sys.argv[1:] if not a.startswith('-')]
     if args:
@@ -107,7 +171,8 @@ def main():
     failed = 0
     for f in files:
         rel = f.relative_to(ROOT) if f.is_relative_to(ROOT) else f
-        errs = check(f)
+        text = f.read_text(encoding='utf-8')
+        errs = check(f) + check_a11y(f, text)
         if errs:
             failed += 1
             print(f"FAIL  {rel}")

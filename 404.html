@@ -2,7 +2,8 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<script src="/theme-boot.js"></script>
+<script>/* theme boot — runs before the first paint so a saved or system preference never flashes the other theme */
+(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'}document.documentElement.setAttribute('data-theme',t);window.__theme=t})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <meta name="robots" content="noindex">
@@ -25,8 +26,9 @@
     --border: rgba(255,255,255,0.16);
     --border-soft: rgba(255,255,255,0.09);
     --text: #F3F5F7;
-    --text-muted: #98A2B0;
-    --text-dim: #7E8896;
+    --text-muted: #A9B3C1;
+    --text-dim: #95A0AE;
+    --red: #E88C7C;
     --teal-dim: rgba(47,224,196,0.14);
     --card-shadow: inset 0 1px 1px rgba(255,255,255,0.16), inset 0 -1px 1px rgba(0,0,0,0.3), 0 24px 70px -30px rgba(0,0,0,0.6);
   }
@@ -41,11 +43,12 @@
     --border-soft: rgba(16,21,28,0.06);
     --text: #10151C;
     --text-muted: #4B5563;
-    --text-dim: #5F6B7A;
-    --teal: #0EA894;
+    --text-dim: #4E5A68;
+    --teal: #0B7568;
     --teal-2: #3B6FE0;
-    --amber: #C97A1E;
-    --teal-dim: rgba(14,168,148,0.12);
+    --amber: #8F5310;
+    --red: #B23B2C;
+    --teal-dim: rgba(11,117,104,0.12);
     --card-shadow: inset 0 1px 1px rgba(255,255,255,0.85), inset 0 -1px 1px rgba(16,21,28,0.04), 0 24px 60px -32px rgba(16,21,28,0.2);
   }
 
@@ -247,7 +250,7 @@
   }
   .term-dot{width:9px;height:9px;border-radius:50%;}
   .term-dot.r{background:#F76464;} .term-dot.y{background:#F6C244;} .term-dot.g{background:#63D471;}
-  .term-title{margin-left:auto; font-size:0.68rem; color:rgba(255,255,255,0.35);}
+  .term-title{margin-left:auto; font-size:0.68rem; color:rgba(255,255,255,0.62);}
   .term-body{padding:14px 16px 16px; line-height:1.9; min-height:118px;}
   .term-body .l{color:#7DE0C9;}
   .term-body .l::before{content:"$ "; color:rgba(255,255,255,0.3);}
@@ -276,8 +279,8 @@
     box-shadow:0 14px 34px -16px rgba(47,224,196,0.55), inset 0 1px 1px rgba(255,255,255,0.35);
   }
   .btn.primary:hover, .btn.primary:focus-visible{color:#fff; filter:brightness(1.08);}
-  html[data-theme="light"] .btn.primary{color:#08090D;}
-  html[data-theme="light"] .btn.primary:hover, html[data-theme="light"] .btn.primary:focus-visible{color:#08090D;}
+  html[data-theme="light"] .btn.primary{color:#fff;}
+  html[data-theme="light"] .btn.primary:hover, html[data-theme="light"] .btn.primary:focus-visible{color:#fff;}
 
   footer{position:relative; z-index:3; text-align:center; padding:0 24px 34px; font-size:0.74rem; color:var(--text-dim);}
   footer a{color:var(--text-muted); transition:color .2s ease;}
@@ -296,6 +299,7 @@
 <script src="/components.js" defer></script>
 </head>
 <body>
+<a class="skip-link" href="#main" data-en="Skip to content">پرش به محتوا</a>
 <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
 <symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
@@ -321,7 +325,7 @@
   <div class="nav-wrap">
     <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
     <div class="nav-right">
-      <nav>
+      <nav aria-label="منوی اصلی" data-en-aria="Main menu">
         <ul>
           <li><a href="/#about" data-en="About">درباره من</a></li>
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
@@ -357,7 +361,7 @@
   </nav>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
 <div class="card" id="card404">
   <div class="code mono fu">404</div>
   <div class="status mono fu d1" data-en="HTTP 404 — PAGE_NOT_FOUND">HTTP 404 — NOT_FOUND</div>

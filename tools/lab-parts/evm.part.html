@@ -1,4 +1,4 @@
-<main>
+<main id="main" tabindex="-1">
   <div class="tool-head fu">
     <div class="post-meta">
       <span class="badge teal" data-en="Interactive tool">ابزار تعاملی</span>
@@ -115,14 +115,14 @@
         <table class="wf-table evm-table">
           <thead>
             <tr>
-              <th data-en="Period">دوره</th>
-              <th>PV</th><th>EV</th><th>AC</th>
-              <th data-en="Cumulative PV">PV تجمعی</th>
-              <th data-en="Cumulative EV">EV تجمعی</th>
-              <th data-en="Cumulative AC">AC تجمعی</th>
-              <th>CPI</th><th>SPI</th>
-              <th data-en="Cost variance">CV</th>
-              <th data-en="Schedule variance">SV</th>
+              <th scope="col" data-en="Period">دوره</th>
+              <th scope="col">PV</th><th scope="col">EV</th><th scope="col">AC</th>
+              <th scope="col" data-en="Cumulative PV">PV تجمعی</th>
+              <th scope="col" data-en="Cumulative EV">EV تجمعی</th>
+              <th scope="col" data-en="Cumulative AC">AC تجمعی</th>
+              <th scope="col">CPI</th><th scope="col">SPI</th>
+              <th scope="col" data-en="Cost variance">CV</th>
+              <th scope="col" data-en="Schedule variance">SV</th>
             </tr>
           </thead>
           <tbody id="evm-body"></tbody>
@@ -136,7 +136,7 @@
       <div class="panel-head"><h2 data-en="What each number means">هر عدد چه می‌گوید</h2></div>
       <div class="accordion" data-single>
         <div class="acc-item">
-          <button class="acc-head" data-en="The four core ratios">چهار نسبت اصلی <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="The four core ratios">چهار نسبت اصلی <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
             <pre dir="ltr" data-lang="FORMULA">CV  = EV − AC      SV  = EV − PV
 CPI = EV / AC      SPI = EV / PV</pre>
@@ -144,7 +144,7 @@ CPI = EV / AC      SPI = EV / PV</pre>
           </div></div>
         </div>
         <div class="acc-item">
-          <button class="acc-head" data-en="Which EAC method to use">کدام روش EAC <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="Which EAC method to use">کدام روش EAC <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
             <pre dir="ltr" data-lang="FORMULA">typical    EAC = BAC / CPI
 atypical   EAC = AC + (BAC − EV)
@@ -157,7 +157,7 @@ composite  EAC = AC + (BAC − EV) / (CPI × SPI)</pre>
           </div></div>
         </div>
         <div class="acc-item">
-          <button class="acc-head" data-en="TCPI — the number people skip">TCPI — عددی که رد می‌شوند <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="TCPI — the number people skip">TCPI — عددی که رد می‌شوند <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
             <pre dir="ltr" data-lang="FORMULA">TCPI(BAC) = (BAC − EV) / (BAC − AC)
 TCPI(EAC) = (BAC − EV) / (EAC − AC)</pre>

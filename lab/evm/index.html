@@ -2,7 +2,8 @@
 <html lang="fa" dir="rtl" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<script src="/theme-boot.js"></script>
+<script>/* theme boot — runs before the first paint so a saved or system preference never flashes the other theme */
+(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'}document.documentElement.setAttribute('data-theme',t);window.__theme=t})();</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
@@ -113,6 +114,7 @@
 </script>
 </head>
 <body>
+<a class="skip-link" href="#main" data-en="Skip to content">پرش به محتوا</a>
 <div class="cursor-glow" aria-hidden="true"></div>
 <svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
 <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
@@ -135,7 +137,7 @@
   <div class="nav-wrap">
     <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
     <div class="nav-right">
-      <nav>
+      <nav aria-label="منوی اصلی" data-en-aria="Main menu">
         <ul>
           <li><a href="/#about" data-en="About">درباره من</a></li>
           <li><a href="/#experience" data-en="Experience">تجربه</a></li>
@@ -173,7 +175,7 @@
   </nav>
 </header>
 
-<main>
+<main id="main" tabindex="-1">
   <div class="tool-head fu">
     <div class="post-meta">
       <span class="badge teal" data-en="Interactive tool">ابزار تعاملی</span>
@@ -239,7 +241,7 @@
           <button class="btn primary sm" id="evm-run" data-en="Recalculate">محاسبه</button>
           <button class="btn sm" id="evm-csv" data-en="Export CSV">خروجی CSV</button>
           <button class="btn sm" id="evm-import" data-en="Import CSV">ورود CSV</button>
-          <input type="file" id="evm-csv-in" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" hidden>
+          <input type="file" id="evm-csv-in" accept=".csv,.tsv,.txt,text/csv,text/tab-separated-values,text/plain" aria-label="ورود فایل CSV" data-en-aria="Import CSV file" hidden>
           <span class="io-note" id="evm-io-note" role="status" aria-live="polite"></span>
           <button class="btn sm" id="evm-print" data-en="Print">چاپ</button>
           <button class="btn sm ghost" id="evm-clear" data-en="Clear">پاک کردن</button>
@@ -293,14 +295,14 @@
         <table class="wf-table evm-table">
           <thead>
             <tr>
-              <th data-en="Period">دوره</th>
-              <th>PV</th><th>EV</th><th>AC</th>
-              <th data-en="Cumulative PV">PV تجمعی</th>
-              <th data-en="Cumulative EV">EV تجمعی</th>
-              <th data-en="Cumulative AC">AC تجمعی</th>
-              <th>CPI</th><th>SPI</th>
-              <th data-en="Cost variance">CV</th>
-              <th data-en="Schedule variance">SV</th>
+              <th scope="col" data-en="Period">دوره</th>
+              <th scope="col">PV</th><th scope="col">EV</th><th scope="col">AC</th>
+              <th scope="col" data-en="Cumulative PV">PV تجمعی</th>
+              <th scope="col" data-en="Cumulative EV">EV تجمعی</th>
+              <th scope="col" data-en="Cumulative AC">AC تجمعی</th>
+              <th scope="col">CPI</th><th scope="col">SPI</th>
+              <th scope="col" data-en="Cost variance">CV</th>
+              <th scope="col" data-en="Schedule variance">SV</th>
             </tr>
           </thead>
           <tbody id="evm-body"></tbody>
@@ -314,7 +316,7 @@
       <div class="panel-head"><h2 data-en="What each number means">هر عدد چه می‌گوید</h2></div>
       <div class="accordion" data-single>
         <div class="acc-item">
-          <button class="acc-head" data-en="The four core ratios">چهار نسبت اصلی <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="The four core ratios">چهار نسبت اصلی <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
             <pre dir="ltr" data-lang="FORMULA">CV  = EV − AC      SV  = EV − PV
 CPI = EV / AC      SPI = EV / PV</pre>
@@ -322,7 +324,7 @@ CPI = EV / AC      SPI = EV / PV</pre>
           </div></div>
         </div>
         <div class="acc-item">
-          <button class="acc-head" data-en="Which EAC method to use">کدام روش EAC <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="Which EAC method to use">کدام روش EAC <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
             <pre dir="ltr" data-lang="FORMULA">typical    EAC = BAC / CPI
 atypical   EAC = AC + (BAC − EV)
@@ -335,7 +337,7 @@ composite  EAC = AC + (BAC − EV) / (CPI × SPI)</pre>
           </div></div>
         </div>
         <div class="acc-item">
-          <button class="acc-head" data-en="TCPI — the number people skip">TCPI — عددی که رد می‌شوند <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <button class="acc-head" data-en="TCPI — the number people skip">TCPI — عددی که رد می‌شوند <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
           <div class="acc-body"><div>
             <pre dir="ltr" data-lang="FORMULA">TCPI(BAC) = (BAC − EV) / (BAC − AC)
 TCPI(EAC) = (BAC − EV) / (EAC − AC)</pre>
@@ -359,8 +361,8 @@ TCPI(EAC) = (BAC − EV) / (EAC − AC)</pre>
 <div class="cmdk-overlay" id="cmdk-overlay">
   <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="پالت فرمان" data-en-aria="Command palette">
     <div class="cmdk-input-row">
-      <svg viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
-      <input type="text" class="cmdk-input" id="cmdk-input" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
       <span class="cmdk-esc">Esc</span>
     </div>
     <div class="cmdk-list" id="cmdk-list"></div>

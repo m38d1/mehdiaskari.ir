@@ -15,8 +15,9 @@ html[data-theme="dark"]{
   --border: rgba(255,255,255,0.16);
   --border-soft: rgba(255,255,255,0.09);
   --text: #F3F5F7;
-  --text-muted: #98A2B0;
-  --text-dim: #7E8896;
+  --text-muted: #A9B3C1;
+  --text-dim: #95A0AE;
+  --red: #E88C7C;
   --teal-dim: rgba(47,224,196,0.14);
   --card-shadow: inset 0 1px 1px rgba(255,255,255,0.16), inset 0 -1px 1px rgba(0,0,0,0.3), 0 24px 70px -30px rgba(0,0,0,0.6);
 }
@@ -32,11 +33,12 @@ html[data-theme="light"]{
   --border-soft: rgba(16,21,28,0.06);
   --text: #10151C;
   --text-muted: #4B5563;
-  --text-dim: #5F6B7A;
-  --teal: #0EA894;
+  --text-dim: #4E5A68;
+  --teal: #0B7568;
   --teal-2: #3B6FE0;
-  --amber: #C97A1E;
-  --teal-dim: rgba(14,168,148,0.12);
+  --amber: #8F5310;
+  --red: #B23B2C;
+  --teal-dim: rgba(11,117,104,0.12);
   --card-shadow: inset 0 1px 1px rgba(255,255,255,0.85), inset 0 -1px 1px rgba(16,21,28,0.04), 0 24px 60px -32px rgba(16,21,28,0.2);
 }
 
@@ -210,7 +212,9 @@ main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
   border:1px solid var(--border); background:var(--glass-2);
   padding:2px 9px; border-radius:100px;
 }
-.post-card h3{font-size:1.05rem; font-weight:800; line-height:1.7; margin-bottom:8px;}
+/* archive cards sit directly under the page h1, so their title is an h2;
+   related-post cards live under their own h2 and stay h3 */
+.post-card h2, .post-card h3{font-size:1.05rem; font-weight:800; line-height:1.7; margin-bottom:8px;}
 .post-card p{font-size:0.85rem; color:var(--text-muted);}
 .post-card .read{
   display:inline-flex; align-items:center; gap:6px; margin-top:14px;
@@ -273,10 +277,8 @@ main{max-width:860px; margin:0 auto; padding:24px 24px 64px;}
   background:#ff5f57; box-shadow:13px 0 0 #febc2e, 26px 0 0 #28c840;
 }
 .prose a{color:var(--teal); border-bottom:1px dashed var(--teal);}
-/* Light theme: --teal (#0EA894) only reaches ~2.7:1 on the light background,
-   so links and inline code get a darker, still-teal ink that passes 4.5:1. */
-html[data-theme="light"] .prose a{color:#0A6A5F; border-bottom-color:#0A6A5F;}
-html[data-theme="light"] .prose code{color:#0A5C53;}
+/* --teal is ink-safe in both themes (light #0B7568 = 5.1:1 on the page), so
+   links and inline code need no per-theme override. */
 .post-foot{
   display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px;
   margin-top:26px;
@@ -304,10 +306,10 @@ html[data-theme="light"] .prose code{color:#0A5C53;}
   background:linear-gradient(135deg, var(--teal), var(--teal-2));
   box-shadow:0 14px 34px -16px rgba(47,224,196,0.55), inset 0 1px 1px rgba(255,255,255,0.35);
 }
-html[data-theme="light"] .btn.primary{color:#08090D;}
+html[data-theme="light"] .btn.primary{color:#fff;}
 .btn:focus-visible{outline:2px solid var(--teal); outline-offset:3px;}
 
-.rss-link{display:inline-flex; align-items:center; gap:7px; font-size:0.76rem; color:var(--text-dim);}
+.rss-link{display:inline-flex; align-items:center; gap:7px; padding-block:2px; font-size:0.76rem; color:var(--text-dim);}
 .rss-link:hover{color:var(--teal);}
 .rss-link svg{width:14px; height:14px; fill:currentColor;}
 
