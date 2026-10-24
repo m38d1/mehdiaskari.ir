@@ -1,5 +1,5 @@
 /* mehdiaskari.ir — offline cache service worker */
-const CACHE = 'mehdiaskari-v53';
+const CACHE = 'mehdiaskari-v54';
 
 const PRECACHE = [
   './',
@@ -37,7 +37,6 @@ const PRECACHE = [
   './fonts/vazirmatn-arabic.woff2',
   './fonts/vazirmatn-latin.woff2',
   './fonts/ibm-plex-mono-400.woff2',
-  './fonts/ibm-plex-mono-500.woff2',
   './fonts/ibm-plex-mono-600.woff2'
 ];
 
