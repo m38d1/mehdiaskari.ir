@@ -42,7 +42,7 @@
     <h2>نمونه‌های آماده برای گزارش هفتگی</h2>
     <table class="data">
       <thead>
-        <tr><th>کاربرد</th><th>قالب</th><th>خروجی نمونه</th></tr>
+        <tr><th scope="col">کاربرد</th><th scope="col">قالب</th><th scope="col">خروجی نمونه</th></tr>
       </thead>
       <tbody>
         <tr><td>انحراف روز</td><td><code>[Red]▼ 0;[Green]▲ 0;"—"</code></td><td>▼ 4 &nbsp; ▲ 2 &nbsp; —</td></tr>
@@ -74,19 +74,19 @@
     <h2>سوالات متداول</h2>
     <div class="accordion" data-single>
       <div class="acc-item">
-        <button class="acc-head">در بخش منفی علامت منها ننوشتم؛ پس چرا عدد منفی دیده می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">در بخش منفی علامت منها ننوشتم؛ پس چرا عدد منفی دیده می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>دیده نمی‌شود! اگر در بخش منفی هیچ علامتی نگذارید، اکسل عدد منفی را بدون منها نمایش می‌دهد و جهت را به فلش می‌سپارد. اگر منها را لازم دارید، خودتان آن را پیش از رقم بنویسید؛ اکسل دوباره اضافه‌اش نمی‌کند.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">آیا این رنگ‌ها در چاپ و PDF می‌آیند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">آیا این رنگ‌ها در چاپ و PDF می‌آیند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>بله. رنگ قالب عدد، رنگ خودِ فونت سلول است و مثل هر رنگ دیگری در چاپ و PDF می‌آید؛ برخلاف بعضی لایه‌های شرطی که در نرم‌افزارهای دیگر گم می‌شوند.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">چطور این قالب‌ها را بین فایل‌های مختلف ببرم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">چطور این قالب‌ها را بین فایل‌های مختلف ببرم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>قالب‌های سفارشی داخل خودِ فایل ذخیره می‌شوند. کافی است یک سلول فرمت‌شده را کپی کنید و در فایل مقصد Paste کنید، یا فایل را به‌عنوان قالب پروژه (تمپلیت) نگه دارید. یک‌بار ساختن و ماندن در تمپلیت، بهتر از ساختن دوباره در هر گزارش است.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">تفاوت <code>0</code> و <code>#</code> در قالب چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">تفاوت <code>0</code> و <code>#</code> در قالب چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div><code>0</code> یک رقم اجباری است و صفر پیشرو را نگه می‌دارد؛ <code>#</code> یک رقم اختیاری است و صفر بی‌دلیل نشان نمی‌دهد. مثلاً <code>0.0</code> عدد ۳ را «3.0» و <code>#.#</code> آن را «3.» می‌نویسد.</div>
       </div>
     </div>
@@ -154,19 +154,19 @@ add host=1.1.1.1 interval=10s down-script="/ip route disable [find comment=\"WAN
     <h2>سوالات متداول</h2>
     <div class="accordion" data-single>
       <div class="acc-item">
-        <button class="acc-head">تفاوت <code>check-gateway=ping</code> و <code>check-gateway=arp</code> چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">تفاوت <code>check-gateway=ping</code> و <code>check-gateway=arp</code> چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div><code>arp</code> فقط روی اینترفیس‌های اترنتی که ARP دارند معنا دارد و برای PPPoE و VPN کار نمی‌کند. برای گیت‌وی‌های نقطه‌به‌نقطه از <code>ping</code> استفاده کنید؛ همین دلیل می‌شود که در سایت‌هایی با PPPoE، فِیلوور با arp هرگز فعال نمی‌شود.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">چرا با وجود قطعی اینترنت، مسیر اصلی همچنان فعال است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">چرا با وجود قطعی اینترنت، مسیر اصلی همچنان فعال است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>چون اینترفیس و گیت‌وی محلی بالاست و به پینگ پاسخ می‌دهد؛ مشکل در بالادست است. علاجش همین مسیر بازگشتی است: به‌جای گیت‌وی، یک آدرس عمومی را پینگ کنید تا فِیلوور به دسترسی واقعی گره بخورد.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">آیا همین چیدمان برای لود بالانس هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">آیا همین چیدمان برای لود بالانس هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>برای فِیلوور بله. برای توزیع هم‌زمان باید <code>distance</code> مسیرها را برابر کنید و با Mangle/PCC ترافیک را بین ISPها تقسیم کنید — جزئیاتش در یادداشت لود بالانسینگ همین سایت آمده است.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">چرا در مثال‌ها <code>scope=30</code> و <code>target-scope=11</code> آمده است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">چرا در مثال‌ها <code>scope=30</code> و <code>target-scope=11</code> آمده است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>چون قاعده‌ی حل بازگشتی همینه: <code>target-scope</code> مسیر پیش‌فرض باید از <code>scope</code> مسیر سرور بزرگ‌تر باشد. اعداد باید سازگار بمانند نه اینکه حفظ شوند؛ مهم رابطه‌ی «بزرگ‌تر بودن» است. RouterOS v7 همین قاعده را سخت‌گیرانه چک می‌کند.</div>
       </div>
     </div>
@@ -227,19 +227,19 @@ git worktree add --detach ../site-before HEAD~5</pre>
     <h2>سوالات متداول</h2>
     <div class="accordion" data-single>
       <div class="acc-item">
-        <button class="acc-head">تفاوت worktree با یک کلون دوباره چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">تفاوت worktree با یک کلون دوباره چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>کلون یک مخزن جدا با آسمان (remote) و فضای دیسک جداگانه است؛ برای دیدن تغییرات باید fetch و push کنید. worktree همان مخزن را کامل به اشتراک می‌گذارد، پس آبجکت‌ها و برنچ‌ها فوری در همه‌ی پوشه‌ها دیده می‌شوند.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">می‌توانم هم‌زمان دو نسخه از یک برنچ داشته باشم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">می‌توانم هم‌زمان دو نسخه از یک برنچ داشته باشم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>نه، یک برنچ فقط در یک worktree باز می‌شود. ولی می‌توانید با <code>--detach</code> روی یک کامیت یا تگ مشخص، عملاً دو نسخه‌ی جداگانه از همان کد را کنار هم داشته باشید.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">اگر پوشه‌ی worktree را اشتباهی پاک کنم چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">اگر پوشه‌ی worktree را اشتباهی پاک کنم چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>مخزن اصلی سالم می‌ماند؛ فقط یک رکورد یتیم در <code>.git/worktrees/</code> باقی می‌ماند. با <code>git worktree prune</code> پاکش کنید. برای حذف مرتب هم <code>git worktree remove</code> درست است.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">روی ویندوز هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">روی ویندوز هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>بله؛ فقط مسیر پوشه‌ی جدید را بدون فاصله بگیرید و کنار مخزن اصلی نگه دارید تا ابزارها راحت‌تر پیدایش کنند. با Git for Windows و WSL هر دو کار می‌کند.</div>
       </div>
     </div>
@@ -298,15 +298,15 @@ git worktree add --detach ../site-before HEAD~5</pre>
     <h2>سوالات متداول</h2>
     <div class="accordion" data-single>
       <div class="acc-item">
-        <button class="acc-head">آستانه‌های DCMA دقیقاً چه اعدادی هستند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">آستانه‌های DCMA دقیقاً چه اعدادی هستند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>مهم‌ترین‌ها: منطق گم‌شده زیر ۵٪، Lead صفر درصد، شناوری بالای ۴۴ روز زیر ۵٪، مدت بالای ۴۴ روز زیر ۵٪، و صفر تاریخ نامعتبر. بقیهٔ موارد ۱۴گانه دربارهٔ رابطه‌ها، منابع و هزینه است.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">این چک‌ها چقدر وقت می‌گیرند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">این چک‌ها چقدر وقت می‌گیرند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>بار اول حدود نیم ساعت (چون ایرادها را هم اصلاح می‌کنید) و از دورهٔ دوم به بعد حدود پنج دقیقه. پیشنهاد می‌کنم همین پنج فیلتر را ذخیره کنید و اجرایش را به چک‌لیست ثابت قبل از به‌روزرسانی اضافه کنید.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">ابزار خودکار برای این کار هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">ابزار خودکار برای این کار هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>بله، ابزارهای Schedule Analyzer این ۱۴ چک را خودکار می‌گیرند، ولی برای برنامه‌های MSP و P6 همین فیلترهای دستی کافی و شفاف‌ترند؛ چون هر مورد را همان لحظه می‌بینید و اصلاح می‌کنید.</div>
       </div>
     </div>
@@ -485,23 +485,23 @@ add chain=forward in-interface=ether1,ether2 connection-nat-state=!dstnat action
   <h2>سؤالات متداول</h2>
   <div class="accordion" data-single>
     <div class="acc-item">
-      <button class="acc-head">آیا PCC برای تمام پروتکل‌ها کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="acc-head">آیا PCC برای تمام پروتکل‌ها کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div>برای TCP و UDP بله، چون مفهوم اتصال دارند. ICMP و پروتکل‌های بی‌state با PCC طبقه‌بندی نمی‌شوند و از جدول main (یعنی ISP اصلی) می‌روند — که معمولاً همان چیزی است که می‌خواهید، چون ping های تستی شما از مسیر ثابت می‌گذرند.</div>
     </div>
     <div class="acc-item">
-      <button class="acc-head">نسبت ۷۰/۳۰ یا هر عدد دیگری ممکن است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="acc-head">نسبت ۷۰/۳۰ یا هر عدد دیگری ممکن است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div>بله؛ به‌جای دو bucket ده bucket بسازید (گام ۴) و تعداد bucketهای هر ISP را متناسب با ظرفیتش انتخاب کنید. ۵/۵، ۷/۳ و ۸/۲ همه با همین الگو ساخته می‌شوند؛ برای نسبت‌های دقیق‌تر denominator را بزرگ‌تر بگیرید.</div>
     </div>
     <div class="acc-item">
-      <button class="acc-head">ECMP بهتر از PCC نیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="acc-head">ECMP بهتر از PCC نیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div>ECMP ساده‌تر است (چند gateway در یک مسیر) ولی تصمیمش را با هش داخلی و بسته‌به‌بسته می‌گیرد و کنترل استثناها را از شما می‌گیرد. برای شبکهٔ اداری که بانک و ریموت‌دسکتاپ دارد، کنترل در سطح اتصال با PCC انتخاب مطمئن‌تری است.</div>
     </div>
     <div class="acc-item">
-      <button class="acc-head">با دو WAN چطور port forwarding درست کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="acc-head">با دو WAN چطور port forwarding درست کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div>dstnat را روی هر WAN جدا تعریف کنید و لایهٔ اول Mangle (گام ۳) را حتماً بنویسید. آن قاعده تضمین می‌کند پاسخِ هر اتصالِ ورودی از همان دروازه‌ای برگردد که آمده — بدون آن، دوربین‌ها و سرویس‌های ریموت عملاً غیرقابل استفاده می‌شوند.</div>
     </div>
     <div class="acc-item">
-      <button class="acc-head">چطور یک IP خاص را همیشه از یک ISP بفرستم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="acc-head">چطور یک IP خاص را همیشه از یک ISP بفرستم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
       <div>یک address-list بسازید و یک قاعدهٔ mark-connection بر اساس <code dir="ltr">dst-address-list</code> بالاتر از قواعد PCC اضافه کنید. همان الگوی استثنای سایت‌های بانکی است؛ ترتیب قواعد، همه‌چیز است.</div>
     </div>
   </div>
@@ -569,19 +569,19 @@ add chain=forward in-interface=ether1,ether2 connection-nat-state=!dstnat action
     <h2>سوالات متداول</h2>
     <div class="accordion" data-single>
       <div class="acc-item">
-        <button class="acc-head">آیا Deadline روی مسیر بحرانی اثر می‌گذارد؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">آیا Deadline روی مسیر بحرانی اثر می‌گذارد؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>غیرمستقیم بله: اگر فعالیت از Deadline بگذرد، Total Slack منفی می‌شود و MSP آن را بحرانی گزارش می‌کند (مگر آستانهٔ بحرانی‌بودن را تغییر داده باشید). خود Deadline زنجیره‌ای نمی‌سازد و منطق شبکه را قفل نمی‌کند — همان کاری که Constraint می‌کند.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">تفاوت Total Slack و Free Slack چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">تفاوت Total Slack و Free Slack چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>Total Slack شوکی است که فعالیت بدون به‌خطر انداختن <strong>پایان کل پروژه</strong> (یا یک محدودیت) دارد؛ Free Slack شوکی است که بدون جابجا کردن <strong>جانشین مستقیمش</strong> دارد. برای مدیریت منابع، Free Slack نگاه دقیق‌تری است؛ برای گزارش بحرانی‌بودن، Total Slack.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">Inactivate Task در گزارش‌های قبلی چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">Inactivate Task در گزارش‌های قبلی چه می‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>هیچ — تاریخچهٔ Baseline دست نمی‌خورد. فعالیت غیرفعال در محاسبات کنار گذاشته می‌شود ولی داده‌هایش باقی می‌ماند؛ به همین دلیل برای claims بهتر از حذف کردن است. فقط مراقب باشید فیلترهای گزارش شما فعالیت‌های غیرفعال را نشان ندهند (در فیلتر، Active Tasks را شرط کنید).</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">فیلد Number1 و Text1 را همین‌طور در دسترس دارم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">فیلد Number1 و Text1 را همین‌طور در دسترس دارم؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>بله؛ MSP در هر جدول (Task/Resource/Assignment) چندین فیلد عددی و متنی خام (Number1..10، Text1..30 و ...) دارد که از طریق Custom Fields می‌توانید rename، فرمول و Graphical Indicator به‌شان بدهید. اگر فایل را با دیگری ردوبدل می‌کنید، نام فیلدها را در مپینگ import/export هماهنگ نگه دارید.</div>
       </div>
     </div>
@@ -680,19 +680,19 @@ Then: Remaining Duration = Original Duration * (1 - Physical % Complete / 100)</
     <h2>سوالات متداول</h2>
     <div class="accordion" data-single>
       <div class="acc-item">
-        <button class="acc-head">Global Change روی Resource Assignments هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">Global Change روی Resource Assignments هم کار می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>بله؛ در بخش Advanced می‌توانید به تخصیص منابع (Resource Assignment) دست بزنید — مثلاً Budgeted Units را بر اساس مدت بازمحاسبه کنید. ولی حواستان باشد که واحدها با نرخ‌ها و Bucket Planning درگیرند؛ تغییر گروهی واحدها راحت‌تر از هر چیز دیگری EVM پروژه را به‌هم می‌ریزد.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">آیا Global Change قابل Undo است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">آیا Global Change قابل Undo است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>خیر. P6 برای Global Change تاریخچه/Undo ندارد. تنها راه برگشت، Import همان XER بکاپ یا بازگردانی دیتابیس است. به همین دلیل Preview و بکاپ اجباری‌اند، نه پیشنهاد.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">چرا Global Change روی بعضی سطرها اجرا نمی‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">چرا Global Change روی بعضی سطرها اجرا نمی‌شود؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>سه علت رایج: (۱) فیلتر Layout فعلی سطرها را پنهان کرده — Global Change روی دادهٔ پنهان هم ممکن است اجرا شود یا نشود بسته به تنظیم؛ (۲) سطرهای Selected در حالت «Selected activities» بسته شده؛ (۳) فیلد مقصد در آن Activity Type قابل ویرایش نیست (مثلاً Milestoneها مدت صفر دارند). پیام خطای پایین پنجره را بخوانید؛ P6 معمولاً دقیق می‌گوید کدام سطرها skip شدند.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">در نسخهٔ Cloud/Primavera P6 EPPM هم همین مسیر هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">در نسخهٔ Cloud/Primavera P6 EPPM هم همین مسیر هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>بله، Global Change در EPPM هم هست ولی رابط کمی فرق دارد (از منوی Activities، بخش Tools). منطق If/Then/Else و Preview یکسان است؛ فقط دسترسی کاربر می‌تواند توسط Admin محدود شده باشد.</div>
       </div>
     </div>
@@ -792,19 +792,19 @@ in
     <h2>سوالات متداول</h2>
     <div class="accordion" data-single>
       <div class="acc-item">
-        <button class="acc-head">Power Query در نسخهٔ اکسل من هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">Power Query در نسخهٔ اکسل من هست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>در Excel 2016 به بعد به‌صورت داخلی در تب Data هست (Get &amp; Transform). برای 2010/2013 افزونهٔ جداگانهٔ Power Query مایکروسافت را می‌شود نصب کرد. مک هم از نسخه‌های جدیدتر پشتیبانی می‌کند، ولی Folder Connector در مک محدودتر است — بهتر است فایل‌ها را لوکال نگه دارید.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">اگر پیمانکار قالب فایلش را عوض کند چه؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">اگر پیمانکار قالب فایلش را عوض کند چه؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>Query یا خطا می‌دهد یا ستون‌ها را null می‌گیرد — هر دو علامت خوبی‌اند چون قبل از گزارش، شما را خبر می‌کنند. راه‌حل بلندمدت: قالب گزارش هفتگی را با یک Template قفل‌شده به پیمانکارها بدهید و در چک‌لیست ورودی، همین دو ستون کلیدی (Activity ID و Physical %) را بسننجید.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">عملکرد Refresh روی فایل‌های سنگین چطور است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">عملکرد Refresh روی فایل‌های سنگین چطور است؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>سه اهرم اصلی: (۱) فیلتر فایل‌های غیرضروری را در همان Query اول انجام دهید (قبل از هر Expand)؛ (۲) Table.Buffer فقط برای جدول‌های مرجع کوچک، نه دادهٔ اصلی؛ (۳) در Query Options، گزینهٔ Fast Data Load را در سفارشی‌سازی ویرایشگر فعال نگه دارید. برای صدها فایل، بهتر است داده را در Power Pivot یا Power BI لود کنید نه شیت اکسل.</div>
       </div>
       <div class="acc-item">
-        <button class="acc-head">تا کجا می‌شود بدون Power BI جلو رفت؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <button class="acc-head">تا کجا می‌شود بدون Power BI جلو رفت؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <div>تا PivotTable چندصفحه‌ای، S-curve ساده با Sparkline و داشبورد با Slicer — یعنی ۸۰٪ نیازهای گزارش دوره‌ای. Power BI وقتی لازم می‌شود که خوانندهٔ گزارش زیاد شود، تحلیل مقایسه‌ای بین پروژه‌ها بخواهید، یا مدل به‌روزرسانی خودکار و سرور بخورد.</div>
       </div>
     </div>
@@ -945,7 +945,7 @@ b2a4353ab608c0f73b3c8d44b9d444e3053b5685bd6d0a1386d799a118523a2e
 
 <h2>۷. چنج‌لاگ (v8 → v13)</h2>
 <table class="data">
-<thead><tr><th>نسخه</th><th>نکتهٔ کلیدی</th></tr></thead>
+<thead><tr><th scope="col">نسخه</th><th scope="col">نکتهٔ کلیدی</th></tr></thead>
 <tbody>
 <tr><td>v8</td><td>وای‌فای دو‑بانده + netmon (مانیتورینگ)</td></tr>
 <tr><td>v9</td><td>مهاجرت از PassWall2 به PassWall1</td></tr>
@@ -1012,7 +1012,7 @@ Weighted Progress ≈ Σ ( W.F_i × (C_i / V_i) ) × 100</pre>
 <h2>مثال عددی</h2>
 <p>فرض کنید پروژه ۵ بسته کاری دارد:</p>
 <table class="data">
-<thead><tr><th>فعالیت</th><th>W</th><th>V (میلیون ریال)</th><th>C (هزینه تاکنون)</th><th>W.F = W/ΣW</th><th>نسبت هزینه C/V</th><th>سهم وزنی‌شده</th></tr></thead>
+<thead><tr><th scope="col">فعالیت</th><th scope="col">W</th><th scope="col">V (میلیون ریال)</th><th scope="col">C (هزینه تاکنون)</th><th scope="col">W.F = W/ΣW</th><th scope="col">نسبت هزینه C/V</th><th scope="col">سهم وزنی‌شده</th></tr></thead>
 <tbody>
 <tr><td>A</td><td>20</td><td>200</td><td>80</td><td>0.20</td><td>0.40</td><td>0.080</td></tr>
 <tr><td>B</td><td>30</td><td>300</td><td>120</td><td>0.30</td><td>0.40</td><td>0.120</td></tr>
@@ -1039,7 +1039,7 @@ W.F_proj(node)  =  W.F↑_node × W.F↑_parent × … × W.F↑_root</pre>
 <h3>مثال دوسطحی</h3>
 <p>فرض کنید پروژه دو WBS بالا دارد: «مهندسی» (وزن پروژه ۰٫۴۰) و «اجرا» (وزن پروژه ۰٫۶۰). زیر «اجرا» سه بسته با قیمت‌های زیر قرار دارد:</p>
 <table class="data">
-<thead><tr><th>بسته</th><th>والد</th><th>V (میلیون)</th><th>W.F↑ (نسبت به والد)</th><th>وزن پروژه</th></tr></thead>
+<thead><tr><th scope="col">بسته</th><th scope="col">والد</th><th scope="col">V (میلیون)</th><th scope="col">W.F↑ (نسبت به والد)</th><th scope="col">وزن پروژه</th></tr></thead>
 <tbody>
 <tr><td>الف</td><td>اجرا</td><td>300</td><td>300/1000 = 0.30</td><td>0.60 × 0.30 = 0.18</td></tr>
 <tr><td>ب</td><td>اجرا</td><td>200</td><td>200/1000 = 0.20</td><td>0.60 × 0.20 = 0.12</td></tr>
@@ -1052,7 +1052,7 @@ W.F_proj(node)  =  W.F↑_node × W.F↑_parent × … × W.F↑_root</pre>
 <h2>پیاده‌سازی در اکسل</h2>
 <p>جدول را به این شکل بچینید (سرستون‌ها در سطر ۱، داده‌ها در سطرهای ۲ تا ۶):</p>
 <table class="data">
-<thead><tr><th>ستون</th><th>محتوا</th></tr></thead>
+<thead><tr><th scope="col">ستون</th><th scope="col">محتوا</th></tr></thead>
 <tbody>
 <tr><td>A</td><td>نام فعالیت</td></tr>
 <tr><td>B</td><td>W (وزن)</td></tr>
@@ -1165,24 +1165,24 @@ Weighted Progress % =
 <h2>سوالات متداول</h2>
 <div class="accordion" data-single>
   <div class="acc-item">
-    <button class="acc-head">تفاوت W.F وزنی و W.F ارزشی چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="acc-head">تفاوت W.F وزنی و W.F ارزشی چیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div>در روش وزنی، W.F = W_i / ΣW و در روش ارزشی، W.F = V_i / ΣV. هر دو نرمال‌اند (جمعشان ۱)؛ تفاوت در این است که وزن‌دهی را بر چه اساسی توزیع می‌کنید. در پروژه‌های صنعتی معمولاً روش ارزشی (بر مبنای پول) طبیعی‌تر است.</div>
   </div>
   <div class="acc-item">
-    <button class="acc-head">چرا نسبت هزینه همیشه با پیشرفت فیزیکی یکی نیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="acc-head">چرا نسبت هزینه همیشه با پیشرفت فیزیکی یکی نیست؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div>خرید تجهیزات پول را زود خرج می‌کند ولی کار فیزیکی دیر انجام می‌شود؛ تورم و فعالیت‌های غیرخطی (مثل راه‌اندازی) هم منحرف‌کننده‌اند. نسبت هزینه را «برآورد محافظه‌کارانه» بگیرید و با یک چک فیزیکی ترکیب کنید.</div>
   </div>
   <div class="acc-item">
-    <button class="acc-head">والد‌نسبت چه فرقی با وزن کل‌پروژه دارد؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="acc-head">والد‌نسبت چه فرقی با وزن کل‌پروژه دارد؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div>وزن کل‌پروژه سهم گره را از کل پروژه می‌دهد؛ والد‌نسبت سهمش را از والدِ بلافصل. رابطه: W.F↑ = W.F_پروژه(گره) / W.F_پروژه(والد). والد‌نسبت در هر سطح جمعش ۱ می‌شود و وقتی WBS تغییر می‌کند، ثابت می‌ماند.</div>
   </div>
   <div class="acc-item">
-    <button class="acc-head">آیا MSP خودش W.F را حساب می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    <button class="acc-head">آیا MSP خودش W.F را حساب می‌کند؟ <svg class="chev" viewBox="0 0 16 16" width="16" height="16" aria-hidden="true" focusable="false"><path d="M4 6l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
     <div>نه به‌طور مستقیم؛ MSP فیلد «W.F» ندارد. اما با فیلدهای سفارشی (Custom Fields) و Rollup دقیقاً همین محاسبه را درون خود برنامه زنده نگه می‌دارد — همان‌طور که در بخش MSP توضیح داده شد.</div>
   </div>
 </div>
 
-<button class="dialog-close" aria-label="بستن" data-en-aria="Close"><svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+<button class="dialog-close" aria-label="بستن" data-en-aria="Close"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M4 4l8 8M12 4l-8 8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
     <h3>فرمول‌های یک‌جا</h3>
     <div class="prose-compact">
       <p>ضریب وزن (تخت):</p>
