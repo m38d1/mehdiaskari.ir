@@ -41,14 +41,16 @@ MENU_SKILLS = '    <a href="/#skills" data-en="Skills">'
 MENU_EDU = ('    <a href="/#education" data-en="Education">تحصیلات</a>\n'
             '    <a href="/#skills" data-en="Skills">')
 
-# "Lab" and "Project Controls" sit between Skills and Blog on every page. The
-# nav needle is '<li><a href="/lab/"' and the mobile one is '    <a href="/lab/"'
-# — the four spaces never match inside the nav line (it has '<li>' there), so
-# the insertions cannot short-circuit each other.
-NAV_BLOG = '          <li><a href="/blog/all/" data-en="Blog">'
-NAV_LAB = ('          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>\n'
-           '          <li><a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a></li>\n'
-           '          <li><a href="/blog/all/" data-en="Blog">')
+# The article nav mirrors the home page menu: about/experience/education/
+# skills/blog/contact. Lab and Project Controls were removed from article
+# pages on user request (Oct 2026) — they stay reachable from the home page
+# and the lab hub's own cross-links. These lines strip them from any page
+# that still ships them. The four-space mobile variants never match inside
+# a '<li>' nav line, so nav and menu strips cannot interfere.
+NAV_LAB_LINE = '          <li><a href="/lab/" data-en="Lab">آزمایشگاه</a></li>\n'
+NAV_PC_LINE = '          <li><a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a></li>\n'
+MENU_LAB_LINE = '    <a href="/lab/" data-en="Lab">آزمایشگاه</a>\n'
+MENU_PC_LINE = '    <a href="/project-controls/" data-en="Project Controls">کنترل پروژه</a>\n'
 # The site had no chart glyph at all, which is odd for a dashboard person.
 SPRITE_ANCHOR = '<symbol id="i-tools" viewBox="0 0 24 24">'
 SPRITE_ICON = ('<symbol id="i-chart" viewBox="0 0 24 24">'
@@ -90,10 +92,10 @@ CHECKS = {
     'cursor glow': 'cursor-glow',
     'Education (nav)': '<li><a href="/#education"',
     'Education (menu)': '    <a href="/#education"',
-    'Lab (nav)': '<li><a href="/lab/"',
-    'Lab (menu)': '    <a href="/lab/"',
-    'Project Controls (nav)': '<li><a href="/project-controls/"',
-    'Project Controls (menu)': '    <a href="/project-controls/"',
+    'no Lab (nav)': ('!', '<li><a href="/lab/"'),
+    'no Lab (menu)': ('!', '    <a href="/lab/"'),
+    'no PC (nav)': ('!', '<li><a href="/project-controls/"'),
+    'no PC (menu)': ('!', '    <a href="/project-controls/"'),
     'chart icon': '<symbol id="i-chart"',
     'lang toggle': 'class="lang-toggle"',
     'cmdk hint': 'class="cmdk-hint"',
@@ -321,8 +323,11 @@ def patch(html: str):
     sub('<body>\n', '<body>\n' + GLOW + '\n', 'cursor-glow', 'cursor glow')
     sub(NAV_SKILLS, NAV_EDU, '<li><a href="/#education"', 'Education (nav)')
     sub(MENU_SKILLS, MENU_EDU, '    <a href="/#education"', 'Education (menu)')
-    sub(NAV_BLOG, NAV_LAB, '<li><a href="/lab/"', 'Lab (nav)')
-    sub(MENU_BLOG, MENU_LAB, '    <a href="/lab/"', 'Lab (menu)')
+    for line, label in ((NAV_LAB_LINE, 'Lab (nav)'), (NAV_PC_LINE, 'PC (nav)'),
+                        (MENU_LAB_LINE, 'Lab (menu)'), (MENU_PC_LINE, 'PC (menu)')):
+        if line in html:
+            html = html.replace(line, '')
+            changes.append(f'drop {label}')
     sub(THEME_ANCHOR, LANG_BLOCK, 'class="lang-toggle"', 'lang toggle + cmdk hint')
     sub(SPRITE_ANCHOR, SPRITE_ICON + SPRITE_ANCHOR, '<symbol id="i-chart"', 'chart icon')
     sub('</footer>', '</footer>\n\n' + CMDK_OVERLAY + '\n', 'id="cmdk-overlay"', 'cmdk overlay')
@@ -330,7 +335,14 @@ def patch(html: str):
 
 
 def missing(html: str):
-    return [name for name, needle in CHECKS.items() if needle not in html]
+    out = []
+    for name, needle in CHECKS.items():
+        if isinstance(needle, tuple):        # ('!', frag) — fragment must be ABSENT
+            if needle[1] in html:
+                out.append(name)
+        elif needle not in html:
+            out.append(name)
+    return out
 
 
 # ---------------------------------------------------------------- template

@@ -139,7 +139,7 @@
     transform:scaleX(0); transition:transform .25s ease;
   }
   nav a:hover::after, nav a:focus-visible::after{transform:scaleX(1);}
-  @media (max-width:820px){ nav ul{display:none;} }
+  @media (max-width:700px){ nav ul{display:none;} }
 
   .menu-toggle{
     display:none; width:32px; height:32px; border:none; background:transparent; cursor:pointer;
@@ -149,10 +149,10 @@
   .menu-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
   .menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
   .menu-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-  @media (max-width:820px){ .menu-toggle{display:flex;} }
+  @media (max-width:700px){ .menu-toggle{display:flex;} }
 
   /* Hidden on desktop even if components.css has not arrived yet — the sheet
-     itself (and the un-hide below 820px) lives in components.css. */
+     itself (and the un-hide below 700px) lives in components.css. */
   @media (min-width:821px){ .mobile-menu{ display:none; } }
 
   .theme-toggle{

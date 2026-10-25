@@ -650,11 +650,43 @@
     }
   }
 
+  /* With html{scroll-behavior:smooth} Chromium drops the initial fragment
+     scroll on cross-document arrivals (post-header «تماس» -> /#contact loaded
+     at the top, scrollY 0) and lazy content can shift the target mid-flight.
+     Let the native scroll run; if after ~700ms we are still far from the
+     target, jump there instantly. Successful smooth scrolls stay untouched. */
+  function initHashJump(){
+    function ensure(){
+      var id = location.hash.slice(1);
+      if(!id) return;
+      var el = document.getElementById(id);
+      if(!el) return;
+      var header = document.querySelector('header');
+      var off = (header ? header.offsetHeight : 0) + 10;
+      var want = Math.max(0, Math.round(el.getBoundingClientRect().top + window.pageYOffset - off));
+      if(Math.abs(window.pageYOffset - want) > 120) window.scrollTo({top: want, behavior: 'auto'});
+    }
+    // the reader scrolling away by hand wins — never yank them back
+    var touched = false;
+    ['wheel','touchstart','keydown'].forEach(function(ev){
+      window.addEventListener(ev, function(){ touched = true; }, {passive:true, capture:true});
+    });
+    function watch(){
+      touched = false;
+      setTimeout(function(){ if(!touched) ensure(); }, 700);
+    }
+    if(document.readyState === 'loading'){
+      document.addEventListener('DOMContentLoaded', watch);
+    } else { watch(); }
+    window.addEventListener('load', watch);           // after late layout shifts
+    window.addEventListener('hashchange', watch);     // TOC + in-page anchors
+  }
+
   function initAll(root){
     initTabs(root); initAccordion(root); initDialog(root); initCode(root);
     initReadingBar(); initTOC(); initReadingTime(); initRelated(); initCounters(root);
     initBlogSearch(root); initTilt(root); initCursorGlow();
-    initLang(); initCmdk(); initMenu(root);
+    initLang(); initCmdk(); initMenu(root); initHashJump();
   }
 
   if (document.readyState === 'loading') {
