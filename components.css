@@ -325,8 +325,8 @@ main:focus{ outline:none; }
 .mobile-menu, .menu-backdrop{ display:none; }
 
 /* the sheet has to cover the whole range where blog.css hides the desktop
-   nav (see its 820px breakpoint) or the toggle would open nothing */
-@media (max-width:820px){
+   nav (see its 700px breakpoint) or the toggle would open nothing */
+@media (max-width:700px){
   .mobile-menu{
     display:flex; flex-direction:column;
     position:fixed; inset-inline:0; bottom:0; z-index:70;
