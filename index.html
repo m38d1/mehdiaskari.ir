@@ -462,8 +462,7 @@
   .role-pill:hover{border-color:var(--teal); color:var(--teal); transform:translateY(-2px);}
 
   .hero-actions{
-    max-width:960px; margin:28px auto 0; padding:0 24px;
-    display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
+    margin-top:26px; display:flex; align-items:center; justify-content:center; gap:14px; flex-wrap:wrap;
   }
   .btn-download{
     position:relative; display:inline-flex; align-items:center; gap:10px;
@@ -543,11 +542,17 @@
   }
   .schedule-track{height:8px; border-radius:5px; background:var(--border-soft); overflow:hidden; position:relative;}
   .schedule-fill{
-    height:100%; width:0%; border-radius:5px;
+    height:100%; width:0%; border-radius:5px; position:relative; overflow:hidden;
     background:linear-gradient(90deg, var(--teal-2), var(--teal));
     animation:fillbar 1.7s cubic-bezier(.2,.8,.2,1) 0.4s forwards;
   }
   @keyframes fillbar{to{width:88%;}}
+  .schedule-fill::after{
+    content:""; position:absolute; inset:0;
+    background:linear-gradient(100deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    transform:translateX(-100%); animation:sheen 3.2s ease-in-out 2.2s infinite;
+  }
+  @keyframes sheen{ 0%{transform:translateX(-100%);} 55%,100%{transform:translateX(100%);} }
   .schedule-meta{display:flex; justify-content:space-between; margin-top:14px;}
   .schedule-meta span{font-size:0.72rem; color:var(--text-dim);}
   .schedule-meta strong{color:var(--text-muted); font-weight:600;}
@@ -573,7 +578,7 @@
     position:relative; overflow:hidden;
     transition:border-color .25s ease, transform .25s ease;
   }
-  .info-card:hover{border-color:var(--teal-2); transform:translateY(-3px);}
+  .info-card:hover{border-color:var(--teal-2); transform:translateY(-3px); box-shadow:0 18px 44px -22px rgba(91,140,255,0.35);}
   .info-card::before, .contact-panel::before{
     content:""; position:absolute; top:0; right:0; left:0; height:2px;
     background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber));
@@ -838,7 +843,11 @@
     background:linear-gradient(90deg, var(--teal), var(--teal-2), var(--amber));
     opacity:.5; transition:opacity .25s ease;
   }
-  .blog-card:hover{border-color:var(--teal); transform:translateY(-4px);}
+  .blog-card[data-accent="0"]::before{background:linear-gradient(90deg, var(--teal), var(--teal-2));}
+  .blog-card[data-accent="1"]::before{background:linear-gradient(90deg, var(--teal-2), var(--teal));}
+  .blog-card[data-accent="2"]::before{background:linear-gradient(90deg, var(--amber), var(--teal-2));}
+  .blog-card .rtime{margin-inline-start:auto; white-space:nowrap; font-family:'IBM Plex Mono', monospace; font-size:0.64rem;}
+  .blog-card:hover{border-color:var(--teal); transform:translateY(-4px); box-shadow:0 18px 44px -22px rgba(47,224,196,0.35);}
   .blog-card:hover::before{opacity:1;}
   .blog-card h3{font-size:0.98rem; font-weight:800; line-height:1.7;}
   .blog-card p{font-size:0.82rem; color:var(--text-muted); display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
@@ -1109,6 +1118,8 @@
 
   /* click ripple — confirm feedback, decaying overlay (not layout motion) */
   .ripple-able{position:relative; overflow:hidden;}
+  /* the ripple class must not re-anchor the fixed back-to-top button */
+  .scroll-top.ripple-able{position:fixed;}
   .ripple{
     position:absolute; border-radius:50%; pointer-events:none; opacity:.28;
     background:radial-gradient(circle, var(--teal) 0%, transparent 68%);
@@ -1274,6 +1285,13 @@
       <span data-en='Role: <strong>Project Planning &amp; Control</strong>'>سمت: <strong>برنامه‌ریزی و کنترل پروژه</strong></span>
     </div>
   </div>
+
+  <div class="hero-actions">
+  <button class="btn-download" id="download-resume">
+    <span class="ic-wrap"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/></svg></span>
+    <span data-en="Download Resume (PDF)">دانلود رزومه (PDF)</span>
+  </button>
+</div>
   </div>
 
 <section id="about" class="reveal">
@@ -1294,12 +1312,6 @@
   </div>
 </section>
 
-<div class="hero-actions">
-  <button class="btn-download" id="download-resume">
-    <span class="ic-wrap"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5"/><path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z"/></svg></span>
-    <span data-en="Download Resume (PDF)">دانلود رزومه (PDF)</span>
-  </button>
-</div>
 
 <div class="section-divider"><span></span><span></span><span></span></div>
 <section id="experience" class="reveal">
@@ -1508,14 +1520,14 @@
   <div class="bento-wide skill-marquee">
     <div class="mq" dir="ltr">
       <div class="mq-inner">
-      <div class="mq-track" dir="rtl"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
-      <div class="mq-track" dir="rtl" aria-hidden="true"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Network+</span></div>
+      <div class="mq-track" dir="rtl"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">Power BI</span><span class="skill-tag">Power Query</span><span class="skill-tag">Excel</span><span class="skill-tag">MikroTik RouterOS</span></div>
+      <div class="mq-track" dir="rtl" aria-hidden="true"><span class="skill-tag">Oracle Primavera P6</span><span class="skill-tag">Microsoft Project</span><span class="skill-tag">Frontend / Backend</span><span class="skill-tag">CompTIA Network+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">Power BI</span><span class="skill-tag">Power Query</span><span class="skill-tag">Excel</span><span class="skill-tag">MikroTik RouterOS</span></div>
       </div>
     </div>
     <div class="mq mq-rev" dir="ltr">
       <div class="mq-inner">
-      <div class="mq-track" dir="rtl"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
-      <div class="mq-track" dir="rtl" aria-hidden="true"><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span><span class="skill-tag">CompTIA Security+</span></div>
+      <div class="mq-track" dir="rtl"><span class="skill-tag" data-en="Project Planning & Control">برنامه‌ریزی و کنترل پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="EVM & Variance Analysis">تحلیل انحراف و ارزش کسب‌شده (EVM)</span><span class="skill-tag" data-en="Change Control">کنترل تغییرات</span><span class="skill-tag" data-en="Management Dashboards">داشبورد مدیریتی</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Design & Implementation">طراحی و پیاده‌سازی شبکه</span><span class="skill-tag" data-en="Data Analysis">تحلیل داده</span></div>
+      <div class="mq-track" dir="rtl" aria-hidden="true"><span class="skill-tag" data-en="Project Planning & Control">برنامه‌ریزی و کنترل پروژه</span><span class="skill-tag" data-en="Periodic Project Reporting">گزارش‌دهی دوره‌ای پروژه</span><span class="skill-tag" data-en="EVM & Variance Analysis">تحلیل انحراف و ارزش کسب‌شده (EVM)</span><span class="skill-tag" data-en="Change Control">کنترل تغییرات</span><span class="skill-tag" data-en="Management Dashboards">داشبورد مدیریتی</span><span class="skill-tag" data-en="Network Security">امنیت شبکه</span><span class="skill-tag" data-en="Network Design & Implementation">طراحی و پیاده‌سازی شبکه</span><span class="skill-tag" data-en="Data Analysis">تحلیل داده</span></div>
       </div>
     </div>
   </div>
@@ -1822,12 +1834,19 @@
   const reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const isCoarsePointer = window.matchMedia && window.matchMedia('(pointer: coarse)').matches;
   if(!reduceMotion && !isCoarsePointer){
+    // vibefarsi glow: keep the spotlight inside the hero so long reads stay calm.
+    const glowZone = document.querySelector('.hero');
+    let spotY;
+    const syncSpot = () => spotlight.classList.toggle('on',
+      spotY !== undefined && glowZone && spotY < glowZone.getBoundingClientRect().bottom);
     window.addEventListener('mousemove', (e)=>{
       root.style.setProperty('--mx', e.clientX + 'px');
       root.style.setProperty('--my', e.clientY + 'px');
-      spotlight.classList.add('on');
+      spotY = e.clientY;
+      syncSpot();
     }, {passive:true});
-    window.addEventListener('mouseleave', ()=> spotlight.classList.remove('on'));
+    window.addEventListener('scroll', syncSpot, {passive:true});
+    window.addEventListener('mouseleave', ()=>{ spotY = undefined; spotlight.classList.remove('on'); });
 
     const magneticBtn = document.getElementById('download-resume');
     if(magneticBtn){
@@ -2192,12 +2211,15 @@
       if(!list.length){ grid.innerHTML = emptyHTML(q); return; }
       const en = isEn();
       const more = en ? 'Read post' : 'خواندن نوشته';
+      const faNum = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
       list.forEach(p => {
+        const accent = (typeof hueFor === 'function') ? ' data-accent="' + hueFor(p.slug, p.tags) + '"' : '';
+        const rtime = p.read ? '<span class="rtime">' + (en ? p.read + ' min read' : faNum(p.read) + ' دقیقه') + '</span>' : '';
         grid.insertAdjacentHTML('beforeend',
-          '<a class="blog-card" href="blog/' + p.slug + '/">' +
+          '<a class="blog-card"' + accent + ' href="blog/' + p.slug + '/">' +
             '<div class="cover" data-cover="' + p.slug + '"></div>' +
             '<div class="post-meta"><span class="pdate">' + (en ? p.date : p.dateFa) + '</span>' +
-            p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
+            p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + rtime + '</div>' +
             '<h3>' + (en && p.titleEn ? p.titleEn : p.title) + '</h3>' +
             '<p>' + (en && p.excerptEn ? p.excerptEn : p.excerpt) + '</p>' +
             '<span class="more">' + more +
@@ -2236,7 +2258,7 @@
       ticking = false;
       const max = document.documentElement.scrollHeight - innerHeight;
       const p = max > 0 ? (window.scrollY || pageYOffset) / max : 0;
-      document.documentElement.style.setProperty('--py', (p * 150 - 75).toFixed(1) + 'px');
+      document.documentElement.style.setProperty('--py', (p * 240 - 120).toFixed(1) + 'px');
     }
     window.addEventListener('scroll', () => { if(!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
     window.addEventListener('resize', update, {passive:true});

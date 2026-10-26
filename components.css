@@ -223,8 +223,8 @@ mark.hl{ background:var(--teal-dim); color:var(--text); border-radius:3px; paddi
 /* ---------- Cursor glow ---------- */
 .cursor-glow{
   position:fixed; inset:0; pointer-events:none; z-index:0;
-  background:radial-gradient(420px circle at var(--mx,50%) var(--my,30%),
-            color-mix(in srgb, var(--teal) 12%, transparent), transparent 60%);
+  background:radial-gradient(380px circle at var(--mx,50%) var(--my,30%),
+            color-mix(in srgb, var(--teal) 8%, transparent), transparent 60%);
   opacity:0; transition:opacity .4s ease;
 }
 .cursor-glow.on{ opacity:1; }
