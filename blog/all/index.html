@@ -412,14 +412,17 @@
     const grid = document.getElementById('post-grid');
     grid.innerHTML = '';
     grid.classList.add('posts-ready');
+    const faNum = n => String(n).replace(/\d/g, d => '۰۱۲۳۴۵۶۷۸۹'[d]);
     posts.forEach((p, i) => {
       const card = document.createElement('a');
       card.className = 'post-card';
       card.href = '/blog/' + p.slug + '/';
+      if (typeof hueFor === 'function') card.setAttribute('data-accent', hueFor(p.slug, p.tags));
+      const rtime = p.read ? '<span class="rtime">' + (lang === 'en' ? p.read + ' min read' : faNum(p.read) + ' دقیقه') + '</span>' : '';
       card.innerHTML =
         '<div class="cover" data-cover="' + p.slug + '"></div>' +
         '<div class="post-meta"><span class="pdate">' + (lang === 'en' ? p.date : p.dateFa) + '</span>' +
-        p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + '</div>' +
+        p.tags.map(t => '<span class="tag">' + t + '</span>').join('') + rtime + '</div>' +
         '<h2>' + (lang === 'en' && p.titleEn ? p.titleEn : p.title) + '</h2>' +
         '<p>' + (lang === 'en' && p.excerptEn ? p.excerptEn : p.excerpt) + '</p>' +
         '<span class="read">' + (lang === 'en' ? 'Read article' : 'خواندن نوشته') +

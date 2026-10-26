@@ -405,12 +405,32 @@
   function initCursorGlow(){
     if(window.matchMedia && window.matchMedia('(hover: none)').matches) return;
     var g = document.querySelector('.cursor-glow');
-    if(!g) return;
-    g.classList.add('on');
+    if(!g || g.__bound) return;
+    g.__bound = true;
+    // vibefarsi glow: a hero accent, not a global spotlight — it turns off once
+    // the hero (or the first 72vh on pages without one) scrolls past the pointer.
+    var zone = document.querySelector('.hero');
+    var lastY;
+    function zoneBottom(){
+      return zone ? zone.getBoundingClientRect().bottom
+                  : innerHeight * 0.72 - (window.scrollY || window.pageYOffset || 0);
+    }
+    function sync(y){
+      lastY = y;
+      g.classList.toggle('on', y < zoneBottom());
+    }
     window.addEventListener('mousemove', function(e){
       g.style.setProperty('--mx', e.clientX+'px');
       g.style.setProperty('--my', e.clientY+'px');
+      sync(e.clientY);
     }, {passive:true});
+    window.addEventListener('scroll', function(){
+      if(lastY !== undefined) sync(lastY);
+    }, {passive:true});
+    window.addEventListener('mouseleave', function(){
+      lastY = undefined;
+      g.classList.remove('on');
+    });
   }
 
   // ---------- Language toggle (wire only if page has no own handler) ----------

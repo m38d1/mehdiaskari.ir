@@ -14,7 +14,8 @@
       ],
       "excerpt": "قالب عدد سفارشی اکسل یک راه کم‌دردسر برای ستون انحراف است: رنگ، فلش و صفرِ بی‌معنا را در خودِ سلول می‌گذارد. بخش‌های چهارگانه قالب، هشت رنگ نام‌دار، شرط‌های آستانه برای SPI/CPI و هشدارهای عملی را ببینید.",
       "titleEn": "Excel custom number formats: a variance column that colours itself",
-      "excerptEn": "Excel custom number formats put colour, arrows and a tidy zero into the cell itself — no conditional formatting needed. The four sections, the eight named colours, threshold conditions for SPI/CPI, and the practical caveats."
+      "excerptEn": "Excel custom number formats put colour, arrows and a tidy zero into the cell itself — no conditional formatting needed. The four sections, the eight named colours, threshold conditions for SPI/CPI, and the practical caveats.",
+      "read": 5
     },
     {
       "slug": "mikrotik-wan-failover",
@@ -29,7 +30,8 @@
       ],
       "excerpt": "وقتی اینترفیس WAN بالا است ولی اینترنت مرده، روتر باز هم خیالش راحت است. با check-gateway=ping و مسیرهای بازگشتی به یک آدرس عمومی، فِیلوور را به زنده‌بودن واقعی اینترنت گره بزنید.",
       "titleEn": "Automatic WAN failover in RouterOS with check-gateway and recursive routes",
-      "excerptEn": "When the WAN interface stays up but the internet is dead, the router still thinks it is online. Bind failover to real reachability with check-gateway=ping and recursive routes to a public address."
+      "excerptEn": "When the WAN interface stays up but the internet is dead, the router still thinks it is online. Bind failover to real reachability with check-gateway=ping and recursive routes to a public address.",
+      "read": 4
     },
     {
       "slug": "git-worktree-parallel",
@@ -43,7 +45,8 @@
       ],
       "excerpt": "کار نیمه‌کاره‌تان زیر پای یک باگ فوری گیر کرده؟ git worktree چند پوشه‌ی کاری به همان مخزن می‌دهد: یک برنچ اینجا، یک برنچ آنجا، بدون stash و بدون کلون دوم.",
       "titleEn": "git worktree: two branches, two folders, no stashing",
-      "excerptEn": "Caught mid-feature by an urgent fix? git worktree gives you extra working folders on the same repository — one branch here, one there, with no stashing and no second clone."
+      "excerptEn": "Caught mid-feature by an urgent fix? git worktree gives you extra working folders on the same repository — one branch here, one there, with no stashing and no second clone.",
+      "read": 3
     },
     {
       "slug": "schedule-health-checks",
@@ -57,7 +60,8 @@
       ],
       "excerpt": "سرهای باز، لگ منفی، قیدهای سخت، شناوری بالا و تاریخ‌های نامعتبر — پنج چکی که با فیلترهای ساده MSP و P6 برنامه را قبل از هر به‌روزرسانی دوره‌ای سالم نگه می‌دارند.",
       "titleEn": "Five schedule health checks to run before every update",
-      "excerptEn": "Open ends, negative lags, hard constraints, high float and invalid dates — five simple MSP/P6 filter checks that keep your schedule healthy before every update."
+      "excerptEn": "Open ends, negative lags, hard constraints, high float and invalid dates — five simple MSP/P6 filter checks that keep your schedule healthy before every update.",
+      "read": 5
     },
     {
       "slug": "mikrotik-load-balancing-filters",
@@ -71,7 +75,8 @@
       ],
       "excerpt": "ترکیب PCC، Nth، Mangle و فیلترهای Firewall برای توزیع هوشمند ترافیک بین چند ISP و امن‌سازی شبکه — با مثال‌های پیکربندی آماده و چک‌لیست پیش از اجرا.",
       "titleEn": "Load balancing and advanced filters in MikroTik",
-      "excerptEn": "Combining PCC, Nth, Mangle and firewall filters to distribute traffic across multiple ISPs and harden the network — with ready-made RouterOS configs and a pre-deployment checklist."
+      "excerptEn": "Combining PCC, Nth, Mangle and firewall filters to distribute traffic across multiple ISPs and harden the network — with ready-made RouterOS configs and a pre-deployment checklist.",
+      "read": 9
     },
     {
       "slug": "msp-power-tricks",
@@ -85,7 +90,8 @@
       ],
       "excerpt": "Deadline به‌جای Constraint، تقویم سطح فعالیت، Inactivate Tasks برای سناریوسازی، Lead/Lag قابل‌ردیابی با فیلد سفارشی، Baseline دوم، فیلترهای جلسهٔ هفتگی و میله‌های گانت شرطی — هفت ترفند MSP از تجربهٔ پروژه‌های صنعتی.",
       "titleEn": "Seven MS Project tricks that will save your schedule",
-      "excerptEn": "Deadline instead of constraints, task calendars, Inactivate Tasks for what-if, traceable lead/lag via custom fields, a second baseline, meeting filters and conditional Gantt bars — seven MSP tricks from industrial practice."
+      "excerptEn": "Deadline instead of constraints, task calendars, Inactivate Tasks for what-if, traceable lead/lag via custom fields, a second baseline, meeting filters and conditional Gantt bars — seven MSP tricks from industrial practice.",
+      "read": 5
     },
     {
       "slug": "p6-global-change",
@@ -99,7 +105,8 @@
       ],
       "excerpt": "پنج سناریوی واقعی Global Change در P6: اصلاح گروهی مدت‌ها، تخصیص خودکار تقویم، ساخت Activity Code ترکیبی، مستندسازی لَگ‌ها و هم‌خوان‌سازی Remaining Duration با درصد پیشرفت — به‌همراه قواعد امنیتی و چک‌لیست اجرا.",
       "titleEn": "Global Change in Primavera P6: the planner's silent assistant",
-      "excerptEn": "Five real-world P6 Global Change scenarios: bulk duration fixes, automatic calendar assignment, composite activity codes, lag documentation, and aligning Remaining Duration with percent complete — plus safety rules and an execution checklist."
+      "excerptEn": "Five real-world P6 Global Change scenarios: bulk duration fixes, automatic calendar assignment, composite activity codes, lag documentation, and aligning Remaining Duration with percent complete — plus safety rules and an execution checklist.",
+      "read": 6
     },
     {
       "slug": "power-query-site-progress",
@@ -114,7 +121,8 @@
       ],
       "excerpt": "از بیست فایل اکسل پیمانکار تا یک جدول تمیز و قابل‌گزارش با Power Query: پوشه‌خوانی خودکار، پاک‌سازی فرمول‌دار، Merge با WBS استاندارد و مدل ستاره‌ای برای داشبورد — با فرمول‌های M آماده و چک‌لیست کنترل کیفیت داده.",
       "titleEn": "Power Query: a data pipeline for site progress reports",
-      "excerptEn": "From twenty contractor Excel files to one clean, reportable table with Power Query: folder ingestion, formula-driven cleanup, merging against a standard WBS and a star-schema layout for dashboards — with ready-made M formulas and a data-QA checklist."
+      "excerptEn": "From twenty contractor Excel files to one clean, reportable table with Power Query: folder ingestion, formula-driven cleanup, merging against a standard WBS and a star-schema layout for dashboards — with ready-made M formulas and a data-QA checklist.",
+      "read": 5
     },
     {
       "slug": "gale-openwrt-custom-firmware",
@@ -130,7 +138,8 @@
       ],
       "excerpt": "ساخت فریمور سفارشی OpenWrt ۲۵.۱۲.۵ روی Google Wifi (Gale): رفع باگ وای‌فای دایرکت در پس‌وال، مالتی‌WAN واقعی با mwan3 (failover + load balance)، منوی Developer و رمز root خالی.",
       "titleEn": "Custom Google Wifi (Gale) firmware: PassWall, multi-WAN and direct Wi-Fi",
-      "excerptEn": "Building a custom OpenWrt 25.12.5 firmware for the Google Wifi (Gale): fixing the direct-WiFi bypass bug in PassWall, real multi-WAN with mwan3 (failover + load balance), a Developer menu and an empty root password."
+      "excerptEn": "Building a custom OpenWrt 25.12.5 firmware for the Google Wifi (Gale): fixing the direct-WiFi bypass bug in PassWall, real multi-WAN with mwan3 (failover + load balance), a Developer menu and an empty root password.",
+      "read": 4
     },
     {
       "slug": "weight-factor-excel-msp",
@@ -145,7 +154,8 @@
       ],
       "excerpt": "وقتی فقط هزینه واقعی (C)، وزن (W) و ارزش/بودجه (V) را داریم، چطور ضریب وزن (W.F) و درصد پیشرفت وزنی کل پروژه را حساب کنیم — آموزش گام‌به‌گام در اکسل و Microsoft Project.",
       "titleEn": "Calculating Weight Factor (W.F) and weighted progress from cost, weight and value — in Excel and MSP",
-      "excerptEn": "When you only have actual cost (C), weight (W) and budget/value (V): how to compute the Weight Factor (W.F) and overall weighted progress — step by step in Excel and Microsoft Project."
+      "excerptEn": "When you only have actual cost (C), weight (W) and budget/value (V): how to compute the Weight Factor (W.F) and overall weighted progress — step by step in Excel and Microsoft Project.",
+      "read": 8
     },
     {
       "slug": "p6-power-bi-dashboard",
@@ -160,7 +170,8 @@
       ],
       "excerpt": "راهنمای گام‌به‌گام استخراج داده از P6، وارد کردن به Power BI، مدل داده، شاخص‌های EVM (SPI، CPI، SV، CV، EAC) و طراحی داشبورد کنترل پروژه — با مثال واقعی از پروژه‌های نفت، گاز، پتروشیمی و نیروگاه.",
       "titleEn": "Connecting Primavera P6 to Power BI — A Practical Guide to Project Controls Dashboards",
-      "excerptEn": "Step-by-step guide: exporting from P6, importing into Power BI, data modeling, EVM metrics (SPI, CPI, SV, CV, EAC), and dashboard design — with real examples from oil, gas, petrochemical and power projects."
+      "excerptEn": "Step-by-step guide: exporting from P6, importing into Power BI, data modeling, EVM metrics (SPI, CPI, SV, CV, EAC), and dashboard design — with real examples from oil, gas, petrochemical and power projects.",
+      "read": 6
     },
     {
       "slug": "pmi-ai-project-patterns",
@@ -174,7 +185,8 @@
       ],
       "excerpt": "از CPMAI تا الگوهای هفت‌گانه پروژه‌های AI؛ چرا روش‌شناسی‌های کلاسیک به‌تنهایی برای پروژه‌های هوش مصنوعی کافی نیستند و PMI چه مسیری ترسیم کرده است.",
       "titleEn": "Why project management is taking AI seriously",
-      "excerptEn": "From CPMAI to the seven AI project patterns; why classic methodologies alone fall short for AI projects — and the path PMI has drawn."
+      "excerptEn": "From CPMAI to the seven AI project patterns; why classic methodologies alone fall short for AI projects — and the path PMI has drawn.",
+      "read": 1
     },
     {
       "slug": "from-code-to-gantt",
@@ -187,7 +199,8 @@
       ],
       "excerpt": "چطور یک توسعه‌دهنده‌ی وب به دنیای برنامه‌ریزی و کنترل پروژه‌های صنعتی رسید و چه چیز مشترکی بین دیباگ کد و کنترل انحرافات پروژه وجود دارد.",
       "titleEn": "From code to Gantt charts: the story of a detour",
-      "excerptEn": "How a web developer ended up planning industrial megaprojects — and what debugging code and controlling schedule deviations have in common."
+      "excerptEn": "How a web developer ended up planning industrial megaprojects — and what debugging code and controlling schedule deviations have in common.",
+      "read": 1
     },
     {
       "slug": "network-lessons-industrial-site",
@@ -200,7 +213,8 @@
       ],
       "excerpt": "درس‌هایی از طراحی و نگهداری شبکه در محیط صنعتی؛ جایی که پایداری شبکه یعنی پایداری کل پروژه.",
       "titleEn": "Five networking lessons from an industrial site",
-      "excerptEn": "Lessons from designing and maintaining networks where uptime equals project uptime."
+      "excerptEn": "Lessons from designing and maintaining networks where uptime equals project uptime.",
+      "read": 1
     }
   ]
 }
