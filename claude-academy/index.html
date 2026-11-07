@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script>/* theme boot — runs before the first paint so a saved or system preference never flashes the other theme */
+(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'}document.documentElement.setAttribute('data-theme',t);window.__theme=t})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+<link rel="stylesheet" href="/components.css">
+<title>Claude Academy — ۲۹ دورهٔ تکمیل‌شده | مهدی عسکری</title>
+<meta name="description" content="فهرست کامل ۲۹ دورهٔ تکمیل‌شدهٔ Claude Academy (Anthropic) با توضیح هر دوره؛ از مبانی Claude و ساخت با API و MCP تا استقرار سازمانی و چارچوب AI Fluency.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Claude Academy — ۲۹ دورهٔ تکمیل‌شده">
+<meta property="og:description" content="فهرست کامل ۲۹ دورهٔ تکمیل‌شدهٔ Claude Academy (Anthropic) با توضیح هر دوره.">
+<meta property="og:url" content="https://mehdiaskari.ir/claude-academy/">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="https://mehdiaskari.ir/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Claude Academy — ۲۹ دورهٔ تکمیل‌شده">
+<meta name="twitter:description" content="فهرست کامل ۲۹ دورهٔ تکمیل‌شدهٔ Claude Academy (Anthropic) با توضیح هر دوره.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/og-image.png">
+<link rel="canonical" href="https://mehdiaskari.ir/claude-academy/">
+<script src="/components.js" defer></script>
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@type": "CollectionPage",
+ "name": "Claude Academy — دوره‌های تکمیل‌شدهٔ مهدی عسکری",
+ "url": "https://mehdiaskari.ir/claude-academy/",
+ "description": "فهرست ۲۹ دورهٔ تکمیل‌شدهٔ Claude Academy شرکت Anthropic به‌همراه توضیح هر دوره.",
+ "inLanguage": "fa",
+ "author": { "@type": "Person", "name": "Mehdi Askari", "alternateName": "مهدی عسکری", "url": "https://mehdiaskari.ir/" },
+ "about": { "@type": "Organization", "name": "Anthropic", "alternateName": "Claude Academy" }
+}</script>
+<style>
+  .ca-intro{color:var(--text-muted); font-size:.95rem; line-height:1.9; max-width:75ch; margin-top:12px;}
+  .ca-group{margin:36px 0;}
+  .ca-group>h2{font-size:1.15rem; font-weight:800; margin:0 0 14px; color:var(--text);}
+  .ca-group>h2::before{content:"◂ "; color:var(--teal);}
+  html[dir="ltr"] .ca-group>h2::before{content:"▸ ";}
+  .ca-course{padding:16px 18px; border:1px solid var(--border-soft); border-radius:14px; background:var(--glass); margin-bottom:10px;}
+  .ca-course h3{font-size:.95rem; font-weight:700; margin:0 0 6px;}
+  .ca-course h3 a{color:var(--text); text-decoration:none; direction:ltr; unicode-bidi:isolate;}
+  .ca-course h3 a:hover{color:var(--teal);}
+  .ca-course p{color:var(--text-dim); font-size:.85rem; margin:0; line-height:1.85;}
+  .ca-count{display:inline-block; margin-inline-start:8px; font-size:.72rem; font-weight:600; color:var(--teal); background:var(--glass-2); border:1px solid var(--border-soft); border-radius:100px; padding:2px 10px; vertical-align:middle;}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main" data-en="Skip to content">پرش به محتوا</a>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4-1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16.5 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav aria-label="منوی اصلی" data-en-aria="Main menu">
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group"  aria-label="زبان / Language" data-en-aria="Language">
+        <button class="lang-opt" data-lang="fa">فا</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+      </div>
+      <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان (Ctrl K)" data-en-aria="Command palette (⌘ K)" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+      <div class="theme-toggle" role="group"  aria-label="حالت نمایش" data-en-aria="Appearance">
+        <button class="theme-opt" data-mode="light"  aria-label="روشن" data-en-aria="Light"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark"  aria-label="تاریک" data-en-aria="Dark"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle"  aria-label="منو" data-en-aria="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="post-head fu">
+    <div class="post-meta"><span class="pdate" data-en="Nov 2026">آبان ۱۴۰۵</span><span class="tag">Anthropic</span><span class="tag" data-en="29 courses">۲۹ دوره</span><span class="tag" data-en="25 badges">۲۵ نشان</span></div>
+    <h1 data-en="Claude Academy">آکادمی Claude</h1>
+    <p class="ca-intro" data-en="I've completed all 29 Claude Academy courses (Anthropic) and earned 25 completion badges — from Claude fundamentals, building with the API and MCP, to enterprise deployment and the AI Fluency framework. The full list, grouped by topic:">هر ۲۹ دورهٔ Claude Academy (شرکت Anthropic) را تکمیل کرده‌ام و ۲۵ نشان تکمیل گرفته‌ام — از مبانی Claude و ساخت با API و پروتکل MCP تا استقرار سازمانی و چارچوب AI Fluency. فهرست کامل به‌تفکیک موضوع:</p>
+  </div>
+
+  <div class="ca-catalog fu d1">
+
+    <section class="ca-group">
+      <h2 data-en="Claude products &amp; foundations">محصولات و مبانی Claude <span class="ca-count">۶</span></h2>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/c6381a6b3d895c10bd7b929bb5ae36de" target="_blank" rel="noopener">Claude 101</a></h3>
+        <p data-en="Learn to use Claude for everyday work, from your first conversation and effective prompting to projects, artifacts, skills, and connected tools.">استفاده از Claude برای کارهای روزمره؛ از نخستین گفتگو و پرامپت‌نویسی مؤثر تا پروژه‌ها، artifactها، skillها و ابزارهای متصل.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/c30936e31abf6c74ce0d7d1990c04fcd" target="_blank" rel="noopener">Claude Code 101</a></h3>
+        <p data-en="An agentic coding tool that lives in your terminal. Learn what Claude Code is, how it works, and the core workflows for getting real work done with it.">ابزار کدنویسی عاملی که در ترمینال اجرا می‌شود؛ آشنایی با Claude Code، نحوهٔ کار و گردش‌کارهای اصلی برای انجام کار واقعی با آن.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/9d367e4f50d623d37d3871bd0fb3134d" target="_blank" rel="noopener">Claude Code in action</a></h3>
+        <p data-en="Run long, hands-off Claude Code sessions you can trust: steer, configure, automate, and verify.">اجرای جلسه‌های طولانی و خودکار Claude Code که بتوان به آن‌ها اعتماد کرد؛ هدایت، پیکربندی، خودکارسازی و راستی‌آزمایی.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/8cb3e462aeed882eecbff24c9379ab63" target="_blank" rel="noopener">Introduction to Claude Cowork</a></h3>
+        <p data-en="Delegate multi-step work to Claude in Cowork: set up workspaces, give context, run task loops, and use plugins for research, documents, and browser tasks.">واگذاری کارهای چندمرحله‌ای به Claude در Cowork؛ راه‌اندازی فضای کار، دادن زمینه، اجرای چرخه‌های وظیفه و استفاده از افزونه‌ها برای پژوهش، اسناد و کارهای مرورگر.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/67d7066d97b51f9e34b96ed679c8cd12" target="_blank" rel="noopener">Introduction to Claude Tag</a></h3>
+        <p data-en="Claude Tag (beta) brings Claude into your team's Slack workspace. Learn where to hand it work, how to steer and correct it, and the habits that help you and your team get more from it over time.">Claude Tag (بتا) Claude را به فضای Slack تیم می‌آورد؛ اینکه چه کاری را به آن بسپارید، چگونه هدایت و اصلاحش کنید و عادت‌هایی که بازدهی شما و تیم را بیشتر می‌کند.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/1c0afd1b18e4bdfaf36ef9406b76ff60" target="_blank" rel="noopener">Claude Platform 101</a></h3>
+        <p data-en="This course teaches developers to build on the Claude Platform from the ground up, whether you've made a few API calls or have only used Claude through a chat window.">ساختن روی پلتفرم Claude از پایه؛ مناسب توسعه‌دهندگانی که چند فراخوانی API داشته‌اند یا تنها از پنجرهٔ چت Claude استفاده کرده‌اند.</p>
+      </div>
+    </section>
+
+    <section class="ca-group">
+      <h2 data-en="Building with Claude (API, MCP &amp; agents)">ساخت با Claude (API، MCP و عامل‌ها) <span class="ca-count">۷</span></h2>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/2f4cd17bb33de1673985a8548a8f62cd" target="_blank" rel="noopener">Building with the Claude API</a></h3>
+        <p data-en="The full spectrum of working with Anthropic models using the Claude API: prompting, tool use, RAG, agents, MCP, and production patterns.">طیف کامل کار با مدل‌های Anthropic از طریق Claude API؛ پرامپت‌نویسی، استفاده از ابزار، RAG، عامل‌ها، MCP و الگوهای production.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/2db20d0f18c561838af1021bde1d8716" target="_blank" rel="noopener">Tool use with the Messages API</a></h3>
+        <p data-en="Take tool use that already works and make it reliable, responsive, and cheaper to run, then add the tools Anthropic provides.">قابل‌اتکا، پاسخ‌گو و کم‌هزینه‌کردن استفاده از ابزار در Messages API و سپس افزودن ابزارهایی که Anthropic ارائه می‌دهد.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/a58a58d8edeb3f28ba71772fe8228d43" target="_blank" rel="noopener">Introduction to Model Context Protocol</a></h3>
+        <p data-en="Build MCP servers and clients from scratch with the Python SDK, covering the three core primitives—tools, resources, and prompts—that connect Claude to external services.">ساخت سرور و کلاینت MCP از صفر با SDK پایتون؛ سه اصل اصلی یعنی tools، resources و prompts که Claude را به سرویس‌های خارجی متصل می‌کند.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/ad2a8ebfebf9cc4d183bd0402cee1cfa" target="_blank" rel="noopener">Model Context Protocol: Advanced topics</a></h3>
+        <p data-en="Go beyond MCP basics: sampling, notifications, and roots, with interactive walkthroughs of each protocol flow.">فراتر از مبانی MCP؛ sampling، notifications و roots همراه با مرور تعاملی هر جریان پروتکل.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/courses/introduction-to-subagents" target="_blank" rel="noopener">Introduction to subagents</a></h3>
+        <p data-en="Decompose complex tasks across parallel Claude subagents and orchestrate them deterministically.">تجزیهٔ وظایف پیچیده میان subagentهای موازی Claude و ارکستره‌کردن قطعی آن‌ها.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/courses/introduction-to-agent-skills" target="_blank" rel="noopener">Introduction to agent skills</a></h3>
+        <p data-en="Build, configure, and share skills in Claude Code — reusable markdown instructions that Claude applies automatically to matching tasks. Covers creating your first skill through team distribution and troubleshooting.">ساخت، پیکربندی و اشتراک skillها در Claude Code؛ دستورالعمل‌های markdown قابل‌استفادهٔ مجدد که Claude خودکار به وظایف مرتبط اعمال می‌کند، از نخستین skill تا توزیع تیمی و عیب‌یابی.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/faa94a3b95af99cbe5dda94f06ef09db" target="_blank" rel="noopener">Introduction to evals</a></h3>
+        <p data-en="Build a small eval on your own data to choose a Claude model by accuracy first and cost second, fix the prompt before you upgrade, and keep checking after launch.">ساخت یک eval کوچک روی دادهٔ خودتان برای انتخاب مدل Claude بر پایهٔ دقت و سپس هزینه؛ اصلاح پرامپت پیش از ارتقا و پایش مستمر پس از انتشار.</p>
+      </div>
+    </section>
+
+    <section class="ca-group">
+      <h2 data-en="Cloud &amp; enterprise deployment">استقرار ابری و سازمانی <span class="ca-count">۵</span></h2>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/ad604735b5dc1156d48e3209e0ccb798" target="_blank" rel="noopener">Claude with Amazon Bedrock</a></h3>
+        <p data-en="Integrating and deploying Claude through Amazon Bedrock: API implementation, tool use, RAG pipelines, agents, and production-ready applications on AWS.">یکپارچه‌سازی و استقرار Claude از طریق Amazon Bedrock؛ پیاده‌سازی API، استفاده از ابزار، خطوط RAG، عامل‌ها و اپلیکیشن‌های آمادهٔ production روی AWS.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/46f97517db89d80edcb7594763f59979" target="_blank" rel="noopener">Claude on Google Cloud</a></h3>
+        <p data-en="Working with Anthropic models through Google Cloud's Agent Platform: setup, prompting, tool use, RAG, agents, and production deployment patterns.">کار با مدل‌های Anthropic از طریق Agent Platform گوگل کلاد؛ راه‌اندازی، پرامپت‌نویسی، استفاده از ابزار، RAG، عامل‌ها و الگوهای استقرار production.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/75618fd01772f718ad664104854d3f06" target="_blank" rel="noopener">Deploying Claude Enterprise with confidence</a></h3>
+        <p data-en="Make the five decisions that shape how Claude works for your organization — Structure &amp; Identity, Access, Governance, Spend, Visibility — and record them in the rollout plan you keep.">پنج تصمیمی که نحوهٔ کار Claude در سازمان را شکل می‌دهد — ساختار و هویت، دسترسی، حاکمیت، هزینه و دیده‌پذیری — و ثبت آن‌ها در طرح rollout.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/courses/ai-native-sdlc-playbook" target="_blank" rel="noopener">The AI-native SDLC playbook</a></h3>
+        <p data-en="Twelve plays for using Claude at each stage of the software development lifecycle (SDLC), for engineering, platform, and security leads whose organization already uses Claude Code.">دوازده play برای به‌کارگیری Claude در هر مرحله از چرخهٔ عمر توسعهٔ نرم‌افزار (SDLC)؛ ویژهٔ رهبران مهندسی، پلتفرم و امنیت که سازمانشان Claude Code دارد.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/4845075ee029b885fd534f24d5f29010" target="_blank" rel="noopener">Building effective human-agent teams (beta)</a></h3>
+        <p data-en="Explore the benefits of moving from single-player to multiplayer AI and learn how to prepare your team for the shift.">مزایای گذار از AI تک‌نفره به چندنفره و اینکه چگونه تیم را برای این تغییر آماده کنید.</p>
+      </div>
+    </section>
+
+    <section class="ca-group">
+      <h2 data-en="AI Fluency framework &amp; applications">چارچوب و کاربردهای AI Fluency <span class="ca-count">۱۱</span></h2>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/162dbd820a8e385cd1018564b3fbe4b8" target="_blank" rel="noopener">AI Fluency: Framework and foundations</a></h3>
+        <p data-en="Learn to collaborate with AI effectively, efficiently, ethically, and safely using the 4D framework: Delegation, Description, Discernment, and Diligence.">همکاری مؤثر، کارآمد، اخلاقی و ایمن با AI با چارچوب 4D؛ Delegation، Description، Discernment و Diligence.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/5e337afca300594db3eff1f6cbda6805" target="_blank" rel="noopener">AI capabilities and limitations</a></h3>
+        <p data-en="Build an accurate mental model of what large language models can and cannot do: next-token prediction, knowledge, working memory, steerability, and context limits.">ساخت مدل ذهنی دقیق از توانایی‌ها و محدودیت‌های مدل‌های زبانی بزرگ؛ پیش‌بینی توکن بعدی، دانش، حافظهٔ کاری، هدایت‌پذیری و محدودیت‌های context.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/c11e915016c4bdda3a909a1e00d02639" target="_blank" rel="noopener">AI Fluency for builders</a></h3>
+        <p data-en="This course empowers builders to develop AI fluency — increasing impact and efficiency while staying true to what it means to own the full arc from problem to shipped solution.">توانمندسازی سازندگان برای توسعهٔ AI fluency؛ افزایش اثرگذاری و کارایی ضمن حفظ مالکیت کامل مسیر از مسئله تا راه‌حل تحویل‌شده.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/3373d116f19a667ff842da778940a820" target="_blank" rel="noopener">AI Fluency for creative work</a></h3>
+        <p data-en="This course empowers creative professionals to develop AI fluency, making intentional, analysis-driven decisions about AI use in their creative practice while protecting what makes their work theirs.">توانمندسازی متخصصان خلاق برای تصمیم‌گیری آگاهانه و تحلیل‌محور دربارهٔ استفاده از AI در عمل خلاقانه، ضمن حفاظت از آنچه اثر را متعلق به آنان می‌کند.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/aa3a9ba1be8edb3f7f081398e1d2afae" target="_blank" rel="noopener">AI Fluency for educators</a></h3>
+        <p data-en="Helps faculty, instructional designers, and education leaders apply the 4D AI Fluency framework to course design, learning materials, and teaching practice.">به‌کارگیری چارچوب 4D توسط اعضای هیئت علمی، طراحان آموزشی و رهبران آموزشی در طراحی دوره، مواد یادگیری و عمل تدریس.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/bfc662e390f41173b271adf71d2d83e2" target="_blank" rel="noopener">AI Fluency for pK–12 educators</a></h3>
+        <p data-en="Helps pK-12 educators build practical AI fluency through the 4D Framework, supporting student learning while staying true to their mission and values. Created in partnership with Teach For America.">ساخت AI fluency عملی برای مربیان pK-12 با چارچوب 4D؛ حمایت از یادگیری دانش‌آموز ضمن پایبندی به مأموریت و ارزش‌ها. با همکاری Teach For America.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/courses/ai-fluency-for-pk-12-train-the-trainer" target="_blank" rel="noopener">AI Fluency for pK-12 Train the Trainer</a></h3>
+        <p data-en="This course empowers pK–12 educators to lead AI fluency training for their colleagues — equipping them with a ready-to-run workshop kit grounded in the 4D Framework, while staying true to educators' mission and values.">توانمندسازی مربیان pK-12 برای رهبری آموزش AI fluency همکاران؛ با کیت کارگاه آمادهٔ اجرا مبتنی بر چارچوب 4D و پایبندی به مأموریت و ارزش‌های مربیان.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/18ab25a86c17b9512ad74dca96e745dc" target="_blank" rel="noopener">Teaching AI Fluency</a></h3>
+        <p data-en="Equips academic faculty and instructional designers to teach and assess AI fluency in instructor-led settings. Builds on the 4D AI Fluency Framework with strategies for assessment, assignment design, and discipline-specific application.">تجهیز اعضای هیئت علمی و طراحان آموزشی برای تدریس و ارزیابی AI fluency در محیط‌های instructor-led؛ راهبردهای ارزیابی، طراحی تکلیف و کاربرد رشته‌ای بر پایهٔ چارچوب 4D.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/b7c061915d15cca367d78d3df8db18c7" target="_blank" rel="noopener">AI Fluency for nonprofits</a></h3>
+        <p data-en="Build practical AI collaboration skills for nonprofit work using the 4D Framework: Delegation, Description, Discernment, and Diligence. Covers research, writing, data analysis, and organization-wide AI adoption while staying true to your mission and values.">مهارت‌های همکاری عملی با AI برای سازمان‌های غیرانتفاعی با چارچوب 4D؛ پژوهش، نگارش، تحلیل داده و پذیرش سازمانی AI ضمن پایبندی به مأموریت و ارزش‌ها.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/913a9937fb7da25a9814f30bcd1729a9" target="_blank" rel="noopener">AI Fluency for small businesses</a></h3>
+        <p data-en="Helps small business owners and staff build practical AI collaboration skills using the 4D Framework: Delegation, Description, Discernment, and Diligence. Applies the framework to everyday business tasks like research, customer data, and operations while staying true to your mission and values.">مهارت‌های همکاری عملی با AI برای صاحبان و کارکنان کسب‌وکارهای کوچک با چارچوب 4D؛ کاربرد در پژوهش، دادهٔ مشتری و عملیات روزمره ضمن پایبندی به مأموریت و ارزش‌ها.</p>
+      </div>
+      <div class="ca-course">
+        <h3><a href="https://academy.claude.com/verify/74f76a6578b427d74a3ab035fc40cd7d" target="_blank" rel="noopener">AI Fluency for students</a></h3>
+        <p data-en="Helps students build AI fluency skills for learning, career planning, and academic success through responsible AI collaboration. Applies the 4D framework (delegation, description, discernment, diligence) to student life.">ساخت مهارت‌های AI fluency برای یادگیری، برنامه‌ریزی شغلی و موفقیت تحصیلی از طریق همکاری مسئولانه با AI؛ کاربرد چارچوب 4D در زندگی دانشجویی.</p>
+      </div>
+    </section>
+
+  </div>
+
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/#education" data-en="← Back to credentials">← بازگشت به گواهینامه‌ها</a>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="پالت فرمان" data-en-aria="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = window.__theme || ((mq && mq.matches) ? 'light' : 'dark');
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    try{ localStorage.setItem('theme', next); }catch(e){}
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+</script>
+</body>
+</html>
