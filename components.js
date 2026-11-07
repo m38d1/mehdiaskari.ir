@@ -672,27 +672,28 @@
 
   /* With html{scroll-behavior:smooth} Chromium drops the initial fragment
      scroll on cross-document arrivals (post-header «تماس» -> /#contact loaded
-     at the top, scrollY 0) and lazy content can shift the target mid-flight.
-     Let the native scroll run; if after ~700ms we are still far from the
-     target, jump there instantly. Successful smooth scrolls stay untouched. */
+     at the top, scrollY 0). Only that state needs a correction: if the page
+     has moved at all by now, leave it alone. Never re-arm the guard — a late
+     `load` on a slow phone used to reset it and yank a reader who had already
+     scrolled away back to the fragment target. */
   function initHashJump(){
     function ensure(){
       var id = location.hash.slice(1);
       if(!id) return;
       var el = document.getElementById(id);
       if(!el) return;
+      if(touched || (window.pageYOffset || 0) > 2) return;
       var header = document.querySelector('header');
       var off = (header ? header.offsetHeight : 0) + 10;
       var want = Math.max(0, Math.round(el.getBoundingClientRect().top + window.pageYOffset - off));
-      if(Math.abs(window.pageYOffset - want) > 120) window.scrollTo({top: want, behavior: 'auto'});
+      if(want > 0) window.scrollTo({top: want, behavior: 'auto'});
     }
-    // the reader scrolling away by hand wins — never yank them back
+    // the reader touching the page by hand wins, for good
     var touched = false;
     ['wheel','touchstart','keydown'].forEach(function(ev){
       window.addEventListener(ev, function(){ touched = true; }, {passive:true, capture:true});
     });
     function watch(){
-      touched = false;
       setTimeout(function(){ if(!touched) ensure(); }, 700);
     }
     if(document.readyState === 'loading'){
