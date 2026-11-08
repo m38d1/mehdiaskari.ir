@@ -1,6 +1,38 @@
 {
-  "updated": "2026-10-17",
+  "updated": "2026-11-08",
   "posts": [
+    {
+      "slug": "excel-risk-matrix",
+      "title": "مدیریت ریسک با ماتریس احتمال/تأثیر در اکسل — بدون نرم‌افزار تخصصی",
+      "date": "2026-11-08",
+      "dateFa": "۱۷ آبان ۱۴۰۵",
+      "tags": [
+        "Excel",
+        "کنترل پروژه",
+        "ریسک",
+        "گزارش"
+      ],
+      "excerpt": "بدون نرم‌افزار تخصصی یک ماتریس ریسک ۵×۵ بسازید: امتیاز = احتمال × تأثیر، رنگ‌بندی خودکار با Conditional Formatting، و فهرست ریسک‌های اولویت‌دار برای اقدام.",
+      "titleEn": "Excel risk matrix: probability/impact without specialized software",
+      "excerptEn": "Build a 5x5 risk matrix with no specialized software: score = probability × impact, auto-colouring, and a ranked list of risks that need action.",
+      "read": 2
+    },
+    {
+      "slug": "msp-dependency-types",
+      "title": "چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟",
+      "date": "2026-11-08",
+      "dateFa": "۱۷ آبان ۱۴۰۵",
+      "tags": [
+        "MS Project",
+        "برنامه‌ریزی",
+        "کنترل پروژه",
+        "وابستگی"
+      ],
+      "excerpt": "فقط FS را می‌شناسید؟ SS، FF و FI هم وجود دارند. هر چهار نوع را با مثال واقعی (تیم‌های لوله‌کش) و تأثیر لگ مثبت و منفی روی تاریخ‌ها ببینید.",
+      "titleEn": "Four dependency types in MSP: which to choose and what lag does",
+      "excerptEn": "You only know FS? SS, FF and FI exist too — explained with a real example (pipelay teams) and the effect of positive and negative lag on dates.",
+      "read": 2
+    },
     {
       "slug": "excel-custom-number-formats",
       "title": "قالب عدد سفارشی در اکسل؛ ستون انحراف را رنگی و جهت‌دار کن",

@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<script>/* theme boot — runs before the first paint so a saved or system preference never flashes the other theme */
+(function(){var t;try{t=localStorage.getItem('theme')}catch(e){}if(t!=='light'&&t!=='dark'){t=(window.matchMedia&&window.matchMedia('(prefers-color-scheme: light)').matches)?'light':'dark'}document.documentElement.setAttribute('data-theme',t);window.__theme=t})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<meta name="theme-color" media="(prefers-color-scheme: dark)" content="#08090D">
+<meta name="theme-color" media="(prefers-color-scheme: light)" content="#F3F5F9">
+<link rel="preload" href="/fonts/vazirmatn-arabic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/vazirmatn-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/blog.css">
+  <link rel="stylesheet" href="/components.css">
+<title>چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟ | مهدی عسکری</title>
+<meta name="description" content="معمولاً فقط وابستگی FS را می‌شناسیم. SS، FF و FI هم در MSP وجود دارند. هر چهار نوع را با مثال واقعی ببینید و بفهمید لگ مثبت و منفی چه می‌کند.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟">
+<meta property="og:description" content="معمولاً فقط وابستگی FS را می‌شناسیم. SS، FF و FI هم در MSP وجود دارند. هر چهار نوع را با مثال واقعی ببینید و بفهمید لگ مثبت و منفی چه می‌کند.">
+<meta property="og:url" content="https://mehdiaskari.ir/blog/msp-dependency-types/">
+<meta property="og:site_name" content="مهدی عسکری">
+<meta property="og:locale" content="fa_IR">
+<meta property="og:image" content="https://mehdiaskari.ir/og/msp-dependency-types.png">
+<meta property="og:image:alt" content="چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟">
+<meta name="twitter:description" content="معمولاً فقط وابستگی FS را می‌شناسیم. SS، FF و FI هم در MSP وجود دارند. هر چهار نوع را با مثال واقعی ببینید و بفهمید لگ مثبت و منفی چه می‌کند.">
+<meta name="twitter:image" content="https://mehdiaskari.ir/og/msp-dependency-types.png">
+<meta property="article:published_time" content="2026-11-08">
+<link rel="canonical" href="https://mehdiaskari.ir/blog/msp-dependency-types/">
+<script src="/cover.js" defer></script>
+  <script src="/components.js" defer></script>
+<script type="application/ld+json" data-entity="article">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "BlogPosting",
+   "@id": "https://mehdiaskari.ir/blog/msp-dependency-types/#article",
+   "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://mehdiaskari.ir/blog/msp-dependency-types/"
+   },
+   "headline": "چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟",
+   "description": "فقط FS را می‌شناسید؟ SS، FF و FI هم وجود دارند. هر چهار نوع را با مثال واقعی (تیم‌های لوله‌کش) و تأثیر لگ مثبت و منفی روی تاریخ‌ها ببینید.",
+   "inLanguage": "fa-IR",
+   "isAccessibleForFree": true,
+   "url": "https://mehdiaskari.ir/blog/msp-dependency-types/",
+   "image": [
+    "https://mehdiaskari.ir/og-image.png"
+   ],
+   "author": {
+    "@type": "Person",
+    "name": "Mehdi Askari",
+    "alternateName": "مهدی عسکری",
+    "url": "https://mehdiaskari.ir/"
+   },
+   "publisher": {
+    "@type": "Organization",
+    "name": "Mehdi Askari",
+    "url": "https://mehdiaskari.ir/",
+    "logo": {
+     "@type": "ImageObject",
+     "url": "https://mehdiaskari.ir/icon.svg"
+    }
+   },
+   "datePublished": "2026-11-08",
+   "dateModified": "2026-11-08",
+   "keywords": "MS Project, برنامه‌ریزی, کنترل پروژه, وابستگی",
+   "wordCount": 1181
+  },
+  {
+   "@type": "BreadcrumbList",
+   "itemListElement": [
+    {
+     "@type": "ListItem",
+     "position": 1,
+     "name": "خانه",
+     "item": "https://mehdiaskari.ir/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 2,
+     "name": "وبلاگ",
+     "item": "https://mehdiaskari.ir/blog/all/"
+    },
+    {
+     "@type": "ListItem",
+     "position": 3,
+     "name": "چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟",
+     "item": "https://mehdiaskari.ir/blog/msp-dependency-types/"
+    }
+   ]
+  }
+ ]
+}</script>
+</head>
+<body>
+<a class="skip-link" href="#main" data-en="Skip to content">پرش به محتوا</a>
+<div class="cursor-glow" aria-hidden="true"></div>
+<svg aria-hidden="true" focusable="false" style="position:absolute;width:0;height:0;overflow:hidden"><defs>
+<symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="i-moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></symbol>
+<symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21v-1a6 6 0 0 1 6-6h4a6 6 0 0 1 6 6v1"/></symbol>
+<symbol id="i-briefcase" viewBox="0 0 24 24"><rect x="2.5" y="7" width="19" height="13" rx="2.5"/><path d="M8 7V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V7M2.5 12.5h19"/></symbol>
+<symbol id="i-cap" viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11.5V16c0 1.6 2.7 3 6 3s6-1.4 6-3v-4.5"/></symbol>
+<symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V4M4 20h16"/><path d="M7.5 16.5V12M11.5 16.5V8.5M15.5 16.5V13.5M19.5 16.5V6"/></symbol><symbol id="i-tools" viewBox="0 0 24 24"><path d="M4 7h8M16.5 7H20M4 17h4.5M12.5 17H20"/><circle cx="14.2" cy="7" r="2.2"/><circle cx="10.2" cy="17" r="2.2"/></symbol>
+<symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6.5C10.5 5 8 4.6 4 5.1V18c4-.5 6.5 0 8 1.5 1.5-1.5 4-2 8-1.5V5.1c-4-.5-6.5-.1-8 1.4z"/><path d="M12 6.5v13"/></symbol>
+<symbol id="i-mail" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14" rx="2.5"/><path d="M3.5 7.5l8.5 6 8.5-6"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3.5 3.6 3.5 14.4 0 18M12 3c-3.5 3.6-3.5 14.4 0 18"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11.5" height="11.5" rx="2.5"/><path d="M5 15H4A2 2 0 0 1 2 13V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></symbol>
+<symbol id="i-github" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.3-1.3-1.7-1.3-1.7-1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.8 1.3 3.5 1 .1-.8.4-1.3.7-1.6-2.6-.3-5.3-1.3-5.3-5.7 0-1.3.5-2.3 1.2-3.1-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.2 1.2a11 11 0 0 1 5.8 0c2.2-1.5 3.2-1.2 3.2-1.2.6 1.6.2 2.8.1 3.1.8.8 1.2 1.8 1.2 3.1 0 4.4-2.7 5.4-5.3 5.7.4.4.8 1.1.8 2.2v3.3c0 .4.2.7.8.6 4.6-1.5 7.9-5.8 7.9-10.9C23.5 5.7 18.3.5 12 .5z"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10.5 13.5a5 5 0 0 0 7.2.5l2.8-2.8a5 5 0 0 0-7-7L12 5.7"/><path d="M13.5 10.5a5 5 0 0 0-7.2-.5l-2.8 2.8a5 5 0 0 0 7 7l1.5-1.5"/></symbol>
+<symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 21h16"/></symbol>
+<symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 20V5M6 11l6-6 6 6"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></symbol>
+</defs></svg>
+<header>
+  <div class="nav-wrap">
+    <a class="logo" href="/" data-en='<span class="logo-mark"></span> Mehdi Askari'><span class="logo-mark"></span> مهدی عسکری</a>
+    <div class="nav-right">
+      <nav aria-label="منوی اصلی" data-en-aria="Main menu">
+        <ul>
+          <li><a href="/#about" data-en="About">درباره من</a></li>
+          <li><a href="/#experience" data-en="Experience">تجربه</a></li>
+          <li><a href="/#education" data-en="Education">تحصیلات</a></li>
+          <li><a href="/#skills" data-en="Skills">مهارت‌ها</a></li>
+          <li><a href="/blog/all/" data-en="Blog">وبلاگ</a></li>
+          <li><a href="/#contact" data-en="Contact">تماس</a></li>
+        </ul>
+      </nav>
+      <div class="lang-toggle" role="group"  aria-label="زبان / Language" data-en-aria="Language">
+          <button class="lang-opt" data-lang="fa">فا</button>
+          <button class="lang-opt" data-lang="en">EN</button>
+        </div>
+        <button class="cmdk-hint" id="cmdk-hint" aria-label="پالت فرمان (Ctrl K)" data-en-aria="Command palette (⌘ K)" data-en='<span>⌘</span><kbd>K</kbd>'><span>Ctrl</span><kbd>K</kbd></button>
+        <div class="theme-toggle" role="group"  aria-label="حالت نمایش" data-en-aria="Appearance">
+        <button class="theme-opt" data-mode="light"  aria-label="روشن" data-en-aria="Light"><svg class="ic" aria-hidden="true"><use href="#i-sun"/></svg></button>
+        <button class="theme-opt" data-mode="dark"  aria-label="تاریک" data-en-aria="Dark"><svg class="ic" aria-hidden="true"><use href="#i-moon"/></svg></button>
+      </div>
+      <button class="menu-toggle" id="menu-toggle"  aria-label="منو" data-en-aria="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="/#about" data-en="About">درباره من</a>
+    <a href="/#experience" data-en="Experience">تجربه</a>
+    <a href="/#education" data-en="Education">تحصیلات</a>
+    <a href="/#skills" data-en="Skills">مهارت‌ها</a>
+    <a href="/blog/all/" data-en="Blog">وبلاگ</a>
+    <a href="/#contact" data-en="Contact">تماس</a>
+  </nav>
+</header>
+
+<main id="main" tabindex="-1">
+  <div class="post-head fu">
+    <div class="post-meta"><span class="pdate">۱۷ آبان ۱۴۰۵</span><span class="badge teal">MS Project</span><span class="badge teal">برنامه‌ریزی</span><span class="badge teal">کنترل پروژه</span></div>
+    <h1>چهار نوع وابستگی در MSP؛ کدام را انتخاب کنیم و لگ چه می‌کند؟</h1>
+<div class="cover post-hero" data-cover="msp-dependency-types"></div>
+  </div>
+  <article class="prose fu d1">
+    <p class="lead">معمولاً همه وابستگی‌ها را «FS» می‌گذاریم چون این تنها گزینه‌ای است که در ذهن داریم. اما MSP چهار نوع وابستگی دارد: FS، SS، FF و FI. انتخاب اشتباه نوع وابستگی، برنامه شما را یا خیلی طولانی می‌کند یا غیرمنطقی. ترفند اصلی اینجاست: نوع وابستگی را از هم‌پوشانی زمان شروع و پایان فعالیت‌ها حدس بزنید.</p>
+
+    <h2>چهار نوع وابستگی چیست؟</h2>
+    <p>هر وابستگی دو رویداد دارد: پایان یا شروعِ فعالیت پیشین (Predecessor)، و پایان یا شروعِ فعالیت بعدی (Successor). ترکیب این‌ها چهار نوع می‌سازد:</p>
+
+    <div class="tabs" data-single>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="a" aria-selected="true">FS — پایان به شروع</button>
+        <button class="tab" data-tab="b" aria-selected="false">SS — شروع به شروع</button>
+      </div>
+      <div class="tab-panel is-active" data-panel="a">
+        <p><strong>Finish-to-Start:</strong> فعالیت بعدی فقط بعد از <em>پایان</em> پیشین شروع می‌شود. رایج‌ترین نوع؛ مثلاً «بتن‌ریزی» بعد از «قالب‌بندی».</p>
+      </div>
+      <div class="tab-panel" data-panel="b">
+        <p><strong>Start-to-Start:</strong> فعالیت بعدی هم‌زمان یا بعد از <em>شروع</em> پیشین آغاز می‌شود. وقتی دو فعالیت می‌توانند موازی کار کنند. مثلاً «دوخت پارچه» هم‌زمان با «الگوبرداری» از پارچه آغاز می‌شود.</p>
+      </div>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="c" aria-selected="false">FF — پایان به پایان</button>
+        <button class="tab" data-tab="d" aria-selected="false">FI — شروع به پایان</button>
+      </div>
+      <div class="tab-panel" data-panel="c">
+        <p><strong>Finish-to-Finish:</strong> فعالیت بعدی فقط بعد از <em>پایان</em> پیشین تمام می‌شود. عالی برای فعالیت‌هایی که طولشان متفاوت است ولی باید هم‌زمان ختم شوند؛ مثلاً «نصب کاشی» باید هم‌زمان با «چسب‌اندازی» تمام شود، نه اینکه بعد از اتمام چسب‌اندازی ۱۰ روز بعد شروع شود.</p>
+      </div>
+      <div class="tab-panel" data-panel="d">
+        <p><strong>Finish-to-Start (معکوس):</strong> فعالیت بعدی باید <em>پایان</em> یابد تا فعالیت پیشین شروع شود. نوعی نادر که بیشتر برای محدودیت‌های منابع کاربرد دارد.</p>
+      </div>
+    </div>
+
+    <p>در MSP خودتان، هنگام وصل کردن دو فعالیت با کلیک روی فلش، پیش‌فرض FS است. برای تغییر نوع، روی وابستگی دابل‌کلیک کنید، تب Dependencies را باز کنید و نوع را عوض کنید. یا از نمای گانت، دو فعالیت را انتخاب و از منوی Task → Dependency نوع را مشخص کنید.</p>
+
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>نکته:</strong> قبل از انتخاب نوع وابستگی، سه سوال از خود بپرسید: (۱) آیا فعالیت بعدی واقعاً باید صبر کند تا پیشین تمام شود؟ اگر نه، احتمالاً SS است. (۲) آیا پایان فعالیت بعدی وابسته به پایان پیشین است، نه شروع آن؟ اگر آره، FF. (۳) آیا واقعاً نمی‌توانم موازی کار کنم؟ FS یعنی صفر درصد هم‌پوشانی، که در پروژه‌های واقعی نادر است.</div>
+    </div>
+
+    <h2>مثال واقعی: لوله‌کشی طبقات یک ساختمان</h2>
+    <p>فرض کنید چهار طبقه داریم و لوله‌کشی هر طبقه ۴ روز طول می‌کشد. دو تیم لوله‌کش داریم که باید به ترتیب طبقات را کار کنند.</p>
+
+    <h3>حالت اول: همه FS (برنامه طولانی)</h3>
+    <pre dir="ltr" data-lang="EXCEL">
+تیم ۱: طبقه ۱ (روز ۱-۴) → طبقه ۲ (روز ۵-۸) → طبقه ۳ (روز ۹-۱۲) → طبقه ۴ (روز ۱۳-۱۶)
+تیم ۲: طبقه ۱ (روز ۱۷-۲۰) → طبقه ۲ (روز ۲۱-۲۴) → ...
+کل پروژه: ۳۲ روز
+    </pre>
+
+    <p>این برنامه سالم است اما غیرواقعی — چون وقتی تیم ۱ دارد طبقه ۲ را شروع می‌کند، تیم ۲ هیچ کاری ندارد و بیکار است. در واقعیت، به محض اتمام لوله‌کشی طبقه ۱ توسط تیم ۱، تیم ۲ همان طبقه را شروع می‌کند.</p>
+
+    <h3>حالت دوم: SS با لگ (برنامه واقعی)</h3>
+    <pre dir="ltr" data-lang="EXCEL">
+تیم ۱: طبقه ۱ (روز ۱-۴) → طبقه ۲ (روز ۵-۸) → طبقه ۳ (روز ۹-۱۲) → طبقه ۴ (روز ۱۳-۱۶)
+تیم ۲: طبقه ۱ (روز ۵-۸) → طبقه ۲ (روز ۹-۱۲) → طبقه ۳ (روز ۱۳-۱۶) → طبقه ۴ (روز ۱۷-۲۰)
+کل پروژه: ۲۰ روز
+    </pre>
+
+    <p>اینجا وابستگی بین «پایان طبقه ۱ تیم ۱» و «شروع طبقه ۱ تیم ۲» نوع SS است. اما کمی وقفه هم نیاز است — مثلاً ۱ روز برای بازدید کیفیت و تحویل طبقه. آن یک روز را با لگ مثبت می‌گذاریم: SS+۱.</p>
+
+    <p>در این حالت، هر دو تیم همیشه مشغولند و پروژه ۱۲ روز زودتر تمام می‌شود. این همان چیزی است که در هر جلسه کنترل پروژه باید بتوانیم نشان دهیم: «اگر هم‌پوشانی را قبول کنید، ۱۲ روز وقت می‌گیرید.»</p>
+
+    <h2>لالگ مثبت و منفی چه می‌کنند؟</h2>
+    <p>لالگ (Lag) فاصله زمانی بین رویداد پیوند است. در MSP به صورت عدد با واحد زمان وارد می‌شود — مثلاً <code>2d</code> برای ۲ روز.</p>
+
+    <ul>
+      <li><strong>لالگ مثبت (+۱d):</strong> فعالیت بعدی <em>بعد از</em> رویداد پیوند آغاز/پایان می‌یابد. یعنی وقفه یا فاصله ایمن. مثل همان یک روز بازدید و تحویل در مثال بالا.</li>
+      <li><strong>لالگ منفی (-۲d):</strong> فعالیت بعدی <em>قبل از</em> رویداد پیوند آغاز/پایان می‌یابد. یعنی شروع زودتر. این یعنی هم‌پوشانی عمدی — فعالیت بعدی ۲ روز قبل از پایان پیشین شروع می‌شود.</li>
+    </ul>
+
+    <p>لالگ منفی در SS و FF بسیار رایج است. مثلاٌ در پروژه نفتی، «مونتاژ پمپ» می‌تواند ۲ روز قبل از پایان «رسیدن قطعات به سایت» شروع شود — یعنی کارگاه مونتاژ هم‌زمان با ترانزیت قطعات کار را پیش می‌برد. این کار را در MSP با SS و لگ <code>-2d</code> مدل می‌کنیم.</p>
+
+    <pre dir="ltr" data-lang="EXCEL">
+فرمول زمان‌بندی با لگ منفی:
+تاریخ شروع فعالیت بعدی = تاریخ شروع فعالیت پیشین + لگ منفی
+
+مثال: پیشین روز ۵ شروع می‌کند، لگ -2d
+→ بعدی از روز ۳ شروع می‌شود (۲ روز زودتر)
+    </pre>
+
+    <p>لالگ منفی را با احتیاط مصرف کنید؛ MSP به صورت خودکار آن را محاسبه می‌کند و تاریخ شروع فعالیت بعدی را به عقب می‌اندازد، اما اگر پیشین جابجا شود، لگ منفی همیشه نسبت به همان رویداد پیوند باقی می‌ماند — این ثابت بودن ریشه‌ی منطقی است، نه یک باگ.</p>
+
+    <h2>ترکیب‌های کاربردی در یک جدول</h2>
+    <p>در پروژه‌های واقعی، این ۴ الگوی وابستگی را بیش از ۹۰٪ مواقع می‌بینیم:</p>
+
+    <div class="tabs" data-single>
+      <div class="tab-list" role="tablist">
+        <button class="tab" data-tab="e" aria-selected="true">ساخت‌وساز</button>
+        <button class="tab" data-tab="f" aria-selected="false">نفت و گاز</button>
+        <button class="tab" data-tab="g" aria-selected="false">نرم‌افزار</button>
+      </div>
+      <div class="tab-panel is-active" data-panel="e">
+        <pre dir="ltr" data-lang="EXCEL">
+FS       : بتن‌ریزی ← قالب‌بندی
+FS+lag   : نما ← بتن‌ریزی (۳ روز لگ برای پخت بتن)
+SS+lag   : تاسیسات الکتریکی ← دیوارچینی (شروع سیم‌کشی هم‌زمان با دیوار)
+FF       : پایان پاکسازی ← پایان نصب تجهیزات (هر دو هم‌زمان تمام شوند)
+        </pre>
+      </div>
+      <div class="tab-panel" data-panel="f">
+        <pre dir="ltr" data-lang="EXCEL">
+FS       : تست هیدروستاتیک ← اتمام جوش‌کاری لوله
+SS-2d    : مونتاژ ← رسیدن قطعات (هم‌پوشانی ۲ روزه)
+SS       : پایش زمین ← حفاری (پایش هم‌زمان با حفاری)
+FF       : پایان مستندسازی ← پایان اجرا (هم‌زمان خاتمه می‌یابند)
+        </pre>
+      </div>
+      <div class="tab-panel" data-panel="g">
+        <pre dir="ltr" data-lang="EXCEL">
+FS       : انتشار ← پذیرش درخواست (PR review)
+SS+1d    : تست خودکار ← کدنویسی (تست‌ها ۱ روز بعد از شروع کد فعال می‌شوند)
+SS       : گزارش‌دهی ← توسعه (گزارش هم‌زمان با توسعه به‌روز می‌شود)
+FS       : آموزش کاربر ← انتشار نهایی
+        </pre>
+      </div>
+    </div>
+
+    <div class="callout">
+      <span class="callout-ic">i</span>
+      <div><strong>هشدار:</strong> وابستگی FI (شروع به پایان) را به ندرت استفاده کنید. در MSP پشتیبانی خوبی دارد اما در پلان‌های بزرگ تقریباُ غیرقابل ردیابی می‌شود و تیم‌ها را گیج می‌کند. اگر کاری با FI مدل می‌کنید، احتمالاً می‌توانید آن را به SS یا FF با لگ بازنویسی کنید — و خوانایی برنامه ۱۰ برابر بهتر می‌شود.</div>
+    </div>
+
+    <h2>جمع‌بندی</h2>
+    <p>انواع وابستگی در MSP فقط چهار گزینه‌اند و انتخاب درست آن‌ها، ۸۰٪ کیفیت برنامه شما را می‌سازد. قانون کلی: اگر باید صبر کنید تا پیشین تمام شود، FS؛ اگر می‌توانید موازی کار کنید، SS؛ اگر پایان فعالیت بعدی وابسته به پایان پیشین است، FF. لگ مثبت = وقفه ایمن، لگ منفی = هم‌پوشانی عمدی. دفعه بعد که برنامه‌ای می‌کشید، قبل از اتصال فعالیت‌ها یک لحظه فکر کنید: آیا واقعاً ۱۰۰٪ باید صبر کنیم؟ اگر نه، احتمالاً SS یا FF با لگ مناسب جواب شماست و برنامه‌تان هم کوتاه‌تر، هم واقعی‌تر می‌شود.</p>
+  </article>
+  <div class="post-foot fu d2">
+    <a class="btn primary" href="/blog/all/">← همه‌ی نوشته‌ها</a>
+    <a class="rss-link" href="/blog/rss.xml">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M2 2v2c5.523 0 10 4.477 10 10h2C14 7.373 8.627 2 2 2m0 4v2a6 6 0 0 1 6 6h2A8 8 0 0 0 2 6m1.5 5a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0 3"/></svg>
+      RSS
+    </a>
+  </div>
+</main>
+
+<footer data-en='Designed by Mehdi Askari'>طراحی شده توسط مهدی عسکری</footer>
+
+<div class="cmdk-overlay" id="cmdk-overlay">
+  <div class="cmdk-modal" role="dialog" aria-modal="true" aria-label="پالت فرمان" data-en-aria="Command palette">
+    <div class="cmdk-input-row">
+      <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 0 1 1-11 0 5.5 0 0 1 11 0"/></svg>
+      <input type="text" class="cmdk-input" id="cmdk-input" aria-label="جستجو یا اجرای دستور" data-en-aria="Search or run a command" placeholder="جستجو یا اجرای دستور… (مثلاً «تماس» یا «تم»)">
+      <span class="cmdk-esc">Esc</span>
+    </div>
+    <div class="cmdk-list" id="cmdk-list"></div>
+  </div>
+</div>
+
+<script>
+  const root = document.documentElement;
+  const optButtons = document.querySelectorAll('.theme-opt');
+  const mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: light)') : null;
+  let theme = window.__theme || ((mq && mq.matches) ? 'light' : 'dark');
+  function renderTheme(){
+    root.setAttribute('data-theme', theme);
+    optButtons.forEach(b => b.classList.toggle('active', b.dataset.mode === theme));
+  }
+  function applyTheme(next, x, y){
+    try{ localStorage.setItem('theme', next); }catch(e){}
+    const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(theme === next || !document.startViewTransition || reduce){ theme = next; renderTheme(); return; }
+    const vt = document.startViewTransition(() => { theme = next; renderTheme(); });
+    vt.ready.then(() => {
+      const rad = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+      document.documentElement.animate(
+        { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${rad}px at ${x}px ${y}px)`] },
+        { duration: 520, easing: 'cubic-bezier(.2,.7,.2,1)', pseudoElement: '::view-transition-new(root)' }
+      );
+    }).catch(()=>{});
+  }
+  optButtons.forEach(b => b.addEventListener('click', (e) => {
+    const r = b.getBoundingClientRect();
+    applyTheme(b.dataset.mode, e.clientX || r.left + r.width/2, e.clientY || r.top + r.height/2);
+  }));
+  renderTheme();
+</script>
+</body>
+</html>
